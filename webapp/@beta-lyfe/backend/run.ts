@@ -1,6 +1,6 @@
 import { config } from "@/shared/config"
 import { serve } from "@hono/node-server"
-import { app } from "@/index"
+import { app } from "@/shared/app"
 
 serve({
   port: config.app.port,
