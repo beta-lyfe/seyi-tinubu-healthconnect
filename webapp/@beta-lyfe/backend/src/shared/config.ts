@@ -8,7 +8,7 @@ const EnvSchema = z.object({
 
 const env = EnvSchema.parse(process.env)
 
-const config = {
+export const config = {
   huddle01: {
     apiKey: env.HUDDLE01_API_KEY,
   },
@@ -17,5 +17,3 @@ const config = {
     environment: env.NODE_ENV,
   }
 }
-
-export default config

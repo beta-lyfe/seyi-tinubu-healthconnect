@@ -80,42 +80,72 @@ const DashboardChatsDoctorIdIndexRoute =
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/_index': {
+      id: '/_index'
+      path: ''
+      fullPath: ''
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
     '/scaffold/consultation': {
+      id: '/scaffold/consultation'
+      path: '/scaffold/consultation'
+      fullPath: '/scaffold/consultation'
       preLoaderRoute: typeof ScaffoldConsultationImport
       parentRoute: typeof rootRoute
     }
     '/_index/': {
+      id: '/_index/'
+      path: '/'
+      fullPath: '/'
       preLoaderRoute: typeof IndexIndexImport
       parentRoute: typeof IndexImport
     }
     '/dashboard/': {
+      id: '/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardIndexImport
       parentRoute: typeof rootRoute
     }
     '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
       preLoaderRoute: typeof LoginIndexImport
       parentRoute: typeof rootRoute
     }
     '/dashboard/chats/': {
+      id: '/dashboard/chats/'
+      path: '/dashboard/chats'
+      fullPath: '/dashboard/chats'
       preLoaderRoute: typeof DashboardChatsIndexImport
       parentRoute: typeof rootRoute
     }
     '/dashboard/doctors/': {
+      id: '/dashboard/doctors/'
+      path: '/dashboard/doctors'
+      fullPath: '/dashboard/doctors'
       preLoaderRoute: typeof DashboardDoctorsIndexImport
       parentRoute: typeof rootRoute
     }
     '/dashboard/profile/': {
+      id: '/dashboard/profile/'
+      path: '/dashboard/profile'
+      fullPath: '/dashboard/profile'
       preLoaderRoute: typeof DashboardProfileIndexImport
       parentRoute: typeof rootRoute
     }
     '/dashboard/wallet/': {
+      id: '/dashboard/wallet/'
+      path: '/dashboard/wallet'
+      fullPath: '/dashboard/wallet'
       preLoaderRoute: typeof DashboardWalletIndexImport
       parentRoute: typeof rootRoute
     }
     '/dashboard/chats/$doctorId/': {
+      id: '/dashboard/chats/$doctorId/'
+      path: '/dashboard/chats/$doctorId'
+      fullPath: '/dashboard/chats/$doctorId'
       preLoaderRoute: typeof DashboardChatsDoctorIdIndexImport
       parentRoute: typeof rootRoute
     }
@@ -124,8 +154,8 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([
-  IndexRoute.addChildren([IndexIndexRoute]),
+export const routeTree = rootRoute.addChildren({
+  IndexRoute: IndexRoute.addChildren({ IndexIndexRoute }),
   ScaffoldConsultationRoute,
   DashboardIndexRoute,
   LoginIndexRoute,
@@ -134,6 +164,61 @@ export const routeTree = rootRoute.addChildren([
   DashboardProfileIndexRoute,
   DashboardWalletIndexRoute,
   DashboardChatsDoctorIdIndexRoute,
-])
+})
 
 /* prettier-ignore-end */
+
+/* ROUTE_MANIFEST_START
+{
+  "routes": {
+    "__root__": {
+      "filePath": "__root.tsx",
+      "children": [
+        "/_index",
+        "/scaffold/consultation",
+        "/dashboard/",
+        "/login/",
+        "/dashboard/chats/",
+        "/dashboard/doctors/",
+        "/dashboard/profile/",
+        "/dashboard/wallet/",
+        "/dashboard/chats/$doctorId/"
+      ]
+    },
+    "/_index": {
+      "filePath": "_index.tsx",
+      "children": [
+        "/_index/"
+      ]
+    },
+    "/scaffold/consultation": {
+      "filePath": "scaffold/consultation.tsx"
+    },
+    "/_index/": {
+      "filePath": "_index/index.tsx",
+      "parent": "/_index"
+    },
+    "/dashboard/": {
+      "filePath": "dashboard/index.tsx"
+    },
+    "/login/": {
+      "filePath": "login/index.tsx"
+    },
+    "/dashboard/chats/": {
+      "filePath": "dashboard/chats/index.tsx"
+    },
+    "/dashboard/doctors/": {
+      "filePath": "dashboard/doctors/index.tsx"
+    },
+    "/dashboard/profile/": {
+      "filePath": "dashboard/profile/index.tsx"
+    },
+    "/dashboard/wallet/": {
+      "filePath": "dashboard/wallet/index.tsx"
+    },
+    "/dashboard/chats/$doctorId/": {
+      "filePath": "dashboard/chats/$doctorId/index.tsx"
+    }
+  }
+}
+ROUTE_MANIFEST_END */

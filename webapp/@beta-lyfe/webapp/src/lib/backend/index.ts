@@ -1,5 +1,5 @@
 import { hc } from "hono/client"
-import { App } from "@beta-lyfe/backend/shared/app"
+import { type App } from "@beta-lyfe/backend"
 
 const client = hc<App>("/")
 

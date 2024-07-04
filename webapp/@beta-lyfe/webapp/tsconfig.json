@@ -4,6 +4,12 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@beta-lyfe/backend": [
+        "../backend/src/index.ts"
+      ],
+      "@beta-lyfe/backend/*": [
+        "../backend/src/*"
       ]
     },
     "target": "ES2020",
