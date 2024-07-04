@@ -1,0 +1,9 @@
+{
+  "name": "@beta-lyfe/backend",
+  "dependencies": {
+    "http-status-codes": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17"
+  }
+}

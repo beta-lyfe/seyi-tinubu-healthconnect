@@ -1,12 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 import path from "path"
 
 export default defineConfig({
   plugins: [
-    nodePolyfills(),
     TanStackRouterVite(),
     react(),
   ],
@@ -14,5 +12,10 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  server: {
+    proxy: {
+      '/api': process.env.BACKEND_URL!
+    }
   }
 })
