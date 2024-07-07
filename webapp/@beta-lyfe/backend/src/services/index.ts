@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { ConsultationRouter } from "./consultation"
-import { APIResponse, toJsonResponse } from "@/shared/utils/response";
+import { APIResponse, toJsonResponse } from "@beta-lyfe/backend/shared/utils/response";
 
 export const ServicesRouter = new Hono()
   .get('/', c => toJsonResponse(c, APIResponse.ok('Welcome to Beta Lyfe API')))

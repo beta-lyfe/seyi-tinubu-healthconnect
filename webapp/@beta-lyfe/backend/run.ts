@@ -1,7 +1,7 @@
-import { config } from "@/shared/config"
+import { config } from "@beta-lyfe/backend/shared/config"
 import { serve } from "@hono/node-server"
-import { app } from "@/shared/app"
-import { log } from "@/shared/logger"
+import { app } from "@beta-lyfe/backend/shared/app"
+import { log } from "@beta-lyfe/backend/shared/logger"
 
 serve({
   port: config.app.port,

@@ -1,6 +1,6 @@
-import { config } from "@/shared/config";
-import { APIResponse, toJsonResponse } from "@/shared/utils/response";
-import { log } from "@/shared/logger";
+import { config } from "@beta-lyfe/backend/shared/config";
+import { APIResponse, toJsonResponse } from "@beta-lyfe/backend/shared/utils/response";
+import { log } from "@beta-lyfe/backend/shared/logger";
 import { Hono } from "hono";
 import { z } from "zod"
 

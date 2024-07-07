@@ -1,7 +1,7 @@
 import { Hono } from "hono"
 import { logger } from "hono/logger"
 import { cors } from "hono/cors"
-import { ServicesRouter } from "@/services"
+import { ServicesRouter } from "@beta-lyfe/backend/services"
 import { APIResponse, toJsonResponse } from "./utils/response"
 import { APIError } from "./utils/error"
 import { log } from "./logger"
