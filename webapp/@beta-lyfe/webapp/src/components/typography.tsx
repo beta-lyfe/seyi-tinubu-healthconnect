@@ -1,4 +1,4 @@
-import { cn } from "@/shad/lib/utils"
+import { cn } from "@beta-lyfe/webapp/shad/lib/utils"
 import React from "react"
 
 export const Typography = {

@@ -2,8 +2,8 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useHuddle01 } from '@huddle01/react';
 import { useLobby, useAudio, useVideo } from '@huddle01/react/hooks';
 import { FunctionComponent, useEffect, useState } from 'react';
-import { config } from '@/lib/config';
-import { consultation } from '@/lib/consultation';
+import { config } from '@beta-lyfe/webapp/lib/config';
+import { consultation } from '@beta-lyfe/webapp/lib/consultation';
 import { toast } from 'sonner';
 import { Audio, Video } from '@huddle01/react/components';
 

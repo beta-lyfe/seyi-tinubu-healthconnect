@@ -1,8 +1,8 @@
-import { Input } from '@/components/input'
-import { BackLink } from '@/components/link'
-import { Typography } from '@/components/typography'
-import { cn } from '@/shad/lib/utils'
-import { Button } from '@/shad/ui/button'
+import { Input } from '@beta-lyfe/webapp/components/input'
+import { BackLink } from '@beta-lyfe/webapp/components/link'
+import { Typography } from '@beta-lyfe/webapp/components/typography'
+import { cn } from '@beta-lyfe/webapp/shad/lib/utils'
+import { Button } from '@beta-lyfe/webapp/shad/ui/button'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { ChevronLeftIcon, PaperclipIcon, SearchIcon, SendHorizonalIcon } from 'lucide-react'
 

@@ -1,8 +1,8 @@
-import { cn } from "@/shad/lib/utils"
+import { cn } from "@beta-lyfe/webapp/shad/lib/utils"
 import { Link, useRouter } from "@tanstack/react-router"
 import { CircleUserRoundIcon, HomeIcon, MessageSquareIcon, MessageSquareMoreIcon, StethoscopeIcon } from "lucide-react"
 import { FunctionComponent } from "react"
-import ElevatedButton from "@/components/elevatedbtn"
+import ElevatedButton from "@beta-lyfe/webapp/components/elevatedbtn"
 
 type IconProps = {
   className?: string

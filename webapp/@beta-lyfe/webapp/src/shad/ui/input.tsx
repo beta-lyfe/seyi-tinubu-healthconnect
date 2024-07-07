@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import { cn } from "@/shad/lib/utils"
+import { cn } from "@beta-lyfe/webapp/shad/lib/utils"
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}

@@ -1,5 +1,5 @@
 import { StethoscopeIcon } from "lucide-react"
-import { Button } from "@/shad/ui/button"
+import { Button } from "@beta-lyfe/webapp/shad/ui/button"
 import { Link } from "@tanstack/react-router"
 
 

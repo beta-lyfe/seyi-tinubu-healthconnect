@@ -1,6 +1,6 @@
-import { Input } from "@/components/input"
-import { Typography } from "@/components/typography"
-import { Button } from "@/shad/ui/button"
+import { Input } from "@beta-lyfe/webapp/components/input"
+import { Typography } from "@beta-lyfe/webapp/components/typography"
+import { Button } from "@beta-lyfe/webapp/shad/ui/button"
 import { Link, createFileRoute, useNavigate, useRouter } from "@tanstack/react-router"
 import { Microscope, Wallet } from "lucide-react"
 
@@ -8,10 +8,10 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from "@/shad/ui/carousel"
+} from "@beta-lyfe/webapp/shad/ui/carousel"
 
 import { ArrowRightIcon, ArrowUpRight, BuildingIcon, CalendarCheckIcon, MessageSquareIcon, PillIcon, SearchIcon, StethoscopeIcon } from "lucide-react"
-import { BottomNav } from "@/routes/-components/bottom-nav"
+import { BottomNav } from "@beta-lyfe/webapp/routes/-components/bottom-nav"
 
 export const Route = createFileRoute('/dashboard/')({
   component: IndexPage,

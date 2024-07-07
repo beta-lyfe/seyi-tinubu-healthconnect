@@ -1,9 +1,9 @@
 import { Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from "@tanstack/router-devtools"
-import { Toaster } from "@/shad/ui/sonner"
+import { Toaster } from "@beta-lyfe/webapp/shad/ui/sonner"
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { env } from '@/env'
+import { env } from '@beta-lyfe/webapp/env'
 import { BottomNav } from './-components/bottom-nav'
 
 const queryClient = new QueryClient()

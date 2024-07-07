@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 import "./styles.css"
-import { cn } from "@/shad/lib/utils";
+import { cn } from "@beta-lyfe/webapp/shad/lib/utils";
 
 export default function({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (

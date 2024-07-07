@@ -1,4 +1,4 @@
-import { IykeFormType } from "@/components/IykeForm";
+import { IykeFormType } from "@beta-lyfe/webapp/components/IykeForm";
 
 export const basicInformationFields: IykeFormType[] = [
     {

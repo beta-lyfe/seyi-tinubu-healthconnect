@@ -1,5 +1,5 @@
-import { Typography } from '@/components/typography'
-import { Button } from '@/shad/ui/button'
+import { Typography } from '@beta-lyfe/webapp/components/typography'
+import { Button } from '@beta-lyfe/webapp/shad/ui/button'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { ArrowRight } from 'lucide-react'
 import { useEffect,useState } from 'react'

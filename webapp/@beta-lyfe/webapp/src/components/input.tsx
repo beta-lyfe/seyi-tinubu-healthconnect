@@ -1,6 +1,6 @@
-import { Input as SInput, InputProps } from "@/shad/ui/input"
+import { Input as SInput, InputProps } from "@beta-lyfe/webapp/shad/ui/input"
 import { forwardRef, useState, ReactNode } from "react";
-import { cn } from "@/shad/lib/utils";
+import { cn } from "@beta-lyfe/webapp/shad/lib/utils";
 import { EyeIcon, EyeOffIcon } from "lucide-react"
 
 type Props = InputProps & {

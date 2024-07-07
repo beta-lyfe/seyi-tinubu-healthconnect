@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@/shad/ui/button'
+import { Button } from '@beta-lyfe/webapp/shad/ui/button'
 
 export type IykeFormType={
     labelName?:string,
