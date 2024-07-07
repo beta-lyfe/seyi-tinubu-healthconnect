@@ -13,7 +13,7 @@ This repo contains all the code related to Beta Lyfe
 ### Development
 
 ```bash
-
+cd backend
 ```
 
 
@@ -21,7 +21,7 @@ This repo contains all the code related to Beta Lyfe
 
 ### Relevant Links
 
-- [Live deployment](https://beta-lyfe-web-app.onrender.com)
+- [Live deployment](https://beta-life-web-app.onrender.com)
 
 ### Development
 
