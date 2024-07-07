@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": [
+      "@beta-lyfe/webapp/*": [
         "./src/*"
       ],
       "@beta-lyfe/backend": [

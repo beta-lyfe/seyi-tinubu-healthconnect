@@ -4,6 +4,7 @@ import { cors } from "hono/cors"
 import { ServicesRouter } from "@/services"
 import { APIResponse, toJsonResponse } from "./utils/response"
 import { APIError } from "./utils/error"
+import { log } from "./logger"
 
 export const app = new Hono()
   .use(logger())
@@ -11,7 +12,7 @@ export const app = new Hono()
   .route("/api", ServicesRouter)
   .notFound(c => toJsonResponse(c, APIResponse.err('Route not found', 404)))
   .onError((err, c) => {
-    console.error(`${err}`)
+    log.error(`${err}`)
 
     if (err instanceof APIError)
       return toJsonResponse(c, err.toResponse())

@@ -1,5 +1,6 @@
 import { config } from "@/shared/config";
 import { APIResponse, toJsonResponse } from "@/shared/utils/response";
+import { log } from "@/shared/logger";
 import { Hono } from "hono";
 import { z } from "zod"
 
@@ -37,7 +38,7 @@ export const Router = new Hono()
 
       return toJsonResponse(c, APIResponse.ok(json.data))
     } catch (err) {
-      console.warn(err)
-      return toJsonResponse(c, APIResponse.err("Sorry an error occurred!"))
+      log.error(err)
+      return toJsonResponse(c, APIResponse.err("Sorry an error occurred while trying to create a room!"))
     }
   })

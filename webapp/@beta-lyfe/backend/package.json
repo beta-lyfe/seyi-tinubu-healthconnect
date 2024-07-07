@@ -4,6 +4,7 @@
     "dev": "tsx --watch ./run.ts"
   },
   "devDependencies": {
-    "@types/node": "^20.11.17"
+    "@types/node": "^20.11.17",
+    "tslog": "^4.9.3"
   }
 }
