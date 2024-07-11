@@ -1,6 +1,7 @@
 import { config } from "@beta-lyfe/backend/shared/config";
 import { APIResponse, toJsonResponse } from "@beta-lyfe/backend/shared/utils/response";
 import { log } from "@beta-lyfe/backend/shared/logger";
+import { AccessToken, Role } from '@huddle01/server-sdk/auth';
 import { Hono } from "hono";
 import { z } from "zod"
 
@@ -41,4 +42,30 @@ export const Router = new Hono()
       log.error(err)
       return toJsonResponse(c, APIResponse.err("Sorry an error occurred while trying to create a room!"))
     }
+  })
+  .get("/:id/access-token", async (c) => {
+    const roomId = c.req.param('id')
+
+    const accessToken = new AccessToken({
+      apiKey: config.huddle01.apiKey,
+      roomId: roomId,
+      role: Role.HOST,
+      permissions: {
+        admin: true,
+        canConsume: true,
+        canProduce: true,
+        canProduceSources: {
+          cam: true,
+          mic: true,
+          screen: true,
+        },
+        canRecvData: true,
+        canSendData: true,
+        canUpdateMetadata: true,
+      }
+    });
+
+    const token = await accessToken.toJwt();
+
+    return toJsonResponse(c, APIResponse.ok(token))
   })
