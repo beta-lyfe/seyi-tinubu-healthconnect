@@ -35,8 +35,6 @@ RUN cp static/index.html templates/index.html
 
 COPY backend/requirements.txt .
 RUN pip install -r requirements.txt
-# RUN python3 manage.py collectstatic --noinput
-
 
 # Stage 3
 FROM python-base AS python-runner
@@ -51,6 +49,10 @@ COPY --from=python-builder /app/templates templates
 ENV VIRTUAL_ENV=/app/.venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 ENV PORT=8000
+ENV SECRET_KEY="some-totally-unsafe-key-that's-required-for-the-build-to-pass"
+ENV APP_ENV="production"
+
+RUN python3 manage.py collectstatic
  
 EXPOSE ${PORT}
 

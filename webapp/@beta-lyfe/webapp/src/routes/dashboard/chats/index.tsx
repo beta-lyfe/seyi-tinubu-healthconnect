@@ -2,11 +2,16 @@ import { Input } from '@beta-lyfe/webapp/components/input'
 import { Typography } from '@beta-lyfe/webapp/components/typography'
 import { BottomNav } from '@beta-lyfe/webapp/routes/-components/bottom-nav'
 import { Link, createFileRoute, useRouter } from '@tanstack/react-router'
-import { Carousel,CarouselItem ,CarouselContent} from '@beta-lyfe/webapp/shad/ui/carousel'
+import { Carousel, CarouselItem, CarouselContent } from '@beta-lyfe/webapp/shad/ui/carousel'
 import { Button } from '@beta-lyfe/webapp/shad/ui/button'
 import { ArrowRightIcon, ArrowUpRight, BuildingIcon, CalendarCheckIcon, MessageSquareIcon, PillIcon, SearchIcon, StethoscopeIcon } from "lucide-react"
 import { doctors, quickNav } from '..'
 import { Wallet } from 'lucide-react'
+import doctorImage from '@beta-lyfe/webapp/assets/images/doctor.png'
+import betaLyfeLogo3 from '@beta-lyfe/webapp/assets/images/betalyfeLogo3.png'
+import doctorJohnDoe from '@beta-lyfe/webapp/assets/images/doctors/john-doe.png'
+import doctorAnnaMichaels from '@beta-lyfe/webapp/assets/images/doctor.png'
+import doctorMariaWatts from '@beta-lyfe/webapp/assets/images/doctors/maria-watts.png'
 
 export const Route = createFileRoute('/dashboard/chats/')({
   component: ChatsListPage
@@ -17,19 +22,19 @@ const chatList = [
     id: "1",
     firstName: "Goodseed",
     lastName: "Reginald",
-    image: "/images/doctors/john-doe.png"
+    image: doctorJohnDoe,
   },
   {
     id: "2",
     firstName: "Anna",
     lastName: "Michaels",
-    image: "/images/doctors/anna-michaels.png"
+    image: doctorAnnaMichaels,
   },
   {
     id: "3",
     firstName: "Maria",
     lastName: "Watts",
-    image: "/images/doctors/maria-watts.png"
+    image: doctorMariaWatts,
   }
 ]
 
@@ -64,83 +69,83 @@ function ChatList() {
 }
 
 function ChatsListPage() {
-  const router=useRouter()
+  const router = useRouter()
   return (
     <div className="grow">
-       <div
-       
-          className="flex justify-between flex-row items-center  bg-primary p-5"
-        >
-          <img 
-          className='w-[180px]'
-          src='/public/images/betalyfeLogo3.png'
-          />
-          
-          <Button 
-          onClick={()=>router.navigate({to:'/dashboard/wallet'})}
-          className="flex  justify-around bg-[#ffffff30] hover:bg-[#ffffff30] gap-4 items-center">
-            <Wallet color="white"/>
-            <Typography.Info className="text-white">₦ 3000.00</Typography.Info>
-          </Button>
-        </div>
-       
-      <div className="p-5 pt-0 bg-primary grid grid-flow-row gap-5">
-      <div className='flex flex-col-reverse gap-3'>
       <div
-        className="p-0"
+
+        className="flex justify-between flex-row items-center  bg-primary p-5"
       >
-        <div className="bg-primary rounded-lg grid grid-cols-2 aspect-video">
-          <div className="grid items-center p-5">
-            <div className="flex flex-col gap-2">
-              <header className="text-white leading-relaxed text-lg font-semibold">
-                Get 10% off for your first 5 minutes
-              </header>
-              <div>
-                <Link to='/dashboard/chats'>
-                  <Button className="rounded-full bg-white flex gap-2 items-center text-primary shadow-md">
-                    Try it
-                    <ArrowRightIcon className="w-4 h-4" />
-                  </Button>
-                </Link>
+        <img
+          className='w-[180px]'
+          src={betaLyfeLogo3}
+        />
+
+        <Button
+          onClick={() => router.navigate({ to: '/dashboard/wallet' })}
+          className="flex  justify-around bg-[#ffffff30] hover:bg-[#ffffff30] gap-4 items-center">
+          <Wallet color="white" />
+          <Typography.Info className="text-white">₦ 3000.00</Typography.Info>
+        </Button>
+      </div>
+
+      <div className="p-5 pt-0 bg-primary grid grid-flow-row gap-5">
+        <div className='flex flex-col-reverse gap-3'>
+          <div
+            className="p-0"
+          >
+            <div className="bg-primary rounded-lg grid grid-cols-2 aspect-video">
+              <div className="grid items-center p-5">
+                <div className="flex flex-col gap-2">
+                  <header className="text-white leading-relaxed text-lg font-semibold">
+                    Get 10% off for your first 5 minutes
+                  </header>
+                  <div>
+                    <Link to='/dashboard/chats'>
+                      <Button className="rounded-full bg-white flex gap-2 items-center text-primary shadow-md">
+                        Try it
+                        <ArrowRightIcon className="w-4 h-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="grid place-items-end">
+                <img
+                  className="aspect-square object-cover object-center"
+                  src={doctorImage}
+                  alt="doctor" />
               </div>
             </div>
           </div>
-          <div className="grid place-items-end">
-            <img
-              className="aspect-square object-cover object-center"
-              src="/images/doctor.png"
-              alt="doctor" />
+          <div >
+            <Input
+              icon={<SearchIcon className="stroke-[3px] text-slate-300 size-5" />}
+              placeholder="Search for a Doctor"
+            />
           </div>
         </div>
-      </div>
-        <div >
-          <Input
-            icon={<SearchIcon className="stroke-[3px] text-slate-300 size-5" />}
-            placeholder="Search for a Doctor"
-          />
-        </div>
-      </div>
       </div>
       <div className='p-5'>
-      <Typography.PageHeading className='pb-5'>
-            Our Services
-          </Typography.PageHeading>
-      <div
-        className="grid grid-cols-4 gap-5"
-      >
-      {quickNav.map(({ text, icon: Icon ,link}) => (
-          <Link to={link}><div key={text} className="flex flex-col gap-2">
-            <div className="rounded-lg bg-slate-200 grid place-items-center aspect-square">
-              <Icon className="size-6 stroke-primary" />
+        <Typography.PageHeading className='pb-5'>
+          Our Services
+        </Typography.PageHeading>
+        <div
+          className="grid grid-cols-4 gap-5"
+        >
+          {quickNav.map(({ text, icon: Icon, link }) => (
+            <Link to={link}><div key={text} className="flex flex-col gap-2">
+              <div className="rounded-lg bg-slate-200 grid place-items-center aspect-square">
+                <Icon className="size-6 stroke-primary" />
+              </div>
+              <Typography.HeadingLead className="text-center">
+                {text}
+              </Typography.HeadingLead>
             </div>
-            <Typography.HeadingLead className="text-center">
-              {text}
-            </Typography.HeadingLead>
-          </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
         </div>
-        </div>
+      </div>
       <div
         className="p-5"
       >

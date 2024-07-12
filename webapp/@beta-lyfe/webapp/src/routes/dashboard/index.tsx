@@ -12,6 +12,9 @@ import {
 
 import { ArrowRightIcon, ArrowUpRight, BuildingIcon, CalendarCheckIcon, MessageSquareIcon, PillIcon, SearchIcon, StethoscopeIcon } from "lucide-react"
 import { BottomNav } from "@beta-lyfe/webapp/routes/-components/bottom-nav"
+import doctorJohnDoe from '@beta-lyfe/webapp/assets/images/doctors/john-doe.png'
+import doctorAnnaMichaels from '@beta-lyfe/webapp/assets/images/doctor.png'
+import doctorMariaWatts from '@beta-lyfe/webapp/assets/images/doctors/maria-watts.png'
 
 export const Route = createFileRoute('/dashboard/')({
   component: IndexPage,
@@ -22,7 +25,7 @@ export const quickNav = [
   {
     text: "Doctor",
     icon: StethoscopeIcon,
-    link:"/dashboard/chats"
+    link: "/dashboard/chats"
   },
   {
     text: "Pharmacy",
@@ -43,21 +46,22 @@ export const doctors = [
     firstName: "Goodseed",
     lastName: "Reginald",
     specialty: "Prosthetitian",
-    image: "/images/doctors/john-doe.png"
+    image: doctorJohnDoe,
   },
   {
     firstName: "Anna",
     lastName: "Michaels",
     specialty: "Paediatritian",
-    image: "/images/doctors/anna-michaels.png"
+    image: doctorAnnaMichaels,
   },
   {
     firstName: "Maria",
     lastName: "Watts",
     specialty: "Geriatritian",
-    image: "/images/doctors/maria-watts.png"
+    image: doctorMariaWatts,
   }
 ]
+
 
 function IndexPage() {
   return (
@@ -65,7 +69,7 @@ function IndexPage() {
       <div
         className="bg-primary p-5 flex flex-col gap-5"
       >
-       
+
         <div>
           <Input
             icon={<SearchIcon className="stroke-[3px] text-slate-300 size-5" />}
@@ -76,7 +80,7 @@ function IndexPage() {
       <div
         className="grid grid-cols-4 gap-5 p-5"
       >
-        {quickNav.map(({ text, icon: Icon ,link}) => (
+        {quickNav.map(({ text, icon: Icon, link }) => (
           <Link to={link}><div key={text} className="flex flex-col gap-2">
             <div className="rounded-lg bg-slate-200 grid place-items-center aspect-square">
               <Icon className="size-6 stroke-primary" />
@@ -89,7 +93,7 @@ function IndexPage() {
         ))}
       </div>
 
-    
+
       <BottomNav />
     </main>
   )

@@ -5,6 +5,7 @@ import { cn } from '@beta-lyfe/webapp/shad/lib/utils'
 import { Button } from '@beta-lyfe/webapp/shad/ui/button'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { ChevronLeftIcon, PaperclipIcon, SearchIcon, SendHorizonalIcon } from 'lucide-react'
+import doctorJohnDoe from '@beta-lyfe/webapp/assets/images/doctors/john-doe.png'
 
 export const Route = createFileRoute('/dashboard/chats/$doctorId/')({
   component: DoctorChatPage
@@ -28,7 +29,7 @@ function ChatNavbar() {
             <div className="flex items-center gap-2">
               <span className="bg-gray-200 size-10 rounded-full overflow-hidden">
                 <img
-                  src="/images/doctors/john-doe.png"
+                  src={doctorJohnDoe}
                   alt="Doctor"
                   className="size-full object-cover" />
               </span>
@@ -167,7 +168,7 @@ function ChatSection() {
                   ? "PP"
                   : (
                     <img
-                      src="/images/doctors/john-doe.png"
+                      src={doctorJohnDoe}
                       alt="Doctor"
                       className="size-full object-cover align-self-end" />
                   )

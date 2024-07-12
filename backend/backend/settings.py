@@ -16,9 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = env.secret_key
 
-# WARNING: This shouldn't be so but because we really media file service support
-# I've enabled debug in production as well
-DEBUG = env.environment == 'development' or env.environment == 'production'
+DEBUG = env.environment == 'development'
 
 ALLOWED_HOSTS = ['*']
 
@@ -33,7 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # 'django.contrib.staticfiles',
+    'django.contrib.staticfiles',
     # corsheader
     "corsheaders",
 	# rest-framework
@@ -51,13 +49,13 @@ INSTALLED_APPS = [
     # cloudinary
     "cloudinary",
     "cloudinary_storage",
-    "whitenoise.runserver_nostatic",  # new
+    "whitenoise.runserver_nostatic",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    "django.contrib.sessions.middleware.SessionMiddleware",
     # cors header middleware
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -134,20 +132,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-MEDIA_ROOT = BASE_DIR / 'static'
-MEDIA_URL = ''
+# MEDIA_ROOT = BASE_DIR / 'static'
+# MEDIA_URL = ''
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = BASE_DIR / 'staticfiles'
-# STATICFILES_DIRS = [BASE_DIR / 'static']
-# STORAGES = {
-#     "default": {
-#         "BACKEND": "django.core.files.storage.FileSystemStorage",
-#     },
-#     "staticfiles": {  
-#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",  # new
-#     },
-# }
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {  
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
