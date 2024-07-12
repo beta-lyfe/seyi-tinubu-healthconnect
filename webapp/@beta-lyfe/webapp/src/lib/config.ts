@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const EnvSchema = z.object({
-  HUDDLE01_PROJECT_ID: z.string()
+  HUDDLE01_PROJECT_ID: z.string().catch("PROJECT_ID_NOT_SET")
 })
 
 const env = EnvSchema.parse({

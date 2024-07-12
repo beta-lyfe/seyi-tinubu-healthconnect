@@ -1,7 +1,7 @@
 {
   "name": "@beta-lyfe/backend",
   "scripts": {
-    "dev": "tsx --watch ./run-bun.ts"
+    "dev": "tsx --watch ./run.ts"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",

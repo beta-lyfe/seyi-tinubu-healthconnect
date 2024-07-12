@@ -18,13 +18,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User, EmailVerication_Keys, PasswordReset_keys
 
 
-
-# Create your views here.
-
-def Home(request):
-    return render(request, 'home.html')
-
-
 """ AUTH """
 # Register View
 @api_view(['POST'])

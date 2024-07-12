@@ -5,20 +5,20 @@ from dotenv import load_dotenv
 import cloudinary.api
 import cloudinary.uploader
 import cloudinary
+from .env import env
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+jdfjbpzn6rd-51nwr#*i4fv^cu5$xkb5a(&34hr9c!cw!0e-4'
+SECRET_KEY = env.secret_key
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# WARNING: This shouldn't be so but because we really media file service support
+# I've enabled debug in production as well
+DEBUG = env.environment == 'development' or env.environment == 'production'
 
 ALLOWED_HOSTS = ['*']
 
@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    # 'django.contrib.staticfiles',
     # corsheader
     "corsheaders",
 	# rest-framework
@@ -50,12 +50,14 @@ INSTALLED_APPS = [
     "api",
     # cloudinary
     "cloudinary",
-    "cloudinary_storage"
+    "cloudinary_storage",
+    "whitenoise.runserver_nostatic",  # new
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     # cors header middleware
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -132,7 +134,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+MEDIA_ROOT = BASE_DIR / 'static'
+MEDIA_URL = ''
+
+STATIC_URL = '/static/'
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
+# STATICFILES_DIRS = [BASE_DIR / 'static']
+# STORAGES = {
+#     "default": {
+#         "BACKEND": "django.core.files.storage.FileSystemStorage",
+#     },
+#     "staticfiles": {  
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",  # new
+#     },
+# }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

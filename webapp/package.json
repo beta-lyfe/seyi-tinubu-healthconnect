@@ -1,7 +1,9 @@
 {
+  "$schema": "https://json.schemastore.org/package.json",
   "name": "beta-lyfe",
   "scripts": {
     "webapp:dev": "pnpm --filter @beta-lyfe/webapp dev",
+    "webapp:build": "pnpm --filter @beta-lyfe/webapp build",
     "backend:dev": "pnpm --filter @beta-lyfe/backend dev"
   },
   "dependencies": {

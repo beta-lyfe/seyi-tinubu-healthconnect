@@ -21,7 +21,7 @@ cd backend
 
 ### Relevant Links
 
-- [Live deployment](https://beta-life-web-app.onrender.com)
+- [Live deployment](https://beta-lyfe.koyeb.app)
 
 ### Development
 

@@ -28,14 +28,14 @@ export const toJsonResponse = <
   )
 
 export const APIResponse = {
-  err: <E, Code extends StatusCodes = StatusCodes.INTERNAL_SERVER_ERROR>(error: E, code?: Code): APIResponse<never, StatusCodes.OK, E, Code> => {
+  err: <E, Code extends StatusCodes = StatusCodes.INTERNAL_SERVER_ERROR>(error: E, code?: Code): APIResponse<unknown, StatusCodes.OK, E, Code> => {
     return {
       variant: "error",
       code: code === undefined ? StatusCodes.INTERNAL_SERVER_ERROR as Code : code,
       error,
     }
   },
-  ok: <T, Code extends StatusCodes = StatusCodes.OK>(data: T, code?: Code): APIResponse<T, Code, never, StatusCodes.INTERNAL_SERVER_ERROR> => {
+  ok: <T, Code extends StatusCodes = StatusCodes.OK>(data: T, code?: Code): APIResponse<T, Code, unknown, StatusCodes.INTERNAL_SERVER_ERROR> => {
     return {
       variant: "ok",
       code: code === undefined ? StatusCodes.OK as Code : code,
