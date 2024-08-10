@@ -33,7 +33,7 @@ const IykeForm = ({data}:{data:IykeFormType[]}) => {
 export const IykeFormField=({name,labelName,inputType,id,placeholder,value}:IykeFormType)=>(
     <>
      <label htmlFor={labelName} className='capitalize'>{labelName || name}</label>
-    <input className="p-4 text-[#817f7f] outline-primary" type={inputType} id={id} name={name} 
+    <input className="p-4 text-[#817f7f] " type={inputType} id={id} name={name} 
     placeholder={ placeholder || "Input into these fields"}
         value={value}
      />

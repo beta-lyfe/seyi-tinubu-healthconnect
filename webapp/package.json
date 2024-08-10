@@ -3,8 +3,8 @@
   "name": "beta-lyfe",
   "scripts": {
     "webapp:dev": "pnpm --filter @beta-lyfe/webapp dev",
-    "webapp:build": "pnpm --filter @beta-lyfe/webapp build",
-    "backend:dev": "pnpm --filter @beta-lyfe/backend dev"
+    "backend:dev": "pnpm --filter @beta-lyfe/backend dev",
+    "webapp:build": "pnpm --filter @beta-lyfe/webapp build"
   },
   "dependencies": {
     "@hono/node-server": "^1.12.0",

@@ -8,7 +8,7 @@ export const Route=createFileRoute('/login/')({
 })
 
 
-const LoginPageContext=createContext<{isPatient:boolean,setPatient:Function} | null>(null)
+const LoginPageContext=createContext<{isPatient:boolean,setPatient:Function}>({} as {isPatient:boolean,setPatient:Function})
 
 function LoginPage(){
     const [isPatient,setPatient]=useState(true)
@@ -69,9 +69,10 @@ function Choose(){
 }
 
 const Form=()=>{
+    const {isPatient}=useContext(LoginPageContext)
     const navigate=useRouter()
     return(
-    <form className='flex flex-col w-[100%] gap-6' onSubmit={()=>navigate.navigate({to:'/dashboard/chats'})}>
+    <form className='flex flex-col w-[100%] gap-6' onSubmit={()=>navigate.navigate({to:isPatient?'/dashboard': '/doctor'})}>
        <FormInput label='Email address' inputType='email'/>
        <div>
        <FormInput label='Password' inputType='password'/>
@@ -94,7 +95,7 @@ function FormInput({label,inputType}:{label:string,inputType:string}){
     onFocus={()=>setLabelOpacity(false)}
     onBlur={e=>setLabelOpacity(!(e.target.value.length>=1))}
     onChange={e=>setLabelOpacity(!(e.target.value.length>=1))}
-    className='outline-none border-b-2 border-primary bg-transparent ' type={inputType}/>
+    className='outline-0  border-primary bg-transparent border-0 border-b-2 focus:ring-0 focus:border-primary' type={inputType}/>
     </fieldset>
     )
 }

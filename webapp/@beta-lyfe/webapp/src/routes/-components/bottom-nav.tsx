@@ -1,11 +1,11 @@
 import { cn } from "@beta-lyfe/webapp/shad/lib/utils"
 import { Link, useRouter } from "@tanstack/react-router"
-import { CircleUserRoundIcon, HomeIcon, MessageSquareIcon, MessageSquareMoreIcon, StethoscopeIcon } from "lucide-react"
+import { Calendar, CalendarDays, CircleUserRoundIcon, Clock3, Clock3Icon, HomeIcon, MessageSquareIcon, MessageSquareMoreIcon, StethoscopeIcon, User, User2 } from "lucide-react"
 import { FunctionComponent } from "react"
 import ElevatedButton from "@beta-lyfe/webapp/components/elevatedbtn"
 
 type IconProps = {
-  className?: string
+  className?: string,
 }
 
 type navProps={
@@ -18,11 +18,11 @@ type navProps={
 
 const nav :navProps[] = [
   {
-    text: "Home",
-    link: "/dashboard/",
+    text: "Schedule",
+    link: "/dashboard/schedule",
     main:false,
-    icon: ({ className }: IconProps) => <HomeIcon className={cn(className)}/>,
-    iconFilled: ({ className }: IconProps) => <HomeIcon className={cn(className)} />
+    icon: ({ className }: IconProps) => <CalendarDays className={cn(className,"stroke-white size-7")} fill="#f382ec"/>,
+    iconFilled: ({ className }: IconProps) => <CalendarDays className={cn(className,"stroke-primary size-7")} fill="white" />
   },
  /* {
     text: "Doctors",
@@ -42,18 +42,18 @@ const nav :navProps[] = [
     text: "Profile",
     link: "/dashboard/profile",
     main:false,
-    icon: ({ className }: IconProps) => <CircleUserRoundIcon className={cn(className)} />,
-    iconFilled: ({ className }: IconProps) => <HomeIcon className={cn(className)} />
+    icon: ({ className }: IconProps) => <User2 className={cn(className,"stroke-white size-7")} fill="#f382ec" />,
+    iconFilled: ({ className }: IconProps) => <User2 className={cn(className,"stroke-primary size-7")} fill="white" />
   }
 ]
 
 export function BottomNav() {
   return (
     <>
-      <div className="h-12" />
+      <div className="h-12 mt-10" />
       <div className="fixed bottom-0 left-0 w-full bg-white grid grid-cols-2 p-5 gap-x-10">
-      {nav.map(data => <BottomNavLink {...data} />)}
-      <ElevatedButton />
+      {nav.map((data,index) => <BottomNavLink {...data} key={index} iconFilled={data.iconFilled}/>)}
+        <ElevatedButton />
       </div>
     </>
   )
@@ -63,8 +63,9 @@ const BottomNavLink: FunctionComponent<{
   link: string
    text: string,
    main:boolean,
+   iconFilled:FunctionComponent<{ className: string}>,
   icon: FunctionComponent<{ className: string}>
-  }> = ({ link, text, icon: Icon,main }) => {
+  }> = ({ link, text, icon: Icon,main ,iconFilled:IconFilled}) => {
   const router =useRouter()
   const active = router.history.location.pathname === link
 
@@ -75,7 +76,9 @@ const BottomNavLink: FunctionComponent<{
             key={text}
             className={cn("flex flex-col items-center justify-center gap-1")}
           >
-            <Icon className={cn("size-5",active && "stroke-primary")}/>
+           {
+            active ? <Icon className='size-6'/> : <IconFilled className='size-6'/>
+           }
             <span className={cn("text-sm",active && "font-bold")}>
               {text}
             </span>
