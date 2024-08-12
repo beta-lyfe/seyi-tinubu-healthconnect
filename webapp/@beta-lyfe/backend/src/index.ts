@@ -1,1 +1,1 @@
-export { app, type App } from "./shared/app"
+export { app, type App } from './shared/app'

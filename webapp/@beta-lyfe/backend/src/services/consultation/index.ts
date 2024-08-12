@@ -1,1 +1,1 @@
-export { Router as ConsultationRouter } from "./router"
+export { Router as ConsultationRouter } from './router'

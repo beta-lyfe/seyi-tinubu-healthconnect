@@ -1,8 +1,10 @@
-import { hc } from "hono/client"
-import type { App } from "@beta-lyfe/backend"
+import { hc } from 'hono/client'
+import type { App } from '@beta-lyfe/backend'
+import api from './api'
 
-const client = hc<App>("/")
+const client = hc<App>('/')
 
 export const backend = {
-  client
+  client,
+  api
 }

@@ -2,23 +2,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@beta-lyfe/webapp/*": [
-        "./src/*"
-      ],
-      "@beta-lyfe/backend": [
-        "../backend/src/index.ts"
-      ],
-      "@beta-lyfe/backend/*": [
-        "../backend/src/*"
-      ]
+      "@beta-lyfe/webapp/*": ["./src/*"],
+      "@beta-lyfe/backend": ["../backend/src/index.ts"],
+      "@beta-lyfe/backend/*": ["../backend/src/*"]
     },
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ES2020",
     "skipLibCheck": true,
     /* Bundler mode */
@@ -33,9 +23,7 @@
     // "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "src"
-  ],
+  "include": ["src"],
   "references": [
     {
       "path": "./tsconfig.node.json"

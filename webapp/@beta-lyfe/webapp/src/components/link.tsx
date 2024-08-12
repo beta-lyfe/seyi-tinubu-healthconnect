@@ -1,7 +1,10 @@
-import { HTMLAttributes, forwardRef } from "react";
-import { useRouter } from "@tanstack/react-router"
+import { HTMLAttributes, forwardRef } from 'react'
+import { useRouter } from '@tanstack/react-router'
 
-export const BackLink = forwardRef<HTMLButtonElement, HTMLAttributes<HTMLButtonElement>>(({ children, onClick, ...props }, ref) => {
+export const BackLink = forwardRef<
+  HTMLButtonElement,
+  HTMLAttributes<HTMLButtonElement>
+>(({ children, onClick, ...props }, ref) => {
   const router = useRouter()
 
   return (
@@ -18,4 +21,3 @@ export const BackLink = forwardRef<HTMLButtonElement, HTMLAttributes<HTMLButtonE
     </button>
   )
 })
-

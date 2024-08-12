@@ -1,13 +1,13 @@
 {
-  "name": "@beta-lyfe/backend",
-  "scripts": {
-    "dev": "tsx --watch ./run.ts"
-  },
-  "devDependencies": {
-    "@types/node": "^20.11.17",
-    "tslog": "^4.9.3"
-  },
-  "dependencies": {
-    "@huddle01/server-sdk": "latest"
-  }
+	"name": "@beta-lyfe/backend",
+	"scripts": {
+		"dev": "tsx --watch ./run.ts"
+	},
+	"devDependencies": {
+		"@types/node": "^20.11.17",
+		"tslog": "^4.9.3"
+	},
+	"dependencies": {
+		"@huddle01/server-sdk": "latest"
+	}
 }

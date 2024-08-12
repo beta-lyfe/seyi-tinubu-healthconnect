@@ -1,11 +1,12 @@
-import { createEnv } from "@t3-oss/env-core"
-import { z } from "zod"
+import { createEnv } from '@t3-oss/env-core'
+import { z } from 'zod'
 
 export const env = createEnv({
-  clientPrefix: "VITE_",
+  clientPrefix: 'VITE_',
   client: {
-    VITE_NODE_ENV: z.enum(["production", "development", "test"])
-      .default("development"),
+    VITE_NODE_ENV: z
+      .enum(['production', 'development', 'test'])
+      .default('development')
   },
   server: {},
   runtimeEnv: {

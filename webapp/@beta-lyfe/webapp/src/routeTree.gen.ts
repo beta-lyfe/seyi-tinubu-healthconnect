@@ -11,183 +11,210 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/_index'
-import { Route as DoctorImport } from './routes/_doctor'
-import { Route as LoginIndexImport } from './routes/login/index'
-import { Route as DashboardIndexImport } from './routes/dashboard/index'
-import { Route as IndexIndexImport } from './routes/_index/index'
-import { Route as DashboardWalletIndexImport } from './routes/dashboard/wallet/index'
-import { Route as DashboardScheduleIndexImport } from './routes/dashboard/schedule/index'
-import { Route as DashboardProfileIndexImport } from './routes/dashboard/profile/index'
-import { Route as DashboardDoctorsIndexImport } from './routes/dashboard/doctors/index'
-import { Route as DoctorDoctorIndexImport } from './routes/_doctor/doctor/index'
-import { Route as DashboardChatsDoctorIdIndexImport } from './routes/dashboard/chats/$doctorId/index'
-import { Route as DoctorDoctorPatientsIndexImport } from './routes/_doctor/doctor/patients/index'
-import { Route as DashboardDoctorsProfileDoctorIdIndexImport } from './routes/dashboard/doctors/profile/$doctorId/index'
+import { Route as PagesImport } from './routes/_pages'
+import { Route as AppImport } from './routes/_app'
+import { Route as PagesPagesImport } from './routes/_pages/_pages'
+import { Route as AppDoctorImport } from './routes/_app/_doctor'
+import { Route as PagesPagesIndexImport } from './routes/_pages/_pages/index'
+import { Route as AppLoginIndexImport } from './routes/_app/login/index'
+import { Route as AppDashboardIndexImport } from './routes/_app/dashboard/index'
+import { Route as AppDashboardWalletIndexImport } from './routes/_app/dashboard/wallet/index'
+import { Route as AppDashboardScheduleIndexImport } from './routes/_app/dashboard/schedule/index'
+import { Route as AppDashboardProfileIndexImport } from './routes/_app/dashboard/profile/index'
+import { Route as AppDashboardDoctorsIndexImport } from './routes/_app/dashboard/doctors/index'
+import { Route as AppDoctorDoctorIndexImport } from './routes/_app/_doctor/doctor/index'
+import { Route as AppDashboardChatsDoctorIdIndexImport } from './routes/_app/dashboard/chats/$doctorId/index'
+import { Route as AppDoctorDoctorPatientsIndexImport } from './routes/_app/_doctor/doctor/patients/index'
+import { Route as AppDashboardDoctorsProfileDoctorIdIndexImport } from './routes/_app/dashboard/doctors/profile/$doctorId/index'
 
 // Create/Update Routes
 
-const IndexRoute = IndexImport.update({
-  id: '/_index',
+const PagesRoute = PagesImport.update({
+  id: '/_pages',
   getParentRoute: () => rootRoute,
 } as any)
 
-const DoctorRoute = DoctorImport.update({
+const AppRoute = AppImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PagesPagesRoute = PagesPagesImport.update({
+  id: '/_pages',
+  getParentRoute: () => PagesRoute,
+} as any)
+
+const AppDoctorRoute = AppDoctorImport.update({
   id: '/_doctor',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AppRoute,
 } as any)
 
-const LoginIndexRoute = LoginIndexImport.update({
-  path: '/login/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const DashboardIndexRoute = DashboardIndexImport.update({
-  path: '/dashboard/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const IndexIndexRoute = IndexIndexImport.update({
+const PagesPagesIndexRoute = PagesPagesIndexImport.update({
   path: '/',
-  getParentRoute: () => IndexRoute,
+  getParentRoute: () => PagesPagesRoute,
 } as any)
 
-const DashboardWalletIndexRoute = DashboardWalletIndexImport.update({
+const AppLoginIndexRoute = AppLoginIndexImport.update({
+  path: '/login/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppDashboardIndexRoute = AppDashboardIndexImport.update({
+  path: '/dashboard/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppDashboardWalletIndexRoute = AppDashboardWalletIndexImport.update({
   path: '/dashboard/wallet/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AppRoute,
 } as any)
 
-const DashboardScheduleIndexRoute = DashboardScheduleIndexImport.update({
+const AppDashboardScheduleIndexRoute = AppDashboardScheduleIndexImport.update({
   path: '/dashboard/schedule/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AppRoute,
 } as any)
 
-const DashboardProfileIndexRoute = DashboardProfileIndexImport.update({
+const AppDashboardProfileIndexRoute = AppDashboardProfileIndexImport.update({
   path: '/dashboard/profile/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AppRoute,
 } as any)
 
-const DashboardDoctorsIndexRoute = DashboardDoctorsIndexImport.update({
+const AppDashboardDoctorsIndexRoute = AppDashboardDoctorsIndexImport.update({
   path: '/dashboard/doctors/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AppRoute,
 } as any)
 
-const DoctorDoctorIndexRoute = DoctorDoctorIndexImport.update({
+const AppDoctorDoctorIndexRoute = AppDoctorDoctorIndexImport.update({
   path: '/doctor/',
-  getParentRoute: () => DoctorRoute,
+  getParentRoute: () => AppDoctorRoute,
 } as any)
 
-const DashboardChatsDoctorIdIndexRoute =
-  DashboardChatsDoctorIdIndexImport.update({
+const AppDashboardChatsDoctorIdIndexRoute =
+  AppDashboardChatsDoctorIdIndexImport.update({
     path: '/dashboard/chats/$doctorId/',
-    getParentRoute: () => rootRoute,
+    getParentRoute: () => AppRoute,
   } as any)
 
-const DoctorDoctorPatientsIndexRoute = DoctorDoctorPatientsIndexImport.update({
-  path: '/doctor/patients/',
-  getParentRoute: () => DoctorRoute,
-} as any)
+const AppDoctorDoctorPatientsIndexRoute =
+  AppDoctorDoctorPatientsIndexImport.update({
+    path: '/doctor/patients/',
+    getParentRoute: () => AppDoctorRoute,
+  } as any)
 
-const DashboardDoctorsProfileDoctorIdIndexRoute =
-  DashboardDoctorsProfileDoctorIdIndexImport.update({
+const AppDashboardDoctorsProfileDoctorIdIndexRoute =
+  AppDashboardDoctorsProfileDoctorIdIndexImport.update({
     path: '/dashboard/doctors/profile/$doctorId/',
-    getParentRoute: () => rootRoute,
+    getParentRoute: () => AppRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_doctor': {
-      id: '/_doctor'
+    '/_app': {
+      id: '/_app'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof DoctorImport
+      preLoaderRoute: typeof AppImport
       parentRoute: typeof rootRoute
     }
-    '/_index': {
-      id: '/_index'
+    '/_pages': {
+      id: '/_pages'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof IndexImport
+      preLoaderRoute: typeof PagesImport
       parentRoute: typeof rootRoute
     }
-    '/_index/': {
-      id: '/_index/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexIndexImport
-      parentRoute: typeof IndexImport
+    '/_app/_doctor': {
+      id: '/_app/_doctor'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppDoctorImport
+      parentRoute: typeof AppImport
     }
-    '/dashboard/': {
-      id: '/dashboard/'
+    '/_pages/_pages': {
+      id: '/_pages/_pages'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PagesPagesImport
+      parentRoute: typeof PagesImport
+    }
+    '/_app/dashboard/': {
+      id: '/_app/dashboard/'
       path: '/dashboard'
       fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AppDashboardIndexImport
+      parentRoute: typeof AppImport
     }
-    '/login/': {
-      id: '/login/'
+    '/_app/login/': {
+      id: '/_app/login/'
       path: '/login'
       fullPath: '/login'
-      preLoaderRoute: typeof LoginIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AppLoginIndexImport
+      parentRoute: typeof AppImport
     }
-    '/_doctor/doctor/': {
-      id: '/_doctor/doctor/'
+    '/_pages/_pages/': {
+      id: '/_pages/_pages/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof PagesPagesIndexImport
+      parentRoute: typeof PagesPagesImport
+    }
+    '/_app/_doctor/doctor/': {
+      id: '/_app/_doctor/doctor/'
       path: '/doctor'
       fullPath: '/doctor'
-      preLoaderRoute: typeof DoctorDoctorIndexImport
-      parentRoute: typeof DoctorImport
+      preLoaderRoute: typeof AppDoctorDoctorIndexImport
+      parentRoute: typeof AppDoctorImport
     }
-    '/dashboard/doctors/': {
-      id: '/dashboard/doctors/'
+    '/_app/dashboard/doctors/': {
+      id: '/_app/dashboard/doctors/'
       path: '/dashboard/doctors'
       fullPath: '/dashboard/doctors'
-      preLoaderRoute: typeof DashboardDoctorsIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AppDashboardDoctorsIndexImport
+      parentRoute: typeof AppImport
     }
-    '/dashboard/profile/': {
-      id: '/dashboard/profile/'
+    '/_app/dashboard/profile/': {
+      id: '/_app/dashboard/profile/'
       path: '/dashboard/profile'
       fullPath: '/dashboard/profile'
-      preLoaderRoute: typeof DashboardProfileIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AppDashboardProfileIndexImport
+      parentRoute: typeof AppImport
     }
-    '/dashboard/schedule/': {
-      id: '/dashboard/schedule/'
+    '/_app/dashboard/schedule/': {
+      id: '/_app/dashboard/schedule/'
       path: '/dashboard/schedule'
       fullPath: '/dashboard/schedule'
-      preLoaderRoute: typeof DashboardScheduleIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AppDashboardScheduleIndexImport
+      parentRoute: typeof AppImport
     }
-    '/dashboard/wallet/': {
-      id: '/dashboard/wallet/'
+    '/_app/dashboard/wallet/': {
+      id: '/_app/dashboard/wallet/'
       path: '/dashboard/wallet'
       fullPath: '/dashboard/wallet'
-      preLoaderRoute: typeof DashboardWalletIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AppDashboardWalletIndexImport
+      parentRoute: typeof AppImport
     }
-    '/_doctor/doctor/patients/': {
-      id: '/_doctor/doctor/patients/'
+    '/_app/_doctor/doctor/patients/': {
+      id: '/_app/_doctor/doctor/patients/'
       path: '/doctor/patients'
       fullPath: '/doctor/patients'
-      preLoaderRoute: typeof DoctorDoctorPatientsIndexImport
-      parentRoute: typeof DoctorImport
+      preLoaderRoute: typeof AppDoctorDoctorPatientsIndexImport
+      parentRoute: typeof AppDoctorImport
     }
-    '/dashboard/chats/$doctorId/': {
-      id: '/dashboard/chats/$doctorId/'
+    '/_app/dashboard/chats/$doctorId/': {
+      id: '/_app/dashboard/chats/$doctorId/'
       path: '/dashboard/chats/$doctorId'
       fullPath: '/dashboard/chats/$doctorId'
-      preLoaderRoute: typeof DashboardChatsDoctorIdIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AppDashboardChatsDoctorIdIndexImport
+      parentRoute: typeof AppImport
     }
-    '/dashboard/doctors/profile/$doctorId/': {
-      id: '/dashboard/doctors/profile/$doctorId/'
+    '/_app/dashboard/doctors/profile/$doctorId/': {
+      id: '/_app/dashboard/doctors/profile/$doctorId/'
       path: '/dashboard/doctors/profile/$doctorId'
       fullPath: '/dashboard/doctors/profile/$doctorId'
-      preLoaderRoute: typeof DashboardDoctorsProfileDoctorIdIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AppDashboardDoctorsProfileDoctorIdIndexImport
+      parentRoute: typeof AppImport
     }
   }
 }
@@ -195,19 +222,23 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  DoctorRoute: DoctorRoute.addChildren({
-    DoctorDoctorIndexRoute,
-    DoctorDoctorPatientsIndexRoute,
+  AppRoute: AppRoute.addChildren({
+    AppDoctorRoute: AppDoctorRoute.addChildren({
+      AppDoctorDoctorIndexRoute,
+      AppDoctorDoctorPatientsIndexRoute,
+    }),
+    AppDashboardIndexRoute,
+    AppLoginIndexRoute,
+    AppDashboardDoctorsIndexRoute,
+    AppDashboardProfileIndexRoute,
+    AppDashboardScheduleIndexRoute,
+    AppDashboardWalletIndexRoute,
+    AppDashboardChatsDoctorIdIndexRoute,
+    AppDashboardDoctorsProfileDoctorIdIndexRoute,
   }),
-  IndexRoute: IndexRoute.addChildren({ IndexIndexRoute }),
-  DashboardIndexRoute,
-  LoginIndexRoute,
-  DashboardDoctorsIndexRoute,
-  DashboardProfileIndexRoute,
-  DashboardScheduleIndexRoute,
-  DashboardWalletIndexRoute,
-  DashboardChatsDoctorIdIndexRoute,
-  DashboardDoctorsProfileDoctorIdIndexRoute,
+  PagesRoute: PagesRoute.addChildren({
+    PagesPagesRoute: PagesPagesRoute.addChildren({ PagesPagesIndexRoute }),
+  }),
 })
 
 /* prettier-ignore-end */
@@ -218,66 +249,88 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/_doctor",
-        "/_index",
-        "/dashboard/",
-        "/login/",
-        "/dashboard/doctors/",
-        "/dashboard/profile/",
-        "/dashboard/schedule/",
-        "/dashboard/wallet/",
-        "/dashboard/chats/$doctorId/",
-        "/dashboard/doctors/profile/$doctorId/"
+        "/_app",
+        "/_pages"
       ]
     },
-    "/_doctor": {
-      "filePath": "_doctor.tsx",
+    "/_app": {
+      "filePath": "_app.tsx",
       "children": [
-        "/_doctor/doctor/",
-        "/_doctor/doctor/patients/"
+        "/_app/_doctor",
+        "/_app/dashboard/",
+        "/_app/login/",
+        "/_app/dashboard/doctors/",
+        "/_app/dashboard/profile/",
+        "/_app/dashboard/schedule/",
+        "/_app/dashboard/wallet/",
+        "/_app/dashboard/chats/$doctorId/",
+        "/_app/dashboard/doctors/profile/$doctorId/"
       ]
     },
-    "/_index": {
-      "filePath": "_index.tsx",
+    "/_pages": {
+      "filePath": "_pages.tsx",
       "children": [
-        "/_index/"
+        "/_pages/_pages"
       ]
     },
-    "/_index/": {
-      "filePath": "_index/index.tsx",
-      "parent": "/_index"
+    "/_app/_doctor": {
+      "filePath": "_app/_doctor.tsx",
+      "parent": "/_app",
+      "children": [
+        "/_app/_doctor/doctor/",
+        "/_app/_doctor/doctor/patients/"
+      ]
     },
-    "/dashboard/": {
-      "filePath": "dashboard/index.tsx"
+    "/_pages/_pages": {
+      "filePath": "_pages/_pages.tsx",
+      "parent": "/_pages",
+      "children": [
+        "/_pages/_pages/"
+      ]
     },
-    "/login/": {
-      "filePath": "login/index.tsx"
+    "/_app/dashboard/": {
+      "filePath": "_app/dashboard/index.tsx",
+      "parent": "/_app"
     },
-    "/_doctor/doctor/": {
-      "filePath": "_doctor/doctor/index.tsx",
-      "parent": "/_doctor"
+    "/_app/login/": {
+      "filePath": "_app/login/index.tsx",
+      "parent": "/_app"
     },
-    "/dashboard/doctors/": {
-      "filePath": "dashboard/doctors/index.tsx"
+    "/_pages/_pages/": {
+      "filePath": "_pages/_pages/index.tsx",
+      "parent": "/_pages/_pages"
     },
-    "/dashboard/profile/": {
-      "filePath": "dashboard/profile/index.tsx"
+    "/_app/_doctor/doctor/": {
+      "filePath": "_app/_doctor/doctor/index.tsx",
+      "parent": "/_app/_doctor"
     },
-    "/dashboard/schedule/": {
-      "filePath": "dashboard/schedule/index.tsx"
+    "/_app/dashboard/doctors/": {
+      "filePath": "_app/dashboard/doctors/index.tsx",
+      "parent": "/_app"
     },
-    "/dashboard/wallet/": {
-      "filePath": "dashboard/wallet/index.tsx"
+    "/_app/dashboard/profile/": {
+      "filePath": "_app/dashboard/profile/index.tsx",
+      "parent": "/_app"
     },
-    "/_doctor/doctor/patients/": {
-      "filePath": "_doctor/doctor/patients/index.tsx",
-      "parent": "/_doctor"
+    "/_app/dashboard/schedule/": {
+      "filePath": "_app/dashboard/schedule/index.tsx",
+      "parent": "/_app"
     },
-    "/dashboard/chats/$doctorId/": {
-      "filePath": "dashboard/chats/$doctorId/index.tsx"
+    "/_app/dashboard/wallet/": {
+      "filePath": "_app/dashboard/wallet/index.tsx",
+      "parent": "/_app"
     },
-    "/dashboard/doctors/profile/$doctorId/": {
-      "filePath": "dashboard/doctors/profile/$doctorId/index.tsx"
+    "/_app/_doctor/doctor/patients/": {
+      "filePath": "_app/_doctor/doctor/patients/index.tsx",
+      "parent": "/_app/_doctor"
+    },
+    "/_app/dashboard/chats/$doctorId/": {
+      "filePath": "_app/dashboard/chats/$doctorId/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/dashboard/doctors/profile/$doctorId/": {
+      "filePath": "_app/dashboard/doctors/profile/$doctorId/index.tsx",
+      "parent": "/_app"
     }
   }
 }
