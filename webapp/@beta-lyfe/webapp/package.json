@@ -57,6 +57,7 @@
     "sonner": "^1.4.0",
     "swiper": "^11.1.0",
     "tailwind-merge": "^2.2.1",
+    "tailwind-scrollbar": "^3.1.0",
     "tailwindcss-animate": "^1.0.7",
     "true-myth": "^7.1.0",
     "twin.macro": "^3.4.1",

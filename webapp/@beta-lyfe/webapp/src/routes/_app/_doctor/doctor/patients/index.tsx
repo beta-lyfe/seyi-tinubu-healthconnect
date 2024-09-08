@@ -25,7 +25,6 @@ import {
   User2,
   UserCircle
 } from 'lucide-react'
-import { ReactNode } from 'react'
 
 export const Route = createFileRoute('/_app/_doctor/doctor/patients/')({
   component: PatientsProfile

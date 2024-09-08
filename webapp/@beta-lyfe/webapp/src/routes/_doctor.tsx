@@ -1,6 +1,6 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet, Router, useLocation, useMatch, useRouter } from '@tanstack/react-router'
 import { Fragment, useState } from 'react'
-import { Dialog, Menu, Transition, TransitionChild } from '@headlessui/react'
+import { Dialog, Menu, Transition ,TransitionChild} from '@headlessui/react'
 import {
   BellIcon,
   CalendarIcon,
@@ -22,12 +22,12 @@ import {
 } from 'lucide-react'
 
 import BetalyfeLogo from '@beta-lyfe/webapp/assets/images/betalyfeLogo3.png'
-import { cn } from '@beta-lyfe/webapp/components/shad/lib/utils'
-import { useLocation } from '@tanstack/react-router'
+import { cn } from "@beta-lyfe/webapp/components/shad/lib/utils"
 
-export const Route = createFileRoute('/_app/_doctor')({
+export const Route = createFileRoute('/_doctor')({
   component: DoctorDashboardLayout
 })
+
 
 /*
   This example requires Tailwind CSS v2.0+ 
@@ -47,33 +47,28 @@ export const Route = createFileRoute('/_app/_doctor')({
 */
 
 const navigation = [
-  { name: 'Dashboard', href: '/doctor', icon: LayoutDashboard, current: false},
-  { name: 'Appointments', href: '/doctor/appointments', icon: CalendarIcon, current: false },
-  {
-    name: 'Patients',
-    href: '/doctor/patients',
-    icon: HeartPulse,
-    current: false
-  },
-  { name: 'Message', href: '/doctor/message', icon: Mail, current: false },
-  { name: 'Lab', href: '/doctor/lab', icon: BookPlus, current: false },
-  //{ name: 'Notfication', href: '#', icon: BellIcon, current: false },
-  { name: 'Support / Help', href: '/doctor/support', icon: HelpingHand, current: false }
+  { name: 'Dashboard', href: '/doctor/', icon: LayoutDashboard, current: false },
+  { name: 'Appointments', href: '#', icon: CalendarIcon, current: false },
+  { name: 'Patients', href: '/doctor/patients', icon: HeartPulse, current: false },
+  { name: 'Message', href: '#', icon: Mail, current: false },
+  { name: 'Lab', href: '#', icon: BookPlus, current: false },
+  { name: 'Notfication', href: '#', icon: BellIcon, current: false },
+  { name: 'Settings', href: '#', icon: Settings, current: false },
+  { name: 'Support / Help', href: '#', icon: HelpingHand, current: false },
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
   { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' }
+  { name: 'Sign out', href: '#' },
 ]
 
-function classNames(...classes: any[]) {
+function classNames(...classes:any[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function DoctorDashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const path=useLocation().pathname
-  console.log(BetalyfeLogo)
+  console.log(sidebarOpen)
   return (
     <>
       {/*
@@ -85,23 +80,21 @@ export default function DoctorDashboardLayout() {
         ```
       */}
       <div>
-        <Transition show={sidebarOpen} as={'div'}>
-          <Dialog
-            as="div"
-            className="fixed inset-0 flex bg-black/75 z-40 md:hidden"
-            onClose={setSidebarOpen}
-          >
+        <Transition show={sidebarOpen} as={"div"}>
+          <Dialog as="div" className="fixed inset-0 flex bg-black/75 z-40 md:hidden" onClose={setSidebarOpen}>
             <TransitionChild
-              as={'div'}
+              as={"div"}
               enter="transition-opacity ease-linear duration-300"
               enterFrom="opacity-0"
               enterTo="opacity-100"
               leave="transition-opacity ease-linear duration-300"
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
-            ></TransitionChild>
+            >
+              
+            </TransitionChild>
             <TransitionChild
-              as={'div'}
+              as={"div"}
               className="w-full"
               enter="transition ease-in-out duration-300 transform"
               enterFrom="-translate-x-full"
@@ -112,7 +105,7 @@ export default function DoctorDashboardLayout() {
             >
               <div className="relative flex-1 flex flex-col max-w-xs w-full h-full pt-5 pb-4 bg-primary">
                 <TransitionChild
-                  as={'div'}
+                  as={"div"}
                   enter="ease-in-out duration-300"
                   enterFrom="opacity-0"
                   enterTo="opacity-100"
@@ -127,10 +120,7 @@ export default function DoctorDashboardLayout() {
                       onClick={() => setSidebarOpen(false)}
                     >
                       <span className="sr-only">Close sidebar</span>
-                      <XIcon
-                        className="h-6 w-6 text-white"
-                        aria-hidden="true"
-                      />
+                      <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
                     </button>
                   </div>
                 </TransitionChild>
@@ -138,6 +128,7 @@ export default function DoctorDashboardLayout() {
                   <img
                     className="h-8 w-auto"
                     src={BetalyfeLogo}
+                  
                     alt="Workflow"
                   />
                 </div>
@@ -148,20 +139,12 @@ export default function DoctorDashboardLayout() {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          path===item.href
-                            ? 'bg-white text-primary hover:text-primary'
-                            : 'text-indigo-100 hover:bg-white hover:text-primary',
+                          false ? 'bg-white text-primary hover:text-primary' : 'text-indigo-100 hover:bg-white hover:text-primary',
                           'group flex items-center px-2 py-2 text-base font-medium rounded-md hover:text-primary'
                         )}
                       >
-                        <item.icon
-                          className={cn(
-                            'mr-4 flex-shrink-0 h-6 w-6 text-white group-hover:text-primary',
-                            path===item.href &&
-                              'text-primary group-hover:text-primary'
-                          )}
-                          aria-hidden="true"
-                        />
+                        <item.icon className={cn("mr-4 flex-shrink-0 h-6 w-6 text-white group-hover:text-primary", item.current && "text-primary group-hover:text-primary")}
+                         aria-hidden="true" />
                         {item.name}
                       </a>
                     ))}
@@ -180,7 +163,11 @@ export default function DoctorDashboardLayout() {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex flex-col flex-grow pt-5 bg-primary overflow-y-auto">
             <div className="flex items-center flex-shrink-0 px-4">
-              <img className="h-8 w-auto" src={BetalyfeLogo} alt="Workflow" />
+              <img
+                className="h-8 w-auto"
+                src={BetalyfeLogo}
+                alt="Workflow"
+              />
             </div>
             <div className="mt-5 flex-1 flex flex-col">
               <nav className="flex-1 px-2 pb-4 space-y-1">
@@ -189,18 +176,11 @@ export default function DoctorDashboardLayout() {
                     key={item.name}
                     href={item.href}
                     className={classNames(
-                      path===item.href
-                        ? 'text-primary bg-white'
-                        : 'text-indigo-100',
+                      false ? 'bg-primary text-white' : 'text-indigo-100',
                       'group flex items-center px-2 py-2 text-sm font-medium rounded-md hover:text-primary hover:bg-white'
                     )}
                   >
-                    <item.icon
-                      className={classNames( path===item.href
-                        ? 'stroke-primary'
-                        : 'text-indigo-100',"mr-3 flex-shrink-0 h-6 w-6 text-white group-hover:text-primary")}
-                      aria-hidden="true"
-                    />
+                    <item.icon className="mr-3 flex-shrink-0 h-6 w-6 text-white group-hover:text-primary" aria-hidden="true" />
                     {item.name}
                   </a>
                 ))}
@@ -260,7 +240,7 @@ export default function DoctorDashboardLayout() {
                     </Menu.Button>
                   </div>
                   <Transition
-                    as={'div'}
+                    as={"div"}
                     enter="transition ease-out duration-100"
                     enterFrom="transform opacity-0 scale-95"
                     enterTo="transform opacity-100 scale-100"

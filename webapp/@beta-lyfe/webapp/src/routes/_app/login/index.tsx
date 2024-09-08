@@ -2,6 +2,8 @@ import { Typography } from '@beta-lyfe/webapp/components/typography'
 import { Button } from '@beta-lyfe/webapp/components/shad/ui/button'
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { useContext, createContext, useState } from 'react'
+import { EyeIcon } from 'lucide-react'
+import { TextInput } from 'flowbite-react'
 
 export const Route = createFileRoute('/_app/login/')({
   component: LoginPage
@@ -86,7 +88,7 @@ const Form = () => {
     >
       <FormInput label="Email address" inputType="email" />
       <div>
-        <FormInput label="Password" inputType="password" />
+        <FormInput label="Password" inputType="password" pw/>
         <Typography.Info
           className="text-right text-black opacity-40 
        py-2
@@ -100,20 +102,22 @@ const Form = () => {
   )
 }
 
-function FormInput({ label, inputType }: { label: string; inputType: string }) {
+function FormInput({ label, inputType ,pw}: { label: string; inputType: string,pw?:boolean}) {
   const [labelOpacity, setLabelOpacity] = useState(true)
+  const [showText,setShowText]=useState(true)
   return (
     <fieldset className="flex flex-1 flex-col gap-2 w-[100%]">
       <label className={'text-sm '.concat(!labelOpacity ? 'opacity-40' : '')}>
         {label}
       </label>
-      <input
+      <input 
         onFocus={() => setLabelOpacity(false)}
         onBlur={(e) => setLabelOpacity(!(e.target.value.length >= 1))}
         onChange={(e) => setLabelOpacity(!(e.target.value.length >= 1))}
         className="outline-0  border-primary bg-transparent border-0 border-b-2 focus:ring-0 focus:border-primary"
         type={inputType}
       />
+      
     </fieldset>
   )
 }

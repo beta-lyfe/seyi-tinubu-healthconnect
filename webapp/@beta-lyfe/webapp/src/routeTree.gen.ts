@@ -12,20 +12,32 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as PagesImport } from './routes/_pages'
+import { Route as DoctorImport } from './routes/_doctor'
 import { Route as AppImport } from './routes/_app'
+import { Route as LoginIndexImport } from './routes/login/index'
+import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as PagesPagesImport } from './routes/_pages/_pages'
 import { Route as AppDoctorImport } from './routes/_app/_doctor'
+import { Route as DashboardScheduleIndexImport } from './routes/dashboard/schedule/index'
 import { Route as PagesPagesIndexImport } from './routes/_pages/_pages/index'
+import { Route as DoctorDoctorIndexImport } from './routes/_doctor/doctor/index'
 import { Route as AppLoginIndexImport } from './routes/_app/login/index'
 import { Route as AppDashboardIndexImport } from './routes/_app/dashboard/index'
+import { Route as DoctorDoctorPatientsIndexImport } from './routes/_doctor/doctor/patients/index'
 import { Route as AppDashboardWalletIndexImport } from './routes/_app/dashboard/wallet/index'
 import { Route as AppDashboardScheduleIndexImport } from './routes/_app/dashboard/schedule/index'
 import { Route as AppDashboardProfileIndexImport } from './routes/_app/dashboard/profile/index'
 import { Route as AppDashboardDoctorsIndexImport } from './routes/_app/dashboard/doctors/index'
 import { Route as AppDoctorDoctorIndexImport } from './routes/_app/_doctor/doctor/index'
+import { Route as DashboardDoctorsProfileDoctorIdIndexImport } from './routes/dashboard/doctors/profile/$doctorId/index'
 import { Route as AppDashboardChatsDoctorIdIndexImport } from './routes/_app/dashboard/chats/$doctorId/index'
+import { Route as AppDoctorDoctorSupportIndexImport } from './routes/_app/_doctor/doctor/support/index'
 import { Route as AppDoctorDoctorPatientsIndexImport } from './routes/_app/_doctor/doctor/patients/index'
+import { Route as AppDoctorDoctorMessageIndexImport } from './routes/_app/_doctor/doctor/message/index'
+import { Route as AppDoctorDoctorLabIndexImport } from './routes/_app/_doctor/doctor/lab/index'
+import { Route as AppDoctorDoctorAppointmentsIndexImport } from './routes/_app/_doctor/doctor/appointments/index'
 import { Route as AppDashboardDoctorsProfileDoctorIdIndexImport } from './routes/_app/dashboard/doctors/profile/$doctorId/index'
+import { Route as AppDoctorDoctorMessagePatientIdIndexImport } from './routes/_app/_doctor/doctor/message/$patientId/index'
 
 // Create/Update Routes
 
@@ -34,8 +46,23 @@ const PagesRoute = PagesImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const DoctorRoute = DoctorImport.update({
+  id: '/_doctor',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AppRoute = AppImport.update({
   id: '/_app',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoginIndexRoute = LoginIndexImport.update({
+  path: '/login/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DashboardIndexRoute = DashboardIndexImport.update({
+  path: '/dashboard/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -49,9 +76,19 @@ const AppDoctorRoute = AppDoctorImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
+const DashboardScheduleIndexRoute = DashboardScheduleIndexImport.update({
+  path: '/dashboard/schedule/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const PagesPagesIndexRoute = PagesPagesIndexImport.update({
   path: '/',
   getParentRoute: () => PagesPagesRoute,
+} as any)
+
+const DoctorDoctorIndexRoute = DoctorDoctorIndexImport.update({
+  path: '/doctor/',
+  getParentRoute: () => DoctorRoute,
 } as any)
 
 const AppLoginIndexRoute = AppLoginIndexImport.update({
@@ -62,6 +99,11 @@ const AppLoginIndexRoute = AppLoginIndexImport.update({
 const AppDashboardIndexRoute = AppDashboardIndexImport.update({
   path: '/dashboard/',
   getParentRoute: () => AppRoute,
+} as any)
+
+const DoctorDoctorPatientsIndexRoute = DoctorDoctorPatientsIndexImport.update({
+  path: '/doctor/patients/',
+  getParentRoute: () => DoctorRoute,
 } as any)
 
 const AppDashboardWalletIndexRoute = AppDashboardWalletIndexImport.update({
@@ -89,10 +131,22 @@ const AppDoctorDoctorIndexRoute = AppDoctorDoctorIndexImport.update({
   getParentRoute: () => AppDoctorRoute,
 } as any)
 
+const DashboardDoctorsProfileDoctorIdIndexRoute =
+  DashboardDoctorsProfileDoctorIdIndexImport.update({
+    path: '/dashboard/doctors/profile/$doctorId/',
+    getParentRoute: () => rootRoute,
+  } as any)
+
 const AppDashboardChatsDoctorIdIndexRoute =
   AppDashboardChatsDoctorIdIndexImport.update({
     path: '/dashboard/chats/$doctorId/',
     getParentRoute: () => AppRoute,
+  } as any)
+
+const AppDoctorDoctorSupportIndexRoute =
+  AppDoctorDoctorSupportIndexImport.update({
+    path: '/doctor/support/',
+    getParentRoute: () => AppDoctorRoute,
   } as any)
 
 const AppDoctorDoctorPatientsIndexRoute =
@@ -101,10 +155,33 @@ const AppDoctorDoctorPatientsIndexRoute =
     getParentRoute: () => AppDoctorRoute,
   } as any)
 
+const AppDoctorDoctorMessageIndexRoute =
+  AppDoctorDoctorMessageIndexImport.update({
+    path: '/doctor/message/',
+    getParentRoute: () => AppDoctorRoute,
+  } as any)
+
+const AppDoctorDoctorLabIndexRoute = AppDoctorDoctorLabIndexImport.update({
+  path: '/doctor/lab/',
+  getParentRoute: () => AppDoctorRoute,
+} as any)
+
+const AppDoctorDoctorAppointmentsIndexRoute =
+  AppDoctorDoctorAppointmentsIndexImport.update({
+    path: '/doctor/appointments/',
+    getParentRoute: () => AppDoctorRoute,
+  } as any)
+
 const AppDashboardDoctorsProfileDoctorIdIndexRoute =
   AppDashboardDoctorsProfileDoctorIdIndexImport.update({
     path: '/dashboard/doctors/profile/$doctorId/',
     getParentRoute: () => AppRoute,
+  } as any)
+
+const AppDoctorDoctorMessagePatientIdIndexRoute =
+  AppDoctorDoctorMessagePatientIdIndexImport.update({
+    path: '/doctor/message/$patientId/',
+    getParentRoute: () => AppDoctorRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -116,6 +193,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AppImport
+      parentRoute: typeof rootRoute
+    }
+    '/_doctor': {
+      id: '/_doctor'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof DoctorImport
       parentRoute: typeof rootRoute
     }
     '/_pages': {
@@ -139,6 +223,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PagesPagesImport
       parentRoute: typeof PagesImport
     }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/_app/dashboard/': {
       id: '/_app/dashboard/'
       path: '/dashboard'
@@ -153,12 +251,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppLoginIndexImport
       parentRoute: typeof AppImport
     }
+    '/_doctor/doctor/': {
+      id: '/_doctor/doctor/'
+      path: '/doctor'
+      fullPath: '/doctor'
+      preLoaderRoute: typeof DoctorDoctorIndexImport
+      parentRoute: typeof DoctorImport
+    }
     '/_pages/_pages/': {
       id: '/_pages/_pages/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof PagesPagesIndexImport
       parentRoute: typeof PagesPagesImport
+    }
+    '/dashboard/schedule/': {
+      id: '/dashboard/schedule/'
+      path: '/dashboard/schedule'
+      fullPath: '/dashboard/schedule'
+      preLoaderRoute: typeof DashboardScheduleIndexImport
+      parentRoute: typeof rootRoute
     }
     '/_app/_doctor/doctor/': {
       id: '/_app/_doctor/doctor/'
@@ -195,11 +307,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardWalletIndexImport
       parentRoute: typeof AppImport
     }
+    '/_doctor/doctor/patients/': {
+      id: '/_doctor/doctor/patients/'
+      path: '/doctor/patients'
+      fullPath: '/doctor/patients'
+      preLoaderRoute: typeof DoctorDoctorPatientsIndexImport
+      parentRoute: typeof DoctorImport
+    }
+    '/_app/_doctor/doctor/appointments/': {
+      id: '/_app/_doctor/doctor/appointments/'
+      path: '/doctor/appointments'
+      fullPath: '/doctor/appointments'
+      preLoaderRoute: typeof AppDoctorDoctorAppointmentsIndexImport
+      parentRoute: typeof AppDoctorImport
+    }
+    '/_app/_doctor/doctor/lab/': {
+      id: '/_app/_doctor/doctor/lab/'
+      path: '/doctor/lab'
+      fullPath: '/doctor/lab'
+      preLoaderRoute: typeof AppDoctorDoctorLabIndexImport
+      parentRoute: typeof AppDoctorImport
+    }
+    '/_app/_doctor/doctor/message/': {
+      id: '/_app/_doctor/doctor/message/'
+      path: '/doctor/message'
+      fullPath: '/doctor/message'
+      preLoaderRoute: typeof AppDoctorDoctorMessageIndexImport
+      parentRoute: typeof AppDoctorImport
+    }
     '/_app/_doctor/doctor/patients/': {
       id: '/_app/_doctor/doctor/patients/'
       path: '/doctor/patients'
       fullPath: '/doctor/patients'
       preLoaderRoute: typeof AppDoctorDoctorPatientsIndexImport
+      parentRoute: typeof AppDoctorImport
+    }
+    '/_app/_doctor/doctor/support/': {
+      id: '/_app/_doctor/doctor/support/'
+      path: '/doctor/support'
+      fullPath: '/doctor/support'
+      preLoaderRoute: typeof AppDoctorDoctorSupportIndexImport
       parentRoute: typeof AppDoctorImport
     }
     '/_app/dashboard/chats/$doctorId/': {
@@ -208,6 +355,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/chats/$doctorId'
       preLoaderRoute: typeof AppDashboardChatsDoctorIdIndexImport
       parentRoute: typeof AppImport
+    }
+    '/dashboard/doctors/profile/$doctorId/': {
+      id: '/dashboard/doctors/profile/$doctorId/'
+      path: '/dashboard/doctors/profile/$doctorId'
+      fullPath: '/dashboard/doctors/profile/$doctorId'
+      preLoaderRoute: typeof DashboardDoctorsProfileDoctorIdIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/_app/_doctor/doctor/message/$patientId/': {
+      id: '/_app/_doctor/doctor/message/$patientId/'
+      path: '/doctor/message/$patientId'
+      fullPath: '/doctor/message/$patientId'
+      preLoaderRoute: typeof AppDoctorDoctorMessagePatientIdIndexImport
+      parentRoute: typeof AppDoctorImport
     }
     '/_app/dashboard/doctors/profile/$doctorId/': {
       id: '/_app/dashboard/doctors/profile/$doctorId/'
@@ -225,7 +386,12 @@ export const routeTree = rootRoute.addChildren({
   AppRoute: AppRoute.addChildren({
     AppDoctorRoute: AppDoctorRoute.addChildren({
       AppDoctorDoctorIndexRoute,
+      AppDoctorDoctorAppointmentsIndexRoute,
+      AppDoctorDoctorLabIndexRoute,
+      AppDoctorDoctorMessageIndexRoute,
       AppDoctorDoctorPatientsIndexRoute,
+      AppDoctorDoctorSupportIndexRoute,
+      AppDoctorDoctorMessagePatientIdIndexRoute,
     }),
     AppDashboardIndexRoute,
     AppLoginIndexRoute,
@@ -236,9 +402,17 @@ export const routeTree = rootRoute.addChildren({
     AppDashboardChatsDoctorIdIndexRoute,
     AppDashboardDoctorsProfileDoctorIdIndexRoute,
   }),
+  DoctorRoute: DoctorRoute.addChildren({
+    DoctorDoctorIndexRoute,
+    DoctorDoctorPatientsIndexRoute,
+  }),
   PagesRoute: PagesRoute.addChildren({
     PagesPagesRoute: PagesPagesRoute.addChildren({ PagesPagesIndexRoute }),
   }),
+  DashboardIndexRoute,
+  LoginIndexRoute,
+  DashboardScheduleIndexRoute,
+  DashboardDoctorsProfileDoctorIdIndexRoute,
 })
 
 /* prettier-ignore-end */
@@ -250,7 +424,12 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/_app",
-        "/_pages"
+        "/_doctor",
+        "/_pages",
+        "/dashboard/",
+        "/login/",
+        "/dashboard/schedule/",
+        "/dashboard/doctors/profile/$doctorId/"
       ]
     },
     "/_app": {
@@ -267,6 +446,13 @@ export const routeTree = rootRoute.addChildren({
         "/_app/dashboard/doctors/profile/$doctorId/"
       ]
     },
+    "/_doctor": {
+      "filePath": "_doctor.tsx",
+      "children": [
+        "/_doctor/doctor/",
+        "/_doctor/doctor/patients/"
+      ]
+    },
     "/_pages": {
       "filePath": "_pages.tsx",
       "children": [
@@ -278,7 +464,12 @@ export const routeTree = rootRoute.addChildren({
       "parent": "/_app",
       "children": [
         "/_app/_doctor/doctor/",
-        "/_app/_doctor/doctor/patients/"
+        "/_app/_doctor/doctor/appointments/",
+        "/_app/_doctor/doctor/lab/",
+        "/_app/_doctor/doctor/message/",
+        "/_app/_doctor/doctor/patients/",
+        "/_app/_doctor/doctor/support/",
+        "/_app/_doctor/doctor/message/$patientId/"
       ]
     },
     "/_pages/_pages": {
@@ -288,6 +479,12 @@ export const routeTree = rootRoute.addChildren({
         "/_pages/_pages/"
       ]
     },
+    "/dashboard/": {
+      "filePath": "dashboard/index.tsx"
+    },
+    "/login/": {
+      "filePath": "login/index.tsx"
+    },
     "/_app/dashboard/": {
       "filePath": "_app/dashboard/index.tsx",
       "parent": "/_app"
@@ -296,9 +493,16 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_app/login/index.tsx",
       "parent": "/_app"
     },
+    "/_doctor/doctor/": {
+      "filePath": "_doctor/doctor/index.tsx",
+      "parent": "/_doctor"
+    },
     "/_pages/_pages/": {
       "filePath": "_pages/_pages/index.tsx",
       "parent": "/_pages/_pages"
+    },
+    "/dashboard/schedule/": {
+      "filePath": "dashboard/schedule/index.tsx"
     },
     "/_app/_doctor/doctor/": {
       "filePath": "_app/_doctor/doctor/index.tsx",
@@ -320,13 +524,40 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_app/dashboard/wallet/index.tsx",
       "parent": "/_app"
     },
+    "/_doctor/doctor/patients/": {
+      "filePath": "_doctor/doctor/patients/index.tsx",
+      "parent": "/_doctor"
+    },
+    "/_app/_doctor/doctor/appointments/": {
+      "filePath": "_app/_doctor/doctor/appointments/index.tsx",
+      "parent": "/_app/_doctor"
+    },
+    "/_app/_doctor/doctor/lab/": {
+      "filePath": "_app/_doctor/doctor/lab/index.tsx",
+      "parent": "/_app/_doctor"
+    },
+    "/_app/_doctor/doctor/message/": {
+      "filePath": "_app/_doctor/doctor/message/index.tsx",
+      "parent": "/_app/_doctor"
+    },
     "/_app/_doctor/doctor/patients/": {
       "filePath": "_app/_doctor/doctor/patients/index.tsx",
+      "parent": "/_app/_doctor"
+    },
+    "/_app/_doctor/doctor/support/": {
+      "filePath": "_app/_doctor/doctor/support/index.tsx",
       "parent": "/_app/_doctor"
     },
     "/_app/dashboard/chats/$doctorId/": {
       "filePath": "_app/dashboard/chats/$doctorId/index.tsx",
       "parent": "/_app"
+    },
+    "/dashboard/doctors/profile/$doctorId/": {
+      "filePath": "dashboard/doctors/profile/$doctorId/index.tsx"
+    },
+    "/_app/_doctor/doctor/message/$patientId/": {
+      "filePath": "_app/_doctor/doctor/message/$patientId/index.tsx",
+      "parent": "/_app/_doctor"
     },
     "/_app/dashboard/doctors/profile/$doctorId/": {
       "filePath": "_app/dashboard/doctors/profile/$doctorId/index.tsx",

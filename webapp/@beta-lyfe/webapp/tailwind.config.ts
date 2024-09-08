@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss'
 import flowbite from 'flowbite-react/tailwind'
+import tailwindScroll from 'tailwind-scrollbar'
 
 const config = {
   darkMode: ['class'],
@@ -24,6 +25,12 @@ const config = {
       aspectRatio: {
         card: '9 / 16'
       },
+      scrollbar: {
+        // Define a custom scrollbar size
+        width: {
+          'extra-thin': '4px',
+        },
+      },
       fontFamily: {
         Poppins: 'Poppins, sans-serif',
         Montserrat: 'Montserrat, sans-serif'
@@ -37,6 +44,7 @@ const config = {
         primary: {
           // DEFAULT: "hsl(var(--primary))",
           DEFAULT: '#f382ec',
+         // DEFAULT: 'skyblue',
           foreground: 'hsl(var(--primary-foreground))'
         },
         secondary: {
@@ -85,7 +93,7 @@ const config = {
       }
     }
   },
-  plugins: [require('tailwindcss-animate'), flowbite.plugin()]
+  plugins: [require('tailwindcss-animate'), flowbite.plugin(),tailwindScroll]
 } satisfies Config
 
 export default config
