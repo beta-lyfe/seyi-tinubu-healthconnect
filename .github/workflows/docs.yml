@@ -20,7 +20,7 @@ jobs:
         run: |
           cd docs/docs
           nix build .#packages.x86_64-linux.docs
-          mkdir ../../__site/docs/docs
+          mkdir -p ../../__site/docs/docs
           cp -r result/* ../../__site/docs/docs
       - name: Check built docs
         run: |
