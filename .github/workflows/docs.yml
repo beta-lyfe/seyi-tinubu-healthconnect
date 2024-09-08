@@ -1,0 +1,50 @@
+name: docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout current repo state
+        uses: actions/checkout@v4
+      - name: Create output folder
+        run: mkdir __site
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+      - name: Build docs
+        run: |
+          cd docs/docs
+          nix build .#packages.x86_64-linux.docs
+          mkdir ../../__site/docs/docs
+          cp -r result/* ../../__site/docs/docs
+      - name: Check built docs
+        run: |
+          cd docs/docs
+          nix flake check
+      - name: Upload built assets
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./__site
+          retention-days: 90
+
+  deploy:
+    needs: build
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
