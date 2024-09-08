@@ -22,6 +22,7 @@ cd backend
 ### Relevant Links
 
 - [Live deployment](https://beta-lyfe.koyeb.app)
+- [Figma](https://www.figma.com/design/CSYvzrVo8DeVjXmCjuR7Yp/Beta-Life?node-id=0-1&t=luR6pZfkz1DCyTlN-0)
 
 ### Development
 
