@@ -33,6 +33,9 @@ importers:
 
   '@beta-lyfe/backend':
     dependencies:
+      '@beta-lyfe/backend':
+        specifier: 'file:'
+        version: file:@beta-lyfe/backend
       '@huddle01/server-sdk':
         specifier: latest
         version: 2.3.2
@@ -894,6 +897,9 @@ packages:
     resolution: {integrity: sha512-YTnYtra7W9e6/oAZEHj0bJehPRUlLH9/fbpT5LfB0NhQXyALCRkRs3zH9v07IYhkgpqX6Z78FnuccZr/l4Fs4Q==}
     engines: {node: '>=6.9.0'}
 
+  '@beta-lyfe/backend@file:@beta-lyfe/backend':
+    resolution: {directory: '@beta-lyfe/backend', type: directory}
+
   '@beta-lyfe/webapp@file:@beta-lyfe/webapp':
     resolution: {directory: '@beta-lyfe/webapp', type: directory}
 
@@ -1298,6 +1304,9 @@ packages:
 
   '@huddle01/server-sdk@2.3.2':
     resolution: {integrity: sha512-DsagsYO9HnHs2/7xUd6zDoTUPnfIqlBGu/bm6EwkDrOVmelFRYLpcAseW+NsF4FBKZ+BDH/X+tQKZVoTZZiiYQ==}
+
+  '@huddle01/server-sdk@2.5.2':
+    resolution: {integrity: sha512-+96gJ1/pQhVO8nxlXMEFLgvw7relieteIFD3/CVu+3CzQW+FYI5eBbeVKdChKoNwLXiG7f9B+FAVnQq9oTKUjA==}
 
   '@huddle01/web-core@2.1.4':
     resolution: {integrity: sha512-kAOOjUEZuIcHtfaevytBUjV49nr7SL+pvUugx1WyTiNW48F0W0tcDwcM5LlYeBTymKpGTsQDvLjZFai3E36HdA==}
@@ -5646,6 +5655,10 @@ snapshots:
       '@babel/helper-validator-identifier': 7.24.7
       to-fast-properties: 2.0.0
 
+  '@beta-lyfe/backend@file:@beta-lyfe/backend':
+    dependencies:
+      '@huddle01/server-sdk': 2.5.2
+
   '@beta-lyfe/webapp@file:@beta-lyfe/webapp(@testing-library/dom@9.3.4)(@types/react-dom@18.3.0)(@types/react@18.3.3)(csstype@3.1.3)(next@14.2.4(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.4)(typescript@5.5.3)(vite@5.3.3(@types/node@20.14.9)(terser@5.31.6))(workbox-build@7.1.1(@types/babel__core@7.20.5))(workbox-window@7.1.0)':
     dependencies:
       '@headlessui/react': 2.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -5998,6 +6011,12 @@ snapshots:
       - react-test-renderer
 
   '@huddle01/server-sdk@2.3.2':
+    dependencies:
+      hono: 4.5.5
+      jose: 5.6.3
+      zod: 3.23.8
+
+  '@huddle01/server-sdk@2.5.2':
     dependencies:
       hono: 4.5.5
       jose: 5.6.3

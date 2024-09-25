@@ -8,6 +8,7 @@
 		"tslog": "^4.9.3"
 	},
 	"dependencies": {
+		"@beta-lyfe/backend": "file:",
 		"@huddle01/server-sdk": "latest"
 	}
 }
