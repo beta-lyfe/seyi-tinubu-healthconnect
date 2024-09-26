@@ -1,5 +1,5 @@
 {
-  description = "CryptoNex nix flake";
+  description = "BetaLyfe nix flake";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.05";
@@ -22,7 +22,7 @@
 
     packages.${system} = {
       docs = pkgs.stdenv.mkDerivation {
-        name = "cryptonex-docs";
+        name = "betalyfe-internal-docs";
         buildInputs = with pkgs; [
           d2
           mdbook

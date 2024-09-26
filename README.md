@@ -2,45 +2,37 @@
 
 This repo contains all the code related to Beta Lyfe
 
+## Documentation
 
-## Backend
+You can [check out the documentation here](https://beta-lyfe.vercel.app/docs/docs)
 
-### Relevant Links
+## Development
 
-- [API documentation](https://documenter.getpostman.com/view/28416230/2sA3e1A9oc)
-
-
-### Development
-
-```bash
-cd backend
-```
-
-
-## Webapp
-
-### Relevant Links
-
-- [Live deployment](https://beta-lyfe.koyeb.app)
-- [Figma](https://www.figma.com/design/CSYvzrVo8DeVjXmCjuR7Yp/Beta-Life?node-id=0-1&t=luR6pZfkz1DCyTlN-0)
-
-### Development
-
-#### Installing Dependencies
+### Installing Dependencies
 
 ```bash
 cd webapp
 pnpm install
 ```
 
+### Running the local setup
 
-#### Running the local setup
+#### Frontend (Webapp)
 
 ```bash
 # pwd: ./webapp/
 
 pnpm webapp:dev # to run the webapp
 pnpm backend:dev # to run the ad-hoc backend server
+```
+
+#### Backend
+
+```bash
+# pwd: ./backend
+
+python3 manage.py migrate
+python3 manage.py runserver
 ```
 
 ## Contribution
