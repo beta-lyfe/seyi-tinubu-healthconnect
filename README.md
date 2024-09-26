@@ -4,7 +4,7 @@ This repo contains all the code related to Beta Lyfe
 
 ## Documentation
 
-You can [check out the documentation here](https://beta-lyfe.vercel.app/docs/docs)
+You can [check out the documentation here](https://beta-lyfe.vercel.app/docs/docs/index.html)
 
 ## Development
 
