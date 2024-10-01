@@ -1,0 +1,456 @@
+openapi: 3.0.0
+info:
+  title: API Documentation
+  version: 0.0.0
+tags: []
+paths:
+  /api/auth/sign-in:
+    post:
+      operationId: signIn
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Authentication.AuthCredentials'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.BadRequestError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Authentication.SignInCredentials'
+  /api/auth/sign-up:
+    post:
+      operationId: signUp
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Authentication.WelcomeMessage'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.BadRequestError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Authentication.SignUpCredentials'
+  /api/consultation/request/:
+    post:
+      operationId: Request_requestConsultation
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.Request.ConsultationRequestCreated'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Consultation.Request.ConsultationRequestPayload'
+    get:
+      operationId: Request_fetchConsultationRequests
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Api.Consultation.Request.ConsultationRequest'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+  /api/consultation/request/{id}:
+    get:
+      operationId: Request_fetchConsultationRequestById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.Request.ConsultationRequest'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+  /api/consultation/request/{id}/accept:
+    get:
+      operationId: Request_acceptConsultationRequest
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Api.Consultation.Request.ConsultationRequestAccepted'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+  /api/consultation/{id}:
+    get:
+      operationId: Consultation_fetchConsultationById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.Consultation'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+  /api/consultation/{id}/chat:
+    get:
+      operationId: Consultation_fetchChat
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.ConsultationChatAdded'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+  /api/consultation/{id}/note:
+    post:
+      operationId: Consultation_addDoctorsNotes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.ConsultationNoteAdded'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+components:
+  schemas:
+    Api.Authentication.AuthCredentials:
+      type: object
+      required:
+        - token
+      properties:
+        token:
+          type: string
+          enum:
+            - 745731af4484f323968969eda289aeee
+      description: Authentication token
+    Api.Authentication.SignInCredentials:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    Api.Authentication.SignUpCredentials:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - email
+        - password
+        - role
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+          enum:
+            - patient
+            - doctor
+    Api.Authentication.WelcomeMessage:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          enum:
+            - Please check your email address for a verification code
+    Api.BadRequestError:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          enum:
+            - Invalid data
+    Api.Consultation.Chat:
+      type: object
+      required:
+        - id
+        - content
+        - media
+        - sent_by
+        - created_at
+      properties:
+        id:
+          type: string
+          enum:
+            - f47ac10b-58cc-4372-a567-0e02b2c3d479
+        content:
+          type: string
+          enum:
+            - Hello, how are you feeling today?
+        media:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Consultation.Media'
+        sent_by:
+          type: string
+          enum:
+            - doctor
+            - patient
+        created_at:
+          type: string
+          enum:
+            - 2021-09-01T12:00:00Z
+    Api.Consultation.Consultation:
+      type: object
+      required:
+        - doctors_notes
+        - chats
+        - doctor_id
+        - patient_id
+      properties:
+        doctors_notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Consultation.DoctorNote'
+        chats:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Consultation.Chat'
+        doctor_id:
+          type: string
+          enum:
+            - f47ac10b-58cc-4372-a567-0e02b2c3d479
+        patient_id:
+          type: string
+          enum:
+            - f47ac10b-58cc-4372-a567-0e02b2c3d479
+    Api.Consultation.ConsultationChatAdded:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          enum:
+            - Chat added
+    Api.Consultation.ConsultationNoteAdded:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          enum:
+            - Doctors notes added
+    Api.Consultation.DoctorNote:
+      type: object
+      required:
+        - id
+        - content
+        - created_at
+      properties:
+        id:
+          type: string
+          enum:
+            - f47ac10b-58cc-4372-a567-0e02b2c3d479
+        content:
+          type: string
+          enum:
+            - Patient is suffering from a cold
+        created_at:
+          type: string
+          enum:
+            - 2021-09-01T12:00:00Z
+    Api.Consultation.Media:
+      type: object
+      required:
+        - type
+        - url
+      properties:
+        type:
+          type: string
+          enum:
+            - image
+            - video
+        url:
+          type: string
+          enum:
+            - https://example.com/image.jpg
+    Api.Consultation.Request.ConsultationRequest:
+      type: object
+      required:
+        - doctor_id
+        - patient_id
+        - status
+        - message
+      properties:
+        doctor_id:
+          type: string
+          enum:
+            - f47ac10b-58cc-4372-a567-0e02b2c3d479
+        patient_id:
+          type: string
+          enum:
+            - f47ac10b-58cc-4372-a567-0e02b2c3d479
+        status:
+          type: string
+          enum:
+            - pending
+            - accepted
+            - rejected
+        message:
+          type: string
+          enum:
+            - Consultation request created successfully
+    Api.Consultation.Request.ConsultationRequestAccepted:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          enum:
+            - Consultation request accepted
+    Api.Consultation.Request.ConsultationRequestCreated:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          enum:
+            - Consultation request created
+    Api.Consultation.Request.ConsultationRequestPayload:
+      type: object
+      required:
+        - doctor_id
+        - message
+      properties:
+        doctor_id:
+          type: string
+          enum:
+            - f47ac10b-58cc-4372-a567-0e02b2c3d479
+        message:
+          type: string
+    Api.UnexpectedError:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          enum:
+            - An unexpected error occurred

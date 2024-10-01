@@ -7,43 +7,236 @@ using TypeSpec.Http;
 })
 namespace ApiDocs;
 
+@example("f47ac10b-58cc-4372-a567-0e02b2c3d479")
+scalar Id extends string;
+
+@example("2021-09-01T12:00:00Z")
+scalar Date extends string;
+
 @route("/api")
 @doc("API")
 namespace Api {
 
+  @error
+  model UnexpectedError {
+    @statusCode code: 500;
+    @example("An unexpected error occurred")
+    message: string;
+  }
+
+  @error
+  model BadRequestError {
+    @statusCode code: 400;
+    @example("Invalid data")
+    message: string;
+  }
+
+  @tag("Auth")
   @route("/auth")
   namespace Authentication {
 
-    model SignInCredentials {
+    model SignInPayload {
+      @example("mary.slessor@mail.com")
       email: string;
+      @example("$3cureP@ssw0rd")
       password: string;
     }
 
-    model SignUpCredentials {
+    model SignUpPayload {
+      @example("Mary")
       first_name: string;
+      @example("Slessor")
       last_name: string;
+      @example("mary.slessor@mail.com")
       email: string;
+      @example("$3cureP@ssw0rd")
       password: string;
       role: "patient" | "doctor";
+    } 
+    
+    model SendResetPasswordEmailPayload {
+      @example("mary.slessor@mail.com")
+      email: string
+    }
+
+    model ResetPasswordPayload {
+      @example("mary.slessor@mail.com")
+      email: string;
+      @example("NewP@ssw0rd")
+      password: string
     }
     
-    
-    @error
-    model UnexpectedError {
-      @statusCode code: 500;
-      message: string;
-    }
-    
+    @doc("Authentication token")
     model AuthCredentials {
+      @example("745731af4484f323968969eda289aeee")
       token: string;
     }
 
     model WelcomeMessage {
-      message: "Please check your email address for a verification code";
+      @example("Please check your email address for a verification code")
+      message: string;
     }
     
+    model VerifyEmailPayload {
+      @example("mary.slessor@mail.com")
+      email: string;
+      @example("123456")
+      otp: string;
+    }
+
+    model VerificationSuccessful {
+      @example("Email verified successfully")
+      message: string;
+    }
     
-    @route("/sign-in") op signIn(@body thing: SignInCredentials): AuthCredentials | UnexpectedError;
-    @route("/sign-up") op signUp(@body thing: SignUpCredentials): WelcomeMessage | UnexpectedError;
+    model ResendVerificationEmailPayload {
+      @example("mary.slessor@mail.com")
+      email: string
+    }
+    
+    model SignOutSuccessful {
+      @example("Sign out successful")
+      message: string;
+    }
+    
+    @route("/sign-up")
+    @post
+    @doc("Sign up new user")
+    op signUp(@body payload: SignUpPayload): WelcomeMessage | BadRequestError | UnexpectedError;
+    
+    @route("/verify-email")
+    @post
+    @doc("Verify email address")
+    op verifyEmail(@body payload: VerifyEmailPayload): VerificationSuccessful | BadRequestError | UnexpectedError;
+    
+    @route("/resend-verification-email")
+    @post
+    @doc("Resend verification email")
+    op resendVerificationEmail(@body payload: ResendVerificationEmailPayload): WelcomeMessage | BadRequestError | UnexpectedError;
+
+    @route("/sign-in")
+    @post
+    @doc("Sign in user")
+    op signIn(@body payload: SignInPayload): AuthCredentials | BadRequestError | UnexpectedError;
+
+    @route("/reset-password/send-email")
+    @post
+    @doc("Send reset password email")
+    op sendResetPasswordEmail(@body payload: SendResetPasswordEmailPayload): WelcomeMessage | BadRequestError | UnexpectedError;
+
+    @route("/reset-password")
+    @put
+    @doc("Reset password")
+    op resetPassword(@body payload: ResetPasswordPayload): WelcomeMessage | BadRequestError | UnexpectedError;
+
+    @route("/sign-out")
+    @doc("Sign out user")
+    op signOut(): SignOutSuccessful | UnexpectedError;
+  }
+
+  @tag("Consultation")
+  @route("/consultation")
+  @useAuth(BearerAuth)
+  namespace Consultation {
+
+    model DoctorNote {
+      id: Id;
+      @example("Patient is suffering from a cold")
+      content: string;
+      created_at: Date;
+    }
+    
+    model Media {
+      type: "image" | "video";
+      @example("https://example.com/image.jpg")
+      url: string;
+    }
+
+    model Chat {
+      id: Id;
+      @example("Hello, how are you feeling today?")
+      content: string;
+      media: Media[];
+      sent_by: "doctor" | "patient";
+      created_at: Date;
+    }
+
+    model Consultation {
+      doctors_notes: DoctorNote[];
+      chats: Chat[];
+      doctor_id: Id;
+      patient_id: Id;
+    }
+    
+    model ConsultationNoteAdded {
+      @example("Doctors notes added")
+      message: string;
+    }
+    
+    model ConsultationChatAdded {
+      @example("Chat added")
+      message: string;
+    }
+    
+    @route("/{id}")
+    @get
+    @doc("Fetch consultation by ID")
+    op fetchConsultationById(@path id: string): Consultation | UnexpectedError;
+
+    @route("/{id}/note")
+    @post
+    @doc("Add doctors notes")
+    op addDoctorsNotes(@path id: string, @body note: string): ConsultationNoteAdded | UnexpectedError;
+
+    @route("/{id}/chat")
+    @post
+    @doc("Add chat")
+    op fetchChat(@path id: string): ConsultationChatAdded | UnexpectedError;
+
+    @route("/request")
+    namespace Request {
+      model ConsultationRequestPayload {
+        doctor_id: Id;
+        @example("I am feeling unwell")
+        message: string;
+      }
+      
+      model ConsultationRequestCreated {
+        @example("Consultation request created")
+        message: string;
+      }
+      
+      model ConsultationRequest {
+        doctor_id: Id;
+        patient_id: Id;
+        status: "pending" | "accepted" | "rejected";
+        @example("I am feeling unwell")
+        message: string;
+      }
+      
+      model ConsultationRequestAccepted {
+        message: "Consultation request accepted";
+      }
+
+      @route("/")
+      @post
+      @doc("Request consultation")
+      op requestConsultation(@body body: ConsultationRequestPayload): ConsultationRequestCreated | UnexpectedError;
+
+      @route("/")
+      @get
+      @doc("Fetch consultation requests")
+      op fetchConsultationRequests(): ConsultationRequest[] | UnexpectedError;
+
+      @route("/{id}")
+      @get
+      @doc("Fetch consultation request by ID")
+      op fetchConsultationRequestById(@path id: string): ConsultationRequest | UnexpectedError;
+
+      @route("/{id}/accept")
+      @post
+      @doc("Accept consultation request")
+      op acceptConsultationRequest(@path id: string): ConsultationRequestAccepted[] | UnexpectedError;
+    }
   }
 }
