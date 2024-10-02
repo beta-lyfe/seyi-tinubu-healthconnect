@@ -133,6 +133,78 @@ namespace Api {
     @doc("Sign out user")
     op signOut(): SignOutSuccessful | UnexpectedError;
   }
+  
+  @tag("Patient")
+  @route("/patients")
+  @useAuth(BearerAuth)
+  namespace Patient {
+    model Patient {
+      id: Id;
+      @example("Mary")
+      first_name: string;
+      @example("Slessor")
+      last_name: string;
+      @example("mary.slessor@mail.com")
+      email: string;
+    }
+    
+    @route("/")
+    @get
+    @doc("Fetch all patients")
+    op fetchPatients(): Patient[] | UnexpectedError;
+    
+
+    @route("/profile")
+    @get
+    @doc("Fetch patient profile")
+    op fetchProfile(): Patient | UnexpectedError;
+    
+    @route("/{id}")
+    @get
+    @doc("Fetch patient by ID")
+    op fetchPatientById(@path id: string): Patient | UnexpectedError;
+    
+    @route("/{id}")
+    @patch
+    @doc("Update patient by ID")
+    op updatePatientById(@path id: string, @body patient: Patient): Patient | UnexpectedError;
+  }
+
+  @tag("Doctor")
+  @route("/doctors")
+  @useAuth(BearerAuth)
+  namespace Doctor {
+    model Doctor {
+      id: Id;
+      @example("John")
+      first_name: string;
+      @example("Doe")
+      last_name: string;
+      @example("john.doe@mail.com")
+      email: string;
+    }
+    
+    @route("/")
+    @get
+    @doc("Fetch all doctors")
+    op fetchDoctors(): Doctor[] | UnexpectedError;
+    
+
+    @route("/profile")
+    @get
+    @doc("Fetch doctor profile")
+    op fetchProfile(): Doctor | UnexpectedError;
+    
+    @route("/{id}")
+    @get
+    @doc("Fetch doctor by ID")
+    op fetchDoctorById(@path id: string): Doctor | UnexpectedError;
+    
+    @route("/{id}")
+    @patch
+    @doc("Update doctor by ID")
+    op updateDoctorById(@path id: string, @body doctor: Doctor): Doctor | UnexpectedError;
+  }
 
   @tag("Consultation")
   @route("/consultation")
