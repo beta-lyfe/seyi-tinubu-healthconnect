@@ -29,6 +29,7 @@ import { Route as AppDashboardScheduleIndexImport } from './routes/_app/dashboar
 import { Route as AppDashboardProfileIndexImport } from './routes/_app/dashboard/profile/index'
 import { Route as AppDashboardDoctorsIndexImport } from './routes/_app/dashboard/doctors/index'
 import { Route as AppDoctorDoctorIndexImport } from './routes/_app/_doctor/doctor/index'
+import { Route as AppConsultationConsultationsIndexImport } from './routes/_app/_consultation/consultations/index'
 import { Route as DashboardDoctorsProfileDoctorIdIndexImport } from './routes/dashboard/doctors/profile/$doctorId/index'
 import { Route as AppDashboardChatsDoctorIdIndexImport } from './routes/_app/dashboard/chats/$doctorId/index'
 import { Route as AppDoctorDoctorSupportIndexImport } from './routes/_app/_doctor/doctor/support/index'
@@ -130,6 +131,12 @@ const AppDoctorDoctorIndexRoute = AppDoctorDoctorIndexImport.update({
   path: '/doctor/',
   getParentRoute: () => AppDoctorRoute,
 } as any)
+
+const AppConsultationConsultationsIndexRoute =
+  AppConsultationConsultationsIndexImport.update({
+    path: '/consultations/',
+    getParentRoute: () => AppRoute,
+  } as any)
 
 const DashboardDoctorsProfileDoctorIdIndexRoute =
   DashboardDoctorsProfileDoctorIdIndexImport.update({
@@ -272,6 +279,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardScheduleIndexImport
       parentRoute: typeof rootRoute
     }
+    '/_app/_consultation/consultations/': {
+      id: '/_app/_consultation/consultations/'
+      path: '/consultations'
+      fullPath: '/consultations'
+      preLoaderRoute: typeof AppConsultationConsultationsIndexImport
+      parentRoute: typeof AppImport
+    }
     '/_app/_doctor/doctor/': {
       id: '/_app/_doctor/doctor/'
       path: '/doctor'
@@ -395,6 +409,7 @@ export const routeTree = rootRoute.addChildren({
     }),
     AppDashboardIndexRoute,
     AppLoginIndexRoute,
+    AppConsultationConsultationsIndexRoute,
     AppDashboardDoctorsIndexRoute,
     AppDashboardProfileIndexRoute,
     AppDashboardScheduleIndexRoute,
@@ -438,6 +453,7 @@ export const routeTree = rootRoute.addChildren({
         "/_app/_doctor",
         "/_app/dashboard/",
         "/_app/login/",
+        "/_app/_consultation/consultations/",
         "/_app/dashboard/doctors/",
         "/_app/dashboard/profile/",
         "/_app/dashboard/schedule/",
@@ -503,6 +519,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/dashboard/schedule/": {
       "filePath": "dashboard/schedule/index.tsx"
+    },
+    "/_app/_consultation/consultations/": {
+      "filePath": "_app/_consultation/consultations/index.tsx",
+      "parent": "/_app"
     },
     "/_app/_doctor/doctor/": {
       "filePath": "_app/_doctor/doctor/index.tsx",
