@@ -20,7 +20,7 @@ pnpm install
 #### Frontend (Webapp)
 
 ```bash
-# pwd: ./webapp/
+# pwd: ./webapp
 
 pnpm webapp:dev # to run the webapp
 pnpm backend:dev # to run the ad-hoc backend server
@@ -31,8 +31,8 @@ pnpm backend:dev # to run the ad-hoc backend server
 ```bash
 # pwd: ./backend
 
-python3 manage.py migrate
-python3 manage.py runserver
+python3 manage.py migrate # to run migrations
+python3 manage.py runserver # to run the server
 ```
 
 ## Contribution
