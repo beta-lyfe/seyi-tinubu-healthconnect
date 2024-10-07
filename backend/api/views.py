@@ -1,4 +1,3 @@
-from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -15,7 +14,11 @@ from django.contrib.auth.hashers import make_password, check_password
 from allauth.account.models import EmailAddress
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import User, EmailVerication_Keys, PasswordReset_keys
+from api.models import User, EmailVerication_Keys, PasswordReset_keys
+from doctor.models import DoctorProfile
+from patient.models import PatientProfile
+from doctor.serializer import DoctorProfileSerializer
+from patient.serializer import PatientProfileSerializer
 
 
 """ AUTH """
@@ -33,9 +36,20 @@ def register(request):
         )
         key, exp = VerifyEmail_key(user.id)
 
-        return Response({'detail': {'name': user.first_name, 'key': key, 'expires': exp} }, status=status.HTTP_201_CREATED) # type: ignore
-    return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
+        # Add other fields to profile ('first_name', 'last_name', 'phone_number', 'age')
+        if user.is_doctor:
+            profile = DoctorProfile.objects.get(user=user)
+            doctor = DoctorProfileSerializer(profile, data=request.data, partial=True)
+            if doctor.is_valid():
+                doctor.save()
+        else:
+            profile = PatientProfile.objects.get(user=user)
+            patient = PatientProfileSerializer(profile, data=request.data, partial=True)
+            if patient.is_valid():
+                patient.save()
 
+        return Response({'detail': {'email': user.email, 'key': key, 'expires': exp} }, status=status.HTTP_201_CREATED) # type: ignore
+    return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Verify Email Here
@@ -95,12 +109,35 @@ def login(request):
             refresh = RefreshToken.for_user(user)
             # update_last_login(None, user)
 
+            # If the user is a doctor
+            if user.is_doctor:
+                patient_profile = user.doctor
+                serializer = DoctorProfileSerializer(patient_profile)
+
+                data = serializer.data
+                data['email'] = user.email
+                data['is_doctor'] = user.is_doctor
+            
+                return Response({
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token), # type: ignore
+                    'user' : data
+                })
+            
+            # If the user is a patient
+            patient_profile = user.patient
+            serializer = PatientProfileSerializer(patient_profile)
+            
+            data = serializer.data
+            data['email'] = user.email
+            data['is_doctor'] = user.is_doctor
+    
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token), # type: ignore
-                'user_id': user.id, # type: ignore
-                'first_name': user.first_name
+                'user' : data
             })
+
         else:
             print(check_password(user.password, password))
             return Response({'erro': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -201,3 +238,16 @@ def confirm_reset_password(request, uid, key):
     except User.DoesNotExist or PasswordReset_keys.DoesNotExist:
         return Response({'detail': _('User DoesNot Exist or Reset Password Key is Invalid')},
                         status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def delete_user(request):
+    # Get the user profile
+    user = get_object_or_404(User, id=request.user.id)
+    message = f"User {user.id} has been deleted Successfully"
+
+    user.delete()
+    return Response({"message": message}, status=status.HTTP_200_OK)
+
+
+

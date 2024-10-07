@@ -3,6 +3,7 @@ from .models import EmailVerication_Keys, User, PasswordReset_keys
 from django.shortcuts import get_object_or_404
 from datetime import datetime, timedelta
 from django.utils import timezone
+import uuid
 
 
 import random
@@ -31,6 +32,7 @@ def VerifyEmail_key(user_id: int):
 
     expriation = datetime.now() + timedelta(hours=24)
     EmailVerication_Keys.objects.create(
+        id = uuid.uuid4(),
         user = user,
         key = unique_key,
         exp = expriation
@@ -53,6 +55,7 @@ def ResetPassword_key(email: int):
 
     expriation = timezone.now() + timedelta(hours=1)
     PasswordReset_keys.objects.create(
+        id = uuid.uuid4(),
         user = user,
         key = unique_key,
         exp = expriation

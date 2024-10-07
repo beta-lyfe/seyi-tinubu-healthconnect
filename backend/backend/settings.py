@@ -6,7 +6,9 @@ import cloudinary.api
 import cloudinary.uploader
 import cloudinary
 from .env import env
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,9 +16,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-SECRET_KEY = env.secret_key
+# SECRET_KEY = env.secret_key
 
-DEBUG = env.environment == 'development'
+# DEBUG = env.environment == 'development'
+
+SECRET_KEY = os.environ.get("SECRET_KEY")
+
+DEBUG = os.environ.get("SECRET_KEY")
 
 ALLOWED_HOSTS = ['*']
 
@@ -32,20 +38,29 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # corsheader
     "corsheaders",
-	# rest-framework
+
+    # rest-framework
     'rest_framework',
     'rest_framework.authtoken',
-	# dj-rest-auth
+
+    # dj-rest-auth
 	'dj_rest_auth.registration',
     'dj_rest_auth',
-	# allauth
+
+    # allauth
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+
     # local app
     "api",
+    "doctor",
+    "patient",
+    "consultation",
+
     # cloudinary
     "cloudinary",
     "cloudinary_storage",
@@ -89,6 +104,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgres',
+#     }
+# }
 
 DATABASES = {
     'default': {
@@ -224,8 +245,8 @@ APPEND_SLASH = False
 ACCOUNT_LOGOUT_ON_GET = True
 
 
-# cloudinary.config(
-#     cloud_name=os.environ["CLOUD_NAME"],
-#     api_key=os.environ["API_KEY"],
-#     api_secret=os.environ["API_SECRET"]
-# )
+cloudinary.config(
+    cloud_name=os.environ["CLOUD_NAME"],
+    api_key=os.environ["CLOUD_API_KEY"],
+    api_secret=os.environ["CLOUD_API_SECRET"]
+)
