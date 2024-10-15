@@ -30,6 +30,21 @@ namespace Api {
     @example("Invalid data")
     message: string;
   }
+  
+  @error
+  model NotFoundError<T extends valueof string> {
+    @statusCode code: 404;
+    @example("${T} not found")
+    message: string
+  }
+
+  @error
+  model PermissionDeniedError {
+    @statusCode code: 401;
+    @example("Permission denied")
+    message: string
+  }
+
 
   @tag("Auth")
   @route("/auth")
@@ -147,27 +162,29 @@ namespace Api {
       @example("mary.slessor@mail.com")
       email: string;
     }
+
+    alias PatientNotFoundError = NotFoundError<"Patient">;
     
     @route("/")
     @get
     @doc("Fetch all patients")
-    op fetchPatients(): Patient[] | UnexpectedError;
+    op fetchPatients(): Patient[] | PermissionDeniedError | UnexpectedError;
     
 
     @route("/profile")
     @get
     @doc("Fetch patient profile")
-    op fetchProfile(): Patient | UnexpectedError;
+    op fetchProfile(): Patient | PermissionDeniedError | UnexpectedError;
     
     @route("/{id}")
     @get
     @doc("Fetch patient by ID")
-    op fetchPatientById(@path id: string): Patient | UnexpectedError;
+    op fetchPatientById(@path id: string): Patient | PatientNotFoundError | PermissionDeniedError | UnexpectedError;
     
     @route("/{id}")
     @patch
     @doc("Update patient by ID")
-    op updatePatientById(@path id: string, @body patient: Patient): Patient | UnexpectedError;
+    op updatePatientById(@path id: string, @body patient: Patient): Patient | PatientNotFoundError | PermissionDeniedError | UnexpectedError;
   }
 
   @tag("Doctor")
@@ -183,27 +200,29 @@ namespace Api {
       @example("john.doe@mail.com")
       email: string;
     }
+
+    alias DoctorNotFoundError = NotFoundError<"Doctor">;
     
     @route("/")
     @get
     @doc("Fetch all doctors")
-    op fetchDoctors(): Doctor[] | UnexpectedError;
+    op fetchDoctors(): Doctor[] | PermissionDeniedError | UnexpectedError;
     
 
     @route("/profile")
     @get
     @doc("Fetch doctor profile")
-    op fetchProfile(): Doctor | UnexpectedError;
+    op fetchProfile(): Doctor | PermissionDeniedError | UnexpectedError;
     
     @route("/{id}")
     @get
     @doc("Fetch doctor by ID")
-    op fetchDoctorById(@path id: string): Doctor | UnexpectedError;
+    op fetchDoctorById(@path id: string): Doctor | DoctorNotFoundError | PermissionDeniedError | UnexpectedError;
     
     @route("/{id}")
     @patch
     @doc("Update doctor by ID")
-    op updateDoctorById(@path id: string, @body doctor: Doctor): Doctor | UnexpectedError;
+    op updateDoctorById(@path id: string, @body doctor: Doctor): Doctor | DoctorNotFoundError | PermissionDeniedError | UnexpectedError;
   }
 
   @tag("Consultation")
@@ -236,9 +255,12 @@ namespace Api {
     model Consultation {
       doctors_notes: DoctorNote[];
       chats: Chat[];
+      room_id: Id;
       doctor_id: Id;
       patient_id: Id;
     }
+    
+    alias ConsultationNotFoundError = NotFoundError<"Consultation">;
     
     model ConsultationNoteAdded {
       @example("Doctors notes added")
@@ -250,20 +272,30 @@ namespace Api {
       message: string;
     }
     
+    model AccessToken {
+      @example("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik1hcnkgU2xlc3NvciIsImlhdCI6MTUxNjIzOTAyMn0.UFI1B6pCOrqlpaFHV58dqqTLYCCC8hukJAVY8Wb1Z9o")
+      token: string;
+    }
+    
     @route("/{id}")
     @get
     @doc("Fetch consultation by ID")
-    op fetchConsultationById(@path id: string): Consultation | UnexpectedError;
+    op fetchConsultationById(@path id: string): Consultation | ConsultationNotFoundError | PermissionDeniedError | UnexpectedError;
+
+    @route("/{id}/access-token")
+    @get
+    @doc("Generate access token")
+    op generateAccessToken(@path id: string): AccessToken | ConsultationNotFoundError | PermissionDeniedError | UnexpectedError;
 
     @route("/{id}/note")
     @post
     @doc("Add doctors notes")
-    op addDoctorsNotes(@path id: string, @body note: string): ConsultationNoteAdded | UnexpectedError;
+    op addDoctorsNotes(@path id: string, @body note: string): ConsultationNoteAdded | ConsultationNotFoundError | PermissionDeniedError | UnexpectedError;
 
     @route("/{id}/chat")
     @post
     @doc("Add chat")
-    op fetchChat(@path id: string): ConsultationChatAdded | UnexpectedError;
+    op fetchChat(@path id: string): ConsultationChatAdded | ConsultationNotFoundError | PermissionDeniedError | UnexpectedError;
 
     @route("/request")
     namespace Request {
@@ -293,22 +325,22 @@ namespace Api {
       @route("/")
       @post
       @doc("Request consultation")
-      op requestConsultation(@body body: ConsultationRequestPayload): ConsultationRequestCreated | UnexpectedError;
+      op requestConsultation(@body body: ConsultationRequestPayload): ConsultationRequestCreated | PermissionDeniedError | UnexpectedError;
 
       @route("/")
       @get
       @doc("Fetch consultation requests")
-      op fetchConsultationRequests(): ConsultationRequest[] | UnexpectedError;
+      op fetchConsultationRequests(): ConsultationRequest[] | PermissionDeniedError | UnexpectedError;
 
       @route("/{id}")
       @get
       @doc("Fetch consultation request by ID")
-      op fetchConsultationRequestById(@path id: string): ConsultationRequest | UnexpectedError;
+      op fetchConsultationRequestById(@path id: string): ConsultationRequest | ConsultationNotFoundError | PermissionDeniedError | UnexpectedError;
 
       @route("/{id}/accept")
       @post
       @doc("Accept consultation request")
-      op acceptConsultationRequest(@path id: string): ConsultationRequestAccepted[] | UnexpectedError;
+      op acceptConsultationRequest(@path id: string): ConsultationRequestAccepted[] | ConsultationNotFoundError | PermissionDeniedError | UnexpectedError;
     }
   }
 }
