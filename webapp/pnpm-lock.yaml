@@ -18,8 +18,11 @@ importers:
         specifier: ^3.3.4
         version: 3.9.0(react-hook-form@7.53.0(react@18.3.1))
       '@huddle01/react':
-        specifier: latest
+        specifier: ^2.2.0
         version: 2.2.0(@testing-library/dom@10.4.0)(@types/react-dom@18.3.0)(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))
+      '@huddle01/server-sdk':
+        specifier: ^2.5.2
+        version: 2.5.2
       '@radix-ui/react-avatar':
         specifier: ^1.0.4
         version: 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -122,6 +125,9 @@ importers:
       openapi-fetch:
         specifier: ^0.12.2
         version: 0.12.2
+      openapi-react-query:
+        specifier: ^0.2.0
+        version: 0.2.0(@tanstack/react-query@5.59.8(react@18.3.1))(openapi-fetch@0.12.2)
       react:
         specifier: ^18
         version: 18.3.1
@@ -1185,6 +1191,9 @@ packages:
 
   '@huddle01/react@2.2.0':
     resolution: {integrity: sha512-AnzXahVvVoUY1fbt03pevUfoP2GKVxAxg1Ltejed9kpr7Rs4Q84YNt79yFggx4r1sNILV/xvozfKuyCTOduZCQ==}
+
+  '@huddle01/server-sdk@2.5.2':
+    resolution: {integrity: sha512-+96gJ1/pQhVO8nxlXMEFLgvw7relieteIFD3/CVu+3CzQW+FYI5eBbeVKdChKoNwLXiG7f9B+FAVnQq9oTKUjA==}
 
   '@huddle01/web-core@2.2.0':
     resolution: {integrity: sha512-kaPD1GKtVMAWBpbMrPiWtA4Dq8x2QrRjEZWXp0f/tmH79bsZ4ejDoKs/G1d0zhhD3NYkhE/0DZlfX2iz9jMvgA==}
@@ -3207,6 +3216,10 @@ packages:
   hmac-drbg@1.0.1:
     resolution: {integrity: sha512-Tti3gMqLdZfhOQY1Mzf/AanLiqh1WTiJgEj26ZuYQ9fbkLomzGchCws4FyrSd4VkpBfiNhaE1On+lOz894jvXg==}
 
+  hono@4.6.5:
+    resolution: {integrity: sha512-qsmN3V5fgtwdKARGLgwwHvcdLKursMd+YOt69eGpl1dUCJb8mCd7hZfyZnBYjxCegBG7qkJRQRUy2oO25yHcyQ==}
+    engines: {node: '>=16.9.0'}
+
   https-browserify@1.0.0:
     resolution: {integrity: sha512-J+FkSdyD+0mA0N+81tMotaRMfSL9SGi+xpD3T6YApKsc3bGSXJlfXri3VyFOeYkfLRQisDk1W+jIFFKBeUBbBg==}
 
@@ -3390,6 +3403,9 @@ packages:
   jiti@1.21.6:
     resolution: {integrity: sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==}
     hasBin: true
+
+  jose@5.9.4:
+    resolution: {integrity: sha512-WBBl6au1qg6OHj67yCffCgFR3BADJBXN8MdRvCgJDuMv3driV2nHr7jdGvaKX9IolosAsn+M0XRArqLXUhyJHQ==}
 
   jotai@2.10.0:
     resolution: {integrity: sha512-8W4u0aRlOIwGlLQ0sqfl/c6+eExl5D8lZgAUolirZLktyaj4WnxO/8a0HEPmtriQAB6X5LMhXzZVmw02X0P0qQ==}
@@ -3672,6 +3688,12 @@ packages:
 
   openapi-fetch@0.12.2:
     resolution: {integrity: sha512-ctMQ4LkkSWfIDUMuf1SYuPMsQ7ePcWAkYaMPW1lCDdk4WlV3Vulq1zoyGrwnFVvrBs5t7OOqNF+EKa8SAaovEA==}
+
+  openapi-react-query@0.2.0:
+    resolution: {integrity: sha512-LzkWdoJRtY4InZD5r3vRWwqKx672Q7wIwjhEzYesyBl8VHMYmBG0HW5y29cDtqD9XAHA/lJsCDt17VELdaHvWA==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.0.0
+      openapi-fetch: ^0.12.2
 
   openapi-typescript-helpers@0.0.13:
     resolution: {integrity: sha512-z44WK2e7ygW3aUtAtiurfEACohf/Qt9g6BsejmIYgEoY4REHeRzgFJmO3ium0libsuzPc145I+8lE9aiiZrQvQ==}
@@ -5536,6 +5558,7 @@ snapshots:
       '@headlessui/react': 2.1.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@hookform/resolvers': 3.9.0(react-hook-form@7.53.0(react@18.3.1))
       '@huddle01/react': 2.2.0(@testing-library/dom@10.4.0)(@types/react-dom@18.3.0)(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))
+      '@huddle01/server-sdk': 2.5.2
       '@radix-ui/react-avatar': 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-context-menu': 2.2.2(@types/react-dom@18.3.0)(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-dialog': 1.1.2(@types/react-dom@18.3.0)(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -5841,6 +5864,12 @@ snapshots:
       - debug
       - react-dom
       - react-test-renderer
+
+  '@huddle01/server-sdk@2.5.2':
+    dependencies:
+      hono: 4.6.5
+      jose: 5.9.4
+      zod: 3.23.8
 
   '@huddle01/web-core@2.2.0':
     dependencies:
@@ -8082,6 +8111,8 @@ snapshots:
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
 
+  hono@4.6.5: {}
+
   https-browserify@1.0.0: {}
 
   https-proxy-agent@7.0.5(supports-color@9.4.0):
@@ -8246,6 +8277,8 @@ snapshots:
       minimatch: 3.1.2
 
   jiti@1.21.6: {}
+
+  jose@5.9.4: {}
 
   jotai@2.10.0(@types/react@18.3.11)(react@18.3.1):
     optionalDependencies:
@@ -8521,6 +8554,12 @@ snapshots:
 
   openapi-fetch@0.12.2:
     dependencies:
+      openapi-typescript-helpers: 0.0.13
+
+  openapi-react-query@0.2.0(@tanstack/react-query@5.59.8(react@18.3.1))(openapi-fetch@0.12.2):
+    dependencies:
+      '@tanstack/react-query': 5.59.8(react@18.3.1)
+      openapi-fetch: 0.12.2
       openapi-typescript-helpers: 0.0.13
 
   openapi-typescript-helpers@0.0.13: {}
