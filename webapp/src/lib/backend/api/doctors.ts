@@ -11,6 +11,8 @@ export type Doctor = {
   image_url: string
 }
 
+
+
 const useGetDoctors = () =>
   useQuery({
     queryKey: ['backend', 'api', 'doctors', 'get'],

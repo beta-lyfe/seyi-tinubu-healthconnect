@@ -23,7 +23,7 @@ import { Route as PagesPagesIndexImport } from './routes/_pages/_pages/index'
 import { Route as DoctorDoctorIndexImport } from './routes/_doctor/doctor/index'
 import { Route as AppLoginIndexImport } from './routes/_app/login/index'
 import { Route as AppDashboardIndexImport } from './routes/_app/dashboard/index'
-import { Route as DoctorDoctorPatientsIndexImport } f./routes/_app/_consultation/consultations/indexents/index'
+import { Route as DoctorDoctorPatientsIndexImport } from './routes/_doctor/doctor/patients/index'
 import { Route as AppDashboardWalletIndexImport } from './routes/_app/dashboard/wallet/index'
 import { Route as AppDashboardScheduleIndexImport } from './routes/_app/dashboard/schedule/index'
 import { Route as AppDashboardProfileIndexImport } from './routes/_app/dashboard/profile/index'
@@ -396,39 +396,268 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({
-  AppRoute: AppRoute.addChildren({
-    AppDoctorRoute: AppDoctorRoute.addChildren({
-      AppDoctorDoctorIndexRoute,
-      AppDoctorDoctorAppointmentsIndexRoute,
-      AppDoctorDoctorLabIndexRoute,
-      AppDoctorDoctorMessageIndexRoute,
-      AppDoctorDoctorPatientsIndexRoute,
-      AppDoctorDoctorSupportIndexRoute,
-      AppDoctorDoctorMessagePatientIdIndexRoute,
-    }),
-    AppDashboardIndexRoute,
-    AppLoginIndexRoute,
+interface AppDoctorRouteChildren {
+  AppDoctorDoctorIndexRoute: typeof AppDoctorDoctorIndexRoute
+  AppDoctorDoctorAppointmentsIndexRoute: typeof AppDoctorDoctorAppointmentsIndexRoute
+  AppDoctorDoctorLabIndexRoute: typeof AppDoctorDoctorLabIndexRoute
+  AppDoctorDoctorMessageIndexRoute: typeof AppDoctorDoctorMessageIndexRoute
+  AppDoctorDoctorPatientsIndexRoute: typeof AppDoctorDoctorPatientsIndexRoute
+  AppDoctorDoctorSupportIndexRoute: typeof AppDoctorDoctorSupportIndexRoute
+  AppDoctorDoctorMessagePatientIdIndexRoute: typeof AppDoctorDoctorMessagePatientIdIndexRoute
+}
+
+const AppDoctorRouteChildren: AppDoctorRouteChildren = {
+  AppDoctorDoctorIndexRoute: AppDoctorDoctorIndexRoute,
+  AppDoctorDoctorAppointmentsIndexRoute: AppDoctorDoctorAppointmentsIndexRoute,
+  AppDoctorDoctorLabIndexRoute: AppDoctorDoctorLabIndexRoute,
+  AppDoctorDoctorMessageIndexRoute: AppDoctorDoctorMessageIndexRoute,
+  AppDoctorDoctorPatientsIndexRoute: AppDoctorDoctorPatientsIndexRoute,
+  AppDoctorDoctorSupportIndexRoute: AppDoctorDoctorSupportIndexRoute,
+  AppDoctorDoctorMessagePatientIdIndexRoute:
+    AppDoctorDoctorMessagePatientIdIndexRoute,
+}
+
+const AppDoctorRouteWithChildren = AppDoctorRoute._addFileChildren(
+  AppDoctorRouteChildren,
+)
+
+interface AppRouteChildren {
+  AppDoctorRoute: typeof AppDoctorRouteWithChildren
+  AppDashboardIndexRoute: typeof AppDashboardIndexRoute
+  AppLoginIndexRoute: typeof AppLoginIndexRoute
+  AppConsultationConsultationsIndexRoute: typeof AppConsultationConsultationsIndexRoute
+  AppDashboardDoctorsIndexRoute: typeof AppDashboardDoctorsIndexRoute
+  AppDashboardProfileIndexRoute: typeof AppDashboardProfileIndexRoute
+  AppDashboardScheduleIndexRoute: typeof AppDashboardScheduleIndexRoute
+  AppDashboardWalletIndexRoute: typeof AppDashboardWalletIndexRoute
+  AppDashboardChatsDoctorIdIndexRoute: typeof AppDashboardChatsDoctorIdIndexRoute
+  AppDashboardDoctorsProfileDoctorIdIndexRoute: typeof AppDashboardDoctorsProfileDoctorIdIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppDoctorRoute: AppDoctorRouteWithChildren,
+  AppDashboardIndexRoute: AppDashboardIndexRoute,
+  AppLoginIndexRoute: AppLoginIndexRoute,
+  AppConsultationConsultationsIndexRoute:
     AppConsultationConsultationsIndexRoute,
-    AppDashboardDoctorsIndexRoute,
-    AppDashboardProfileIndexRoute,
-    AppDashboardScheduleIndexRoute,
-    AppDashboardWalletIndexRoute,
-    AppDashboardChatsDoctorIdIndexRoute,
+  AppDashboardDoctorsIndexRoute: AppDashboardDoctorsIndexRoute,
+  AppDashboardProfileIndexRoute: AppDashboardProfileIndexRoute,
+  AppDashboardScheduleIndexRoute: AppDashboardScheduleIndexRoute,
+  AppDashboardWalletIndexRoute: AppDashboardWalletIndexRoute,
+  AppDashboardChatsDoctorIdIndexRoute: AppDashboardChatsDoctorIdIndexRoute,
+  AppDashboardDoctorsProfileDoctorIdIndexRoute:
     AppDashboardDoctorsProfileDoctorIdIndexRoute,
-  }),
-  DoctorRoute: DoctorRoute.addChildren({
-    DoctorDoctorIndexRoute,
-    DoctorDoctorPatientsIndexRoute,
-  }),
-  PagesRoute: PagesRoute.addChildren({
-    PagesPagesRoute: PagesPagesRoute.addChildren({ PagesPagesIndexRoute }),
-  }),
-  DashboardIndexRoute,
-  LoginIndexRoute,
-  DashboardScheduleIndexRoute,
-  DashboardDoctorsProfileDoctorIdIndexRoute,
-})
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
+interface DoctorRouteChildren {
+  DoctorDoctorIndexRoute: typeof DoctorDoctorIndexRoute
+  DoctorDoctorPatientsIndexRoute: typeof DoctorDoctorPatientsIndexRoute
+}
+
+const DoctorRouteChildren: DoctorRouteChildren = {
+  DoctorDoctorIndexRoute: DoctorDoctorIndexRoute,
+  DoctorDoctorPatientsIndexRoute: DoctorDoctorPatientsIndexRoute,
+}
+
+const DoctorRouteWithChildren =
+  DoctorRoute._addFileChildren(DoctorRouteChildren)
+
+interface PagesPagesRouteChildren {
+  PagesPagesIndexRoute: typeof PagesPagesIndexRoute
+}
+
+const PagesPagesRouteChildren: PagesPagesRouteChildren = {
+  PagesPagesIndexRoute: PagesPagesIndexRoute,
+}
+
+const PagesPagesRouteWithChildren = PagesPagesRoute._addFileChildren(
+  PagesPagesRouteChildren,
+)
+
+interface PagesRouteChildren {
+  PagesPagesRoute: typeof PagesPagesRouteWithChildren
+}
+
+const PagesRouteChildren: PagesRouteChildren = {
+  PagesPagesRoute: PagesPagesRouteWithChildren,
+}
+
+const PagesRouteWithChildren = PagesRoute._addFileChildren(PagesRouteChildren)
+
+export interface FileRoutesByFullPath {
+  '': typeof PagesPagesRouteWithChildren
+  '/dashboard': typeof AppDashboardIndexRoute
+  '/login': typeof AppLoginIndexRoute
+  '/doctor': typeof AppDoctorDoctorIndexRoute
+  '/': typeof PagesPagesIndexRoute
+  '/dashboard/schedule': typeof AppDashboardScheduleIndexRoute
+  '/consultations': typeof AppConsultationConsultationsIndexRoute
+  '/dashboard/doctors': typeof AppDashboardDoctorsIndexRoute
+  '/dashboard/profile': typeof AppDashboardProfileIndexRoute
+  '/dashboard/wallet': typeof AppDashboardWalletIndexRoute
+  '/doctor/patients': typeof AppDoctorDoctorPatientsIndexRoute
+  '/doctor/appointments': typeof AppDoctorDoctorAppointmentsIndexRoute
+  '/doctor/lab': typeof AppDoctorDoctorLabIndexRoute
+  '/doctor/message': typeof AppDoctorDoctorMessageIndexRoute
+  '/doctor/support': typeof AppDoctorDoctorSupportIndexRoute
+  '/dashboard/chats/$doctorId': typeof AppDashboardChatsDoctorIdIndexRoute
+  '/dashboard/doctors/profile/$doctorId': typeof AppDashboardDoctorsProfileDoctorIdIndexRoute
+  '/doctor/message/$patientId': typeof AppDoctorDoctorMessagePatientIdIndexRoute
+}
+
+export interface FileRoutesByTo {
+  '': typeof AppDoctorRouteWithChildren
+  '/dashboard': typeof AppDashboardIndexRoute
+  '/login': typeof AppLoginIndexRoute
+  '/doctor': typeof AppDoctorDoctorIndexRoute
+  '/': typeof PagesPagesIndexRoute
+  '/dashboard/schedule': typeof AppDashboardScheduleIndexRoute
+  '/consultations': typeof AppConsultationConsultationsIndexRoute
+  '/dashboard/doctors': typeof AppDashboardDoctorsIndexRoute
+  '/dashboard/profile': typeof AppDashboardProfileIndexRoute
+  '/dashboard/wallet': typeof AppDashboardWalletIndexRoute
+  '/doctor/patients': typeof AppDoctorDoctorPatientsIndexRoute
+  '/doctor/appointments': typeof AppDoctorDoctorAppointmentsIndexRoute
+  '/doctor/lab': typeof AppDoctorDoctorLabIndexRoute
+  '/doctor/message': typeof AppDoctorDoctorMessageIndexRoute
+  '/doctor/support': typeof AppDoctorDoctorSupportIndexRoute
+  '/dashboard/chats/$doctorId': typeof AppDashboardChatsDoctorIdIndexRoute
+  '/dashboard/doctors/profile/$doctorId': typeof AppDashboardDoctorsProfileDoctorIdIndexRoute
+  '/doctor/message/$patientId': typeof AppDoctorDoctorMessagePatientIdIndexRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRoute
+  '/_app': typeof AppRouteWithChildren
+  '/_doctor': typeof DoctorRouteWithChildren
+  '/_pages': typeof PagesRouteWithChildren
+  '/_app/_doctor': typeof AppDoctorRouteWithChildren
+  '/_pages/_pages': typeof PagesPagesRouteWithChildren
+  '/dashboard/': typeof DashboardIndexRoute
+  '/login/': typeof LoginIndexRoute
+  '/_app/dashboard/': typeof AppDashboardIndexRoute
+  '/_app/login/': typeof AppLoginIndexRoute
+  '/_doctor/doctor/': typeof DoctorDoctorIndexRoute
+  '/_pages/_pages/': typeof PagesPagesIndexRoute
+  '/dashboard/schedule/': typeof DashboardScheduleIndexRoute
+  '/_app/_consultation/consultations/': typeof AppConsultationConsultationsIndexRoute
+  '/_app/_doctor/doctor/': typeof AppDoctorDoctorIndexRoute
+  '/_app/dashboard/doctors/': typeof AppDashboardDoctorsIndexRoute
+  '/_app/dashboard/profile/': typeof AppDashboardProfileIndexRoute
+  '/_app/dashboard/schedule/': typeof AppDashboardScheduleIndexRoute
+  '/_app/dashboard/wallet/': typeof AppDashboardWalletIndexRoute
+  '/_doctor/doctor/patients/': typeof DoctorDoctorPatientsIndexRoute
+  '/_app/_doctor/doctor/appointments/': typeof AppDoctorDoctorAppointmentsIndexRoute
+  '/_app/_doctor/doctor/lab/': typeof AppDoctorDoctorLabIndexRoute
+  '/_app/_doctor/doctor/message/': typeof AppDoctorDoctorMessageIndexRoute
+  '/_app/_doctor/doctor/patients/': typeof AppDoctorDoctorPatientsIndexRoute
+  '/_app/_doctor/doctor/support/': typeof AppDoctorDoctorSupportIndexRoute
+  '/_app/dashboard/chats/$doctorId/': typeof AppDashboardChatsDoctorIdIndexRoute
+  '/dashboard/doctors/profile/$doctorId/': typeof DashboardDoctorsProfileDoctorIdIndexRoute
+  '/_app/_doctor/doctor/message/$patientId/': typeof AppDoctorDoctorMessagePatientIdIndexRoute
+  '/_app/dashboard/doctors/profile/$doctorId/': typeof AppDashboardDoctorsProfileDoctorIdIndexRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | ''
+    | '/dashboard'
+    | '/login'
+    | '/doctor'
+    | '/'
+    | '/dashboard/schedule'
+    | '/consultations'
+    | '/dashboard/doctors'
+    | '/dashboard/profile'
+    | '/dashboard/wallet'
+    | '/doctor/patients'
+    | '/doctor/appointments'
+    | '/doctor/lab'
+    | '/doctor/message'
+    | '/doctor/support'
+    | '/dashboard/chats/$doctorId'
+    | '/dashboard/doctors/profile/$doctorId'
+    | '/doctor/message/$patientId'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | ''
+    | '/dashboard'
+    | '/login'
+    | '/doctor'
+    | '/'
+    | '/dashboard/schedule'
+    | '/consultations'
+    | '/dashboard/doctors'
+    | '/dashboard/profile'
+    | '/dashboard/wallet'
+    | '/doctor/patients'
+    | '/doctor/appointments'
+    | '/doctor/lab'
+    | '/doctor/message'
+    | '/doctor/support'
+    | '/dashboard/chats/$doctorId'
+    | '/dashboard/doctors/profile/$doctorId'
+    | '/doctor/message/$patientId'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/_doctor'
+    | '/_pages'
+    | '/_app/_doctor'
+    | '/_pages/_pages'
+    | '/dashboard/'
+    | '/login/'
+    | '/_app/dashboard/'
+    | '/_app/login/'
+    | '/_doctor/doctor/'
+    | '/_pages/_pages/'
+    | '/dashboard/schedule/'
+    | '/_app/_consultation/consultations/'
+    | '/_app/_doctor/doctor/'
+    | '/_app/dashboard/doctors/'
+    | '/_app/dashboard/profile/'
+    | '/_app/dashboard/schedule/'
+    | '/_app/dashboard/wallet/'
+    | '/_doctor/doctor/patients/'
+    | '/_app/_doctor/doctor/appointments/'
+    | '/_app/_doctor/doctor/lab/'
+    | '/_app/_doctor/doctor/message/'
+    | '/_app/_doctor/doctor/patients/'
+    | '/_app/_doctor/doctor/support/'
+    | '/_app/dashboard/chats/$doctorId/'
+    | '/dashboard/doctors/profile/$doctorId/'
+    | '/_app/_doctor/doctor/message/$patientId/'
+    | '/_app/dashboard/doctors/profile/$doctorId/'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  AppRoute: typeof AppRouteWithChildren
+  DoctorRoute: typeof DoctorRouteWithChildren
+  PagesRoute: typeof PagesRouteWithChildren
+  DashboardIndexRoute: typeof DashboardIndexRoute
+  LoginIndexRoute: typeof LoginIndexRoute
+  DashboardScheduleIndexRoute: typeof DashboardScheduleIndexRoute
+  DashboardDoctorsProfileDoctorIdIndexRoute: typeof DashboardDoctorsProfileDoctorIdIndexRoute
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  AppRoute: AppRouteWithChildren,
+  DoctorRoute: DoctorRouteWithChildren,
+  PagesRoute: PagesRouteWithChildren,
+  DashboardIndexRoute: DashboardIndexRoute,
+  LoginIndexRoute: LoginIndexRoute,
+  DashboardScheduleIndexRoute: DashboardScheduleIndexRoute,
+  DashboardDoctorsProfileDoctorIdIndexRoute:
+    DashboardDoctorsProfileDoctorIdIndexRoute,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 
