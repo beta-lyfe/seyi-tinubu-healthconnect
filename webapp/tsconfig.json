@@ -3,8 +3,6 @@
 		"baseUrl": ".",
 		"paths": {
 			"@beta-lyfe/webapp/*": ["./src/*"],
-			"@beta-lyfe/backend": ["../backend/src/index.ts"],
-			"@beta-lyfe/backend/*": ["../backend/src/*"]
 		},
 		"target": "ES2020",
 		"useDefineForClassFields": true,
