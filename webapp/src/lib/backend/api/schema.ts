@@ -192,6 +192,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/consultation/{id}/access-token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Generate access token */
+        get: operations["Consultation_generateAccessToken"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/consultation/{id}/chat": {
         parameters: {
             query?: never;
@@ -393,6 +410,10 @@ export interface components {
             /** @example Invalid data */
             message: string;
         };
+        "Api.Consultation.AccessToken": {
+            /** @example eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik1hcnkgU2xlc3NvciIsImlhdCI6MTUxNjIzOTAyMn0.UFI1B6pCOrqlpaFHV58dqqTLYCCC8hukJAVY8Wb1Z9o */
+            token: string;
+        };
         "Api.Consultation.Chat": {
             id: components["schemas"]["Id"];
             /** @example Hello, how are you feeling today? */
@@ -405,6 +426,7 @@ export interface components {
         "Api.Consultation.Consultation": {
             doctors_notes: components["schemas"]["Api.Consultation.DoctorNote"][];
             chats: components["schemas"]["Api.Consultation.Chat"][];
+            room_id: components["schemas"]["Id"];
             doctor_id: components["schemas"]["Id"];
             patient_id: components["schemas"]["Id"];
         };
@@ -457,6 +479,10 @@ export interface components {
             last_name: string;
             /** @example john.doe@mail.com */
             email: string;
+            /** @example https://avatar.iran.liara.run/public */
+            image_url: string;
+            /** @example neurologist */
+            specialty: string;
         };
         "Api.Doctor.DoctorUpdate": {
             id?: components["schemas"]["Id"];
@@ -466,6 +492,10 @@ export interface components {
             last_name?: string;
             /** @example john.doe@mail.com */
             email?: string;
+            /** @example https://avatar.iran.liara.run/public */
+            image_url?: string;
+            /** @example neurologist */
+            specialty?: string;
         };
         "Api.Patient.Patient": {
             id: components["schemas"]["Id"];
@@ -484,6 +514,10 @@ export interface components {
             last_name?: string;
             /** @example mary.slessor@mail.com */
             email?: string;
+        };
+        "Api.PermissionDeniedError": {
+            /** @example Permission denied */
+            message: string;
         };
         "Api.UnexpectedError": {
             /** @example An unexpected error occurred */
@@ -801,6 +835,15 @@ export interface operations {
                     "application/json": components["schemas"]["Api.Consultation.Request.ConsultationRequest"][];
                 };
             };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
+                };
+            };
             /** @description Server error */
             500: {
                 headers: {
@@ -834,6 +877,15 @@ export interface operations {
                     "application/json": components["schemas"]["Api.Consultation.Request.ConsultationRequestCreated"];
                 };
             };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
+                };
+            };
             /** @description Server error */
             500: {
                 headers: {
@@ -863,6 +915,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Api.Consultation.Request.ConsultationRequest"];
+                };
+            };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
+                };
+            };
+            /** @description The server cannot find the requested resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example Consultation not found */
+                        message: string;
+                    };
                 };
             };
             /** @description Server error */
@@ -896,6 +969,27 @@ export interface operations {
                     "application/json": components["schemas"]["Api.Consultation.Request.ConsultationRequestAccepted"][];
                 };
             };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
+                };
+            };
+            /** @description The server cannot find the requested resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example Consultation not found */
+                        message: string;
+                    };
+                };
+            };
             /** @description Server error */
             500: {
                 headers: {
@@ -927,6 +1021,79 @@ export interface operations {
                     "application/json": components["schemas"]["Api.Consultation.Consultation"];
                 };
             };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
+                };
+            };
+            /** @description The server cannot find the requested resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example Consultation not found */
+                        message: string;
+                    };
+                };
+            };
+            /** @description Server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.UnexpectedError"];
+                };
+            };
+        };
+    };
+    Consultation_generateAccessToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The request has succeeded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.Consultation.AccessToken"];
+                };
+            };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
+                };
+            };
+            /** @description The server cannot find the requested resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example Consultation not found */
+                        message: string;
+                    };
+                };
+            };
             /** @description Server error */
             500: {
                 headers: {
@@ -956,6 +1123,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Api.Consultation.ConsultationChatAdded"];
+                };
+            };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
+                };
+            };
+            /** @description The server cannot find the requested resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example Consultation not found */
+                        message: string;
+                    };
                 };
             };
             /** @description Server error */
@@ -993,6 +1181,27 @@ export interface operations {
                     "application/json": components["schemas"]["Api.Consultation.ConsultationNoteAdded"];
                 };
             };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
+                };
+            };
+            /** @description The server cannot find the requested resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example Consultation not found */
+                        message: string;
+                    };
+                };
+            };
             /** @description Server error */
             500: {
                 headers: {
@@ -1020,6 +1229,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Api.Doctor.Doctor"][];
+                };
+            };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
                 };
             };
             /** @description Server error */
@@ -1051,6 +1269,15 @@ export interface operations {
                     "application/json": components["schemas"]["Api.Doctor.Doctor"];
                 };
             };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
+                };
+            };
             /** @description Server error */
             500: {
                 headers: {
@@ -1080,6 +1307,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Api.Doctor.Doctor"];
+                };
+            };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
+                };
+            };
+            /** @description The server cannot find the requested resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example Doctor not found */
+                        message: string;
+                    };
                 };
             };
             /** @description Server error */
@@ -1117,6 +1365,27 @@ export interface operations {
                     "application/json": components["schemas"]["Api.Doctor.Doctor"];
                 };
             };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
+                };
+            };
+            /** @description The server cannot find the requested resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example Doctor not found */
+                        message: string;
+                    };
+                };
+            };
             /** @description Server error */
             500: {
                 headers: {
@@ -1144,6 +1413,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Api.Patient.Patient"][];
+                };
+            };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
                 };
             };
             /** @description Server error */
@@ -1175,6 +1453,15 @@ export interface operations {
                     "application/json": components["schemas"]["Api.Patient.Patient"];
                 };
             };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
+                };
+            };
             /** @description Server error */
             500: {
                 headers: {
@@ -1204,6 +1491,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Api.Patient.Patient"];
+                };
+            };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
+                };
+            };
+            /** @description The server cannot find the requested resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example Patient not found */
+                        message: string;
+                    };
                 };
             };
             /** @description Server error */
@@ -1239,6 +1547,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Api.Patient.Patient"];
+                };
+            };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.PermissionDeniedError"];
+                };
+            };
+            /** @description The server cannot find the requested resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example Patient not found */
+                        message: string;
+                    };
                 };
             };
             /** @description Server error */

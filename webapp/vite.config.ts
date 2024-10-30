@@ -8,41 +8,41 @@ export default defineConfig({
   plugins: [
     TanStackRouterVite(),
     react(),
-    VitePWA({
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-        navigateFallbackDenylist: [/^\/api/]
-      },
-      // strategies: 'injectManifest',
-      devOptions: {
-        enabled: true
-      },
-      manifest: {
-        name: 'BetaLyfe',
-        short_name: 'BetaLyfe',
-        description: 'BetaLyfe mobile app',
-        theme_color: '#f382ec',
-        start_url: '/dashboard',
-        related_applications: [
-          {
-            platform: 'webapp',
-            url: `${process.env.BASE_URL}/manifest.webmanifest`
-          }
-        ],
-        icons: [
-          {
-            src: '/images/logo-192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: '/images/logo-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
-          }
-        ]
-      }
-    }),
+    // VitePWA({
+    //   workbox: {
+    //     globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+    //     navigateFallbackDenylist: [/^\/api/]
+    //   },
+    //   // strategies: 'injectManifest',
+    //   devOptions: {
+    //     enabled: true
+    //   },
+    //   manifest: {
+    //     name: 'BetaLyfe',
+    //     short_name: 'BetaLyfe',
+    //     description: 'BetaLyfe mobile app',
+    //     theme_color: '#f382ec',
+    //     start_url: '/dashboard',
+    //     related_applications: [
+    //       {
+    //         platform: 'webapp',
+    //         url: `${process.env.BASE_URL}/manifest.webmanifest`
+    //       }
+    //     ],
+    //     icons: [
+    //       {
+    //         src: '/images/logo-192x192.png',
+    //         sizes: '192x192',
+    //         type: 'image/png'
+    //       },
+    //       {
+    //         src: '/images/logo-512x512.png',
+    //         sizes: '512x512',
+    //         type: 'image/png'
+    //       }
+    //     ]
+    //   }
+    // }),
     tsconfigPaths()
   ],
   server: {

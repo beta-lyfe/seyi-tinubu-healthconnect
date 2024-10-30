@@ -4,17 +4,16 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { ArrowRight } from 'lucide-react'
 import { type FunctionComponent, useEffect, useState } from 'react'
 import doctorMariaWatts from '@beta-lyfe/webapp/assets/images/doctors/maria-watts.png'
-import { backend } from '@beta-lyfe/webapp/lib/backend'
-import type { Doctor } from '@beta-lyfe/webapp/lib/backend/api/doctors'
+import { $api,schema } from '@beta-lyfe/webapp/lib/backend'
 import appointmentIcon from '@beta-lyfe/webapp/assets/images/icons/appointment.png'
 import examinationIcon from '@beta-lyfe/webapp/assets/images/icons/examination.png'
 import medicalProfileIcon from '@beta-lyfe/webapp/assets/images/icons/medical-profile.png'
-
 export const Route = createFileRoute('/_pages/_pages/')({
   component: () => <LandingPage />
 })
 
 const links = ['Home', 'About us', 'Services', 'Doctors', 'FAQs', 'Contact']
+type Doctor= schema.components['schemas']['Api.Doctor.Doctor']
 
 const statements = [
   {
@@ -28,8 +27,7 @@ const statements = [
 ]
 
 function LandingPage() {
-  const { data, status } = backend.api.doctors.useGetDoctors()
-
+  const { data, status } = $api.useQuery("get",'/api/doctors/')
   if (status === 'pending' || status === 'error') return null
 
   const doctors = data
@@ -289,7 +287,7 @@ const MeetOurDoctors: FunctionComponent<{ doctors: Doctor[] }> = ({
   )
 }
 
-const DoctorCard: FunctionComponent<{ doctor: Doctor }> = ({ doctor }) => {
+const DoctorCard: FunctionComponent<{ doctor: Doctor}> = ({ doctor }) => {
   const fullName = `${doctor.first_name} ${doctor.last_name}`
 
   return (

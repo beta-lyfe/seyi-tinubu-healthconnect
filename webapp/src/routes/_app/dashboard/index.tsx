@@ -20,8 +20,7 @@ import {
 import { quickNav } from './schedule'
 import { Wallet } from 'lucide-react'
 import { BottomNav } from '../-components/bottom-nav'
-import type { Doctor } from '@beta-lyfe/webapp/lib/backend/api/doctors'
-import { backend } from '@beta-lyfe/webapp/lib/backend'
+import { $api } from '@beta-lyfe/webapp/lib/backend'
 import { LogoIcon } from '@beta-lyfe/webapp/components/icons'
 import doctorImage from '@beta-lyfe/webapp/assets/images/doctor.png'
 
@@ -30,7 +29,7 @@ export const Route = createFileRoute('/_app/dashboard/')({
 })
 
 function ChatList() {
-  const { data, status } = backend.api.doctors.useGetDoctors()
+  const { data, status } = $api.useQuery('get',"/api/doctors/")
 
   if (status === 'pending' || status === 'error') return null
 
@@ -65,7 +64,7 @@ function ChatList() {
 }
 
 const DoctorsCarousel = () => {
-  const { data, status } = backend.api.doctors.useGetDoctors()
+  const { data, status } = $api.useQuery("get","/api/doctors/")
 
   if (status === 'pending' || status === 'error') return null
 

@@ -1,1 +1,1 @@
-export { client, reactQueryClient as $api } from "./api";
+export { client, reactQueryClient as $api,schema } from "./api";
