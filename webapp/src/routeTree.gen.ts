@@ -17,8 +17,8 @@ import { Route as AppImport } from './routes/_app'
 import { Route as PagesPagesImport } from './routes/_pages/_pages'
 import { Route as AppDoctorImport } from './routes/_app/_doctor'
 import { Route as PagesPagesIndexImport } from './routes/_pages/_pages/index'
-import { Route as AppLoginIndexImport } from './routes/_app/login/index'
 import { Route as AppDashboardIndexImport } from './routes/_app/dashboard/index'
+import { Route as AppAuthSignInImport } from './routes/_app/auth/sign-in'
 import { Route as AppDashboardWalletIndexImport } from './routes/_app/dashboard/wallet/index'
 import { Route as AppDashboardScheduleIndexImport } from './routes/_app/dashboard/schedule/index'
 import { Route as AppDashboardProfileIndexImport } from './routes/_app/dashboard/profile/index'
@@ -67,15 +67,15 @@ const PagesPagesIndexRoute = PagesPagesIndexImport.update({
   getParentRoute: () => PagesPagesRoute,
 } as any)
 
-const AppLoginIndexRoute = AppLoginIndexImport.update({
-  id: '/login/',
-  path: '/login/',
-  getParentRoute: () => AppRoute,
-} as any)
-
 const AppDashboardIndexRoute = AppDashboardIndexImport.update({
   id: '/dashboard/',
   path: '/dashboard/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppAuthSignInRoute = AppAuthSignInImport.update({
+  id: '/auth/sign-in',
+  path: '/auth/sign-in',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -210,18 +210,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PagesPagesImport
       parentRoute: typeof PagesImport
     }
+    '/_app/auth/sign-in': {
+      id: '/_app/auth/sign-in'
+      path: '/auth/sign-in'
+      fullPath: '/auth/sign-in'
+      preLoaderRoute: typeof AppAuthSignInImport
+      parentRoute: typeof AppImport
+    }
     '/_app/dashboard/': {
       id: '/_app/dashboard/'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AppDashboardIndexImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/login/': {
-      id: '/_app/login/'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof AppLoginIndexImport
       parentRoute: typeof AppImport
     }
     '/_pages/_pages/': {
@@ -361,8 +361,8 @@ const AppDoctorRouteWithChildren = AppDoctorRoute._addFileChildren(
 
 interface AppRouteChildren {
   AppDoctorRoute: typeof AppDoctorRouteWithChildren
+  AppAuthSignInRoute: typeof AppAuthSignInRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
-  AppLoginIndexRoute: typeof AppLoginIndexRoute
   AppConsultationConsultationsIndexRoute: typeof AppConsultationConsultationsIndexRoute
   AppDashboardDoctorsIndexRoute: typeof AppDashboardDoctorsIndexRoute
   AppDashboardProfileIndexRoute: typeof AppDashboardProfileIndexRoute
@@ -374,8 +374,8 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppDoctorRoute: AppDoctorRouteWithChildren,
+  AppAuthSignInRoute: AppAuthSignInRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
-  AppLoginIndexRoute: AppLoginIndexRoute,
   AppConsultationConsultationsIndexRoute:
     AppConsultationConsultationsIndexRoute,
   AppDashboardDoctorsIndexRoute: AppDashboardDoctorsIndexRoute,
@@ -413,8 +413,8 @@ const PagesRouteWithChildren = PagesRoute._addFileChildren(PagesRouteChildren)
 
 export interface FileRoutesByFullPath {
   '': typeof PagesPagesRouteWithChildren
+  '/auth/sign-in': typeof AppAuthSignInRoute
   '/dashboard': typeof AppDashboardIndexRoute
-  '/login': typeof AppLoginIndexRoute
   '/': typeof PagesPagesIndexRoute
   '/consultations': typeof AppConsultationConsultationsIndexRoute
   '/doctor': typeof AppDoctorDoctorIndexRoute
@@ -434,8 +434,8 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof AppDoctorRouteWithChildren
+  '/auth/sign-in': typeof AppAuthSignInRoute
   '/dashboard': typeof AppDashboardIndexRoute
-  '/login': typeof AppLoginIndexRoute
   '/': typeof PagesPagesIndexRoute
   '/consultations': typeof AppConsultationConsultationsIndexRoute
   '/doctor': typeof AppDoctorDoctorIndexRoute
@@ -460,8 +460,8 @@ export interface FileRoutesById {
   '/_pages': typeof PagesRouteWithChildren
   '/_app/_doctor': typeof AppDoctorRouteWithChildren
   '/_pages/_pages': typeof PagesPagesRouteWithChildren
+  '/_app/auth/sign-in': typeof AppAuthSignInRoute
   '/_app/dashboard/': typeof AppDashboardIndexRoute
-  '/_app/login/': typeof AppLoginIndexRoute
   '/_pages/_pages/': typeof PagesPagesIndexRoute
   '/_app/_consultation/consultations/': typeof AppConsultationConsultationsIndexRoute
   '/_app/_doctor/doctor/': typeof AppDoctorDoctorIndexRoute
@@ -483,8 +483,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
+    | '/auth/sign-in'
     | '/dashboard'
-    | '/login'
     | '/'
     | '/consultations'
     | '/doctor'
@@ -503,8 +503,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
+    | '/auth/sign-in'
     | '/dashboard'
-    | '/login'
     | '/'
     | '/consultations'
     | '/doctor'
@@ -527,8 +527,8 @@ export interface FileRouteTypes {
     | '/_pages'
     | '/_app/_doctor'
     | '/_pages/_pages'
+    | '/_app/auth/sign-in'
     | '/_app/dashboard/'
-    | '/_app/login/'
     | '/_pages/_pages/'
     | '/_app/_consultation/consultations/'
     | '/_app/_doctor/doctor/'
@@ -580,8 +580,8 @@ export const routeTree = rootRoute
       "filePath": "_app.tsx",
       "children": [
         "/_app/_doctor",
+        "/_app/auth/sign-in",
         "/_app/dashboard/",
-        "/_app/login/",
         "/_app/_consultation/consultations/",
         "/_app/dashboard/doctors/",
         "/_app/dashboard/profile/",
@@ -620,12 +620,12 @@ export const routeTree = rootRoute
         "/_pages/_pages/"
       ]
     },
-    "/_app/dashboard/": {
-      "filePath": "_app/dashboard/index.tsx",
+    "/_app/auth/sign-in": {
+      "filePath": "_app/auth/sign-in.tsx",
       "parent": "/_app"
     },
-    "/_app/login/": {
-      "filePath": "_app/login/index.tsx",
+    "/_app/dashboard/": {
+      "filePath": "_app/dashboard/index.tsx",
       "parent": "/_app"
     },
     "/_pages/_pages/": {
