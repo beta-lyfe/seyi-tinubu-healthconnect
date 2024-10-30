@@ -1,0 +1,15 @@
+{
+	"javascript": {
+		"formatter": {
+			"indentStyle": "space",
+			"indentWidth": 2,
+			"quoteStyle": "single",
+			"semicolons": "asNeeded",
+			"trailingCommas": "none",
+			"lineWidth": 80
+		}
+	},
+	"organizeImports": {
+		"enabled": true
+	}
+}
