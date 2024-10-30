@@ -5,8 +5,8 @@ export namespace AuthLayout {
 		children,
 	}) => (
 		<div className="h-screen grid grid-cols-12">
-			<div className="col-span-6 bg-primary" />
-			<div className="col-span-6">{children}</div>
+			<div className="lg:col-span-6 bg-primary hidden lg:block col-span-0" />
+			<div className="col-span-12 lg:col-span-6">{children}</div>
 		</div>
 	);
 }

@@ -18,6 +18,7 @@ import { Route as PagesPagesImport } from './routes/_pages/_pages'
 import { Route as AppDoctorImport } from './routes/_app/_doctor'
 import { Route as PagesPagesIndexImport } from './routes/_pages/_pages/index'
 import { Route as AppDashboardIndexImport } from './routes/_app/dashboard/index'
+import { Route as AppAuthSignUpImport } from './routes/_app/auth/sign-up'
 import { Route as AppAuthSignInImport } from './routes/_app/auth/sign-in'
 import { Route as AppDashboardWalletIndexImport } from './routes/_app/dashboard/wallet/index'
 import { Route as AppDashboardScheduleIndexImport } from './routes/_app/dashboard/schedule/index'
@@ -70,6 +71,12 @@ const PagesPagesIndexRoute = PagesPagesIndexImport.update({
 const AppDashboardIndexRoute = AppDashboardIndexImport.update({
   id: '/dashboard/',
   path: '/dashboard/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppAuthSignUpRoute = AppAuthSignUpImport.update({
+  id: '/auth/sign-up',
+  path: '/auth/sign-up',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -217,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAuthSignInImport
       parentRoute: typeof AppImport
     }
+    '/_app/auth/sign-up': {
+      id: '/_app/auth/sign-up'
+      path: '/auth/sign-up'
+      fullPath: '/auth/sign-up'
+      preLoaderRoute: typeof AppAuthSignUpImport
+      parentRoute: typeof AppImport
+    }
     '/_app/dashboard/': {
       id: '/_app/dashboard/'
       path: '/dashboard'
@@ -362,6 +376,7 @@ const AppDoctorRouteWithChildren = AppDoctorRoute._addFileChildren(
 interface AppRouteChildren {
   AppDoctorRoute: typeof AppDoctorRouteWithChildren
   AppAuthSignInRoute: typeof AppAuthSignInRoute
+  AppAuthSignUpRoute: typeof AppAuthSignUpRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
   AppConsultationConsultationsIndexRoute: typeof AppConsultationConsultationsIndexRoute
   AppDashboardDoctorsIndexRoute: typeof AppDashboardDoctorsIndexRoute
@@ -375,6 +390,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppDoctorRoute: AppDoctorRouteWithChildren,
   AppAuthSignInRoute: AppAuthSignInRoute,
+  AppAuthSignUpRoute: AppAuthSignUpRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
   AppConsultationConsultationsIndexRoute:
     AppConsultationConsultationsIndexRoute,
@@ -414,6 +430,7 @@ const PagesRouteWithChildren = PagesRoute._addFileChildren(PagesRouteChildren)
 export interface FileRoutesByFullPath {
   '': typeof PagesPagesRouteWithChildren
   '/auth/sign-in': typeof AppAuthSignInRoute
+  '/auth/sign-up': typeof AppAuthSignUpRoute
   '/dashboard': typeof AppDashboardIndexRoute
   '/': typeof PagesPagesIndexRoute
   '/consultations': typeof AppConsultationConsultationsIndexRoute
@@ -435,6 +452,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '': typeof AppDoctorRouteWithChildren
   '/auth/sign-in': typeof AppAuthSignInRoute
+  '/auth/sign-up': typeof AppAuthSignUpRoute
   '/dashboard': typeof AppDashboardIndexRoute
   '/': typeof PagesPagesIndexRoute
   '/consultations': typeof AppConsultationConsultationsIndexRoute
@@ -461,6 +479,7 @@ export interface FileRoutesById {
   '/_app/_doctor': typeof AppDoctorRouteWithChildren
   '/_pages/_pages': typeof PagesPagesRouteWithChildren
   '/_app/auth/sign-in': typeof AppAuthSignInRoute
+  '/_app/auth/sign-up': typeof AppAuthSignUpRoute
   '/_app/dashboard/': typeof AppDashboardIndexRoute
   '/_pages/_pages/': typeof PagesPagesIndexRoute
   '/_app/_consultation/consultations/': typeof AppConsultationConsultationsIndexRoute
@@ -484,6 +503,7 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/auth/sign-in'
+    | '/auth/sign-up'
     | '/dashboard'
     | '/'
     | '/consultations'
@@ -504,6 +524,7 @@ export interface FileRouteTypes {
   to:
     | ''
     | '/auth/sign-in'
+    | '/auth/sign-up'
     | '/dashboard'
     | '/'
     | '/consultations'
@@ -528,6 +549,7 @@ export interface FileRouteTypes {
     | '/_app/_doctor'
     | '/_pages/_pages'
     | '/_app/auth/sign-in'
+    | '/_app/auth/sign-up'
     | '/_app/dashboard/'
     | '/_pages/_pages/'
     | '/_app/_consultation/consultations/'
@@ -581,6 +603,7 @@ export const routeTree = rootRoute
       "children": [
         "/_app/_doctor",
         "/_app/auth/sign-in",
+        "/_app/auth/sign-up",
         "/_app/dashboard/",
         "/_app/_consultation/consultations/",
         "/_app/dashboard/doctors/",
@@ -622,6 +645,10 @@ export const routeTree = rootRoute
     },
     "/_app/auth/sign-in": {
       "filePath": "_app/auth/sign-in.tsx",
+      "parent": "/_app"
+    },
+    "/_app/auth/sign-up": {
+      "filePath": "_app/auth/sign-up.tsx",
       "parent": "/_app"
     },
     "/_app/dashboard/": {

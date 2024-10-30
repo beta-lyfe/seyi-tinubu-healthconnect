@@ -19,7 +19,7 @@ import { useEffect, useRef, useState } from "react";
 import { defaultValues } from "./-components/credentials";
 import { ArrowLeftIcon } from "lucide-react";
 
-export const Route = createFileRoute("/_app/auth/sign-in")({
+export const Route = createFileRoute("/_app/auth/sign-up")({
 	component: SignInPage,
 });
 
@@ -71,7 +71,7 @@ function SignInPage() {
 						className="w-full max-w-md flex flex-col gap-4"
 					>
 						<header className="text-xl font-semibold text-center">
-							Sign in
+							Sign up
 						</header>
 						<div className="flex flex-col gap-4">
 							<FormField
@@ -103,9 +103,9 @@ function SignInPage() {
 						</div>
 						<div>
 							{/*<Link href="">Forgot password?</Link>*/}
-							Don't have an account?{" "}
-							<Link href="/auth/sign-up" className="text-primary">
-								Sign up
+							Alreadh have an account?{" "}
+							<Link href="/auth/sign-in" className="text-primary">
+								Sign in
 							</Link>
 						</div>
 						<Button type="submit">Submit</Button>
