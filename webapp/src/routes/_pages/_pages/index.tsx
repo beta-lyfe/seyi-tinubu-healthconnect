@@ -74,7 +74,7 @@ function Hero() {
             your medical records—all from your smartphone, tablet, or computer
           </Typography.Info>
           <div className="text-left py-6">
-            <Link to="/login">
+            <Link to="/auth/sign-in">
               <Button className="bg-white text-primary hover:text-primary hover:bg-white">
                 Get Started
               </Button>
@@ -233,7 +233,7 @@ function Nav() {
           </li>
         ))}
       </ul>
-      <Link to="/login">
+      <Link to="/auth/sign-in">
         <Button className="bg-white text-primary hover:text-primary hover:bg-white">
           Login
         </Button>

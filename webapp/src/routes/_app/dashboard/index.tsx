@@ -29,7 +29,7 @@ export const Route = createFileRoute('/_app/dashboard/')({
 })
 
 function ChatList() {
-  const { data, status } = $api.useQuery('get',"/api/doctors/")
+  const { data, status } = $api.useQuery('get', '/api/doctors/')
 
   if (status === 'pending' || status === 'error') return null
 
@@ -64,7 +64,7 @@ function ChatList() {
 }
 
 const DoctorsCarousel = () => {
-  const { data, status } = $api.useQuery("get","/api/doctors/")
+  const { data, status } = $api.useQuery('get', '/api/doctors/')
 
   if (status === 'pending' || status === 'error') return null
 
@@ -158,12 +158,7 @@ function ChatsListPage() {
             </div>
           </div>
           <div>
-            <Input
-              icon={
-                <SearchIcon className="stroke-[3px] text-slate-300 size-5" />
-              }
-              placeholder="Search for a Doctor"
-            />
+            <Input placeholder="Search for a Doctor" />
           </div>
         </div>
       </div>

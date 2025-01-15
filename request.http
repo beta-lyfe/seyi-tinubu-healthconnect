@@ -1,0 +1,9 @@
+##############################
+POST http://localhost:8000/api/auth/register/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "password": "password",
+    "password2" : "password",
+    "email": "mary.slessor@mail.com"
+}

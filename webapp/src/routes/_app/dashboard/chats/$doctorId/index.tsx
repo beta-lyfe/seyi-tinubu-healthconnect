@@ -134,11 +134,7 @@ function BottomChatSection() {
       <div className="fixed bottom-0 left-0 p-5 py-2 bg-white w-full">
         <div className="flex gap-2">
           <div className="grow">
-            <Input
-              icon={
-                <PaperclipIcon className="stroke-[3px] text-slate-300 size-5" />
-              }
-            />
+            <Input />
           </div>
           <Button className="h-auto flex gap-2">
             Send
