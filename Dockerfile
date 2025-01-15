@@ -15,7 +15,7 @@ COPY webapp .
 
 RUN pnpm install
 
-RUN pnpm run webapp:build
+RUN pnpm run build
 
 
 # Stage 2
@@ -29,7 +29,7 @@ RUN python3 -m venv .venv
 ENV VIRTUAL_ENV=/app/.venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-COPY --from=node-builder /app/@beta-lyfe/webapp/dist static
+COPY --from=node-builder /app/webapp/dist static
 COPY backend/templates templates
 RUN cp static/index.html templates/index.html
 
