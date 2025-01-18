@@ -22,8 +22,7 @@ pnpm install
 ```bash
 # pwd: ./webapp
 
-pnpm webapp:dev # to run the webapp
-pnpm backend:dev # to run the ad-hoc backend server
+pnpm dev # to run the webapp
 ```
 
 #### Backend

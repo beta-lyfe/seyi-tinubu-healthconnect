@@ -3,13 +3,14 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework import status
 import cloudinary
 
-from .serializer import UserSerializer, LoginSerializer, EmailVerifySerializer
+from api.schemas import UserSerializer, LoginSerializer, EmailVerifySerializer
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from .tools import VerifyEmail_key, ResetPassword_key
+from api.utils import VerifyEmail_key, ResetPassword_key
 from django.contrib.auth.hashers import make_password, check_password
 from allauth.account.models import EmailAddress
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -20,36 +21,67 @@ from patient.models import PatientProfile
 from doctor.serializer import DoctorProfileSerializer
 from patient.serializer import PatientProfileSerializer
 
+from django.template.loader import get_template
+from django.core.mail import send_mail
+
+from api.schemas import (register_schema)
+
 
 """ AUTH """
 # Register View
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def register(request):
-    serialized_data = UserSerializer(data=request.data)
+class RegisterView(APIView):
+    permission_classes = [AllowAny]
+    
+    @register_schema
+    def post(self, request):
+        serialized_data = UserSerializer(data=request.data)
 
-    if serialized_data.is_valid():
-        user = serialized_data.save()
-        EmailAddress.objects.create(
-            user=user,
-            email=user.email # type: ignore
-        )
-        key, exp = VerifyEmail_key(user.id)
+        if serialized_data.is_valid():
+            user = serialized_data.save()
+                
+            return self.handle_email_verification(user=user)
+
+        return Response({'message': serialized_data.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    def handle_email_verification(self, user):
+        """Helper method to handle email verification process."""
+        EmailAddress.objects.create(user=user, email=user.email)
+        key, expires_at = VerifyEmail_key(user.id)
 
         # Add other fields to profile ('first_name', 'last_name', 'phone_number', 'age')
-        if user.is_doctor:
-            profile = DoctorProfile.objects.get(user=user)
-            doctor = DoctorProfileSerializer(profile, data=request.data, partial=True)
-            if doctor.is_valid():
-                doctor.save()
-        else:
-            profile = PatientProfile.objects.get(user=user)
-            patient = PatientProfileSerializer(profile, data=request.data, partial=True)
-            if patient.is_valid():
-                patient.save()
+        # if user.is_doctor:
+        #     profile = DoctorProfile.objects.get(user=user)
+        #     doctor = DoctorProfileSerializer(profile, data=request.data, partial=True)
+        #     if doctor.is_valid():
+        #         doctor.save()
+        # else:
+        #     profile = PatientProfile.objects.get(user=user)
+        #     patient = PatientProfileSerializer(profile, data=request.data, partial=True)
+        #     if patient.is_valid():
+        #         patient.save()
+        
+        html_content = get_template('auth/verify_email.html').render({
+            "user": user,
+            "otp": key,
+            "expirary_date": expires_at
+        })
 
-        return Response({'detail': {'email': user.email, 'key': key, 'expires': exp} }, status=status.HTTP_201_CREATED) # type: ignore
-    return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            send_mail(
+                subject="Verify your email",
+                message="Please Verify your email. This Email is from GetPaid.bot",
+                from_email="BETA LYFE <cyrile450@gmail.com>",
+                recipient_list=[user.email],
+                html_message=html_content,
+                fail_silently=False
+            )
+            return Response({
+                "message": "Please check your email address for a verification code",
+                "data": {"otp": key, "exp": expires_at}}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            print(f"Error: {e}")
+            return Response({"message": "User Registered Successfully, Verify your email"}, status=status.HTTP_202_ACCEPTED)
 
 
 # Verify Email Here
@@ -67,7 +99,7 @@ def verify_email(request):
         try:
             unique_key = get_object_or_404(EmailVerication_Keys, key=key)
             if unique_key.exp <= timezone.now():
-                return Response({'detail': _('Key has expired.')}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'message': _('Key has expired.')}, status=status.HTTP_404_NOT_FOUND)
             user = unique_key.user
             # Here you can update the 'verified' field of the user
             user.verified = True
@@ -81,11 +113,12 @@ def verify_email(request):
             user.save()
             # You might also want to delete the used verification key
             unique_key.delete()
-            return Response({'detail': _('Email verified successfully.')}, status=status.HTTP_200_OK)
+            return Response({'message': _('Email verified successfully.')}, status=status.HTTP_200_OK)
         except EmailVerication_Keys.DoesNotExist:
-            return Response({'detail': _('Invalid verification key.')}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'message': _('Invalid verification key.')}, status=status.HTTP_404_NOT_FOUND)
 
     return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -156,7 +189,7 @@ def resend_verify_email(request):
 
         key, exp = VerifyEmail_key(user.id)
 
-        return Response({'detail': {'name': user.first_name, 'key': key, 'expires': exp} }, status=status.HTTP_201_CREATED) # type: ignore
+        return Response({'message': {'name': user.first_name, 'key': key, 'expires': exp} }, status=status.HTTP_201_CREATED) # type: ignore
     except:
         return Response("Email does not exist", status=status.HTTP_400_BAD_REQUEST)
 
@@ -188,7 +221,7 @@ def reset_password(request):
         
         key, uid = ResetPassword_key(email=data['email']) # type: ignore pylance warning
 
-        return Response({'detail': {'uid': uid, 'key': key}}, status=status.HTTP_201_CREATED)
+        return Response({'message': {'uid': uid, 'key': key}}, status=status.HTTP_201_CREATED)
     return Response({'errors': 'Something went wrong!'}, status=status.HTTP_400_BAD_REQUEST)
 
 # Verify Email Here
@@ -214,7 +247,7 @@ def confirm_reset_password(request, uid, key):
         print(reset_pwd_object.exp)
         # print(timezone.now())
         if reset_pwd_object.exp <= timezone.now():
-                return Response({'detail': _('Key has expired.')}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'message': _('Key has expired.')}, status=status.HTTP_404_NOT_FOUND)
 
         password = request.data.get('password')
         password2 = request.data.get('password2')
@@ -224,7 +257,7 @@ def confirm_reset_password(request, uid, key):
 
         # Check if passwords match
         if password != password2:
-            return Response({'detail': _('Passwords do not match.')}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message': _('Passwords do not match.')}, status=status.HTTP_400_BAD_REQUEST)
 
 
         # Update the user's password
@@ -233,10 +266,10 @@ def confirm_reset_password(request, uid, key):
         user.save()
         print(f"New password: {user.password}")
 
-        return Response({'detail': _('Password Successfully changed.')}, status=status.HTTP_201_CREATED)
+        return Response({'message': _('Password Successfully changed.')}, status=status.HTTP_201_CREATED)
 
     except User.DoesNotExist or PasswordReset_keys.DoesNotExist:
-        return Response({'detail': _('User DoesNot Exist or Reset Password Key is Invalid')},
+        return Response({'message': _('User DoesNot Exist or Reset Password Key is Invalid')},
                         status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET'])

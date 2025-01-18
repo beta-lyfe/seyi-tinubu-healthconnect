@@ -6,7 +6,7 @@ from .managers import CustomUserManager
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True)
     email = models.EmailField(unique=True)
-    username = models.CharField(max_length=100, blank=True, null=True)
+    username = models.CharField(max_length=100, blank=True)
     is_doctor = models.BooleanField(default=False)
 
     is_staff = models.BooleanField(default=False)

@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react-swc'
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { VitePWA } from 'vite-plugin-pwa'
+import { env } from './src/env'
 
 export default defineConfig({
   plugins: [
@@ -47,7 +48,7 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      '/api': process.env.BACKEND_URL!
+      '/api': env.BACKEND_URL
     }
   }
 })

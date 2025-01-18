@@ -5,10 +5,11 @@ from dotenv import load_dotenv
 import cloudinary.api
 import cloudinary.uploader
 import cloudinary
-from .env import env
 from dotenv import load_dotenv
 
 load_dotenv()
+
+from .env import env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,13 +17,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECRET_KEY = env.secret_key
+SECRET_KEY = env.secret_key
 
-# DEBUG = env.environment == 'development'
-
-SECRET_KEY = os.environ.get("SECRET_KEY")
-
-DEBUG = os.environ.get("SECRET_KEY")
+DEBUG = env.environment == 'development'
 
 ALLOWED_HOSTS = ['*']
 
@@ -38,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     # corsheader
     "corsheaders",
@@ -46,14 +44,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
 
-    # dj-rest-auth
-	'dj_rest_auth.registration',
-    'dj_rest_auth',
+    # drf-spectacular
+    'drf_spectacular',
 
-    # allauth
-    'django.contrib.sites',
+    # allauth    
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
 
     # local app
     "api",
@@ -105,18 +102,31 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgres',
-#     }
-# }
+APP_STAGE = env.environment
 
-DATABASES = {
+
+if APP_STAGE == "production":
+    # MAIN DATABASE -> POSTGRES SQL
+
+    DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ["DB_NAME"],
+        'USER': os.environ["DB_USER"],
+        'PASSWORD': os.environ["DB_PASS"],
+        'HOST': os.environ["DB_HOST"],
+        'PORT': os.environ["DB_PORT"],
     }
 }
+else:
+    # TEST DATABASE -> SQLITE DATABASE
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
 
 
 # Password validation
@@ -179,12 +189,33 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
+# EMAIL FIELDS
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_SSL = True
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+
+DEFAULT_FROM_EMAIL = "BETA LYFE <cyrile450@gmail.com>"
+
+# Spectacuclar setting
+SPECTACULAR_SETTINGS= {
+    'TITLE': 'Beta Lyfe Docs',
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True,
+    },
+    'AUTHENTICATION_WHITELIST': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 
 # rest-framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
  
 # simple jwt
@@ -250,3 +281,4 @@ cloudinary.config(
     api_key=os.environ["CLOUD_API_KEY"],
     api_secret=os.environ["CLOUD_API_SECRET"]
 )
+

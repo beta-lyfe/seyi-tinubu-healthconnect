@@ -2,7 +2,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 import uuid
 import cloudinary
 from backend.settings import BASE_DIR
-from .models import User, EmailVerication_Keys, PasswordReset_keys
+from api.models import User, EmailVerication_Keys, PasswordReset_keys
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 
@@ -57,3 +57,7 @@ class EmailVerifySerializer(ModelSerializer):
     class Meta:
         model = EmailVerication_Keys
         fields = ['key']
+
+class EmailSerializer(serializers.Serializer):
+    email = serializers.CharField(write_only=True)
+    
