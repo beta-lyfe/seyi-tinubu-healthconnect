@@ -15,11 +15,17 @@ from django.contrib.auth.hashers import make_password, check_password
 from allauth.account.models import EmailAddress
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from api.models import User, EmailVerication_Keys, PasswordReset_keys
+from api.models import User, EmailVerication_Keys, PasswordReset_keys, Waitlist
 from doctor.models import DoctorProfile
 from patient.models import PatientProfile
 from doctor.serializer import DoctorProfileSerializer
 from patient.serializer import PatientProfileSerializer
+
+from django.template.loader import get_template
+from django.core.mail import send_mail
+from uuid import uuid4
+
+from api.schemas import (register_schema)
 
 from django.template.loader import get_template
 from django.core.mail import send_mail
@@ -29,6 +35,12 @@ from api.schemas import (register_schema)
 
 """ AUTH """
 # Register View
+class RegisterView(APIView):
+    permission_classes = [AllowAny]
+    
+    @register_schema
+    def post(self, request):
+        serialized_data = UserSerializer(data=request.data)
 class RegisterView(APIView):
     permission_classes = [AllowAny]
     
@@ -49,6 +61,39 @@ class RegisterView(APIView):
         key, expires_at = VerifyEmail_key(user.id)
 
         # Add other fields to profile ('first_name', 'last_name', 'phone_number', 'age')
+        # if user.is_doctor:
+        #     profile = DoctorProfile.objects.get(user=user)
+        #     doctor = DoctorProfileSerializer(profile, data=request.data, partial=True)
+        #     if doctor.is_valid():
+        #         doctor.save()
+        # else:
+        #     profile = PatientProfile.objects.get(user=user)
+        #     patient = PatientProfileSerializer(profile, data=request.data, partial=True)
+        #     if patient.is_valid():
+        #         patient.save()
+        
+        html_content = get_template('auth/verify_email.html').render({
+            "user": user,
+            "otp": key,
+            "expirary_date": expires_at
+        })
+
+        try:
+            send_mail(
+                subject="Verify your email",
+                message="Please Verify your email. This Email is from GetPaid.bot",
+                from_email="BETA LYFE <cyrile450@gmail.com>",
+                recipient_list=[user.email],
+                html_message=html_content,
+                fail_silently=False
+            )
+            return Response({
+                "message": "Please check your email address for a verification code",
+                "data": {"otp": key, "exp": expires_at}}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            print(f"Error: {e}")
+            return Response({"message": "User Registered Successfully, Verify your email"}, status=status.HTTP_202_ACCEPTED)
         # if user.is_doctor:
         #     profile = DoctorProfile.objects.get(user=user)
         #     doctor = DoctorProfileSerializer(profile, data=request.data, partial=True)
@@ -118,6 +163,7 @@ def verify_email(request):
             return Response({'message': _('Invalid verification key.')}, status=status.HTTP_404_NOT_FOUND)
 
     return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 @api_view(['POST'])
@@ -210,7 +256,7 @@ def logout(request):
 # Reset password Here
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def reset_password(request):
+def forget_password(request):
     """
         Receives Email
         Check if Email is in database
@@ -227,11 +273,11 @@ def reset_password(request):
 # Verify Email Here
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def confirm_reset_password(request, uid, key):
+def confirm_forget_password(request, uid, otp):
     """
         The confirm reset password takes in two arguments
             uid - User id
-            key - Key generated from the reset_password
+            otp - Key generated from the reset_password
         and the post data
             password
             password2
@@ -241,7 +287,7 @@ def confirm_reset_password(request, uid, key):
     """
     try:
         user = get_object_or_404(User, id=uid)
-        reset_pwd_object = get_object_or_404(PasswordReset_keys, user=user, key=key)
+        reset_pwd_object = get_object_or_404(PasswordReset_keys, user=user, key=otp)
 
         # Check if key has expired
         print(reset_pwd_object.exp)
@@ -283,4 +329,18 @@ def delete_user(request):
     return Response({"message": message}, status=status.HTTP_200_OK)
 
 
-
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def waitlist(request):
+    email = request.data.get('email')
+    if not email:
+        return Response({'message': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Check if the email already exists
+    if Waitlist.objects.filter(email=email).exists():
+        return Response({'message': 'This email has already been added to the waitlist'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+    
+    # Create a new waitlist entry
+    Waitlist.objects.create(id=uuid4(), email=email)
+    return Response({'message': 'Email Added Successfully'}, status=status.HTTP_200_OK)
+    

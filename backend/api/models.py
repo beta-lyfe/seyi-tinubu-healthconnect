@@ -43,3 +43,11 @@ class PasswordReset_keys(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class Waitlist(models.Model):
+    id = models.UUIDField(primary_key=True)
+    email = models.EmailField(unique=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
