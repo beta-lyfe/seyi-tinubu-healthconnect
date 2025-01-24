@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+	"scripts": {
+		"dev": "pnpm --recursive --parallel dev"
+	},
+	"devDependencies": {
+		"vercel": "^39.3.0"
+	}
+}

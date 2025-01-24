@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@beta-lyfe/website",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "packageManager": "pnpm@9.15.3",
+  "scripts": {
+    "dev": "vite --port 3000",
+    "build": "./scripts/build.sh",
+    "deploy": "vercel deploy --prebuilt"
+  },
+  "dependencies": {
+    "@beta-lyfe/api": "workspace:^",
+    "@hookform/resolvers": "^3.9.1",
+    "@tanstack/react-query": "^5.20.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.1",
+    "react-social-icons": "^6.20.0",
+    "sonner": "^1.7.2",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@beta-lyfe/ui": "workspace:^",
+    "@t3-oss/env-core": "^0.9.2",
+    "@types/node": "^22.10.7",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "autoprefixer": "^10.4.20",
+    "globals": "^15.14.0",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.5"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@beta-lyfe/api",
+  "packageManager": "pnpm@9.15.3",
+  "exports": "./src/index.ts",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "typegen": "openapi-typescript ../docs-api/src/spec/openapi.yaml -o ./src/api/schema.ts"
+  },
+  "dependencies": {
+    "openapi-fetch": "^0.13.4",
+    "openapi-react-query": "^0.2.9"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.4.1"
+  }
+}

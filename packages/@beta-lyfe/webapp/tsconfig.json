@@ -1,0 +1,31 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@beta-lyfe/webapp/*": ["./src/*"]
+		},
+		"target": "ES2020",
+		"useDefineForClassFields": true,
+		"noUncheckedIndexedAccess": true,
+		"lib": ["ES2020", "DOM", "DOM.Iterable"],
+		"module": "ES2020",
+		"skipLibCheck": true,
+		/* Bundler mode */
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"esModuleInterop": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
+		"strict": true,
+		// "noUnusedLocals": true,
+		// "noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true
+	},
+	"include": ["src"],
+	"references": [
+		{
+			"path": "./tsconfig.node.json"
+		}
+	]
+}

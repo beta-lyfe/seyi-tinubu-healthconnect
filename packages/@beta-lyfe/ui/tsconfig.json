@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "moduleDetection": "force",
+    "esModuleInterop": true,
+    "isolatedModules": true
+  }
+}
