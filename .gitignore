@@ -149,3 +149,4 @@ dist
 .direnv
 
 # End of https://www.toptal.com/developers/gitignore/api/direnv
+.env.*

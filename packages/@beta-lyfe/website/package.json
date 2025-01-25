@@ -8,9 +8,10 @@
   "scripts": {
     "dev": "vite --port 3000",
     "build": "./scripts/build.sh",
-    "deploy": "vercel deploy --prebuilt"
+    "deploy": "vercel deploy --prebuilt --token $VERCEL_TOKEN"
   },
   "dependencies": {
+    "@beta-lyfe/ui": "workspace:^",
     "@beta-lyfe/api": "workspace:^",
     "@hookform/resolvers": "^3.9.1",
     "@tanstack/react-query": "^5.20.1",
@@ -22,7 +23,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@beta-lyfe/ui": "workspace:^",
     "@t3-oss/env-core": "^0.9.2",
     "@types/node": "^22.10.7",
     "@types/react": "^18.3.18",
