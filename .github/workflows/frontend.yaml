@@ -34,8 +34,7 @@ jobs:
         run: pnpm install
 
       - name: Load .env file
-        run: |
-          echo '${{ secrets.ENV }}' > ./packages/.env
+        run: echo '${{ secrets.ENV }}' > ./packages/.env
 
       - name: Build website
         working-directory: packages
