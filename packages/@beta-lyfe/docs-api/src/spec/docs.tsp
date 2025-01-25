@@ -64,13 +64,6 @@ namespace Api {
     @example("Invalid data")
     message: string;
   }
-  
-  @error
-  model NOT_ACCEPTABLE {
-    @statusCode code: 406;
-    @example("$Email already Exists")
-    message: string
-  }
 
   @error
   model NotFoundError<T extends valueof string> {
@@ -102,41 +95,38 @@ namespace Api {
 
       @example("Slessor")
       last_name: string;
-      @example("mary.slessor@mail.com")
-      email: string;
-      @example("$3cureP@ssw0rd")
-      password: string;
-      @example("$3cureP@ssw0rd")
-      password2: string;
+
+      email: Email;
+      password: Password;
+      password2: Password;
+
       @example(true)
-      is_doctor: bool;
-    } 
-    
+      is_doctor: boolean;
+    }
+
     model SendResetPasswordEmailPayload {
-      @example("mary.slessor@mail.com")
-      email: string;
+      email: Email;
     }
 
     model ResetPasswordPayload {
-      @example("mary.slessor@mail.com")
-      email: string;
+      email: Email;
+      password: Password;
+    }
 
-      @example("NewP@ssw0rd")
-      password: string;
+    model PasswordResetInitResponse {
+      @example("Please check your email address for a password reset link")
+      message: string;
     }
 
     model ForgotPasswordPayload {
-      @example("mary.slessor@mail.com")
-      email: string;
+      email: Email;
     }
 
     model ConfirmForgotPasswordPayload {
-      @example("NewP@ssw0rd")
-      password: string
-      @example("NewP@ssw0rd")
-      password2: string
+      password: Password;
+      password2: Password;
     }
-    
+
     @doc("Authentication token")
     model AuthCredentials {
       @example("745731af4484f323968969eda289aeee")
@@ -178,37 +168,43 @@ namespace Api {
     @route("/verify-email")
     @post
     @doc("Verify email address")
-    op verifyEmail(@body payload: VerifyEmailPayload): VerificationSuccessful | BadRequestError | UnexpectedError;
-    
+    op verifyEmail(
+      @body payload: VerifyEmailPayload,
+    ): VerificationSuccessful | BadRequestError | UnexpectedError;
+
     @route("/resend-verify-email")
     @post
     @doc("Resend verification email")
-    op resendVerificationEmail(@body payload: ResendVerificationEmailPayload): WelcomeMessage | BadRequestError | UnexpectedError;
+    op resendVerificationEmail(
+      @body payload: ResendVerificationEmailPayload,
+    ): WelcomeMessage | BadRequestError | UnexpectedError;
 
     @route("/forget-password")
     @post
     @doc("""
-      Initiates the password reset process.
-      
-      Receives an email address and generates a password reset token if the email exists in the database.
-      Returns a UID and reset key that will be used to verify the reset request.
-    """)
-    initiatePasswordReset(@body payload: ForgotPasswordPayload): PasswordResetInitResponse | BadRequestError;
+        Initiates the password reset process.
+        
+        Receives an email address and generates a password reset token if the email exists in the database.
+        Returns a UID and reset key that will be used to verify the reset request.
+      """)
+    op initiatePasswordReset(
+      @body payload: ForgotPasswordPayload,
+    ): PasswordResetInitResponse | BadRequestError;
 
     @route("/forget-password/{uid}/{otp}")
     @post
     @doc("""
-      Confirms password reset request and updates the password.
-      
-      Validates the provided UID and OTP token, then updates the user's password if:
-      - The reset token hasn't expired
-      - The provided passwords match
-      - The user exists and token is valid
-    """)
-    confirmPasswordReset(
+        Confirms password reset request and updates the password.
+        
+        Validates the provided UID and OTP token, then updates the user's password if:
+        - The reset token hasn't expired
+        - The provided passwords match
+        - The user exists and token is valid
+      """)
+    op confirmPasswordReset(
       @path uid: string,
       @path otp: string,
-      @body payload: ConfirmForgotPasswordPayload
+      @body payload: ConfirmForgotPasswordPayload,
     ): WelcomeMessage | BadRequestError | UnexpectedError;
 
     @route("/sign-in")
@@ -236,19 +232,9 @@ namespace Api {
     @doc("Sign out user")
     op signOut(): SignOutSuccessful | UnexpectedError;
   }
-  
-  model EmailPayload {
-    @examaple("cyrile450@gmail.com")
-    email: string
-  }
 
-  @tag("Waitlist")
-  @route("/waitlist")
-  namespace Waitlist {
-    @route("")
-    @post
-    @doc("Add a new email to the waitlist")
-    op sendWaitlist(@body payload: EmailPayload): WelcomeMessage | BadRequestError | NOT_ACCEPTABLE
+  model EmailPayload {
+    email: Email;
   }
 
   @tag("Patient")
@@ -650,9 +636,16 @@ namespace Api {
   @tag("Waitlist")
   @route("/waitlist")
   namespace Waitlist {
+    @error
+    model WaitlistAlreadyJoinedError {
+      @statusCode code: 406;
+
+      @example("You're already in the waitlist")
+      message: string;
+    }
+
     model JoinWaitlistPayload {
-      @example("john.doe.mail.com")
-      email: string;
+      email: Email;
     }
 
     model WaitlistJoined {
@@ -662,7 +655,7 @@ namespace Api {
 
     op joinWaitlist(
       @body req: JoinWaitlistPayload,
-    ): WaitlistJoined | UnexpectedError;
+    ): WaitlistJoined | WaitlistAlreadyJoinedError | UnexpectedError;
   }
 }
 

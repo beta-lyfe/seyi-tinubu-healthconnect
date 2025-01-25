@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
 
 jobs:
   build-and-deploy:
@@ -31,10 +34,8 @@ jobs:
         run: pnpm install
 
       - name: Load .env file
-        uses: akiojin/decode-base64-github-action@v0.1.0
-        with:
-          base64: ${{ secrets.env }}
-          output-path: ./packages/.env
+        run: |
+          echo '${{ secrets.ENV }}' > ./packages/.env
 
       - name: Build website
         working-directory: packages
