@@ -29,7 +29,7 @@
                 buildPhase = ''
                     cp -r $src/* .
                     pnpm install
-                    pnpm run build --base /docs/api
+                    pnpm run build --base /api
                 '';
                 installPhase = ''
                     mkdir -p $out
