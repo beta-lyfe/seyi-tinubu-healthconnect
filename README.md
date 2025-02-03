@@ -4,25 +4,34 @@ This repo contains all the code related to Beta Lyfe
 
 ## Documentation
 
-You can [check out the documentation here](https://beta-lyfe.vercel.app/docs/docs/index.html)
+You can [check out the documentation here](https://docs.betalyfe.com.ng/docs/index.html)
 
 ## Development
 
 ### Installing Dependencies
 
+#### Frontend
+
 ```bash
-cd webapp
+cd packages
 pnpm install
+```
+
+#### Backend
+
+```bash
+cd backend
+pip3 install -r requirements.txt
 ```
 
 ### Running the local setup
 
-#### Frontend (Webapp)
+#### Frontend
 
 ```bash
-# pwd: ./webapp
+# pwd: ./packages
 
-pnpm dev # to run the webapp
+pnpm dev # to run the frontend stack
 ```
 
 #### Backend
