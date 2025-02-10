@@ -2,11 +2,11 @@ import { Avatar, Table, TableCell ,TableRow} from "flowbite-react";
 
 import { createFileRoute } from '@tanstack/react-router'
 import { ArrowDown, ArrowRight, FilterIcon, PlusCircle, User2Icon } from "lucide-react";
-import { Typography } from "@beta-lyfe/webapp/components/typography";
-import { DropDownComponent } from "@beta-lyfe/webapp/components/DropDown";
-import { Button } from "@beta-lyfe/webapp/components/button";
+import { Typography } from "@beta-lyfe/ui/components/typography";
+import { DropDownComponent } from "@beta-lyfe/ui/components/DropDown";
+import { Button } from "@beta-lyfe/ui/components/button";
 import { useState } from "react";
-import { ModalComponent } from "@beta-lyfe/webapp/components/Modal";
+import { ModalComponent } from "@beta-lyfe/ui/components/Modal";
 
 export const Route = createFileRoute('/_app/_doctor/doctor/appointments/')({
   component: () => Component()

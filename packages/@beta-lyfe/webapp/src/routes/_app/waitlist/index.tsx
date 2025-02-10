@@ -1,5 +1,5 @@
-import { Input } from '@beta-lyfe/webapp/components/input'
-import { Typography } from '@beta-lyfe/webapp/components/typography'
+import { Input } from '@beta-lyfe/ui/components/input'
+import { Typography } from '@beta-lyfe/ui/components/typography'
 import { createFileRoute } from '@tanstack/react-router'
 import { Instagram, SeparatorVerticalIcon, X } from 'lucide-react'
 import { SocialIcon } from 'react-social-icons'

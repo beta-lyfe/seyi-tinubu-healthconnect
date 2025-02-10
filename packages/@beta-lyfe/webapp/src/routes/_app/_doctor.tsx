@@ -22,7 +22,7 @@ import {
 } from 'lucide-react'
 
 import BetalyfeLogo from '@beta-lyfe/webapp/assets/images/betalyfeLogo3.png'
-import { cn } from '@beta-lyfe/webapp/components/shad/lib/utils'
+import { cn } from '@beta-lyfe/ui/components/shad/lib/utils'
 import { useLocation } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_app/_doctor')({

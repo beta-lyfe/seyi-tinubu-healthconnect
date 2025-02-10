@@ -1,8 +1,8 @@
-import { Input } from '@beta-lyfe/webapp/components/input'
-import { BackLink } from '@beta-lyfe/webapp/components/link'
-import { Typography } from '@beta-lyfe/webapp/components/typography'
-import { cn } from '@beta-lyfe/webapp/components/shad/lib/utils'
-import { Button } from '@beta-lyfe/webapp/components/shad/ui/button'
+import { Input } from '@beta-lyfe/ui/components/input'
+import { BackLink } from '@beta-lyfe/ui/components/link'
+import { Typography } from '@beta-lyfe/ui/components/typography'
+import { cn } from '@beta-lyfe/ui/components/shad/lib/utils'
+import { Button } from '@beta-lyfe/ui/components/shad/ui/button'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import {
   ChevronLeftIcon,

@@ -1,4 +1,4 @@
-import { Button } from '@beta-lyfe/webapp/components/shad/ui/button'
+import { Button } from '@beta-lyfe/ui/components/shad/ui/button'
 import { createFileRoute } from '@tanstack/react-router'
 import { StethoscopeIcon } from 'lucide-react'
 

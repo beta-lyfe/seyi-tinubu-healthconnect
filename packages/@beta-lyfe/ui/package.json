@@ -10,9 +10,10 @@
 		"dev": "pnpm build --watch"
 	},
 	"exports": {
-		"./*": "./src/*.tsx",
+		"./*": 	"./src/*.tsx",
 		"./styles.css": "./dist/styles.css",
-		"./tailwind.config.js": "./tailwind.config.ts"
+		"./tailwind.config.js": "./tailwind.config.ts",
+		"./tailwind.config": "./tailwind.config.ts"
 	},
 	"dependencies": {
 		"@beta-lyfe/ui": "workspace:^",

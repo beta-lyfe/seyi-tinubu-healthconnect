@@ -1,5 +1,5 @@
-import { Button } from '@beta-lyfe/webapp/components/button'
-import { Typography } from '@beta-lyfe/webapp/components/typography'
+import { Button } from '@beta-lyfe/ui/components/button'
+import { Typography } from '@beta-lyfe/ui/components/typography'
 import { webapp } from '@beta-lyfe/webapp/lib/store/webapp'
 import { Loader2Icon } from 'lucide-react'
 import { type FunctionComponent, useState } from 'react'

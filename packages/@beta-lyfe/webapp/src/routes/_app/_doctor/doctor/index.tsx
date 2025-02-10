@@ -1,9 +1,9 @@
-import { cn } from '@beta-lyfe/webapp/components/shad/lib/utils'
+import { cn } from '@beta-lyfe/ui/components/shad/lib/utils'
 import { createFileRoute } from '@tanstack/react-router'
 import { Calendar, Megaphone, User, UserPlus, Users, Video } from 'lucide-react'
 import { FunctionComponent } from 'react'
 import { Schedule } from '../../dashboard/schedule'
-import { Button } from '@beta-lyfe/webapp/components/shad/ui/button'
+import { Button } from '@beta-lyfe/ui/components/shad/ui/button'
 import {
   BarChart,
   CartesianGrid,

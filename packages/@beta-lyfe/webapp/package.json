@@ -10,8 +10,8 @@
 		"build:platform:onrender": "pnpm build --outDir ../../dist"
 	},
 	"dependencies": {
+		"@beta-lyfe/api": "workspace:^",
 		"@beta-lyfe/ui": "workspace:^",
-		"@beta-lyfe/webapp": "file:",
 		"@headlessui/react": "^2.1.2",
 		"@hookform/resolvers": "^3.9.1",
 		"@huddle01/react": "^2.2.0",
