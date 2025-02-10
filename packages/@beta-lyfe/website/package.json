@@ -13,6 +13,7 @@
   "dependencies": {
     "@beta-lyfe/ui": "workspace:^",
     "@beta-lyfe/api": "workspace:^",
+    "@beta-lyfe/webapp": "workspace:^",
     "@hookform/resolvers": "^3.9.1",
     "@tanstack/react-query": "^5.20.1",
     "react": "^18.3.1",
