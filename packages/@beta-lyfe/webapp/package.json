@@ -5,7 +5,7 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "dotenv -- vite --port 3001 --host",
+		"dev": "dotenv -- vite --port 3001",
 		"build": "tsc && vite build",
 		"build:platform:onrender": "pnpm build --outDir ../../dist"
 	},

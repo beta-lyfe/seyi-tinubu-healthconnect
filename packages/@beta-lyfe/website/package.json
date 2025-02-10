@@ -6,7 +6,7 @@
   "type": "module",
   "packageManager": "pnpm@9.15.3",
   "scripts": {
-    "dev": "vite --port 3000",
+    "dev": "dotenv -- vite --port 3000",
     "build": "./scripts/build.sh",
     "deploy": "vercel deploy --prebuilt --token $VERCEL_TOKEN"
   },
@@ -33,6 +33,7 @@
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.6.2",
-    "vite": "^6.0.5"
+    "vite": "^6.0.5",
+		"dotenv-cli": "^8.0.0"
   }
 }
