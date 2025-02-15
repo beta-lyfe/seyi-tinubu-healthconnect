@@ -1,9 +1,6 @@
 {
 	"compilerOptions": {
 		"baseUrl": ".",
-		"paths": {
-			"@beta-lyfe/webapp/*": ["./src/*"]
-		},
 		"target": "ES2020",
 		"useDefineForClassFields": true,
 		"noUncheckedIndexedAccess": true,

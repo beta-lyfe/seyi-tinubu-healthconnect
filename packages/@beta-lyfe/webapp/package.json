@@ -5,13 +5,17 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "dotenv -- vite --port 3001 --host",
+		"dev": "dotenv -- vite --port 3001",
 		"build": "tsc && vite build",
 		"build:platform:onrender": "pnpm build --outDir ../../dist"
 	},
+	"exports": {
+		"./*": ["./src/*.ts","./src/*.tsx"]
+	},
 	"dependencies": {
+		"@beta-lyfe/api": "workspace:^",
 		"@beta-lyfe/ui": "workspace:^",
-		"@beta-lyfe/webapp": "file:",
+		"@beta-lyfe/webapp": "workspace:^",
 		"@headlessui/react": "^2.1.2",
 		"@hookform/resolvers": "^3.9.1",
 		"@huddle01/react": "^2.2.0",

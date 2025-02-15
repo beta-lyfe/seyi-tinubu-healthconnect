@@ -1,4 +1,4 @@
-import { cn } from '@beta-lyfe/webapp/components/shad/lib/utils'
+import { cn } from '@beta-lyfe/ui/components/shad/lib/utils'
 import { Link, useRouter } from '@tanstack/react-router'
 import {
   Calendar,
@@ -14,7 +14,7 @@ import {
   User2
 } from 'lucide-react'
 import { FunctionComponent } from 'react'
-import ElevatedButton from '@beta-lyfe/webapp/components/elevatedbtn'
+import ElevatedButton from '@beta-lyfe/ui/components/elevatedbtn'
 
 type IconProps = {
   className?: string

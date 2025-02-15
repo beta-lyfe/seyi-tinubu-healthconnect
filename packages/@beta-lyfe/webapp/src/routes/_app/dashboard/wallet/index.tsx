@@ -1,6 +1,6 @@
-import { Typography } from '@beta-lyfe/webapp/components/typography'
+import { Typography } from '@beta-lyfe/ui/components/typography'
 import { BottomNav } from '../../-components/bottom-nav'
-import { Button } from '@beta-lyfe/webapp/components/shad/ui/button'
+import { Button } from '@beta-lyfe/ui/components/shad/ui/button'
 import { createFileRoute } from '@tanstack/react-router'
 import { ArrowDownLeft, ArrowUpRight, Wallet2 } from 'lucide-react'
 

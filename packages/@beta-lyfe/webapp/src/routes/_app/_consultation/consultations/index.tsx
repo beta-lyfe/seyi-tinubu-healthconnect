@@ -1,4 +1,4 @@
-import { Button } from "@beta-lyfe/webapp/components/button";
+import { Button } from "@beta-lyfe/ui/components/button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import {

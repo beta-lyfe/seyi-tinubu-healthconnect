@@ -1,10 +1,10 @@
 import { Outlet, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import { Toaster } from "@beta-lyfe/webapp/components/shad/ui/sonner";
+import { Toaster } from "@beta-lyfe/ui/components/shad/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { HuddleClient, HuddleProvider } from "@huddle01/react";
-import { env } from "@beta-lyfe/webapp/env";
+import { env } from "../env";
 import type { ReactNode } from "react";
 
 const queryClient = new QueryClient();

@@ -6,13 +6,14 @@
   "type": "module",
   "packageManager": "pnpm@9.15.3",
   "scripts": {
-    "dev": "vite --port 3000",
+    "dev": "dotenv -- vite --port 3000",
     "build": "./scripts/build.sh",
     "deploy": "vercel deploy --prebuilt --token $VERCEL_TOKEN"
   },
   "dependencies": {
     "@beta-lyfe/ui": "workspace:^",
     "@beta-lyfe/api": "workspace:^",
+    "@beta-lyfe/webapp": "workspace:^",
     "@hookform/resolvers": "^3.9.1",
     "@tanstack/react-query": "^5.20.1",
     "react": "^18.3.1",
@@ -33,6 +34,7 @@
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.6.2",
-    "vite": "^6.0.5"
+    "vite": "^6.0.5",
+		"dotenv-cli": "^8.0.0"
   }
 }

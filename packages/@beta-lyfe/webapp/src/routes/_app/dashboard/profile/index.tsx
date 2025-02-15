@@ -1,11 +1,11 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
-import { Button } from '@beta-lyfe/webapp/components/shad/ui/button'
-import { Typography } from '@beta-lyfe/webapp/components/typography'
+import { Button } from '@beta-lyfe/ui/components/shad/ui/button'
+import { Typography } from '@beta-lyfe/ui/components/typography'
 import IykeForm, {
   IykeFormField,
   type IykeFormType
-} from '@beta-lyfe/webapp/components/IykeForm'
+} from '@beta-lyfe/ui/components/IykeForm'
 import {
   additionalInformationFields,
   availabilityFields,

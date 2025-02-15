@@ -1,6 +1,6 @@
-import { Button } from "@beta-lyfe/webapp/components/shad/ui/button";
+import { Button } from "@beta-lyfe/ui/components/shad/ui/button";
 import { createFileRoute, useRouter, Link } from "@tanstack/react-router";
-import { Input } from "@beta-lyfe/webapp/components/shad/ui/input";
+import { Input } from "@beta-lyfe/ui/components/shad/ui/input";
 import { z } from "zod";
 import {
 	Form,
@@ -9,7 +9,7 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@beta-lyfe/webapp/components/shad/ui/form";
+} from "@beta-lyfe/ui/components/shad/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthLayout } from "./-components/layout";

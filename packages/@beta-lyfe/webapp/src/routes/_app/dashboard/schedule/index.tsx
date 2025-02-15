@@ -1,4 +1,4 @@
-import { Typography } from '@beta-lyfe/webapp/components/typography'
+import { Typography } from '@beta-lyfe/ui/components/typography'
 import { createFileRoute } from '@tanstack/react-router'
 import { Mail, Microscope, ShoppingCart, Wallet } from 'lucide-react'
 import { Datepicker } from 'flowbite-react'
@@ -6,7 +6,7 @@ import { Datepicker } from 'flowbite-react'
 import { CalendarCheckIcon, PillIcon, StethoscopeIcon } from 'lucide-react'
 import { BottomNav } from '../../-components/bottom-nav'
 import { useState } from 'react'
-import { cn } from '@beta-lyfe/webapp/components/shad/lib/utils'
+import { cn } from '@beta-lyfe/ui/components/shad/lib/utils'
 import { DateTheme } from '@beta-lyfe/webapp/data/dateTheme'
 
 export const Route = createFileRoute('/_app/dashboard/schedule/')({

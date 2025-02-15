@@ -1,12 +1,12 @@
-import { Input } from '@beta-lyfe/webapp/components/input'
-import { Typography } from '@beta-lyfe/webapp/components/typography'
+import { Input } from '@beta-lyfe/ui/components/input'
+import { Typography } from '@beta-lyfe/ui/components/typography'
 import { Link, createFileRoute, useRouter } from '@tanstack/react-router'
 import {
   Carousel,
   CarouselItem,
   CarouselContent
-} from '@beta-lyfe/webapp/components/shad/ui/carousel'
-import { Button } from '@beta-lyfe/webapp/components/shad/ui/button'
+} from '@beta-lyfe/ui/components/shad/ui/carousel'
+import { Button } from '@beta-lyfe/ui/components/shad/ui/button'
 import {
   ArrowRightIcon,
   ArrowUpRight,
@@ -21,7 +21,7 @@ import { quickNav } from './schedule'
 import { Wallet } from 'lucide-react'
 import { BottomNav } from '../-components/bottom-nav'
 import { $api } from '@beta-lyfe/webapp/lib/backend'
-import { LogoIcon } from '@beta-lyfe/webapp/components/icons'
+import { LogoIcon } from '@beta-lyfe/ui/components/icons/index'
 import doctorImage from '@beta-lyfe/webapp/assets/images/doctor.png'
 
 export const Route = createFileRoute('/_app/dashboard/')({

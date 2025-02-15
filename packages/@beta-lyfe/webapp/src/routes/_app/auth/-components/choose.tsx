@@ -1,4 +1,4 @@
-// import { Typography } from "@beta-lyfe/webapp/components/typography";
+// import { Typography } from "@beta-lyfe/ui/components/typography";
 
 // function Choose(){
 
