@@ -34,6 +34,11 @@ pip3 install -r requirements.txt
 pnpm dev # to run the frontend stack
 ```
 
+NOTE:
+- website runs on port `3000`
+- webapp runs on port `3001`
+- api docs runs on port `3002`
+
 #### Backend
 
 ```bash
@@ -42,6 +47,9 @@ pnpm dev # to run the frontend stack
 python3 manage.py migrate # to run migrations
 python3 manage.py runserver # to run the server
 ```
+
+NOTE:
+- the backend runs on port 8000
 
 ## Contribution
 
