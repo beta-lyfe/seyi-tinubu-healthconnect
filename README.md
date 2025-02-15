@@ -49,7 +49,7 @@ python3 manage.py runserver # to run the server
 ```
 
 NOTE:
-- the backend runs on port 8000
+- the backend runs on port `8000`
 
 ## Contribution
 
