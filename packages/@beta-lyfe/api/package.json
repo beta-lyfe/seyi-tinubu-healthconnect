@@ -10,6 +10,7 @@
     "typegen": "openapi-typescript ../docs-api/src/spec/openapi.yaml -o ./src/api/schema.ts"
   },
   "dependencies": {
+    "@beta-lyfe/api": "file:",
     "openapi-fetch": "^0.13.4",
     "openapi-react-query": "^0.2.9"
   },

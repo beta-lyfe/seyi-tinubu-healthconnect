@@ -10,13 +10,13 @@
 		"dev": "pnpm build --watch"
 	},
 	"exports": {
-		"./*": 	"./src/*.tsx",
+		"./*": "./src/*.tsx",
 		"./styles.css": "./dist/styles.css",
 		"./tailwind.config.js": "./tailwind.config.ts",
 		"./tailwind.config": "./tailwind.config.ts"
 	},
 	"dependencies": {
-		"@beta-lyfe/ui": "workspace:^",
+		"@beta-lyfe/ui": "file:",
 		"@headlessui/react": "^2.1.2",
 		"@hookform/resolvers": "^3.9.1",
 		"@huddle01/react": "^2.2.0",
