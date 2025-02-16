@@ -21,7 +21,7 @@ import {
   Mail
 } from 'lucide-react'
 
-import BetalyfeLogo from '@beta-lyfe/webapp/assets/images/betalyfeLogo3.png'
+import BetalyfeLogo from '../../assets/images/betalyfeLogo3.png'
 import { cn } from '@beta-lyfe/ui/components/shad/lib/utils'
 import { useLocation } from '@tanstack/react-router'
 

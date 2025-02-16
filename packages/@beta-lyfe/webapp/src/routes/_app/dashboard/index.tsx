@@ -22,7 +22,7 @@ import { Wallet } from 'lucide-react'
 import { BottomNav } from '../-components/bottom-nav'
 import { $api } from '@beta-lyfe/webapp/lib/backend'
 import { LogoIcon } from '@beta-lyfe/ui/components/icons/index'
-import doctorImage from '@beta-lyfe/webapp/assets/images/doctor.png'
+import doctorImage from '../../../assets/images/doctor.png'
 
 export const Route = createFileRoute('/_app/dashboard/')({
   component: ChatsListPage
