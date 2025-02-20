@@ -11,7 +11,7 @@
 		"prefix": ""
 	},
 	"aliases": {
-		"components": "@beta-lyfe/webapp/components/shad",
-		"utils": "@beta-lyfe/webapp/components/shad/lib/utils"
+		"components": "@beta-lyfe/ui/components/shad/ui",
+		"utils": "@beta-lyfe/ui/components/shad/lib/utils"
 	}
 }
