@@ -10,7 +10,7 @@ import {
   SearchIcon,
   SendHorizonalIcon
 } from 'lucide-react'
-import doctorJohnDoe from '@beta-lyfe/webapp/assets/images/doctors/john-doe.png'
+import doctorJohnDoe from '../../../../../assets/images/doctors/john-doe.png'
 
 export const Route = createFileRoute('/_app/dashboard/chats/$doctorId/')({
   component: DoctorChatPage

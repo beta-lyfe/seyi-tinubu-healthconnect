@@ -7,7 +7,8 @@ export default {
         NunitoSans: ['Nunito Sans', 'sans-serif'],
       },
       colors: {
-        'primary': '#FF3287'
+        'primary':'#2a9b7d',
+        'primary2': '#FF3287'
       }
     },
   },

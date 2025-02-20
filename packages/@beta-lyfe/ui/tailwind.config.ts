@@ -45,7 +45,8 @@ export default {
 				primary: {
 					// DEFAULT: "hsl(var(--primary))",
 					//DEFAULT: '#f382ec',
-					DEFAULT: '#ff3287',
+					DEFAULT: '#2a9b7d',
+					//DEFAULT: '#ff3287',
 					// DEFAULT: 'skyblue',
 					foreground: 'hsl(var(--primary-foreground))'
 				},
