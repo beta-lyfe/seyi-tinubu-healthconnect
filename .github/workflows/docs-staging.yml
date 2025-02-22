@@ -1,9 +1,6 @@
-name: docs-prod
+name: docs-staging
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened]
@@ -50,7 +47,7 @@ jobs:
           mkdir -p .vercel/output/static
           echo '{ "version": 3 }' > .vercel/output/config.json
           mv docs/* .vercel/output/static
-          nix run nixpkgs#bun -- x vercel deploy --prebuilt --target production --token ${{ secrets.VERCEL_TOKEN }}
+          nix run nixpkgs#bun -- x vercel deploy --prebuilt --target staging --token ${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_API_DOCS_PROJECT_ID }}

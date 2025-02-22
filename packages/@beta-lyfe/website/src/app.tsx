@@ -98,7 +98,7 @@ export function App() {
                         emailRef.current = e
                       }}
                     />
-                    <Button type="submit" disabled={isSubmitting}>
+                    <Button type="submit" disabled={isSubmitting} className='text-white'>
                       Notify me
                     </Button>
                   </div>
