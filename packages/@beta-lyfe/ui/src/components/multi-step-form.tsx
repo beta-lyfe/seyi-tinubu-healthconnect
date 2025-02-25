@@ -1,4 +1,4 @@
-import { type FunctionComponent, useState } from "react";
+import { Dispatch, type FunctionComponent, SetStateAction, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 export type StepComponent = FunctionComponent<{
@@ -6,14 +6,20 @@ export type StepComponent = FunctionComponent<{
 	next: () => void;
 	submit: () => void;
 	cancel: () => void;
+	index: number
 }>;
 
 export const MultiStepForm: FunctionComponent<{
 	steps: StepComponent[];
 	onCancel?: () => void;
 	onSubmit?: () => void;
-}> = ({ steps, onCancel, onSubmit }) => {
-	const [currentStep, setCurrentStep] = useState(0);
+	index?: number;
+	setIndex?: Dispatch<SetStateAction<number>>
+}> = ({ steps, onCancel, onSubmit, index, setIndex }) => {
+	const _step= useState(0)
+	const currentStep = index ?? _step[0]
+	const setCurrentStep = setIndex ?? _step[1]
+	// const [currentStep, setCurrentStep] = useState(0);
 	const [previousStep, setPreviousStep] = useState(0);
 
 	const delta = currentStep - previousStep;
@@ -68,6 +74,7 @@ export const MultiStepForm: FunctionComponent<{
 						next={onNext}
 						submit={() => onSubmit && onSubmit()}
 						cancel={() => onCancel && onCancel()}
+						index={index}
 					/>
 				</motion.div>
 			),
