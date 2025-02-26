@@ -38,6 +38,7 @@ export default function Provider({ children }: { children: ReactNode }) {
 
 function Devtools() {
 	if (env.VITE_NODE_ENV !== "development") return null;
+	return null
 
 	return (
 		<>

@@ -19,13 +19,16 @@ import {
 } from 'lucide-react'
 import { quickNav } from './schedule'
 import { Wallet } from 'lucide-react'
-import { BottomNav } from '../-components/bottom-nav'
+// import { BottomNav } from '../-components/bottom-nav'
+import { BottomNav } from './-components/bottom-nav'
 import { $api } from '@beta-lyfe/webapp/lib/backend'
 import { LogoIcon } from '@beta-lyfe/ui/components/icons/index'
 import doctorImage from '../../../assets/images/doctor.png'
+import { Layout } from './-components/layout'
+import { Section } from './-components/section'
 
 export const Route = createFileRoute('/_app/dashboard/')({
-  component: ChatsListPage
+  component: DashboardHomePage
 })
 
 function ChatList() {
@@ -113,12 +116,12 @@ const DoctorsCarousel = () => {
   )
 }
 
-function ChatsListPage() {
+function DashboardHomePage() {
   const router = useRouter()
   return (
-    <div className="grow">
+    <Layout>
       <div className="flex justify-between flex-row items-center  bg-primary p-5">
-        <LogoIcon />
+        <LogoIcon className="size-12" />
 
         <Button
           onClick={() => router.navigate({ to: '/dashboard/wallet' })}
@@ -129,39 +132,41 @@ function ChatsListPage() {
         </Button>
       </div>
 
-      <div className="p-5 pt-0 bg-primary grid grid-flow-row gap-5">
-        <div className="flex flex-col-reverse gap-3">
-          <div className="p-0">
-            <div className="bg-primary rounded-lg grid grid-cols-2 aspect-video">
-              <div className="grid items-center p-5">
-                <div className="flex flex-col gap-2">
-                  <header className="text-white leading-relaxed text-lg font-semibold">
-                    Get 10% off for your first 5 minutes
-                  </header>
-                  <div>
-                    <Link to="/dashboard">
-                      <Button className="rounded-full bg-white flex gap-2 items-center text-primary shadow-md">
-                        Try it
-                        <ArrowRightIcon className="w-4 h-4" />
-                      </Button>
-                    </Link>
+      <Section className="bg-primary">
+        <div className="pt-0 grid grid-flow-row gap-5">
+          <div className="flex flex-col-reverse gap-3">
+            <div className="p-0">
+              <div className="bg-primary rounded-lg grid grid-cols-2 aspect-video">
+                <div className="grid items-center">
+                  <div className="flex flex-col gap-2">
+                    <header className="text-white font-medium leading-relaxed text-lg">
+                      Get 10% off for your first 5 minutes
+                    </header>
+                    <div>
+                      <Link to="/dashboard">
+                        <Button className="rounded-full bg-white flex gap-2 items-center text-black shadow-md">
+                          Try it
+                          <ArrowRightIcon className="w-4 h-4" />
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="grid place-items-end">
-                <img
-                  className="aspect-square object-cover object-center"
-                  src={doctorImage}
-                  alt="doctor"
-                />
+                <div className="grid place-items-end">
+                  <img
+                    className="aspect-square object-cover object-center"
+                    src={doctorImage}
+                    alt="doctor"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div>
-            <Input placeholder="Search for a Doctor" />
+            <div>
+              <Input placeholder="Search for a Doctor" />
+            </div>
           </div>
         </div>
-      </div>
+      </Section>
       <div className="p-5">
         <Typography.PageHeading className="pb-5">
           Our Services
@@ -201,7 +206,6 @@ function ChatsListPage() {
       <div className="pb-10">
         <ChatList />
       </div>
-      <BottomNav />
-    </div>
+    </Layout>
   )
 }
