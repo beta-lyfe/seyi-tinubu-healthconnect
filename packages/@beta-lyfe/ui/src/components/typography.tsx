@@ -90,7 +90,7 @@ export const Typography = {
     HTMLParagraphElement,
     React.HTMLAttributes<HTMLParagraphElement>
   >(({ children, className, ...props }, ref) => (
-    <p {...props} className={cn('text-slate-300', className)} ref={ref}>
+    <p {...props} className={cn('text-slate-300 text-sm', className)} ref={ref}>
       {children}
     </p>
   )),

@@ -8,7 +8,7 @@ import {
 } from '@beta-lyfe/ui/components/shad/ui/carousel'
 import { Button } from '@beta-lyfe/ui/components/shad/ui/button'
 import { ArrowRightIcon, ArrowUpRight, MessageSquareIcon } from 'lucide-react'
-import { quickNav } from './schedule'
+import { quickNav as services } from './schedule'
 import { $api } from '@beta-lyfe/webapp/lib/backend'
 import doctorImage from '../../../assets/images/doctor.png'
 import { Layout } from './-components/layout'
@@ -145,7 +145,7 @@ const Services = () => (
       Our Services
     </Typography.PageHeading>
     <div className="grid grid-cols-4 gap-5">
-      {quickNav.map(({ text, icon: Icon, link }, index) => (
+      {services.map(({ text, icon: Icon, link }, index) => (
         <Link to={link} key={index}>
           <div key={index} className="flex flex-col gap-2">
             <div
