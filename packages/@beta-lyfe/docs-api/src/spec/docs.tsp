@@ -273,6 +273,11 @@ namespace Api {
   @route("/patients")
   @useAuth(BearerAuth)
   namespace Patient {
+    model PatientProfileUpdatedResponse {
+      @example("Successful")
+      message: string;
+    }
+
     model Patient {
       id: Id;
 
@@ -297,6 +302,15 @@ namespace Api {
 
         data: Patient[];
       };
+
+      @example(18)
+      count: int64;
+
+      @example("http://localhost:8000/api/patients?page=3")
+      next: string | null;
+
+      @example("http://localhost:8000/api/patients?page=2")
+      previous: string | null;
     }
 
     alias PatientNotFoundError = NotFoundError<"Patient">;
@@ -307,13 +321,13 @@ namespace Api {
     op fetchPatients(
     ): PaginatedPatients | AuthenticationRequiredError | UnexpectedError;
 
-    @route("/profile")
+    @route("/profile/")
     @get
     @useAuth(BearerAuth)
     @doc("Fetch patient profile")
     op fetchProfile(): Patient | AuthenticationRequiredError | UnexpectedError;
 
-    @route("profile/{id}")
+    @route("/{id}")
     @get
     @doc("Fetch patient by ID")
     op fetchPatientById(@path id: string):
@@ -326,9 +340,7 @@ namespace Api {
     @patch
     @doc("Update patient profile")
     op updatePatientById(@body patient: Patient):
-      | {
-          message: "Successfully updated";
-        }
+      | PatientProfileUpdatedResponse
       | PatientNotFoundError
       | AuthenticationRequiredError
       | UnexpectedError;
@@ -623,13 +635,17 @@ namespace Api {
       model ConsultationRequestAccepted {
         message: "Consultation request accepted";
       }
+      model UnauthorisedRequest {
+        @statusCode code: 403;
+        message: "Doctor cannot create a consultation request";
+      }
 
       @route("/")
       @post
       @doc("Request consultation")
       op requestConsultation(
         @body body: ConsultationRequestPayload,
-      ): ConsultationRequestCreated | AuthenticationRequiredError | UnexpectedError;
+      ): ConsultationRequestCreated | UnauthorisedRequest | BadRequestError | AuthenticationRequiredError | UnexpectedError;
 
       @route("/")
       @get
@@ -746,3 +762,4 @@ namespace Api {
     ): UserCreatedMessage | UnexpectedError;
   }
 }
+

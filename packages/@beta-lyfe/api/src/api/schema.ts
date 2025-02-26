@@ -371,7 +371,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/patients/profile": {
+    "/api/patients/profile/": {
         parameters: {
             query?: never;
             header?: never;
@@ -385,27 +385,11 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/patients/profile/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
         /** @description Update patient profile */
         patch: operations["Patient_updatePatientById"];
         trace?: never;
     };
-    "/api/patients/profile/{id}": {
+    "/api/patients/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -612,6 +596,10 @@ export interface components {
             /** @example I am feeling unwell */
             message: string;
         };
+        "Api.Consultation.Request.UnauthorisedRequest": {
+            /** @enum {string} */
+            message: "Doctor cannot create a consultation request";
+        };
         "Api.Dev.UserCreatedMessage": {
             /** @example User created successfully */
             message: string;
@@ -668,6 +656,10 @@ export interface components {
         };
         "Api.Doctor.DoctorNotFoundError": {
             /** @example Doctor not found */
+            message: string;
+        };
+        "Api.Doctor.DoctorProfileUpdatedResponse": {
+            /** @example Successful */
             message: string;
         };
         "Api.Doctor.DoctorUpdate": {
@@ -789,6 +781,15 @@ export interface components {
                 message: string;
                 data: components["schemas"]["Api.Patient.Patient"][];
             };
+            /**
+             * Format: int64
+             * @example 18
+             */
+            count: number;
+            /** @example http://localhost:8000/api/patients?page=3 */
+            next: string | null;
+            /** @example http://localhost:8000/api/patients?page=2 */
+            previous: string | null;
         };
         "Api.Patient.Patient": {
             id: components["schemas"]["Id"];
@@ -803,6 +804,10 @@ export interface components {
             /** Format: int64 */
             age: number | null;
             profile_picture_url: string;
+        };
+        "Api.Patient.PatientProfileUpdatedResponse": {
+            /** @example Successful */
+            message: string;
         };
         "Api.Patient.PatientUpdate": {
             id?: components["schemas"]["Id"];
@@ -1348,6 +1353,15 @@ export interface operations {
                     "application/json": components["schemas"]["Api.Consultation.Request.ConsultationRequestCreated"];
                 };
             };
+            /** @description The server could not understand the request due to invalid syntax. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.BadRequestError"];
+                };
+            };
             /** @description Access is unauthorized. */
             401: {
                 headers: {
@@ -1355,6 +1369,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Api.AuthenticationRequiredError"];
+                };
+            };
+            /** @description Access is forbidden. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.Consultation.Request.UnauthorisedRequest"];
                 };
             };
             /** @description Server error */
@@ -1812,7 +1835,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Api.Doctor.SuccessMessage"];
+                    "application/json": components["schemas"]["Api.Doctor.DoctorProfileUpdatedResponse"];
                 };
             };
             /** @description Access is unauthorized. */
@@ -1988,10 +2011,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Successfully updated";
-                    };
+                    "application/json": components["schemas"]["Api.Patient.PatientProfileUpdatedResponse"];
                 };
             };
             /** @description Access is unauthorized. */
