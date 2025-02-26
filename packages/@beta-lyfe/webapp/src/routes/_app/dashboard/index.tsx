@@ -36,7 +36,7 @@ function ChatList() {
 
   if (status === 'pending' || status === 'error') return null
 
-  const doctors = data
+  const doctors = []
 
   return (
     <div className="grid grid-flow-row grow divide-y-2 divide-gray-300">
@@ -71,28 +71,26 @@ const DoctorsCarousel = () => {
 
   if (status === 'pending' || status === 'error') return null
 
-  const doctors = data
+  const doctors = data.results.data
 
   return (
     <Carousel>
-      <CarouselContent>
+      <CarouselContent className="gap-4">
         {doctors.map((doctor) => (
-          <CarouselItem
-            key={`${doctor.first_name} ${doctor.last_name}`}
-            className="basis-auto"
-          >
+          <CarouselItem key={doctor.id} className="basis-auto">
             <div className="border-2 border-gray-300 rounded-2xl aspect-card w-[200px] shadow-md flex flex-col overflow-clip">
               <div className="bg-gray-300 flex justify-center items-end">
                 <img
-                  src={doctor.image_url}
-                  alt={`${doctor.first_name} ${doctor.last_name}`}
+                  //  TODO: this should use the actual doctor's image
+                  src="https://placehold.co/400"
+                  alt={`Dr. ${doctor.first_name} ${doctor.last_name}`}
                   className="w-full object-cover h-[230px] object-center"
                 />
               </div>
               <div className="flex flex-col p-3 gap-3 divide-y grow">
                 <hgroup className="grow">
                   <Typography.CardHeadingLead>
-                    {doctor.specialty}
+                    {doctor.specialization}
                   </Typography.CardHeadingLead>
                   <Typography.CardHeading>
                     {doctor.first_name} {doctor.last_name}
