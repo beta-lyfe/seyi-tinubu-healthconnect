@@ -58,10 +58,18 @@ namespace Api {
   }
 
   @error
+  model NoTokenProvidedError {
+    @statusCode code: 401;
+
+    @example("Authentication credentials were not provided or are invalid.")
+    message: string;
+  }
+
+  @error
   model BadRequestError {
     @statusCode code: 400;
 
-    @example("Invalid data")
+    @example("Required fields missing")
     message: string;
   }
 
@@ -70,6 +78,14 @@ namespace Api {
     @statusCode code: 404;
 
     @example("${T} not found")
+    message: string;
+  }
+
+  @error
+  model VerifyOtpError {
+    @statusCode code: 404;
+
+    @example("Invalid verification OTP or OTP has expired.")
     message: string;
   }
 
@@ -130,7 +146,12 @@ namespace Api {
     @doc("Authentication token")
     model AuthCredentials {
       @example("745731af4484f323968969eda289aeee")
-      token: string;
+      access: string;
+
+      @example("745731af4484f323968969eda289aeee")
+      refresh: string;
+
+      user: Doctor.Doctor;
     }
 
     model WelcomeMessage {
@@ -148,6 +169,13 @@ namespace Api {
       message: string;
     }
 
+    model VerificationError {
+      @statusCode code: 202;
+
+      @example("User Registered Successfully, Verification Otp wasn't sent please resend")
+      message: string;
+    }
+
     model ResendVerificationEmailPayload {
       @example("mary.slessor@mail.com")
       email: string;
@@ -161,16 +189,20 @@ namespace Api {
     @route("/sign-up")
     @post
     @doc("Sign up new user")
-    op signUp(
-      @body payload: SignUpPayload,
-    ): WelcomeMessage | BadRequestError | UnexpectedError;
+    op signUp(@body payload: SignUpPayload):
+      | WelcomeMessage
+      | VerificationError
+      | BadRequestError
+      | UnexpectedError;
 
     @route("/verify-email")
     @post
     @doc("Verify email address")
-    op verifyEmail(
-      @body payload: VerifyEmailPayload,
-    ): VerificationSuccessful | BadRequestError | UnexpectedError;
+    op verifyEmail(@body payload: VerifyEmailPayload):
+      | VerificationSuccessful
+      | VerifyOtpError
+      | BadRequestError
+      | UnexpectedError;
 
     @route("/resend-verify-email")
     @post
@@ -241,6 +273,11 @@ namespace Api {
   @route("/patients")
   @useAuth(BearerAuth)
   namespace Patient {
+    model PatientProfileUpdatedResponse {
+      @example("Successful")
+      message: string;
+    }
+
     model Patient {
       id: Id;
 
@@ -250,9 +287,30 @@ namespace Api {
       @example("Slessor")
       last_name: string;
 
+      other_names: string | null;
       phone_number: PhoneNumber;
       date_of_birth: DateOfBirth;
       email: Email;
+      age: int64 | null;
+      profile_picture_url: string;
+    }
+
+    model PaginatedPatients {
+      results: {
+        @example("Successful")
+        message: string;
+
+        data: Patient[];
+      };
+
+      @example(18)
+      count: int64;
+
+      @example("http://localhost:8000/api/patients?page=3")
+      next: string | null;
+
+      @example("http://localhost:8000/api/patients?page=2")
+      previous: string | null;
     }
 
     alias PatientNotFoundError = NotFoundError<"Patient">;
@@ -261,10 +319,11 @@ namespace Api {
     @get
     @doc("Fetch all patients")
     op fetchPatients(
-    ): Patient[] | AuthenticationRequiredError | UnexpectedError;
+    ): PaginatedPatients | AuthenticationRequiredError | UnexpectedError;
 
-    @route("/profile")
+    @route("/profile/")
     @get
+    @useAuth(BearerAuth)
     @doc("Fetch patient profile")
     op fetchProfile(): Patient | AuthenticationRequiredError | UnexpectedError;
 
@@ -277,11 +336,11 @@ namespace Api {
       | AuthenticationRequiredError
       | UnexpectedError;
 
-    @route("/{id}")
+    @route("/profile/")
     @patch
-    @doc("Update patient by ID")
-    op updatePatientById(@path id: string, @body patient: Patient):
-      | Patient
+    @doc("Update patient profile")
+    op updatePatientById(@body patient: Patient):
+      | PatientProfileUpdatedResponse
       | PatientNotFoundError
       | AuthenticationRequiredError
       | UnexpectedError;
@@ -291,12 +350,15 @@ namespace Api {
   @route("/doctors")
   @useAuth(BearerAuth)
   namespace Doctor {
+    model DoctorProfileUpdatedResponse {
+      @example("Successful")
+      message: string;
+    }
+
     @example("General Practitioner")
     scalar Specialization extends string;
 
     model Certification {
-      id: Id;
-
       @example("MBBS")
       name: string;
 
@@ -308,8 +370,6 @@ namespace Api {
     }
 
     model Experience {
-      id: Id;
-
       @example("General Practitioner")
       title: string;
 
@@ -357,6 +417,11 @@ namespace Api {
       state: string;
     }
 
+    model SuccessMessage {
+      @example("Successful")
+      message: string;
+    }
+
     model Doctor {
       id: Id;
 
@@ -372,12 +437,13 @@ namespace Api {
       email: Email;
       phone_number: PhoneNumber;
       date_of_birth: DateOfBirth;
-      Specialization: Specialization;
+      specialization: Specialization | null;
       patients_treated: int64;
       years_of_experience: int64;
       reviews: int64;
       rating: float64;
-      description: string;
+      description: string | null;
+      other_names: string | null;
 
       @example(500.00)
       home_consultation_charge: float64;
@@ -388,27 +454,44 @@ namespace Api {
       @example(300.00)
       clinic_consultation_charge: float64;
 
-      certifications: Certification[];
-      experiences: Experience[];
-      working_hours: WorkingHour[];
-      location: Location;
-      role: Role;
+      certifications: Certification[] | null;
+      experiences: Experience[] | null;
+      working_hours: WorkingHour[] | null;
+      location: Location | null;
     }
 
-    alias DoctorNotFoundError = NotFoundError<"Doctor">;
+    model DoctorNotFoundError extends NotFoundError<"Doctor"> {}
+    model PaginatedDoctors {
+      results: {
+        @example("Successful")
+        message: string;
+
+        data: Doctor[];
+      };
+
+      @example(18)
+      count: int64;
+
+      @example("http://localhost:8000/api/doctors/?page=3")
+      next: string | null;
+
+      @example("http://localhost:8000/api/doctors/?page=2")
+      previous: string | null;
+    }
 
     @route("/")
     @get
     @doc("Fetch all doctors")
     op fetchDoctors(
-    ): Paginated<Doctor> | AuthenticationRequiredError | UnexpectedError;
+    ): PaginatedDoctors | AuthenticationRequiredError | UnexpectedError;
 
     @route("/profile")
     @get
+    @useAuth(BearerAuth)
     @doc("Fetch doctor profile")
     op fetchProfile(): Doctor | AuthenticationRequiredError | UnexpectedError;
 
-    @route("/{id}")
+    @route("profile/{id}")
     @get
     @doc("Fetch doctor by ID")
     op fetchDoctorById(@path id: string):
@@ -417,11 +500,12 @@ namespace Api {
       | AuthenticationRequiredError
       | UnexpectedError;
 
-    @route("/{id}")
+    @route("/profile")
     @patch
-    @doc("Update doctor by ID")
-    op updateDoctorById(@path id: string, @body doctor: Doctor):
-      | Doctor
+    @useAuth(BearerAuth)
+    @doc("Update doctor profile")
+    op updateDoctorById(@body doctor: Doctor):
+      | DoctorProfileUpdatedResponse
       | DoctorNotFoundError
       | AuthenticationRequiredError
       | UnexpectedError;
@@ -551,13 +635,17 @@ namespace Api {
       model ConsultationRequestAccepted {
         message: "Consultation request accepted";
       }
+      model UnauthorisedRequest {
+        @statusCode code: 403;
+        message: "Doctor cannot create a consultation request";
+      }
 
       @route("/")
       @post
       @doc("Request consultation")
       op requestConsultation(
         @body body: ConsultationRequestPayload,
-      ): ConsultationRequestCreated | AuthenticationRequiredError | UnexpectedError;
+      ): ConsultationRequestCreated | UnauthorisedRequest | BadRequestError | AuthenticationRequiredError | UnexpectedError;
 
       @route("/")
       @get
@@ -656,6 +744,22 @@ namespace Api {
     op joinWaitlist(
       @body req: JoinWaitlistPayload,
     ): WaitlistJoined | WaitlistAlreadyJoinedError | UnexpectedError;
+  }
+
+  @tag("Dev")
+  @route("/dev")
+  namespace Dev {
+    model UserCreatedMessage {
+      @example("User created successfully")
+      message: string;
+    }
+
+    @route("/user")
+    @post
+    @doc("Create a user")
+    op createUser(
+      @body payload: Authentication.SignUpPayload,
+    ): UserCreatedMessage | UnexpectedError;
   }
 }
 

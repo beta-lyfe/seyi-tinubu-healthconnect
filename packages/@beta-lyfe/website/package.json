@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "dotenv -- vite --port 3000",
     "build": "./scripts/build.sh",
-    "deploy": "vercel deploy --prebuilt --token $VERCEL_TOKEN"
+    "deploy": "vercel deploy --prebuilt --token $VERCEL_TOKEN",
+    "lint": "tsc"
   },
   "dependencies": {
     "@beta-lyfe/ui": "workspace:^",
@@ -33,8 +34,7 @@
     "globals": "^15.14.0",
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17",
-    "typescript": "~5.6.2",
     "vite": "^6.0.5",
-		"dotenv-cli": "^8.0.0"
+    "dotenv-cli": "^8.0.0"
   }
 }

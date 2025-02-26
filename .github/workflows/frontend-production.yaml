@@ -1,0 +1,54 @@
+name: frontend-production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22]
+
+    steps:
+      - name: Checkout current repo state
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        working-directory: packages
+        run: pnpm install
+
+      - name: Load .env file
+        run: echo '${{ secrets.ENV }}' > ./packages/.env
+
+      - name: Build website
+        working-directory: packages
+        run: |
+          set -a            
+          source .env
+          set +a
+          pnpm --filter @beta-lyfe/ui run build
+          pnpm --filter @beta-lyfe/website run build
+
+      - name: Deploy website
+        working-directory: packages
+        run: |
+          set -a            
+          source .env
+          set +a
+          pnpm --filter @beta-lyfe/website run deploy --target production
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_WEBSITE_PROJECT_ID }}

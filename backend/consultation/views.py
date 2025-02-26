@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework import status
 import cloudinary.uploader
@@ -12,8 +13,18 @@ from consultation.models import Consultation_Request, Consultations
 from consultation.serializer import ConsultationRequestSerializer, ConsultationSerializer
 
 
+# Helper function
+class CustomIsAuthenticated(IsAuthenticated):
+    def has_permission(self, request, view):
+        is_authenticated = super().has_permission(request, view)
+        if not is_authenticated:
+            raise PermissionDenied({
+                'message': 'Authentication required',
+            })
+        return is_authenticated
+
 @api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([CustomIsAuthenticated])
 def request_consultation(request):
     user = request.user
 
@@ -29,11 +40,12 @@ def request_consultation(request):
 
         data = [ConsultationRequestSerializer(result).data for result in results]
 
-        return Response(data, status=status.HTTP_200_OK)
+        return Response({'message': 'Retrieved Consultations Successfully',
+                         'data': data}, status=status.HTTP_200_OK)
 
 
     elif request.method == 'POST':
-        
+
         if user.is_doctor:
             return Response({'message': 'Doctor cannot create a consultation request'}, status=status.HTTP_403_FORBIDDEN)
 
@@ -42,21 +54,22 @@ def request_consultation(request):
         data['id'] = uuid.uuid4()
 
         print(data)
-        
+
         serializer = ConsultationRequestSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
 
             return Response({"message": "Consultation request created"}, status=status.HTTP_201_CREATED)
         # Return validation errors if any
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        print(serializer.errors)
+        return Response({'message': 'Missing a Required Field'}, status=status.HTTP_400_BAD_REQUEST)
     
     # Default response in case of any unforeseen methods
-    return Response({'detail': 'Method not allowed.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    return Response({'message': 'Method not allowed.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([CustomIsAuthenticated])
 def consultation_request_by_id(request, request_id):
     user = request.user
     consultation = get_object_or_404(Consultation_Request, id=request_id)
@@ -68,13 +81,14 @@ def consultation_request_by_id(request, request_id):
     elif user.is_patient and consultation.patient.id != user.id:
         return Response({"message": f"Patient {user.email} does Not have Permission to Access this Information"},
                         status=status.HTTP_403_FORBIDDEN)
-    
-    return Response(ConsultationRequestSerializer(consultation).data,
+
+    return Response({'message': 'Succesfully Requested Consultation',
+                     'data': ConsultationRequestSerializer(consultation).data},
                     status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([CustomIsAuthenticated])
 def consultation_accept_request(request, request_id):
     user = request.user
     consultation = get_object_or_404(Consultation_Request, id=request_id)
@@ -115,11 +129,12 @@ def consultation_accept_request(request, request_id):
         return Response({"message": "Consultation created!"}, status=status.HTTP_201_CREATED)
 
     except Exception as e:
+        print(e)
         return Response({"message": "An unexpected error occurred."},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([CustomIsAuthenticated])
 def user_consultation(request):
     user = request.user
     if user.is_doctor:
@@ -130,13 +145,14 @@ def user_consultation(request):
     print(consultations)
 
     
-    return Response(ConsultationSerializer(consultations, many=True).data,
+    return Response({'message': 'Retrieved All Consultations Successfully',
+                     'data': ConsultationSerializer(consultations, many=True).data},
                     status=status.HTTP_200_OK)
 
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([CustomIsAuthenticated])
 def consultation_by_id(request, consultation_id):
     user = request.user
     consultation = get_object_or_404(Consultations, id=consultation_id)
@@ -154,7 +170,7 @@ def consultation_by_id(request, consultation_id):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([CustomIsAuthenticated])
 def consultation_add_chats(request, consultation_id):
     user = request.user
     consultation = get_object_or_404(Consultations, id=consultation_id)
@@ -200,7 +216,7 @@ def consultation_add_chats(request, consultation_id):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([CustomIsAuthenticated])
 def consultation_add_notes(request, consultation_id):
     user = request.user
     consultation = get_object_or_404(Consultations, id=consultation_id)

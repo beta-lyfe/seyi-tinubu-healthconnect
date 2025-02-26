@@ -1,9 +1,6 @@
-name: frontend
+name: frontend-production
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened]
@@ -51,7 +48,7 @@ jobs:
           set -a            
           source .env
           set +a
-          pnpm --filter @beta-lyfe/website run deploy --prod
+          pnpm --filter @beta-lyfe/website run deploy --target staging
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_WEBSITE_PROJECT_ID }}

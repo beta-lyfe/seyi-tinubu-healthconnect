@@ -4,7 +4,49 @@
  */
 
 export interface paths {
-    "/api/auth/resend-verification-email": {
+    "/api/auth/forget-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description   Initiates the password reset process.
+         *
+         *       Receives an email address and generates a password reset token if the email exists in the database.
+         *       Returns a UID and reset key that will be used to verify the reset request. */
+        post: operations["Authentication_initiatePasswordReset"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/auth/forget-password/{uid}/{otp}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description   Confirms password reset request and updates the password.
+         *
+         *       Validates the provided UID and OTP token, then updates the user's password if:
+         *       - The reset token hasn't expired
+         *       - The provided passwords match
+         *       - The user exists and token is valid */
+        post: operations["Authentication_confirmPasswordReset"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/auth/resend-verify-email": {
         parameters: {
             query?: never;
             header?: never;
@@ -243,6 +285,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/dev/user": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Create a user */
+        post: operations["Dev_createUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/doctors/": {
         parameters: {
             query?: never;
@@ -274,10 +333,11 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        /** @description Update doctor profile */
+        patch: operations["Doctor_updateDoctorById"];
         trace?: never;
     };
-    "/api/doctors/{id}": {
+    "/api/doctors/profile/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -291,8 +351,7 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        /** @description Update doctor by ID */
-        patch: operations["Doctor_updateDoctorById"];
+        patch?: never;
         trace?: never;
     };
     "/api/patients/": {
@@ -312,7 +371,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/patients/profile": {
+    "/api/patients/profile/": {
         parameters: {
             query?: never;
             header?: never;
@@ -326,7 +385,8 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        /** @description Update patient profile */
+        patch: operations["Patient_updatePatientById"];
         trace?: never;
     };
     "/api/patients/{id}": {
@@ -338,23 +398,6 @@ export interface paths {
         };
         /** @description Fetch patient by ID */
         get: operations["Patient_fetchPatientById"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** @description Update patient by ID */
-        patch: operations["Patient_updatePatientById"];
-        trace?: never;
-    };
-    "/api/profile/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["Profile_fetchProfile"];
         put?: never;
         post?: never;
         delete?: never;
@@ -418,21 +461,32 @@ export interface components {
         /** @description Authentication token */
         "Api.Authentication.AuthCredentials": {
             /** @example 745731af4484f323968969eda289aeee */
-            token: string;
+            access: string;
+            /** @example 745731af4484f323968969eda289aeee */
+            refresh: string;
+            user: components["schemas"]["Api.Doctor.Doctor"];
+        };
+        "Api.Authentication.ConfirmForgotPasswordPayload": {
+            password: components["schemas"]["Password"];
+            password2: components["schemas"]["Password"];
+        };
+        "Api.Authentication.ForgotPasswordPayload": {
+            email: components["schemas"]["Email"];
+        };
+        "Api.Authentication.PasswordResetInitResponse": {
+            /** @example Please check your email address for a password reset link */
+            message: string;
         };
         "Api.Authentication.ResendVerificationEmailPayload": {
             /** @example mary.slessor@mail.com */
             email: string;
         };
         "Api.Authentication.ResetPasswordPayload": {
-            /** @example mary.slessor@mail.com */
-            email: string;
-            /** @example NewP@ssw0rd */
-            password: string;
+            email: components["schemas"]["Email"];
+            password: components["schemas"]["Password"];
         };
         "Api.Authentication.SendResetPasswordEmailPayload": {
-            /** @example mary.slessor@mail.com */
-            email: string;
+            email: components["schemas"]["Email"];
         };
         "Api.Authentication.SignInPayload": {
             email: components["schemas"]["Email"];
@@ -448,18 +502,20 @@ export interface components {
             /** @example Slessor */
             last_name: string;
             email: components["schemas"]["Email"];
-            phone_number: components["schemas"]["PhoneNumber"];
-            date_of_birth: components["schemas"]["DateOfBirth"];
             password: components["schemas"]["Password"];
-            role: components["schemas"]["Role"];
+            password2: components["schemas"]["Password"];
+            /** @example true */
+            is_doctor: boolean;
+        };
+        "Api.Authentication.VerificationError": {
+            /** @example User Registered Successfully, Verification Otp wasn't sent please resend */
+            message: string;
         };
         "Api.Authentication.VerificationSuccessful": {
             /** @example Email verified successfully */
             message: string;
         };
         "Api.Authentication.VerifyEmailPayload": {
-            /** @example mary.slessor@mail.com */
-            email: string;
             /** @example 123456 */
             otp: string;
         };
@@ -472,7 +528,7 @@ export interface components {
             message: string;
         };
         "Api.BadRequestError": {
-            /** @example Invalid data */
+            /** @example Required fields missing */
             message: string;
         };
         "Api.Consultation.AccessToken": {
@@ -540,8 +596,15 @@ export interface components {
             /** @example I am feeling unwell */
             message: string;
         };
+        "Api.Consultation.Request.UnauthorisedRequest": {
+            /** @enum {string} */
+            message: "Doctor cannot create a consultation request";
+        };
+        "Api.Dev.UserCreatedMessage": {
+            /** @example User created successfully */
+            message: string;
+        };
         "Api.Doctor.Certification": {
-            id: components["schemas"]["Id"];
             /** @example MBBS */
             name: string;
             /** @example University of Lagos */
@@ -560,7 +623,7 @@ export interface components {
             email: components["schemas"]["Email"];
             phone_number: components["schemas"]["PhoneNumber"];
             date_of_birth: components["schemas"]["DateOfBirth"];
-            Specialization: components["schemas"]["Api.Doctor.Specialization"];
+            specialization: components["schemas"]["Api.Doctor.Specialization"] | null;
             /** Format: int64 */
             patients_treated: number;
             /** Format: int64 */
@@ -569,7 +632,8 @@ export interface components {
             reviews: number;
             /** Format: double */
             rating: number;
-            description: string;
+            description: string | null;
+            other_names: string | null;
             /**
              * Format: double
              * @example 500
@@ -585,11 +649,18 @@ export interface components {
              * @example 300
              */
             clinic_consultation_charge: number;
-            certifications: components["schemas"]["Api.Doctor.Certification"][];
-            experiences: components["schemas"]["Api.Doctor.Experience"][];
-            working_hours: components["schemas"]["Api.Doctor.WorkingHour"][];
-            location: components["schemas"]["Api.Doctor.Location"];
-            role: components["schemas"]["Role"];
+            certifications: components["schemas"]["Api.Doctor.Certification"][] | null;
+            experiences: components["schemas"]["Api.Doctor.Experience"][] | null;
+            working_hours: components["schemas"]["Api.Doctor.WorkingHour"][] | null;
+            location: components["schemas"]["Api.Doctor.Location"] | null;
+        };
+        "Api.Doctor.DoctorNotFoundError": {
+            /** @example Doctor not found */
+            message: string;
+        };
+        "Api.Doctor.DoctorProfileUpdatedResponse": {
+            /** @example Successful */
+            message: string;
         };
         "Api.Doctor.DoctorUpdate": {
             id?: components["schemas"]["Id"];
@@ -602,7 +673,7 @@ export interface components {
             email?: components["schemas"]["Email"];
             phone_number?: components["schemas"]["PhoneNumber"];
             date_of_birth?: components["schemas"]["DateOfBirth"];
-            Specialization?: components["schemas"]["Api.Doctor.Specialization"];
+            specialization?: components["schemas"]["Api.Doctor.Specialization"] | null;
             /** Format: int64 */
             patients_treated?: number;
             /** Format: int64 */
@@ -611,7 +682,8 @@ export interface components {
             reviews?: number;
             /** Format: double */
             rating?: number;
-            description?: string;
+            description?: string | null;
+            other_names?: string | null;
             /**
              * Format: double
              * @example 500
@@ -627,14 +699,12 @@ export interface components {
              * @example 300
              */
             clinic_consultation_charge?: number;
-            certifications?: components["schemas"]["Api.Doctor.Certification"][];
-            experiences?: components["schemas"]["Api.Doctor.Experience"][];
-            working_hours?: components["schemas"]["Api.Doctor.WorkingHour"][];
-            location?: components["schemas"]["Api.Doctor.LocationUpdate"];
-            role?: components["schemas"]["Role"];
+            certifications?: components["schemas"]["Api.Doctor.Certification"][] | null;
+            experiences?: components["schemas"]["Api.Doctor.Experience"][] | null;
+            working_hours?: components["schemas"]["Api.Doctor.WorkingHour"][] | null;
+            location?: components["schemas"]["Api.Doctor.LocationUpdate"] | null;
         };
         "Api.Doctor.Experience": {
-            id: components["schemas"]["Id"];
             /** @example General Practitioner */
             title: string;
             /** @example University of Lagos */
@@ -668,8 +738,28 @@ export interface components {
             /** @example Imo */
             state?: string;
         };
+        "Api.Doctor.PaginatedDoctors": {
+            results: {
+                /** @example Successful */
+                message: string;
+                data: components["schemas"]["Api.Doctor.Doctor"][];
+            };
+            /**
+             * Format: int64
+             * @example 18
+             */
+            count: number;
+            /** @example http://localhost:8000/api/doctors/?page=3 */
+            next: string | null;
+            /** @example http://localhost:8000/api/doctors/?page=2 */
+            previous: string | null;
+        };
         /** @example General Practitioner */
         "Api.Doctor.Specialization": string;
+        "Api.Doctor.SuccessMessage": {
+            /** @example Successful */
+            message: string;
+        };
         "Api.Doctor.WorkingHour": {
             /** @enum {string} */
             day: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
@@ -678,15 +768,46 @@ export interface components {
             /** @example 17:00 */
             end_time: string;
         };
+        "Api.EmailPayload": {
+            email: components["schemas"]["Email"];
+        };
+        "Api.NoTokenProvidedError": {
+            /** @example Authentication credentials were not provided or are invalid. */
+            message: string;
+        };
+        "Api.Patient.PaginatedPatients": {
+            results: {
+                /** @example Successful */
+                message: string;
+                data: components["schemas"]["Api.Patient.Patient"][];
+            };
+            /**
+             * Format: int64
+             * @example 18
+             */
+            count: number;
+            /** @example http://localhost:8000/api/patients?page=3 */
+            next: string | null;
+            /** @example http://localhost:8000/api/patients?page=2 */
+            previous: string | null;
+        };
         "Api.Patient.Patient": {
             id: components["schemas"]["Id"];
             /** @example Mary */
             first_name: string;
             /** @example Slessor */
             last_name: string;
+            other_names: string | null;
             phone_number: components["schemas"]["PhoneNumber"];
             date_of_birth: components["schemas"]["DateOfBirth"];
             email: components["schemas"]["Email"];
+            /** Format: int64 */
+            age: number | null;
+            profile_picture_url: string;
+        };
+        "Api.Patient.PatientProfileUpdatedResponse": {
+            /** @example Successful */
+            message: string;
         };
         "Api.Patient.PatientUpdate": {
             id?: components["schemas"]["Id"];
@@ -694,17 +815,28 @@ export interface components {
             first_name?: string;
             /** @example Slessor */
             last_name?: string;
+            other_names?: string | null;
             phone_number?: components["schemas"]["PhoneNumber"];
             date_of_birth?: components["schemas"]["DateOfBirth"];
             email?: components["schemas"]["Email"];
+            /** Format: int64 */
+            age?: number | null;
+            profile_picture_url?: string;
         };
         "Api.UnexpectedError": {
             /** @example An unexpected error occurred */
             message: string;
         };
+        "Api.VerifyOtpError": {
+            /** @example Invalid verification OTP or OTP has expired. */
+            message: string;
+        };
         "Api.Waitlist.JoinWaitlistPayload": {
-            /** @example john.doe.mail.com */
-            email: string;
+            email: components["schemas"]["Email"];
+        };
+        "Api.Waitlist.WaitlistAlreadyJoinedError": {
+            /** @example You're already in the waitlist */
+            message: string;
         };
         "Api.Waitlist.WaitlistJoined": {
             /** @example You have been added to the waitlist */
@@ -781,6 +913,84 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    Authentication_initiatePasswordReset: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Api.Authentication.ForgotPasswordPayload"];
+            };
+        };
+        responses: {
+            /** @description The request has succeeded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.Authentication.PasswordResetInitResponse"];
+                };
+            };
+            /** @description The server could not understand the request due to invalid syntax. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.BadRequestError"];
+                };
+            };
+        };
+    };
+    Authentication_confirmPasswordReset: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                uid: string;
+                otp: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Api.Authentication.ConfirmForgotPasswordPayload"];
+            };
+        };
+        responses: {
+            /** @description The request has succeeded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.Authentication.WelcomeMessage"];
+                };
+            };
+            /** @description The server could not understand the request due to invalid syntax. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.BadRequestError"];
+                };
+            };
+            /** @description Server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.UnexpectedError"];
+                };
+            };
+        };
+    };
     Authentication_resendVerificationEmail: {
         parameters: {
             query?: never;
@@ -1000,6 +1210,15 @@ export interface operations {
                     "application/json": components["schemas"]["Api.Authentication.WelcomeMessage"];
                 };
             };
+            /** @description The request has been accepted for processing, but processing has not yet completed. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.Authentication.VerificationError"];
+                };
+            };
             /** @description The server could not understand the request due to invalid syntax. */
             400: {
                 headers: {
@@ -1049,6 +1268,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Api.BadRequestError"];
+                };
+            };
+            /** @description The server cannot find the requested resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.VerifyOtpError"];
                 };
             };
             /** @description Server error */
@@ -1125,6 +1353,15 @@ export interface operations {
                     "application/json": components["schemas"]["Api.Consultation.Request.ConsultationRequestCreated"];
                 };
             };
+            /** @description The server could not understand the request due to invalid syntax. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.BadRequestError"];
+                };
+            };
             /** @description Access is unauthorized. */
             401: {
                 headers: {
@@ -1132,6 +1369,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Api.AuthenticationRequiredError"];
+                };
+            };
+            /** @description Access is forbidden. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.Consultation.Request.UnauthorisedRequest"];
                 };
             };
             /** @description Server error */
@@ -1461,6 +1707,39 @@ export interface operations {
             };
         };
     };
+    Dev_createUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Api.Authentication.SignUpPayload"];
+            };
+        };
+        responses: {
+            /** @description The request has succeeded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.Dev.UserCreatedMessage"];
+                };
+            };
+            /** @description Server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.UnexpectedError"];
+                };
+            };
+        };
+    };
     Doctor_fetchDoctors: {
         parameters: {
             query?: never;
@@ -1476,10 +1755,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        data: components["schemas"]["Api.Doctor.Doctor"][];
-                        meta: components["schemas"]["PaginatedMeta"];
-                    };
+                    "application/json": components["schemas"]["Api.Doctor.PaginatedDoctors"];
                 };
             };
             /** @description Access is unauthorized. */
@@ -1540,6 +1816,57 @@ export interface operations {
             };
         };
     };
+    Doctor_updateDoctorById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Api.Doctor.DoctorUpdate"];
+            };
+        };
+        responses: {
+            /** @description The request has succeeded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.Doctor.DoctorProfileUpdatedResponse"];
+                };
+            };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.AuthenticationRequiredError"];
+                };
+            };
+            /** @description Server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.UnexpectedError"];
+                };
+            };
+            /** @description An unexpected error response. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.Doctor.DoctorNotFoundError"];
+                };
+            };
+        };
+    };
     Doctor_fetchDoctorById: {
         parameters: {
             query?: never;
@@ -1569,18 +1896,6 @@ export interface operations {
                     "application/json": components["schemas"]["Api.AuthenticationRequiredError"];
                 };
             };
-            /** @description The server cannot find the requested resource. */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @example Doctor not found */
-                        message: string;
-                    };
-                };
-            };
             /** @description Server error */
             500: {
                 headers: {
@@ -1590,60 +1905,13 @@ export interface operations {
                     "application/json": components["schemas"]["Api.UnexpectedError"];
                 };
             };
-        };
-    };
-    Doctor_updateDoctorById: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["Api.Doctor.DoctorUpdate"];
-            };
-        };
-        responses: {
-            /** @description The request has succeeded. */
-            200: {
+            /** @description An unexpected error response. */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Api.Doctor.Doctor"];
-                };
-            };
-            /** @description Access is unauthorized. */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Api.AuthenticationRequiredError"];
-                };
-            };
-            /** @description The server cannot find the requested resource. */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @example Doctor not found */
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Api.UnexpectedError"];
+                    "application/json": components["schemas"]["Api.Doctor.DoctorNotFoundError"];
                 };
             };
         };
@@ -1663,7 +1931,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Api.Patient.Patient"][];
+                    "application/json": components["schemas"]["Api.Patient.PaginatedPatients"];
                 };
             };
             /** @description Access is unauthorized. */
@@ -1711,6 +1979,60 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Api.AuthenticationRequiredError"];
+                };
+            };
+            /** @description Server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.UnexpectedError"];
+                };
+            };
+        };
+    };
+    Patient_updatePatientById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Api.Patient.PatientUpdate"];
+            };
+        };
+        responses: {
+            /** @description The request has succeeded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.Patient.PatientProfileUpdatedResponse"];
+                };
+            };
+            /** @description Access is unauthorized. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.AuthenticationRequiredError"];
+                };
+            };
+            /** @description The server cannot find the requested resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example Patient not found */
+                        message: string;
+                    };
                 };
             };
             /** @description Server error */
@@ -1776,100 +2098,6 @@ export interface operations {
             };
         };
     };
-    Patient_updatePatientById: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["Api.Patient.PatientUpdate"];
-            };
-        };
-        responses: {
-            /** @description The request has succeeded. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Api.Patient.Patient"];
-                };
-            };
-            /** @description Access is unauthorized. */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Api.AuthenticationRequiredError"];
-                };
-            };
-            /** @description The server cannot find the requested resource. */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @example Patient not found */
-                        message: string;
-                    };
-                };
-            };
-            /** @description Server error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Api.UnexpectedError"];
-                };
-            };
-        };
-    };
-    Profile_fetchProfile: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description The request has succeeded. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Api.Patient.Patient"] | components["schemas"]["Api.Doctor.Doctor"];
-                };
-            };
-            /** @description Access is unauthorized. */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Api.AuthenticationRequiredError"];
-                };
-            };
-            /** @description Server error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Api.UnexpectedError"];
-                };
-            };
-        };
-    };
     Waitlist_joinWaitlist: {
         parameters: {
             query?: never;
@@ -1890,6 +2118,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Api.Waitlist.WaitlistJoined"];
+                };
+            };
+            /** @description Client error */
+            406: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Api.Waitlist.WaitlistAlreadyJoinedError"];
                 };
             };
             /** @description Server error */
