@@ -7,10 +7,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "typegen": "openapi-typescript ../docs-api/src/spec/openapi.yaml -o ./src/api/schema.ts"
+    "typegen": "openapi-typescript ../docs-api/src/spec/openapi.yaml -o ./src/api/schema.ts",
+    "lint": "tsc"
   },
   "dependencies": {
-    "@beta-lyfe/api": "file:",
     "openapi-fetch": "^0.13.4",
     "openapi-react-query": "^0.2.9"
   },

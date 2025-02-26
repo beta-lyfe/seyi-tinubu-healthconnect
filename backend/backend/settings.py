@@ -71,7 +71,7 @@ MIDDLEWARE = [
     # cors header middleware
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    # "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -97,7 +97,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -191,9 +190,9 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 # EMAIL FIELDS
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_SSL = True
-EMAIL_PORT = 465
+EMAIL_HOST = 'localhost'
+EMAIL_USE_TSL = False
+EMAIL_PORT = 1025
 EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
 EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
 
@@ -215,9 +214,14 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',  # Should allow unauthenticated access
+    ),
 }
- 
+
 # simple jwt
 from datetime import timedelta
 SIMPLE_JWT = {
@@ -267,7 +271,8 @@ REST_AUTH = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://betalyfe.com.ng",
-    "https://www.betalyfe.com.ng"
+    "https://www.betalyfe.com.ng",
+    "https://betalyfe-website.vercel.app"
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -283,4 +288,7 @@ cloudinary.config(
     api_key=os.environ["CLOUD_API_KEY"],
     api_secret=os.environ["CLOUD_API_SECRET"]
 )
+
+# Set Cloudinary as the default file storage
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 

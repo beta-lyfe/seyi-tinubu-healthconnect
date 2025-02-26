@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('auth/sign-up', views.RegisterView.as_view(), name='register'),
+    path('dev/user', views.devs, name='register-dev'),
     path('auth/verify-email', views.verify_email, name='verify-email'),
     path('auth/resend-verify-email', views.resend_verify_email, name='verify-email'),
     path('waitlist', views.waitlist, name='waitlist'),
@@ -12,3 +13,5 @@ urlpatterns = [
     path('auth/forgot-password', views.forget_password, name='forgot-password'),
     path('auth/forgot-password/<str:uid>/<str:otp>', views.confirm_forget_password, name='forgot-password'),
 ]
+
+

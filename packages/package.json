@@ -1,9 +1,13 @@
 {
-  "$schema": "https://json.schemastore.org/package.json",
+	"$schema": "https://json.schemastore.org/package.json",
 	"scripts": {
-		"dev": "pnpm --recursive --parallel dev"
+		"dev": "pnpm --recursive --parallel dev",
+		"typegen": "pnpm --recursive --parallel typegen",
+		"lint": "pnpm --recursive --parallel lint",
+		"test": "pnpm --recursive --parallel test"
 	},
 	"devDependencies": {
-		"vercel": "^39.3.0"
+		"vercel": "^39.3.0",
+		"typescript": "^5.5.3"
 	}
 }
