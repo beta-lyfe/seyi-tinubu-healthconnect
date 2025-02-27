@@ -483,6 +483,7 @@ namespace Api {
     @get
     @doc("Fetch all doctors")
     op fetchDoctors(
+      @query page?: string,
     ): PaginatedDoctors | AuthenticationRequiredError | UnexpectedError;
 
     @route("/profile")
@@ -643,9 +644,12 @@ namespace Api {
       @route("/")
       @post
       @doc("Request consultation")
-      op requestConsultation(
-        @body body: ConsultationRequestPayload,
-      ): ConsultationRequestCreated | UnauthorisedRequest | BadRequestError | AuthenticationRequiredError | UnexpectedError;
+      op requestConsultation(@body body: ConsultationRequestPayload):
+        | ConsultationRequestCreated
+        | UnauthorisedRequest
+        | BadRequestError
+        | AuthenticationRequiredError
+        | UnexpectedError;
 
       @route("/")
       @get
@@ -762,4 +766,3 @@ namespace Api {
     ): UserCreatedMessage | UnexpectedError;
   }
 }
-
