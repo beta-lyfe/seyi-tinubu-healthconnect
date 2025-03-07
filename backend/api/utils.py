@@ -25,7 +25,7 @@ def VerifyEmail_key(user_id: int):
     unique_key = ""
     while True:
         unique_key = ""
-        for _ in range(4):
+        for _ in range(6):
             unique_key += str(randint(0, 9))
         if not EmailVerication_Keys.objects.filter(key=unique_key).exists():
             break
@@ -49,7 +49,7 @@ def ResetPassword_key(email: int):
 
     unique_key = ""
     while True:
-        unique_key = generate_random_string(12)
+        unique_key = generate_random_string(6)
         if not PasswordReset_keys.objects.filter(key=unique_key).exists():
             break
 

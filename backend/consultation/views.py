@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework import status
 import cloudinary.uploader
@@ -9,6 +10,7 @@ import uuid
 from django.utils import timezone
 
 from api.models import User
+from consultation.utils import create_room, AccessToken
 from consultation.models import Consultation_Request, Consultations
 from consultation.serializer import ConsultationRequestSerializer, ConsultationSerializer
 
@@ -23,6 +25,11 @@ class CustomIsAuthenticated(IsAuthenticated):
             })
         return is_authenticated
 
+class ConsultationRequestPagination(PageNumberPagination):
+    page_size = 10  # Adjust as needed
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
 @api_view(['GET', 'POST'])
 @permission_classes([CustomIsAuthenticated])
 def request_consultation(request):
@@ -34,15 +41,12 @@ def request_consultation(request):
         else:
             results = Consultation_Request.objects.filter(patient=user)
 
-         # Handle case when there are no consultation requests
-        if not results.exists():
-            return Response({'message': 'No consultation requests found.'}, status=status.HTTP_200_OK)
+        # Apply pagination
+        paginator = ConsultationRequestPagination()
+        paginated_results = paginator.paginate_queryset(results, request)
+        serialized_data = ConsultationRequestSerializer(paginated_results, many=True).data
 
-        data = [ConsultationRequestSerializer(result).data for result in results]
-
-        return Response({'message': 'Retrieved Consultations Successfully',
-                         'data': data}, status=status.HTTP_200_OK)
-
+        return paginator.get_paginated_response(serialized_data)
 
     elif request.method == 'POST':
 
@@ -57,11 +61,16 @@ def request_consultation(request):
 
         serializer = ConsultationRequestSerializer(data=data)
         if serializer.is_valid():
+            request = Consultation_Request.objects.filter(patient=data['patient'], doctor=data['doctor'], status='Pending')
+
+            if request:
+                return Response({'message': 'Already a Pending request'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+
             serializer.save()
 
             return Response({"message": "Consultation request created"}, status=status.HTTP_201_CREATED)
         # Return validation errors if any
-        print(serializer.errors)
+        print(serializer.errors.values())
         return Response({'message': 'Missing a Required Field'}, status=status.HTTP_400_BAD_REQUEST)
     
     # Default response in case of any unforeseen methods
@@ -72,18 +81,21 @@ def request_consultation(request):
 @permission_classes([CustomIsAuthenticated])
 def consultation_request_by_id(request, request_id):
     user = request.user
-    consultation = get_object_or_404(Consultation_Request, id=request_id)
+    try:
+        consultation = Consultation_Request.objects.get(id=request_id)
+    except Exception as e:
+        print(e)
+        return Response({'message': 'Consultation Request not found'}, status=status.HTTP_404_NOT_FOUND)
 
     if user.is_doctor and consultation.doctor.id != user.id:
-        return Response({"message": f"Doctor {user.email} does Not have Permission to Access this Information"},
+        return Response({"message": f"You Do Not have Permission to Access this Information"},
                         status=status.HTTP_403_FORBIDDEN)
 
-    elif user.is_patient and consultation.patient.id != user.id:
-        return Response({"message": f"Patient {user.email} does Not have Permission to Access this Information"},
+    elif not user.is_doctor and consultation.patient.id != user.id:
+        return Response({"message": f"You Do Not have Permission to Access this Information"},
                         status=status.HTTP_403_FORBIDDEN)
 
-    return Response({'message': 'Succesfully Requested Consultation',
-                     'data': ConsultationRequestSerializer(consultation).data},
+    return Response(ConsultationRequestSerializer(consultation).data,
                     status=status.HTTP_200_OK)
 
 
@@ -91,42 +103,57 @@ def consultation_request_by_id(request, request_id):
 @permission_classes([CustomIsAuthenticated])
 def consultation_accept_request(request, request_id):
     user = request.user
-    consultation = get_object_or_404(Consultation_Request, id=request_id)
+    try:
+        consultation = Consultation_Request.objects.get(id=request_id)
+    except Exception as e:
+        print(e)
+        return Response({'message': 'Consultation Request not found'}, status=status.HTTP_404_NOT_FOUND)
 
     # Check if the user is a doctor
     if not user.is_doctor:
-        return Response({"message": "Patients don't have permission to perform this action."},
+        return Response({"message": "User Do Not have Permission to Access this Information"},
                         status=status.HTTP_403_FORBIDDEN)
 
     # Check if the doctor matches the consultation request
     if consultation.doctor.id != user.id:
-        return Response({"message": f"Doctor {user.email} does not have permission to access this information."},
+        return Response({"message": f"User Do Not have Permission to Access this Information"},
                         status=status.HTTP_403_FORBIDDEN)
 
     # Check if the consultation status is 'Pending'
     if consultation.status != 'Pending':
         if consultation.status == 'Accept':
-            return Response({"message": f"Doctor {user.email} has already accepted this request."},
-                            status=status.HTTP_200_OK)
+            return Response({"message": f"Already accepted this request."},
+                            status=status.HTTP_406_NOT_ACCEPTABLE)
         elif consultation.status == 'Decline':
-            return Response({"message": f"Doctor {user.email} has already declined this request."},
-                            status=status.HTTP_200_OK)
+            return Response({"message": f"Already declined this request."},
+                            status=status.HTTP_406_NOT_ACCEPTABLE)
         else:
             return Response({"message": "Invalid consultation status."},
                             status=status.HTTP_400_BAD_REQUEST)
+
+    # Try creating the video_room_id
+    status_code, response = create_room()
+    if not status_code:
+        return Response({'message': 'Generation of Huddle-01 room_id failed'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    if status_code != 201:
+        return Response({'message': f"Huddle-01 Error: ({status_code}) {response['message']}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     # Try to create a new consultation if everything is valid
     try:
         Consultations.objects.create(
             id = uuid.uuid4(),
             doctor=consultation.doctor,
-            patient=consultation.patient
+            patient=consultation.patient,
+            video_room_id=response['data']['roomId'],
+            start_time=consultation.start_time,
+            end_time=consultation.end_time
         )
         # Optionally, update the request status if needed
         consultation.status = 'Accept'
         consultation.save()
 
-        return Response({"message": "Consultation created!"}, status=status.HTTP_201_CREATED)
+        return Response({"message": "Consultation request accepted"}, status=status.HTTP_201_CREATED)
 
     except Exception as e:
         print(e)
@@ -142,12 +169,14 @@ def user_consultation(request):
     else:
         consultations = Consultations.objects.filter(patient=user)
 
-    print(consultations)
+    # print(consultations)
 
-    
-    return Response({'message': 'Retrieved All Consultations Successfully',
-                     'data': ConsultationSerializer(consultations, many=True).data},
-                    status=status.HTTP_200_OK)
+    # Apply pagination
+    paginator = ConsultationRequestPagination()
+    paginated_results = paginator.paginate_queryset(consultations, request)
+    serialized_data = ConsultationSerializer(paginated_results, many=True).data
+
+    return paginator.get_paginated_response(serialized_data)
 
 
 
@@ -158,15 +187,53 @@ def consultation_by_id(request, consultation_id):
     consultation = get_object_or_404(Consultations, id=consultation_id)
 
     if user.is_doctor and consultation.doctor.id != user.id:
-        return Response({"message": f"Doctor {user.email} does Not have Permission to Access this Information"},
+        return Response({"message": f"User Does Not have Permission to Access this Information"},
                         status=status.HTTP_403_FORBIDDEN)
 
     elif not(user.is_doctor) and consultation.patient.id != user.id:
-        return Response({"message": f"Patient {user.email} does Not have Permission to Access this Information"},
+        return Response({"message": f"User Does Not have Permission to Access this Information"},
                         status=status.HTTP_403_FORBIDDEN)
     
     return Response(ConsultationSerializer(consultation).data,
                     status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([CustomIsAuthenticated])
+def consultation_access_token(request, consultation_id):
+    try:
+        user = request.user
+
+        consultation = Consultations.objects.get(id=consultation_id)
+
+        if not consultation:
+            return Response({'message': f"Consultation not found"}, status=status.HTTP_404_NOT_FOUND)
+        if user.is_doctor and user.id != consultation.doctor.id:
+            return Response({"message": f"User Does Not have Permission to Access this Information"},
+                            status=status.HTTP_403_FORBIDDEN)
+        elif not(user.is_doctor) and consultation.patient.id != user.id:
+            return Response({"message": f"User Does Not have Permission to Access this Information"},
+                            status=status.HTTP_403_FORBIDDEN)
+
+        access_token = AccessToken({
+            "roomId": consultation.video_room_id,
+            "role": "SPEAKER",
+            "permissions": {
+                "canConsume": True,
+                "canProduce": True,
+                "canRecvData": True,
+                "canSendData": True,
+                "canUpdateMetadata": True,
+                "canProduceSources": {"cam": True, "mic": True, "screen": True}
+            },
+            "options": {}
+        })
+
+        jwt_token = access_token.to_jwt()
+        # print(f"Token: {jwt_token}")
+        return Response({'token': jwt_token}, status=status.HTTP_200_OK)
+    except Exception as e:
+        print(f"Error: {e}")
+        return Response({'message': 'An unexpected error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['POST'])
@@ -212,8 +279,7 @@ def consultation_add_chats(request, consultation_id):
     # Save the consultation object
     consultation.save()
 
-    return Response({"message": "Chat added successfully"}, status=status.HTTP_200_OK)
-
+    return Response({"message": "Chat added"}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 @permission_classes([CustomIsAuthenticated])
@@ -239,5 +305,5 @@ def consultation_add_notes(request, consultation_id):
 
     consultation.save()
 
-    return Response({"message": "Note added successfully"}, status=status.HTTP_200_OK)
+    return Response({"message": "Doctors notes added"}, status=status.HTTP_200_OK)
 

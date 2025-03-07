@@ -192,11 +192,10 @@ def login(request):
         except User.DoesNotExist:
             return Response({'message': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
 
-        if not EmailAddress.objects.get(email=email).verified:
-                
-                return Response({'message': 'Email is not verified '}, status=status.HTTP_401_UNAUTHORIZED)
-
         if check_password(password, user.password):
+            
+            if not EmailAddress.objects.get(email=email).verified:
+                return Response({'message': 'Email is not verified '}, status=status.HTTP_401_UNAUTHORIZED)
             # print(user.password)
             refresh = RefreshToken.for_user(user)
             # update_last_login(None, user)

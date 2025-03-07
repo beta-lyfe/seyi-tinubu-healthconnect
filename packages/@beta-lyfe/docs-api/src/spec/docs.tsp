@@ -30,20 +30,15 @@ scalar Password extends string;
 @example("mary.slessor@mail.com")
 scalar Email extends string;
 
-model PaginatedMeta {
+model Paginated {
   @example(100)
-  total: int64;
+  count: int64;
 
-  @example(1)
-  page: int64;
+  @example("http://localhost:8000/api/consultation/request/?page=2")
+  next: string | null;
 
-  @example(10)
-  per_page: int64;
-}
-
-model Paginated<T> {
-  data: T[];
-  meta: PaginatedMeta;
+  @example("http://localhost:8000/api/consultation/request/?page=1")
+  previous: string | null;
 }
 
 @route("/api")
@@ -115,6 +110,8 @@ namespace Api {
       email: Email;
       password: Password;
       password2: Password;
+      phone_number: PhoneNumber;
+      date_of_birth: DateOfBirth;
 
       @example(true)
       is_doctor: boolean;
@@ -444,6 +441,7 @@ namespace Api {
       rating: float64;
       description: string | null;
       other_names: string | null;
+      is_doctor: boolean;
 
       @example(500.00)
       home_consultation_charge: float64;
@@ -543,14 +541,6 @@ namespace Api {
       created_at: DateTime;
     }
 
-    model Consultation {
-      doctors_notes: DoctorNote[];
-      chats: Chat[];
-      room_id: Id;
-      doctor_id: Id;
-      patient_id: Id;
-    }
-
     alias ConsultationNotFoundError = NotFoundError<"Consultation">;
 
     model ConsultationNoteAdded {
@@ -567,6 +557,55 @@ namespace Api {
       @example("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik1hcnkgU2xlc3NvciIsImlhdCI6MTUxNjIzOTAyMn0.UFI1B6pCOrqlpaFHV58dqqTLYCCC8hukJAVY8Wb1Z9o")
       token: string;
     }
+
+    model Consultation {
+      id: Id;
+      doctor: Id;
+      patient: Id;
+      status: "pending" | "accepted" | "rejected";
+      doctor_notes: DoctorNote[] | null;
+      chats: Chat[] | null;
+      video_room_id: string | null;
+      start_time: DateTime;
+      end_time: DateTime;
+      created_at: DateTime;
+      updated_at: DateTime;
+    }
+
+    @error
+    model ConsultationAlreadyAccepted {
+      @statusCode code: 406;
+
+      @example("Already accepted this request.")
+      message: string;
+    }
+
+    @error
+    model ConsultationDeclined {
+      @statusCode code: 406;
+
+      @example("Already declined this request.")
+      message: string;
+    }
+
+    model PaginatedConsultations {
+      results: Consultation;
+
+      @example(18)
+      count: int64;
+
+      @example("http://localhost:8000/api/doctors/?page=3")
+      next: string | null;
+
+      @example("http://localhost:8000/api/doctors/?page=2")
+      previous: string | null;
+    }
+
+    @route("/")
+    @get
+    @doc("Fetch all consultations")
+    op fetchConsultations(
+    ): PaginatedConsultations | AuthenticationRequiredError | UnexpectedError;
 
     @route("/{id}")
     @get
@@ -607,7 +646,7 @@ namespace Api {
     @route("/request")
     namespace Request {
       model ConsultationRequestPayload {
-        doctor_id: Id;
+        doctor: Id;
         start_time: DateTime;
         end_time: DateTime;
 
@@ -621,8 +660,9 @@ namespace Api {
       }
 
       model ConsultationRequest {
-        doctor_id: Id;
-        patient_id: Id;
+        id: Id;
+        doctor: Id;
+        patient: Id;
         status: "pending" | "accepted" | "rejected";
 
         @example("I am feeling unwell")
@@ -631,14 +671,39 @@ namespace Api {
         start_time: DateTime;
         end_time: DateTime;
         created_at: DateTime;
+        updated_at: DateTime;
+      }
+
+      model PaginatedConsultationRequest {
+        results: ConsultationRequest;
+
+        @example(18)
+        count: int64;
+
+        @example("http://localhost:8000/api/doctors/?page=3")
+        next: string | null;
+
+        @example("http://localhost:8000/api/doctors/?page=2")
+        previous: string | null;
+      }
+
+      @error
+      model ConsultationRequestPendingError {
+        @statusCode code: 406;
+
+        @example("Already a Pending request")
+        message: string;
+      }
+      @error
+      model UnauthorisedRequestID {
+        @statusCode code: 403;
+
+        @example("User Does Not have Permission to Access this Information")
+        message: string;
       }
 
       model ConsultationRequestAccepted {
         message: "Consultation request accepted";
-      }
-      model UnauthorisedRequest {
-        @statusCode code: 403;
-        message: "Doctor cannot create a consultation request";
       }
 
       @route("/")
@@ -646,7 +711,6 @@ namespace Api {
       @doc("Request consultation")
       op requestConsultation(@body body: ConsultationRequestPayload):
         | ConsultationRequestCreated
-        | UnauthorisedRequest
         | BadRequestError
         | AuthenticationRequiredError
         | UnexpectedError;
@@ -655,14 +719,15 @@ namespace Api {
       @get
       @doc("Fetch consultation requests")
       op fetchConsultationRequests(
-      ): Paginated<ConsultationRequest> | AuthenticationRequiredError | UnexpectedError;
+      ): PaginatedConsultationRequest | AuthenticationRequiredError | UnexpectedError;
 
       @route("/{id}")
       @get
       @doc("Fetch consultation request by ID")
       op fetchConsultationRequestById(@path id: string):
         | ConsultationRequest
-        | ConsultationNotFoundError
+        | NotFoundError<"Consultation Request">
+        | UnauthorisedRequestID
         | AuthenticationRequiredError
         | UnexpectedError;
 
@@ -671,7 +736,10 @@ namespace Api {
       @doc("Accept consultation request")
       op acceptConsultationRequest(@path id: string):
         | ConsultationRequestAccepted[]
+        | NotFoundError<"Consultation Request">
         | ConsultationNotFoundError
+        | ConsultationDeclined
+        | ConsultationAlreadyAccepted
         | AuthenticationRequiredError
         | UnexpectedError;
     }
@@ -688,7 +756,7 @@ namespace Api {
       balance: float64;
     }
 
-    model WalletTransaction {
+    model PaginatedWalletTransaction {
       id: Id;
       type: "credit" | "debit";
 
@@ -702,6 +770,15 @@ namespace Api {
       note: string;
 
       created_at: DateTime;
+
+      @example(18)
+      count: int64;
+
+      @example("http://localhost:8000/api/doctors/?page=3")
+      next: string | null;
+
+      @example("http://localhost:8000/api/doctors/?page=2")
+      previous: string | null;
     }
 
     model WalletTopupPayload {
@@ -722,7 +799,7 @@ namespace Api {
 
     @route("/transactions")
     op fetchWalletTransactions(
-    ): Paginated<WalletTransaction> | AuthenticationRequiredError | UnexpectedError;
+    ): PaginatedWalletTransaction | AuthenticationRequiredError | UnexpectedError;
   }
 
   @tag("Waitlist")

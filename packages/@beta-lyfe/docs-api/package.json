@@ -6,7 +6,8 @@
 	"type": "module",
 	"exports": "./src/index.ts",
 	"scripts": {
-		"dev": "vite --port 3002",
+		"dev": "concurrently \"pnpm compile:dev\" \"pnpm vite:dev\"",
+		"vite:dev": "vite --port 3002",
 		"compile": "tsp compile . --emit @typespec/openapi3",
 		"compile:dev": "pnpm compile --watch",
 		"lint": "tsc",

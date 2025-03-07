@@ -269,7 +269,7 @@ REST_AUTH = {
 
 # cors headers
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
+    "http://localhost:3001",
     "https://betalyfe.com.ng",
     "https://www.betalyfe.com.ng",
     "https://betalyfe-website.vercel.app"
