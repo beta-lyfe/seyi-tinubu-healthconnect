@@ -110,6 +110,8 @@ namespace Api {
       email: Email;
       password: Password;
       password2: Password;
+      phone_number: PhoneNumber;
+      date_of_birth: DateOfBirth;
 
       @example(true)
       is_doctor: boolean;
@@ -439,6 +441,7 @@ namespace Api {
       rating: float64;
       description: string | null;
       other_names: string | null;
+      is_doctor: boolean;
 
       @example(500.00)
       home_consultation_charge: float64;
@@ -478,6 +481,7 @@ namespace Api {
     @get
     @doc("Fetch all doctors")
     op fetchDoctors(
+      @query page?: string,
     ): PaginatedDoctors | AuthenticationRequiredError | UnexpectedError;
 
     @route("/profile")
@@ -559,13 +563,9 @@ namespace Api {
       doctor: Id;
       patient: Id;
       status: "pending" | "accepted" | "rejected";
-
-      doctor_notes: DoctorNote[] | null,
-
-      chats: Chat[] | null,
-
-      video_room_id: string | null,
-
+      doctor_notes: DoctorNote[] | null;
+      chats: Chat[] | null;
+      video_room_id: string | null;
       start_time: DateTime;
       end_time: DateTime;
       created_at: DateTime;
@@ -588,7 +588,6 @@ namespace Api {
       message: string;
     }
 
-    
     model PaginatedConsultations {
       results: Consultation;
 
@@ -603,10 +602,10 @@ namespace Api {
     }
 
     @route("/")
-      @get
-      @doc("Fetch all consultations")
-      op fetchConsultations(
-      ): PaginatedConsultations | AuthenticationRequiredError | UnexpectedError;
+    @get
+    @doc("Fetch all consultations")
+    op fetchConsultations(
+    ): PaginatedConsultations | AuthenticationRequiredError | UnexpectedError;
 
     @route("/{id}")
     @get
@@ -648,7 +647,6 @@ namespace Api {
     namespace Request {
       model ConsultationRequestPayload {
         doctor: Id;
-
         start_time: DateTime;
         end_time: DateTime;
 
@@ -699,6 +697,7 @@ namespace Api {
       @error
       model UnauthorisedRequestID {
         @statusCode code: 403;
+
         @example("User Does Not have Permission to Access this Information")
         message: string;
       }
@@ -710,9 +709,11 @@ namespace Api {
       @route("/")
       @post
       @doc("Request consultation")
-      op requestConsultation(
-        @body body: ConsultationRequestPayload,
-      ): ConsultationRequestCreated | AuthenticationRequiredError | UnexpectedError;
+      op requestConsultation(@body body: ConsultationRequestPayload):
+        | ConsultationRequestCreated
+        | BadRequestError
+        | AuthenticationRequiredError
+        | UnexpectedError;
 
       @route("/")
       @get
@@ -842,4 +843,3 @@ namespace Api {
     ): UserCreatedMessage | UnexpectedError;
   }
 }
-

@@ -30,6 +30,12 @@ jobs:
         working-directory: packages
         run: pnpm install
 
+      - name: Setup assets
+        working-directory: packages
+        run: |
+          pnpm compile
+          pnpm typegen
+
       - name: Load .env file
         run: echo '${{ secrets.ENV }}' > ./packages/.env
 

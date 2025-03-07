@@ -11,6 +11,7 @@
     "lint": "tsc"
   },
   "dependencies": {
+    "@beta-lyfe/api": "file:",
     "openapi-fetch": "^0.13.4",
     "openapi-react-query": "^0.2.9"
   },

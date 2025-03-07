@@ -1,5 +1,5 @@
 import { Button } from '@beta-lyfe/ui/components/shad/ui/button'
-import { createFileRoute, useRouter, Link } from '@tanstack/react-router'
+import { createFileRoute, useRouter, Link, useNavigate } from '@tanstack/react-router'
 import { Input } from '@beta-lyfe/ui/components/shad/ui/input'
 import { z } from 'zod'
 import {
@@ -17,7 +17,9 @@ import { $api } from '@beta-lyfe/webapp/lib/backend'
 import { toast } from 'sonner'
 import { useEffect, useRef, useState } from 'react'
 import { defaultValues } from './-components/credentials'
-import { ArrowLeftIcon } from 'lucide-react'
+import { ArrowLeftIcon, Loader, Loader2 } from 'lucide-react'
+import { useSignUpForm } from './sign-up/-components/context'
+import { useAuth } from '../../../hooks/auth'
 
 export const Route = createFileRoute('/_app/auth/sign-in')({
   component: SignInPage
@@ -32,18 +34,38 @@ type FormSchema = z.infer<typeof formSchema>
 
 function SignInPage() {
   const toastId = useRef<string | number>()
-
+  const navigate=useNavigate()
+  const auth=useAuth()
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues.signIn
   })
 
-  const { mutate } = $api.useMutation('post', '/api/auth/sign-in', {
-    onSuccess: (data) => {
+  const resender=$api.useMutation('post','/api/auth/resend-verify-email',{
+    onError:(error)=>{
       toast.dismiss(toastId.current)
-      toast.success('Sign in successful')
+      toast.error(error.message)
     },
+    onSuccess:(_data)=>{
+      toast.message("otp sent to email")
+      return navigate({
+        to:'/auth/verify',
+        search:{
+          email: form.getValues('email')
+        }
+      })
+    }
+  })
+
+
+  const { mutate } = $api.useMutation('post', '/api/auth/sign-in', {
     onError: (error) => {
+      if(error.message.startsWith("Email is not verified ")){
+        toast.dismiss(toastId.current)
+        toast.error('Email is not verified')
+        console.log(form.getValues('email'))
+        resender.mutate({body:{email:form.getValues('email')}})
+      }
       toast.dismiss(toastId.current)
       toast.error(error.message)
     }
@@ -51,8 +73,26 @@ function SignInPage() {
 
   const onSubmit = (data: FormSchema) => {
     toastId.current = toast.loading('Signing in...')
-    mutate({ body: data })
+    mutate({ body: data }, {
+      onSuccess: (_data) => {
+        auth.update(
+          {status:"authenticated",
+            data:{
+              token:{access_token:_data.access,refresh_token:_data.refresh},
+              user:_data.user.is_doctor?{type:'doctor',data:_data.user}:{type:'patient',data:_data.user}
+            }
+          }
+        )
+        toast.dismiss(toastId.current)
+        toast.success('Sign in successful')
+        navigate({
+          to:'/dashboard'
+        })
+      },  
+    })
   }
+
+  const isSubmitting = form.formState.isSubmitting || status === "pending"
 
   const router = useRouter()
   const goBack = () => router.history.back()
@@ -108,7 +148,11 @@ function SignInPage() {
                 Sign up
               </Link>
             </div>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" className='text-white' disabled={isSubmitting}>
+              {
+                isSubmitting? <Loader2 className="animate-spin" /> : 'Submit'
+              }
+              </Button>
           </form>
         </Form>
         <div />
