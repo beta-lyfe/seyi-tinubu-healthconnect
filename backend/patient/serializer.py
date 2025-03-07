@@ -2,6 +2,7 @@ from rest_framework import serializers
 from patient.models import PatientProfile
 import cloudinary.uploader
 
+DEFAULT_URL = "https://res.cloudinary.com/dlanhtzbw/image/upload/v1675343188/Telegram Clone/no-profile_aknbeq.jpg"
 
 class PatientProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,8 +18,8 @@ class PatientProfileSerializer(serializers.ModelSerializer):
         return instance
 
     def get_profile_picture_url(self, obj):
-        if obj.profile_picture_url:
-            return f"https://res.cloudinary.com/dlanhtzbw/{obj.profile_picture_url}"
+        if obj.profile_picture_url and obj.profile_picture_url != DEFAULT_URL:
+            return f"https://{obj.profile_picture_url}"
         return None
 
 class PatientsDetails(serializers.ModelSerializer):
