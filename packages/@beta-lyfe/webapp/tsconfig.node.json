@@ -5,6 +5,7 @@
 		"composite": true,
 		"skipLibCheck": true,
 		"module": "ESNext",
+		"strict": true,
 		"noEmit": true,
 		"moduleResolution": "bundler",
 		"allowSyntheticDefaultImports": true

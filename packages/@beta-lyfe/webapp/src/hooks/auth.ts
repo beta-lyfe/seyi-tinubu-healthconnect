@@ -35,20 +35,21 @@ export type AuthenticatedAuth = {
   }
 }
 
-export type Auth = { update: (_auth: Auth) => void } & (
+export type AuthStates =
   | UnauthenticatedAuth
   | AuthenticatingAuth
   | AuthenticatedAuth
-)
+
+export type Auth = { update: (_auth: AuthStates) => void } & AuthStates
 
 const auth = proxy<Auth>({
   status: 'unauthenticated',
   update: (_auth) => {
     auth.status = _auth.status
     if (_auth.status === 'authenticated') {
-      ;(auth as AuthenticatedAuth).data = _auth.data
+      ; (auth as AuthenticatedAuth).data = _auth.data
     }
   }
 })
 
-export const useAuth = ()=>useSnapshot(auth)
+export const useAuth = () => useSnapshot(auth)
