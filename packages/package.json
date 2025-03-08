@@ -2,6 +2,7 @@
 	"$schema": "https://json.schemastore.org/package.json",
 	"scripts": {
 		"dev": "pnpm --recursive --parallel dev",
+		"build": "pnpm --recursive --parallel build",
 		"compile": "pnpm --recursive --parallel compile",
 		"typegen": "pnpm --recursive --parallel typegen",
 		"lint": "pnpm --recursive --parallel lint",

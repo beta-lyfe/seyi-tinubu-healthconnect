@@ -3,7 +3,12 @@ import {
   MultiStepForm,
   type StepComponent
 } from '@beta-lyfe/ui/components/multi-step-form'
-import { createFileRoute, useRouter, Link, useNavigate } from '@tanstack/react-router'
+import {
+  createFileRoute,
+  useRouter,
+  Link,
+  useNavigate
+} from '@tanstack/react-router'
 import { Input } from '@beta-lyfe/ui/components/shad/ui/input'
 import {
   InputOTP,
@@ -24,7 +29,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { AuthLayout } from '../-components/layout'
 import { $api } from '@beta-lyfe/webapp/lib/backend'
 import { toast, Toaster } from 'sonner'
-import { SetStateAction, useEffect, useRef, useState } from 'react'
+import {
+  type Dispatch,
+  type SetStateAction,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import { defaultValues } from '../-components/credentials'
 import {
   ArrowLeft,
@@ -90,10 +101,7 @@ function SignInPage() {
         </div>
         <div className="w-full overflow-clip">
           {indexedMultiform < steps.length && (
-            <MultiStepFormBar
-              bars={steps.length}
-              index={indexedMultiform}
-            />
+            <MultiStepFormBar bars={steps.length} index={indexedMultiform} />
           )}
           <SignUpFormProvider>
             <MultiStepForm
@@ -128,128 +136,29 @@ const MultiStepFormBar = ({ bars, index }: MultiStepFormBarProps) => {
   )
 }
 
-{const Step6: StepComponent = () => {
-  const signupForm = useSignUpForm()
-
-  assert(signupForm.step === 'step5')
-
-  return (
-    <div className="w-full flex items-center justify-center flex-col space-y-6">
-      <h2 className="font-bold text-xl md:text-2xl">Verify your account</h2>
-      <p className="text-center">
-        Enter the 6 digit OTP code sent to {signupForm.data.email}
-      </p>
-      <InputOTPPattern />
-      <div className="w-full p-6 flex justify-center items-center">
-        <Button
-          type="submit"
-          className="flex items-center gap-2 justify-center w-[400px]
-			border-black border-2
-			text-white p-4"
-        >
-          <Lock color="white" /> Verify
-        </Button>
-      </div>
-      <div className="flex justify-center items-center flex-col md:flex-row">
-        <p>Didn't receive the code ? </p>
-        <span className="text-primary"> Re-send OTP in 10s</span>
-      </div>
-    </div>
-  )
-}}
-
-export const InputOTPPattern = ({otp,setOtp}:{otp:string,setOtp:Dispatch<SetStateAction<number>>}) => {
+export const InputOTPPattern = ({
+  otp,
+  setOtp
+}: { otp: string; setOtp: Dispatch<SetStateAction<string>> }) => {
   const inputOtpSlot = 'border-black border-[2px] rounded-lg ring-0'
   return (
-    <InputOTP maxLength={6} pattern={inputOtp.REGEXP_ONLY_DIGITS} defaultValue={otp} onChange={(value)=>{
-      setOtp(value)
-    }}>
+    <InputOTP
+      maxLength={6}
+      pattern={inputOtp.REGEXP_ONLY_DIGITS}
+      defaultValue={otp}
+      onChange={(value) => {
+        setOtp(value)
+      }}
+    >
       <InputOTPGroup className="select-none flex items-center justify-center gap-2 md:gap-5">
         <InputOTPSlot index={0} className={inputOtpSlot} />
         <InputOTPSlot index={1} className={inputOtpSlot} />
         <InputOTPSlot index={2} className={inputOtpSlot} />
         <InputOTPSlot index={3} className={inputOtpSlot} />
-        {/* <InputOTPSlot index={4} className={inputOtpSlot} />
-        <InputOTPSlot index={5} className={inputOtpSlot} /> */}
+        <InputOTPSlot index={4} className={inputOtpSlot} />
+        <InputOTPSlot index={5} className={inputOtpSlot} />
       </InputOTPGroup>
     </InputOTP>
-  )
-}
-
-const SignupForm: StepComponent = () => {
-  const toastId = useRef<string | number>()
-
-  const router = useRouter()
-  const goBack = () => router.history.back()
-
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
-    defaultValues: defaultValues.signIn
-  })
-
-  const { mutate } = $api.useMutation('post', '/api/auth/sign-in', {
-    onSuccess: (data) => {
-      toast.dismiss(toastId.current)
-      toast.success('Sign in successful')
-    },
-    onError: (error) => {
-      toast.dismiss(toastId.current)
-      toast.error(error.message)
-    }
-  })
-
-  const onSubmit = (data: FormSchema) => {
-    toastId.current = toast.loading('Signing in...')
-    mutate({ body: data })
-  }
-
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full max-w-md flex flex-col gap-4"
-      >
-        <header className="text-xl font-semibold text-left w-full">
-          Sign up
-        </header>
-        <div className="flex flex-col gap-4">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input type="email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input type="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div>
-          {/*<Link href="">Forgot password?</Link>*/}
-          Alreadh have an account?{' '}
-          <Link href="/auth/sign-in" className="text-primary">
-            Sign in
-          </Link>
-        </div>
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
   )
 }
 
@@ -257,11 +166,11 @@ const Step2: StepComponent = ({ next, prev }) => {
   const signupForm = useSignUpForm()
 
   const [currentwho, setCurrentWho] = useState<Step2Schema['who']>(
-   signupForm.data?.who as any
+    (signupForm.data as any)?.who
   )
 
   const submit = (data: Step2Schema) => {
-    if(!data.who){
+    if (!data.who) {
       return
     }
     if (signupForm.step !== 'step0') {
@@ -288,7 +197,14 @@ const Step2: StepComponent = ({ next, prev }) => {
           selected={currentwho === 'doctor'}
         />
       </div>
-      <p className={cn('text-red-600 px-4 py-2 text-center',currentwho && "hidden")}>Please select who you are</p>
+      <p
+        className={cn(
+          'text-red-600 px-4 py-2 text-center',
+          currentwho && 'hidden'
+        )}
+      >
+        Please select who you are
+      </p>
       <div className="flex justify-between">
         <Button
           className="self-end border-2 border-black w-min flex text-white gap-2"
@@ -350,7 +266,10 @@ const Step3: StepComponent = ({ next, prev }) => {
   const signupForm = useSignUpForm()
 
   const submit = (data: Step3Schema) => {
-    signupForm.update({ step: 'step3', data: { ...signupForm.data, ...data } })
+    signupForm.update({
+      step: 'step3',
+      data: { ...(signupForm.data as any), ...data }
+    })
     next()
   }
   const form = useForm<Step3Schema>({
@@ -363,7 +282,10 @@ const Step3: StepComponent = ({ next, prev }) => {
       <h2 className="text-xl font-bold">How would you like to be contacted?</h2>
       <div className="flex flex-col py-4">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(submit)} className='flex flex-col gap-4'>
+          <form
+            onSubmit={form.handleSubmit(submit)}
+            className="flex flex-col gap-4"
+          >
             <FormField
               control={form.control}
               name="email"
@@ -422,18 +344,18 @@ const Step3: StepComponent = ({ next, prev }) => {
 }
 
 const Step5: StepComponent = ({ next, prev }) => {
-  const navigate=useNavigate();
+  const navigate = useNavigate()
   const signupForm = useSignUpForm()
   const toastId = useRef<string | number>()
 
   const { mutate, status } = $api.useMutation('post', '/api/auth/sign-up', {
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.dismiss(toastId.current)
       toast.success('Sign up successful')
       navigate({
-        to:'/auth/verify',
-        search:{
-          email:signupForm.data.email
+        to: '/auth/verify',
+        search: {
+          email: (signupForm.data as any).email
         }
       })
       next()
@@ -447,12 +369,12 @@ const Step5: StepComponent = ({ next, prev }) => {
   const onSubmit = (data: Step5Schema) => {
     const newStepData: Step5FullSchema = {
       step: 'step5',
-      data: { ...signupForm.data, ...data }
+      data: { ...(signupForm.data as any), ...data }
     }
 
     signupForm.update(newStepData)
 
-    toastId.current = toast.loading("Signing up")
+    toastId.current = toast.loading('Signing up')
 
     mutate({
       body: {
@@ -473,14 +395,17 @@ const Step5: StepComponent = ({ next, prev }) => {
     defaultValues: signupForm.data as any
   })
 
-  const isSubmitting = form.formState.isSubmitting || status === "pending"
+  const isSubmitting = form.formState.isSubmitting || status === 'pending'
 
   return (
     <div className="md:max-w-md">
       <h2 className="text-xl font-bold">Secure your account</h2>
       <div className="flex flex-col gap-4 py-4">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-4'>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
             <FormField
               control={form.control}
               name="password"
@@ -529,8 +454,11 @@ const Step5: StepComponent = ({ next, prev }) => {
                 type="submit"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? 
-                <Loader2Icon className="size-5 animate-spin" /> : "Sign up"}
+                {isSubmitting ? (
+                  <Loader2Icon className="size-5 animate-spin" />
+                ) : (
+                  'Sign up'
+                )}
               </Button>
             </div>
           </form>
@@ -544,7 +472,10 @@ const Step4: StepComponent = ({ next, prev }) => {
   const signupForm = useSignUpForm()
 
   const submit = (data: Step4Schema) => {
-    signupForm.update({ step: 'step4', data: { ...signupForm.data, ...data } })
+    signupForm.update({
+      step: 'step4',
+      data: { ...(signupForm.data as any), ...data }
+    })
     next()
   }
   const form = useForm<Step4Schema>({
@@ -557,7 +488,10 @@ const Step4: StepComponent = ({ next, prev }) => {
       <h2 className="text-xl font-bold">Just one more step</h2>
       <div className="flex flex-col gap-4 py-4">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(submit)} className='flex flex-col gap-4'>
+          <form
+            onSubmit={form.handleSubmit(submit)}
+            className="flex flex-col gap-4"
+          >
             <FormField
               control={form.control}
               name="dob"

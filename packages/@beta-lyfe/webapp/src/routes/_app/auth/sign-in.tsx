@@ -1,5 +1,10 @@
 import { Button } from '@beta-lyfe/ui/components/shad/ui/button'
-import { createFileRoute, useRouter, Link, useNavigate } from '@tanstack/react-router'
+import {
+  createFileRoute,
+  useRouter,
+  Link,
+  useNavigate
+} from '@tanstack/react-router'
 import { Input } from '@beta-lyfe/ui/components/shad/ui/input'
 import { z } from 'zod'
 import {
@@ -34,65 +39,69 @@ type FormSchema = z.infer<typeof formSchema>
 
 function SignInPage() {
   const toastId = useRef<string | number>()
-  const navigate=useNavigate()
-  const auth=useAuth()
+  const navigate = useNavigate()
+  const auth = useAuth()
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues.signIn
   })
 
-  const resender=$api.useMutation('post','/api/auth/resend-verify-email',{
-    onError:(error)=>{
+  const resender = $api.useMutation('post', '/api/auth/resend-verify-email', {
+    onError: (error) => {
       toast.dismiss(toastId.current)
       toast.error(error.message)
     },
-    onSuccess:(_data)=>{
-      toast.message("otp sent to email")
+    onSuccess: (_data) => {
+      toast.message('otp sent to email')
       return navigate({
-        to:'/auth/verify',
-        search:{
+        to: '/auth/verify',
+        search: {
           email: form.getValues('email')
         }
       })
     }
   })
 
-
-  const { mutate } = $api.useMutation('post', '/api/auth/sign-in', {
-    onError: (error) => {
-      if(error.message.startsWith("Email is not verified ")){
-        toast.dismiss(toastId.current)
-        toast.error('Email is not verified')
-        console.log(form.getValues('email'))
-        resender.mutate({body:{email:form.getValues('email')}})
-      }
-      toast.dismiss(toastId.current)
-      toast.error(error.message)
-    }
-  })
+  const { mutate, status } = $api.useMutation('post', '/api/auth/sign-in')
 
   const onSubmit = (data: FormSchema) => {
     toastId.current = toast.loading('Signing in...')
-    mutate({ body: data }, {
-      onSuccess: (_data) => {
-        auth.update(
-          {status:"authenticated",
-            data:{
-              token:{access_token:_data.access,refresh_token:_data.refresh},
-              user:_data.user.is_doctor?{type:'doctor',data:_data.user}:{type:'patient',data:_data.user}
+    mutate(
+      { body: data },
+      {
+        onSuccess: (_data) => {
+          auth.update({
+            status: 'authenticated',
+            data: {
+              token: {
+                access_token: _data.access,
+                refresh_token: _data.refresh
+              },
+              user: _data.user.is_doctor
+                ? { type: 'doctor', data: _data.user }
+                : { type: 'patient', data: _data.user }
             }
+          })
+          toast.dismiss(toastId.current)
+          toast.success('Sign in successful')
+          navigate({
+            to: '/dashboard'
+          })
+        },
+        onError: (error) => {
+          if (error.message.startsWith('Email is not verified ')) {
+            toast.dismiss(toastId.current)
+            toast.error('Email is not verified')
+            resender.mutate({ body: { email: data.email } })
           }
-        )
-        toast.dismiss(toastId.current)
-        toast.success('Sign in successful')
-        navigate({
-          to:'/dashboard'
-        })
-      },  
-    })
+          toast.dismiss(toastId.current)
+          toast.error(error.message)
+        }
+      }
+    )
   }
 
-  const isSubmitting = form.formState.isSubmitting || status === "pending"
+  const isSubmitting = form.formState.isSubmitting || status === 'pending'
 
   const router = useRouter()
   const goBack = () => router.history.back()
@@ -144,15 +153,17 @@ function SignInPage() {
             <div>
               {/*<Link href="">Forgot password?</Link>*/}
               Don't have an account?{' '}
-              <Link href="/auth/sign-up" className="text-primary">
+              <Link to="/auth/sign-up" className="text-primary">
                 Sign up
               </Link>
             </div>
-            <Button type="submit" className='text-white' disabled={isSubmitting}>
-              {
-                isSubmitting? <Loader2 className="animate-spin" /> : 'Submit'
-              }
-              </Button>
+            <Button
+              type="submit"
+              className="text-white"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? <Loader2 className="animate-spin" /> : 'Submit'}
+            </Button>
           </form>
         </Form>
         <div />

@@ -1,7 +1,7 @@
 import { createEnv } from '@t3-oss/env-core'
 import { z } from 'zod'
 
-const ENV = import.meta.env ?? process.env
+const ENV = (import.meta as any).env ?? process.env
 
 export const env = createEnv({
   clientPrefix: 'VITE_',

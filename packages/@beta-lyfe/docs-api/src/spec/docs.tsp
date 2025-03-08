@@ -288,7 +288,6 @@ namespace Api {
       phone_number: PhoneNumber;
       date_of_birth: DateOfBirth;
       email: Email;
-      age: int64 | null;
       profile_picture_url: string;
     }
 
@@ -843,3 +842,4 @@ namespace Api {
     ): UserCreatedMessage | UnexpectedError;
   }
 }
+

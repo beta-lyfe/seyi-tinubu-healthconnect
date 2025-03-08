@@ -10,7 +10,7 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
-/src/routeTree.gen.ts
+# /src/routeTree.gen.ts
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -144,3 +144,4 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/node
 .vite
+.vercel
