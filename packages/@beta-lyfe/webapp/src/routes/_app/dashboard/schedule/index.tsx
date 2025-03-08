@@ -17,7 +17,7 @@ export const quickNav = [
   {
     text: 'Doctor',
     icon: StethoscopeIcon,
-    link: '/dashboard/chats'
+    link: '/dashboard/doctors'
   },
   {
     text: 'Pharmacy',

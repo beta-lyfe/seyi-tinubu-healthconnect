@@ -7,25 +7,15 @@ import {
   CarouselContent
 } from '@beta-lyfe/ui/components/shad/ui/carousel'
 import { Button } from '@beta-lyfe/ui/components/shad/ui/button'
-import {
-  ArrowRightIcon,
-  ArrowUpRight,
-  BuildingIcon,
-  CalendarCheckIcon,
-  MessageSquareIcon,
-  PillIcon,
-  SearchIcon,
-  StethoscopeIcon
-} from 'lucide-react'
-import { quickNav } from './schedule'
-import { Wallet } from 'lucide-react'
-import { BottomNav } from '../-components/bottom-nav'
+import { ArrowRightIcon, ArrowUpRight, MessageSquareIcon } from 'lucide-react'
+import { quickNav as services } from './schedule'
 import { $api } from '@beta-lyfe/webapp/lib/backend'
-import { LogoIcon } from '@beta-lyfe/ui/components/icons/index'
 import doctorImage from '../../../assets/images/doctor.png'
+import { Layout } from './-components/layout'
+import { Section } from './-components/section'
 
 export const Route = createFileRoute('/_app/dashboard/')({
-  component: ChatsListPage
+  component: DashboardHomePage
 })
 
 function ChatList() {
@@ -33,7 +23,7 @@ function ChatList() {
 
   if (status === 'pending' || status === 'error') return null
 
-  const doctors = data
+  const doctors = []
 
   return (
     <div className="grid grid-flow-row grow divide-y-2 divide-gray-300">
@@ -68,28 +58,26 @@ const DoctorsCarousel = () => {
 
   if (status === 'pending' || status === 'error') return null
 
-  const doctors = data
+  const doctors = data.results.data
 
   return (
     <Carousel>
-      <CarouselContent>
+      <CarouselContent className="gap-4">
         {doctors.map((doctor) => (
-          <CarouselItem
-            key={`${doctor.first_name} ${doctor.last_name}`}
-            className="basis-auto"
-          >
+          <CarouselItem key={doctor.id} className="basis-auto">
             <div className="border-2 border-gray-300 rounded-2xl aspect-card w-[200px] shadow-md flex flex-col overflow-clip">
               <div className="bg-gray-300 flex justify-center items-end">
                 <img
-                  src={doctor.image_url}
-                  alt={`${doctor.first_name} ${doctor.last_name}`}
+                  //  TODO: this should use the actual doctor's image
+                  src="https://placehold.co/400"
+                  alt={`Dr. ${doctor.first_name} ${doctor.last_name}`}
                   className="w-full object-cover h-[230px] object-center"
                 />
               </div>
               <div className="flex flex-col p-3 gap-3 divide-y grow">
                 <hgroup className="grow">
                   <Typography.CardHeadingLead>
-                    {doctor.specialty}
+                    {doctor.specialization}
                   </Typography.CardHeadingLead>
                   <Typography.CardHeading>
                     {doctor.first_name} {doctor.last_name}
@@ -113,95 +101,95 @@ const DoctorsCarousel = () => {
   )
 }
 
-function ChatsListPage() {
-  const router = useRouter()
-  return (
-    <div className="grow">
-      <div className="flex justify-between flex-row items-center  bg-primary p-5">
-        <LogoIcon />
-
-        <Button
-          onClick={() => router.navigate({ to: '/dashboard/wallet' })}
-          className="flex  justify-around bg-[#ffffff30] hover:bg-[#ffffff30] gap-4 items-center"
-        >
-          <Wallet color="white" />
-          <Typography.Info className="text-white">₦ 3000.00</Typography.Info>
-        </Button>
-      </div>
-
-      <div className="p-5 pt-0 bg-primary grid grid-flow-row gap-5">
-        <div className="flex flex-col-reverse gap-3">
-          <div className="p-0">
-            <div className="bg-primary rounded-lg grid grid-cols-2 aspect-video">
-              <div className="grid items-center p-5">
-                <div className="flex flex-col gap-2">
-                  <header className="text-white leading-relaxed text-lg font-semibold">
-                    Get 10% off for your first 5 minutes
-                  </header>
-                  <div>
-                    <Link to="/dashboard">
-                      <Button className="rounded-full bg-white flex gap-2 items-center text-primary shadow-md">
-                        Try it
-                        <ArrowRightIcon className="w-4 h-4" />
-                      </Button>
-                    </Link>
-                  </div>
+const Banner = () => (
+  <Section className="bg-primary">
+    <div className="pt-0 grid grid-flow-row gap-5">
+      <div className="flex flex-col-reverse gap-3">
+        <div className="p-0">
+          <div className="bg-primary rounded-lg grid grid-cols-2 aspect-video">
+            <div className="grid items-center">
+              <div className="flex flex-col gap-2">
+                <header className="text-white font-medium leading-relaxed text-lg">
+                  Get 10% off for your first 5 minutes
+                </header>
+                <div>
+                  <Link to="/dashboard">
+                    <Button className="rounded-full bg-white flex gap-2 items-center text-black shadow-md">
+                      Try it
+                      <ArrowRightIcon className="w-4 h-4" />
+                    </Button>
+                  </Link>
                 </div>
-              </div>
-              <div className="grid place-items-end">
-                <img
-                  className="aspect-square object-cover object-center"
-                  src={doctorImage}
-                  alt="doctor"
-                />
               </div>
             </div>
+            <div className="grid place-items-end">
+              <img
+                className="aspect-square object-cover object-center"
+                src={doctorImage}
+                alt="doctor"
+              />
+            </div>
           </div>
-          <div>
-            <Input placeholder="Search for a Doctor" />
+        </div>
+        <div>
+          <Input placeholder="Search for a Doctor" />
+        </div>
+      </div>
+    </div>
+  </Section>
+)
+
+const Services = () => (
+  <Section className="py-6">
+    <Typography.PageHeading className="pb-5">
+      Our Services
+    </Typography.PageHeading>
+    <div className="grid grid-cols-4 gap-5">
+      {services.map(({ text, icon: Icon, link }, index) => (
+        <Link to={link} key={index}>
+          <div key={index} className="flex flex-col gap-2">
+            <div
+              className="rounded-lg bg-slate-200 grid place-items-center aspect-square"
+              key={index}
+            >
+              <Icon className="size-6 stroke-primary" />
+            </div>
+            <Typography.HeadingLead className="text-center">
+              {text}
+            </Typography.HeadingLead>
           </div>
-        </div>
-      </div>
-      <div className="p-5">
-        <Typography.PageHeading className="pb-5">
-          Our Services
-        </Typography.PageHeading>
-        <div className="grid grid-cols-4 gap-5">
-          {quickNav.map(({ text, icon: Icon, link }, index) => (
-            <Link to={link} key={index}>
-              <div key={index} className="flex flex-col gap-2">
-                <div
-                  className="rounded-lg bg-slate-200 grid place-items-center aspect-square"
-                  key={index}
-                >
-                  <Icon className="size-6 stroke-primary" />
-                </div>
-                <Typography.HeadingLead className="text-center">
-                  {text}
-                </Typography.HeadingLead>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-      <div className="p-5">
-        <div className="flex items-center justify-between">
-          <Typography.PageHeading>Top Doctors</Typography.PageHeading>
-          <Link
-            to="/dashboard/doctors"
-            className="text-primary text-xs font-medium"
-          >
-            See All
-          </Link>
-        </div>
-        <div className="py-5">
-          <DoctorsCarousel />
-        </div>
-      </div>
+        </Link>
+      ))}
+    </div>
+  </Section>
+)
+
+const TopDoctors = () => (
+  <Section className="py-6">
+    <div className="flex items-center justify-between">
+      <Typography.PageHeading>Top Doctors</Typography.PageHeading>
+      <Link
+        to="/dashboard/doctors"
+        className="text-primary text-xs font-medium"
+      >
+        See All
+      </Link>
+    </div>
+    <div className="py-5">
+      <DoctorsCarousel />
+    </div>
+  </Section>
+)
+
+function DashboardHomePage() {
+  return (
+    <Layout>
+      <Banner />
+      <Services />
+      <TopDoctors />
       <div className="pb-10">
         <ChatList />
       </div>
-      <BottomNav />
-    </div>
+    </Layout>
   )
 }
