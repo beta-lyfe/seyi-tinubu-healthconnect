@@ -5,5 +5,6 @@ urlpatterns = [
     path('', views.get_doctors, name='doctors'),
     path('profile/<str:id>', views.get_doctor_profile_id, name='doctor-profile-id'),
     path('profile', views.get_or_update_doctor, name='get-edit-profile'),
+    path('available-slots/<str:user_id>', views.get_available_slots, name='get-doctor-slots'),
 ]
 

@@ -43,9 +43,9 @@ def VerifyEmail_key(user_id: int):
 def ResetPassword_key(email: int):
     # Query If user exists
     try:
-        user = get_object_or_404(User, email=email)
+        user = User.objects.get(email=email)
     except User.DoesNotExist:
-        return False
+        return False, ""
 
     unique_key = ""
     while True:

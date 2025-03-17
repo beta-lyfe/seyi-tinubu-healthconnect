@@ -10,9 +10,13 @@ import uuid
 from django.utils import timezone
 
 from api.models import User
-from consultation.utils import create_room, AccessToken
+from doctor.models import DoctorProfile
+from consultation.utils import create_room, AccessToken, notify_doctor_consultation_request, notify_patient_consultation_status
 from consultation.models import Consultation_Request, Consultations
 from consultation.serializer import ConsultationRequestSerializer, ConsultationSerializer
+
+from datetime import datetime, timedelta
+from django.utils.timezone import make_aware
 
 
 # Helper function
@@ -29,6 +33,7 @@ class ConsultationRequestPagination(PageNumberPagination):
     page_size = 10  # Adjust as needed
     page_size_query_param = 'page_size'
     max_page_size = 100
+
 
 @api_view(['GET', 'POST'])
 @permission_classes([CustomIsAuthenticated])
@@ -49,32 +54,81 @@ def request_consultation(request):
         return paginator.get_paginated_response(serialized_data)
 
     elif request.method == 'POST':
-
         if user.is_doctor:
             return Response({'message': 'Doctor cannot create a consultation request'}, status=status.HTTP_403_FORBIDDEN)
 
         data = request.data.copy()
         data['patient'] = request.user.id
-        data['id'] = uuid.uuid4()
-
-        print(data)
+        
+        # Check for existing pending requests
+        existing_request = Consultation_Request.objects.filter(
+            patient=data['patient'], 
+            doctor=data['doctor'], 
+            status='Pending'
+        ).exists()
+        
+        if existing_request:
+            return Response({'message': 'Already a Pending request'}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
         serializer = ConsultationRequestSerializer(data=data)
         if serializer.is_valid():
-            request = Consultation_Request.objects.filter(patient=data['patient'], doctor=data['doctor'], status='Pending')
+            # Extract validated data
+            # validated_data = serializer.validated_data
+            # doctor = validated_data['doctor']
+            # start_time = validated_data['start_time']
+            # end_time = validated_data['end_time']
 
-            if request:
-                return Response({'message': 'Already a Pending request'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+            # try:
+            #     doctor_profile = DoctorProfile.objects.get(user=doctor)
+            # except DoctorProfile.DoesNotExist:
+            #     return Response({'message': 'Doctor profile not found'}, status=status.HTTP_400_BAD_REQUEST)
 
+            # # Extract day of the week
+            # day_of_week = start_time.strftime("%A")
+
+            # # Get doctor's working hours
+            # working_hours = doctor_profile.working_hours
+            # available_hours = next(
+            #     (wh for wh in working_hours if wh["day"].lower() == day_of_week.lower()), None
+            # )
+
+            # if not available_hours:
+            #     return Response({'message': 'Doctor is not available on this day'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # # Convert working hours to datetime for comparison
+            # doctor_start_time = datetime.strptime(available_hours["start_time"], "%H:%M").time()
+            # doctor_end_time = datetime.strptime(available_hours["end_time"], "%H:%M").time()
+            
+            # # Convert start_time and end_time to time objects for comparison
+            # consultation_start_time = start_time.time()
+            # consultation_end_time = end_time.time()
+
+            # if not (doctor_start_time <= consultation_start_time and consultation_end_time <= doctor_end_time):
+            #     return Response({'message': 'Requested time is outside working hours'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # # Check if the doctor has a conflicting consultation
+            # conflicting_consultations = Consultations.objects.filter(
+            #     doctor=doctor,
+            #     start_time__lte=end_time,
+            #     end_time__gte=start_time
+            # ).exists()
+
+            # if conflicting_consultations:
+            #     return Response({'message': 'Doctor is already in a consultation at this time'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Save the consultation request
             serializer.save()
+            new_user = User.objects.get(id=data['doctor'])
+            notify_doctor_consultation_request(new_user)
 
-            return Response({"message": "Consultation request created"}, status=status.HTTP_201_CREATED)
-        # Return validation errors if any
-        print(serializer.errors.values())
-        return Response({'message': 'Missing a Required Field'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "Consultation request created"}, 
+                           status=status.HTTP_201_CREATED)
+            
+        # Return validation errors
+        return Response({'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
     
-    # Default response in case of any unforeseen methods
-    return Response({'message': 'Method not allowed.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    # Default response for unsupported methods
+    return Response({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 @api_view(['GET'])
@@ -130,6 +184,10 @@ def consultation_accept_request(request, request_id):
         else:
             return Response({"message": "Invalid consultation status."},
                             status=status.HTTP_400_BAD_REQUEST)
+    
+    new_user = User.objects.get(id=consultation.patient)
+
+    notify_patient_consultation_status(new_user)
 
     # Try creating the video_room_id
     status_code, response = create_room()
@@ -306,4 +364,5 @@ def consultation_add_notes(request, consultation_id):
     consultation.save()
 
     return Response({"message": "Doctors notes added"}, status=status.HTTP_200_OK)
+
 
