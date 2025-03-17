@@ -19,38 +19,39 @@ export const Route = createFileRoute('/_app/dashboard/')({
 })
 
 function ChatList() {
-  const { data, status } = $api.useQuery('get', '/api/doctors/')
-
-  if (status === 'pending' || status === 'error') return null
-
-  const doctors = []
-
-  return (
-    <div className="grid grid-flow-row grow divide-y-2 divide-gray-300">
-      {doctors.map((doctor) => (
-        <Link
-          to="/dashboard/doctors/profile/$doctorId"
-          params={{ doctorId: doctor.id }}
-          state={{}}
-          key={doctor.id}
-          className="flex gap-4 p-4"
-        >
-          <span className="bg-gray-200 size-12 rounded-full overflow-hidden">
-            <img
-              src={doctor.image_url}
-              alt={`${doctor.first_name} ${doctor.last_name}`}
-              className="size-full object-cover"
-            />
-          </span>
-          <span className="flex items-center">
-            <span>
-              {doctor.first_name} {doctor.last_name}
-            </span>
-          </span>
-        </Link>
-      ))}
-    </div>
-  )
+  return null
+  // const { data, status } = $api.useQuery('get', '/api/doctors/')
+  //
+  // if (status === 'pending' || status === 'error') return null
+  //
+  // const doctors = []
+  //
+  // return (
+  //   <div className="grid grid-flow-row grow divide-y-2 divide-gray-300">
+  //     {doctors.map((doctor) => (
+  //       <Link
+  //         to="/dashboard/doctors/profile/$doctorId"
+  //         params={{ doctorId: doctor.id }}
+  //         state={{}}
+  //         key={doctor.id}
+  //         className="flex gap-4 p-4"
+  //       >
+  //         <span className="bg-gray-200 size-12 rounded-full overflow-hidden">
+  //           <img
+  //             src={doctor.image_url}
+  //             alt={`${doctor.first_name} ${doctor.last_name}`}
+  //             className="size-full object-cover"
+  //           />
+  //         </span>
+  //         <span className="flex items-center">
+  //           <span>
+  //             {doctor.first_name} {doctor.last_name}
+  //           </span>
+  //         </span>
+  //       </Link>
+  //     ))}
+  //   </div>
+  // )
 }
 
 const DoctorsCarousel = () => {

@@ -21,11 +21,11 @@ const TopBar = () => (
 
 const fetchDoctors = async ({ page }: { page: string }) => {
   const res = await client.GET('/api/doctors/', {
-    // params: {
-    //   query: {
-    //     page
-    //   }
-    // }
+    params: {
+      query: {
+        page
+      }
+    }
   })
 
   if (res.error) {
@@ -35,35 +35,33 @@ const fetchDoctors = async ({ page }: { page: string }) => {
   return res.data
 }
 
+type DoctorsQueryResult = Awaited<ReturnType<typeof fetchDoctors>>
+
 const DoctorsListing = () => {
-  // const { data, status } = $api.useQuery('get', '/api/doctors/')
   const { ref, inView: isInView } = useInView({
-    /* Optional options */
     threshold: 0,
     rootMargin: '500px'
   })
 
-  console.log(isInView)
-
   const { data, status, isFetchingNextPage, hasNextPage, fetchNextPage } =
-    useInfiniteQuery({
+    useInfiniteQuery<DoctorsQueryResult>({
       initialPageParam: '1',
       queryKey: ['doctors', 'get'],
       getNextPageParam: (lastPage) => {
-        if (!lastPage.next) return undefined
+        if (!lastPage.next) return null
 
         const url = new URL(lastPage.next)
         const nextPage = url.searchParams.get('page')
-        if (!nextPage) return undefined
+        if (!nextPage) return null
 
         return nextPage
       },
-      queryFn: ({ pageParam }) => fetchDoctors({ page: pageParam })
+      queryFn: ({ pageParam }) => fetchDoctors({ page: pageParam as string })
     })
 
   useEffect(() => {
     if (isInView && hasNextPage && !isFetchingNextPage) fetchNextPage()
-  }, [isInView, isFetchingNextPage, hasNextPage])
+  }, [isInView, isFetchingNextPage, hasNextPage, fetchNextPage])
 
   if (status === 'error' || status === 'pending') return null
 
