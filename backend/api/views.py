@@ -86,7 +86,7 @@ class RegisterView(APIView):
         try:
             send_mail(
                 subject="Verify your email",
-                message="Please Verify your email. This Email is from GetPaid.bot",
+                message="Please Verify your email. This Email is from Betalyfe",
                 from_email="BETA LYFE <cyrile450@gmail.com>",
                 recipient_list=[user.email],
                 html_message=html_content,
@@ -255,9 +255,28 @@ def resend_verify_email(request):
         unverified_email = EmailAddress.objects.get(email=email)
         user = unverified_email.user
 
-        key, exp = VerifyEmail_key(user.id)
+        EmailAddress.objects.create(user=user, email=user.email)
+        key, expires_at = VerifyEmail_key(user.id)
 
-        return Response({'message': {'name': user.first_name, 'otp': key, 'expires': exp} }, status=status.HTTP_201_CREATED) # type: ignore
+        html_content = get_template('auth/verify_email.html').render({
+            "user": user,
+            "otp": key,
+            "expirary_date": expires_at
+        })
+
+
+        send_mail(
+            subject="Verify your email",
+            message="Please Verify your email. This Email is from Betalyfe",
+            from_email="BETA LYFE <cyrile450@gmail.com>",
+            recipient_list=[user.email],
+            html_message=html_content,
+            fail_silently=False
+        )
+        return Response({
+            "message": "Please check your email address for a verification code"}, 
+            status=status.HTTP_200_OK)
+
     except Exception as e:
         print(e)
         return Response("Email does not exist", status=status.HTTP_400_BAD_REQUEST)
@@ -287,8 +306,12 @@ def forget_password(request):
     """
     data = request.data
     if data:
-        
-        key, uid = ResetPassword_key(email=data['email']) # type: ignore pylance warning
+        try:
+            user = User.objects.get(email=data['email'])
+        except User.DoesNotExist:
+            return Response({'message': 'Email not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        key, uid = ResetPassword_key(email=data['email'])
 
         return Response({'message': {'uid': uid, 'key': key}}, status=status.HTTP_201_CREATED)
     return Response({'errors': 'Something went wrong!'}, status=status.HTTP_400_BAD_REQUEST)
@@ -309,8 +332,13 @@ def confirm_forget_password(request, uid, otp):
             changes the password of the user
     """
     try:
-        user = get_object_or_404(User, id=uid)
-        reset_pwd_object = get_object_or_404(PasswordReset_keys, user=user, key=otp)
+        user = User.objects.get(id=uid)
+        if not user:
+            return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        reset_pwd_object = PasswordReset_keys.objects.get(user=user, key=otp)
+        if not reset_pwd_object:
+            return Response({'message': 'Password reset not initialized'}, status=status.HTTP_404_NOT_FOUND)
 
         # Check if key has expired
         if reset_pwd_object.exp <= timezone.now():

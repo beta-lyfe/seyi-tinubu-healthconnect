@@ -1,6 +1,7 @@
 import requests
 import os
-import jwt
+from django.template.loader import get_template
+from django.core.mail import send_mail
 import json
 
 
@@ -139,3 +140,35 @@ def create_token(roomId):
     jwt_token = access_token.to_jwt()
     print(jwt_token)
     return jwt_token
+
+def notify_doctor_consultation_request(user):
+    html_content = get_template('consultation/notify.html').render({
+        "username": user.username
+    })
+
+    send_mail(
+        subject="Consultation email",
+        message="This Email is from Betalyfe",
+        from_email="BETA LYFE <cyrile450@gmail.com>",
+        recipient_list=[user.email],
+        html_message=html_content,
+        fail_silently=False
+    )
+
+    return
+
+def notify_patient_consultation_status(user):
+    html_content = get_template('consultation/notify_patient.html').render({
+        "username": user.username
+    })
+
+    send_mail(
+        subject="Consultation email",
+        message="This Email is from Betalyfe",
+        from_email="BETA LYFE <cyrile450@gmail.com>",
+        recipient_list=[user.email],
+        html_message=html_content,
+        fail_silently=False
+    )
+
+    return

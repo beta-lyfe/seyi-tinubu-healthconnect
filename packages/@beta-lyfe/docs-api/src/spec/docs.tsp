@@ -586,7 +586,14 @@ namespace Api {
       @example("Already declined this request.")
       message: string;
     }
+    @error
+    model UnauthorisedRequest {
+      @statusCode code: 403;
+      @example("User Does Not have Permission to Access this Information")
+      message: string;
+    }
 
+    
     model PaginatedConsultations {
       results: Consultation;
 
@@ -601,10 +608,10 @@ namespace Api {
     }
 
     @route("/")
-    @get
-    @doc("Fetch all consultations")
-    op fetchConsultations(
-    ): PaginatedConsultations | AuthenticationRequiredError | UnexpectedError;
+      @get
+      @doc("Fetch all consultations")
+      op fetchConsultations(
+      ): PaginatedConsultations | AuthenticationRequiredError | UnexpectedError;
 
     @route("/{id}")
     @get
@@ -620,6 +627,7 @@ namespace Api {
     @doc("Generate access token")
     op generateAccessToken(@path id: string):
       | AccessToken
+      | UnauthorisedRequest
       | ConsultationNotFoundError
       | AuthenticationRequiredError
       | UnexpectedError;
@@ -696,7 +704,6 @@ namespace Api {
       @error
       model UnauthorisedRequestID {
         @statusCode code: 403;
-
         @example("User Does Not have Permission to Access this Information")
         message: string;
       }

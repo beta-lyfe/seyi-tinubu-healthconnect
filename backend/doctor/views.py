@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from api.models import User
+from consultation.models import Consultations
 from doctor.models import DoctorProfile
 from doctor.serializer import DoctorProfileSerializer
 from rest_framework.response import Response
@@ -13,6 +14,8 @@ from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.pagination import PageNumberPagination
 
+from datetime import datetime, timedelta
+from django.utils.timezone import make_aware
 
 # Helper function
 class CustomIsAuthenticated(IsAuthenticated):
@@ -124,4 +127,47 @@ def get_or_update_doctor(request):
             return Response({'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     return Response({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+@api_view(['GET'])
+@permission_classes([CustomIsAuthenticated])
+def get_available_slots(request, doctor_id):
+    try:
+        doctor = User.objects.get(id=doctor_id, is_doctor=True)
+    except User.DoesNotExist:
+        return Response({'message': 'Doctor not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    doctor_profile = doctor.doctor
+    working_hours = doctor_profile.working_hours
+    slot_duration = 30  # Duration of each slot in minutes
+
+    available_slots = []
+
+    for working_hour in working_hours:
+        day = working_hour["day"]
+        start_time = make_aware(datetime.strptime(working_hour["start_time"], "%H:%M"))
+        end_time = make_aware(datetime.strptime(working_hour["end_time"], "%H:%M"))
+
+        current_slot = start_time
+        while current_slot + timedelta(minutes=slot_duration) <= end_time:
+            next_slot = current_slot + timedelta(minutes=slot_duration)
+
+            # Check if this slot conflicts with any consultation
+            conflicts = Consultations.objects.filter(
+                doctor=doctor,
+                start_time__lt=next_slot,
+                end_time__gt=current_slot
+            ).exists()
+
+            if not conflicts:
+                available_slots.append({
+                    "day": day,
+                    "start_time": current_slot.strftime("%H:%M"),
+                    "end_time": next_slot.strftime("%H:%M")
+                })
+
+            current_slot = next_slot
+
+    return Response({"available_slots": available_slots}, status=status.HTTP_200_OK)    
+
+
 
