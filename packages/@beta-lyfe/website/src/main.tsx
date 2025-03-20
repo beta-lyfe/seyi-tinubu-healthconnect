@@ -1,20 +1,6 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { App } from './app'
-import '@beta-lyfe/ui/styles.css'
-import './styles.css'
-import { Provider } from './provider'
-import { Toaster } from 'sonner'
+import './app'
 
-const rootElement = document.querySelector('#app')
-
-if (rootElement) {
-  createRoot(rootElement).render(
-    <StrictMode>
-      <Provider>
-        <App />
-        <Toaster />
-      </Provider>
-    </StrictMode>
-  )
-}
+window.addEventListener('DOMContentLoaded', () => {
+  window.addEventListener('beforeinstallprompt', (event) => {
+  })
+})

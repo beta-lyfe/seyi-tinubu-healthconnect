@@ -6,7 +6,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "dotenv -- vite --port 3001",
-    "build": "./scripts/build.sh",
+		"build": "./scripts/build.sh",
+		"deploy": "vercel deploy --prebuilt --token $VERCEL_TOKEN",
 		"lint": "tsc"
 	},
 	"exports": {
@@ -21,8 +22,9 @@
 		"@beta-lyfe/webapp": "workspace:^",
 		"@headlessui/react": "^2.1.2",
 		"@hookform/resolvers": "^3.9.1",
-		"@huddle01/react": "^2.2.0",
+		"@huddle01/react": "^2.3.6",
 		"@huddle01/server-sdk": "^2.5.2",
+		"@jitsi/react-sdk": "^1.4.4",
 		"@radix-ui/react-avatar": "^1.0.4",
 		"@radix-ui/react-context-menu": "^2.1.5",
 		"@radix-ui/react-dialog": "^1.0.5",
