@@ -177,7 +177,7 @@ function ChatSection() {
             <div
               className={cn(
                 'rounded-lg bg-primary p-2 text-white shadow-md w-[80%]',
-                chat.sender === 'patient' && 'justify-self-end',
+                chat.sender === 'patient' && 'justify-self-end bg-white text-black',
                 chat.sender === 'patient'
                   ? 'rounded-br-none'
                   : 'rounded-bl-none'

@@ -13,7 +13,8 @@ import {
   contactInformationFields,
   professionalInformationFields
 } from '@beta-lyfe/webapp/data/data'
-import { BottomNav } from '../../-components/bottom-nav'
+import { BottomNav } from '../-components/bottom-nav'
+import { LayoutWithBottomNav } from '../-components/layout'
 
 const route = [
   'Personal Information',
@@ -114,7 +115,7 @@ export default function ProfilePage() {
   const [isDoctor, setDoctor] = useState(false)
 
   return (
-    <>
+    <LayoutWithBottomNav>
       <div>
         <div className="p-5 bg-primary gap-5">
           <div>
@@ -181,8 +182,7 @@ export default function ProfilePage() {
           )}
         </section>
       </div>
-      <BottomNav />
-    </>
+      </LayoutWithBottomNav>
   )
 }
 

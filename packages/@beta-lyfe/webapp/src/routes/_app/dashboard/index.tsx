@@ -90,7 +90,7 @@ const DoctorsCarousel = () => {
                     <ArrowUpRight className="w-4 h-4" />
                   </Button>
                   <Button className="flex gap-2 font-medium">
-                    <MessageSquareIcon className="w-4 h-4" />
+                    <MessageSquareIcon className="w-4 h-4 text-white" />
                   </Button>
                 </div>
               </div>

@@ -8,16 +8,19 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AppImport } from './routes/_app'
-import { Route as IndexImport } from './routes/index'
 import { Route as AppDoctorImport } from './routes/_app/_doctor'
-import { Route as AppWaitlistIndexImport } from './routes/_app/waitlist/index'
 import { Route as AppDashboardIndexImport } from './routes/_app/dashboard/index'
+import { Route as AppPharmacyCartImport } from './routes/_app/pharmacy/cart'
+import { Route as AppDashboardConsultationImport } from './routes/_app/dashboard/_consultation'
 import { Route as AppAuthVerifyImport } from './routes/_app/auth/verify'
 import { Route as AppAuthSignInImport } from './routes/_app/auth/sign-in'
+import { Route as AppPharmacyProductIndexImport } from './routes/_app/pharmacy/product/index'
 import { Route as AppDashboardWalletIndexImport } from './routes/_app/dashboard/wallet/index'
 import { Route as AppDashboardScheduleIndexImport } from './routes/_app/dashboard/schedule/index'
 import { Route as AppDashboardProfileIndexImport } from './routes/_app/dashboard/profile/index'
@@ -25,6 +28,9 @@ import { Route as AppDashboardDoctorsIndexImport } from './routes/_app/dashboard
 import { Route as AppAuthSignUpIndexImport } from './routes/_app/auth/sign-up/index'
 import { Route as AppDoctorDoctorIndexImport } from './routes/_app/_doctor/doctor/index'
 import { Route as AppConsultationConsultationsIndexImport } from './routes/_app/_consultation/consultations/index'
+import { Route as AppDashboardConsultationJitsiconsultationImport } from './routes/_app/dashboard/_consultation/jitsiconsultation'
+import { Route as AppDashboardConsultationClientconsultationImport } from './routes/_app/dashboard/_consultation/clientconsultation'
+import { Route as AppPharmacyProductIdIndexImport } from './routes/_app/pharmacy/product/$id/index'
 import { Route as AppDashboardChatsDoctorIdIndexImport } from './routes/_app/dashboard/chats/$doctorId/index'
 import { Route as AppDoctorDoctorSupportIndexImport } from './routes/_app/_doctor/doctor/support/index'
 import { Route as AppDoctorDoctorPatientsIndexImport } from './routes/_app/_doctor/doctor/patients/index'
@@ -34,6 +40,10 @@ import { Route as AppDoctorDoctorAppointmentsIndexImport } from './routes/_app/_
 import { Route as AppDashboardDoctorsProfileDoctorIdIndexImport } from './routes/_app/dashboard/doctors/profile/$doctorId/index'
 import { Route as AppDoctorDoctorMessagePatientIdIndexImport } from './routes/_app/_doctor/doctor/message/$patientId/index'
 
+// Create Virtual Routes
+
+const AppDashboardImport = createFileRoute('/_app/dashboard')()
+
 // Create/Update Routes
 
 const AppRoute = AppImport.update({
@@ -41,10 +51,10 @@ const AppRoute = AppImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRoute,
+const AppDashboardRoute = AppDashboardImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
 } as any)
 
 const AppDoctorRoute = AppDoctorImport.update({
@@ -52,16 +62,21 @@ const AppDoctorRoute = AppDoctorImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
-const AppWaitlistIndexRoute = AppWaitlistIndexImport.update({
-  id: '/waitlist/',
-  path: '/waitlist/',
+const AppDashboardIndexRoute = AppDashboardIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppDashboardRoute,
+} as any)
+
+const AppPharmacyCartRoute = AppPharmacyCartImport.update({
+  id: '/pharmacy/cart',
+  path: '/pharmacy/cart',
   getParentRoute: () => AppRoute,
 } as any)
 
-const AppDashboardIndexRoute = AppDashboardIndexImport.update({
-  id: '/dashboard/',
-  path: '/dashboard/',
-  getParentRoute: () => AppRoute,
+const AppDashboardConsultationRoute = AppDashboardConsultationImport.update({
+  id: '/_consultation',
+  getParentRoute: () => AppDashboardRoute,
 } as any)
 
 const AppAuthVerifyRoute = AppAuthVerifyImport.update({
@@ -76,28 +91,34 @@ const AppAuthSignInRoute = AppAuthSignInImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
-const AppDashboardWalletIndexRoute = AppDashboardWalletIndexImport.update({
-  id: '/dashboard/wallet/',
-  path: '/dashboard/wallet/',
+const AppPharmacyProductIndexRoute = AppPharmacyProductIndexImport.update({
+  id: '/pharmacy/product/',
+  path: '/pharmacy/product/',
   getParentRoute: () => AppRoute,
+} as any)
+
+const AppDashboardWalletIndexRoute = AppDashboardWalletIndexImport.update({
+  id: '/wallet/',
+  path: '/wallet/',
+  getParentRoute: () => AppDashboardRoute,
 } as any)
 
 const AppDashboardScheduleIndexRoute = AppDashboardScheduleIndexImport.update({
-  id: '/dashboard/schedule/',
-  path: '/dashboard/schedule/',
-  getParentRoute: () => AppRoute,
+  id: '/schedule/',
+  path: '/schedule/',
+  getParentRoute: () => AppDashboardRoute,
 } as any)
 
 const AppDashboardProfileIndexRoute = AppDashboardProfileIndexImport.update({
-  id: '/dashboard/profile/',
-  path: '/dashboard/profile/',
-  getParentRoute: () => AppRoute,
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => AppDashboardRoute,
 } as any)
 
 const AppDashboardDoctorsIndexRoute = AppDashboardDoctorsIndexImport.update({
-  id: '/dashboard/doctors/',
-  path: '/dashboard/doctors/',
-  getParentRoute: () => AppRoute,
+  id: '/doctors/',
+  path: '/doctors/',
+  getParentRoute: () => AppDashboardRoute,
 } as any)
 
 const AppAuthSignUpIndexRoute = AppAuthSignUpIndexImport.update({
@@ -119,11 +140,31 @@ const AppConsultationConsultationsIndexRoute =
     getParentRoute: () => AppRoute,
   } as any)
 
+const AppDashboardConsultationJitsiconsultationRoute =
+  AppDashboardConsultationJitsiconsultationImport.update({
+    id: '/jitsiconsultation',
+    path: '/jitsiconsultation',
+    getParentRoute: () => AppDashboardConsultationRoute,
+  } as any)
+
+const AppDashboardConsultationClientconsultationRoute =
+  AppDashboardConsultationClientconsultationImport.update({
+    id: '/clientconsultation',
+    path: '/clientconsultation',
+    getParentRoute: () => AppDashboardConsultationRoute,
+  } as any)
+
+const AppPharmacyProductIdIndexRoute = AppPharmacyProductIdIndexImport.update({
+  id: '/pharmacy/product/$id/',
+  path: '/pharmacy/product/$id/',
+  getParentRoute: () => AppRoute,
+} as any)
+
 const AppDashboardChatsDoctorIdIndexRoute =
   AppDashboardChatsDoctorIdIndexImport.update({
-    id: '/dashboard/chats/$doctorId/',
-    path: '/dashboard/chats/$doctorId/',
-    getParentRoute: () => AppRoute,
+    id: '/chats/$doctorId/',
+    path: '/chats/$doctorId/',
+    getParentRoute: () => AppDashboardRoute,
   } as any)
 
 const AppDoctorDoctorSupportIndexRoute =
@@ -162,9 +203,9 @@ const AppDoctorDoctorAppointmentsIndexRoute =
 
 const AppDashboardDoctorsProfileDoctorIdIndexRoute =
   AppDashboardDoctorsProfileDoctorIdIndexImport.update({
-    id: '/dashboard/doctors/profile/$doctorId/',
-    path: '/dashboard/doctors/profile/$doctorId/',
-    getParentRoute: () => AppRoute,
+    id: '/doctors/profile/$doctorId/',
+    path: '/doctors/profile/$doctorId/',
+    getParentRoute: () => AppDashboardRoute,
   } as any)
 
 const AppDoctorDoctorMessagePatientIdIndexRoute =
@@ -178,13 +219,6 @@ const AppDoctorDoctorMessagePatientIdIndexRoute =
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
     '/_app': {
       id: '/_app'
       path: ''
@@ -213,19 +247,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAuthVerifyImport
       parentRoute: typeof AppImport
     }
-    '/_app/dashboard/': {
-      id: '/_app/dashboard/'
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
-      preLoaderRoute: typeof AppDashboardIndexImport
+      preLoaderRoute: typeof AppDashboardImport
       parentRoute: typeof AppImport
     }
-    '/_app/waitlist/': {
-      id: '/_app/waitlist/'
-      path: '/waitlist'
-      fullPath: '/waitlist'
-      preLoaderRoute: typeof AppWaitlistIndexImport
+    '/_app/dashboard/_consultation': {
+      id: '/_app/dashboard/_consultation'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardConsultationImport
+      parentRoute: typeof AppDashboardRoute
+    }
+    '/_app/pharmacy/cart': {
+      id: '/_app/pharmacy/cart'
+      path: '/pharmacy/cart'
+      fullPath: '/pharmacy/cart'
+      preLoaderRoute: typeof AppPharmacyCartImport
       parentRoute: typeof AppImport
+    }
+    '/_app/dashboard/': {
+      id: '/_app/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AppDashboardIndexImport
+      parentRoute: typeof AppDashboardImport
+    }
+    '/_app/dashboard/_consultation/clientconsultation': {
+      id: '/_app/dashboard/_consultation/clientconsultation'
+      path: '/clientconsultation'
+      fullPath: '/dashboard/clientconsultation'
+      preLoaderRoute: typeof AppDashboardConsultationClientconsultationImport
+      parentRoute: typeof AppDashboardConsultationImport
+    }
+    '/_app/dashboard/_consultation/jitsiconsultation': {
+      id: '/_app/dashboard/_consultation/jitsiconsultation'
+      path: '/jitsiconsultation'
+      fullPath: '/dashboard/jitsiconsultation'
+      preLoaderRoute: typeof AppDashboardConsultationJitsiconsultationImport
+      parentRoute: typeof AppDashboardConsultationImport
     }
     '/_app/_consultation/consultations/': {
       id: '/_app/_consultation/consultations/'
@@ -250,30 +312,37 @@ declare module '@tanstack/react-router' {
     }
     '/_app/dashboard/doctors/': {
       id: '/_app/dashboard/doctors/'
-      path: '/dashboard/doctors'
+      path: '/doctors'
       fullPath: '/dashboard/doctors'
       preLoaderRoute: typeof AppDashboardDoctorsIndexImport
-      parentRoute: typeof AppImport
+      parentRoute: typeof AppDashboardImport
     }
     '/_app/dashboard/profile/': {
       id: '/_app/dashboard/profile/'
-      path: '/dashboard/profile'
+      path: '/profile'
       fullPath: '/dashboard/profile'
       preLoaderRoute: typeof AppDashboardProfileIndexImport
-      parentRoute: typeof AppImport
+      parentRoute: typeof AppDashboardImport
     }
     '/_app/dashboard/schedule/': {
       id: '/_app/dashboard/schedule/'
-      path: '/dashboard/schedule'
+      path: '/schedule'
       fullPath: '/dashboard/schedule'
       preLoaderRoute: typeof AppDashboardScheduleIndexImport
-      parentRoute: typeof AppImport
+      parentRoute: typeof AppDashboardImport
     }
     '/_app/dashboard/wallet/': {
       id: '/_app/dashboard/wallet/'
-      path: '/dashboard/wallet'
+      path: '/wallet'
       fullPath: '/dashboard/wallet'
       preLoaderRoute: typeof AppDashboardWalletIndexImport
+      parentRoute: typeof AppDashboardImport
+    }
+    '/_app/pharmacy/product/': {
+      id: '/_app/pharmacy/product/'
+      path: '/pharmacy/product'
+      fullPath: '/pharmacy/product'
+      preLoaderRoute: typeof AppPharmacyProductIndexImport
       parentRoute: typeof AppImport
     }
     '/_app/_doctor/doctor/appointments/': {
@@ -313,9 +382,16 @@ declare module '@tanstack/react-router' {
     }
     '/_app/dashboard/chats/$doctorId/': {
       id: '/_app/dashboard/chats/$doctorId/'
-      path: '/dashboard/chats/$doctorId'
+      path: '/chats/$doctorId'
       fullPath: '/dashboard/chats/$doctorId'
       preLoaderRoute: typeof AppDashboardChatsDoctorIdIndexImport
+      parentRoute: typeof AppDashboardImport
+    }
+    '/_app/pharmacy/product/$id/': {
+      id: '/_app/pharmacy/product/$id/'
+      path: '/pharmacy/product/$id'
+      fullPath: '/pharmacy/product/$id'
+      preLoaderRoute: typeof AppPharmacyProductIdIndexImport
       parentRoute: typeof AppImport
     }
     '/_app/_doctor/doctor/message/$patientId/': {
@@ -327,10 +403,10 @@ declare module '@tanstack/react-router' {
     }
     '/_app/dashboard/doctors/profile/$doctorId/': {
       id: '/_app/dashboard/doctors/profile/$doctorId/'
-      path: '/dashboard/doctors/profile/$doctorId'
+      path: '/doctors/profile/$doctorId'
       fullPath: '/dashboard/doctors/profile/$doctorId'
       preLoaderRoute: typeof AppDashboardDoctorsProfileDoctorIdIndexImport
-      parentRoute: typeof AppImport
+      parentRoute: typeof AppDashboardImport
     }
   }
 }
@@ -362,14 +438,27 @@ const AppDoctorRouteWithChildren = AppDoctorRoute._addFileChildren(
   AppDoctorRouteChildren,
 )
 
-interface AppRouteChildren {
-  AppDoctorRoute: typeof AppDoctorRouteWithChildren
-  AppAuthSignInRoute: typeof AppAuthSignInRoute
-  AppAuthVerifyRoute: typeof AppAuthVerifyRoute
+interface AppDashboardConsultationRouteChildren {
+  AppDashboardConsultationClientconsultationRoute: typeof AppDashboardConsultationClientconsultationRoute
+  AppDashboardConsultationJitsiconsultationRoute: typeof AppDashboardConsultationJitsiconsultationRoute
+}
+
+const AppDashboardConsultationRouteChildren: AppDashboardConsultationRouteChildren =
+  {
+    AppDashboardConsultationClientconsultationRoute:
+      AppDashboardConsultationClientconsultationRoute,
+    AppDashboardConsultationJitsiconsultationRoute:
+      AppDashboardConsultationJitsiconsultationRoute,
+  }
+
+const AppDashboardConsultationRouteWithChildren =
+  AppDashboardConsultationRoute._addFileChildren(
+    AppDashboardConsultationRouteChildren,
+  )
+
+interface AppDashboardRouteChildren {
+  AppDashboardConsultationRoute: typeof AppDashboardConsultationRouteWithChildren
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
-  AppWaitlistIndexRoute: typeof AppWaitlistIndexRoute
-  AppConsultationConsultationsIndexRoute: typeof AppConsultationConsultationsIndexRoute
-  AppAuthSignUpIndexRoute: typeof AppAuthSignUpIndexRoute
   AppDashboardDoctorsIndexRoute: typeof AppDashboardDoctorsIndexRoute
   AppDashboardProfileIndexRoute: typeof AppDashboardProfileIndexRoute
   AppDashboardScheduleIndexRoute: typeof AppDashboardScheduleIndexRoute
@@ -378,15 +467,9 @@ interface AppRouteChildren {
   AppDashboardDoctorsProfileDoctorIdIndexRoute: typeof AppDashboardDoctorsProfileDoctorIdIndexRoute
 }
 
-const AppRouteChildren: AppRouteChildren = {
-  AppDoctorRoute: AppDoctorRouteWithChildren,
-  AppAuthSignInRoute: AppAuthSignInRoute,
-  AppAuthVerifyRoute: AppAuthVerifyRoute,
+const AppDashboardRouteChildren: AppDashboardRouteChildren = {
+  AppDashboardConsultationRoute: AppDashboardConsultationRouteWithChildren,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
-  AppWaitlistIndexRoute: AppWaitlistIndexRoute,
-  AppConsultationConsultationsIndexRoute:
-    AppConsultationConsultationsIndexRoute,
-  AppAuthSignUpIndexRoute: AppAuthSignUpIndexRoute,
   AppDashboardDoctorsIndexRoute: AppDashboardDoctorsIndexRoute,
   AppDashboardProfileIndexRoute: AppDashboardProfileIndexRoute,
   AppDashboardScheduleIndexRoute: AppDashboardScheduleIndexRoute,
@@ -396,15 +479,46 @@ const AppRouteChildren: AppRouteChildren = {
     AppDashboardDoctorsProfileDoctorIdIndexRoute,
 }
 
+const AppDashboardRouteWithChildren = AppDashboardRoute._addFileChildren(
+  AppDashboardRouteChildren,
+)
+
+interface AppRouteChildren {
+  AppDoctorRoute: typeof AppDoctorRouteWithChildren
+  AppAuthSignInRoute: typeof AppAuthSignInRoute
+  AppAuthVerifyRoute: typeof AppAuthVerifyRoute
+  AppDashboardRoute: typeof AppDashboardRouteWithChildren
+  AppPharmacyCartRoute: typeof AppPharmacyCartRoute
+  AppConsultationConsultationsIndexRoute: typeof AppConsultationConsultationsIndexRoute
+  AppAuthSignUpIndexRoute: typeof AppAuthSignUpIndexRoute
+  AppPharmacyProductIndexRoute: typeof AppPharmacyProductIndexRoute
+  AppPharmacyProductIdIndexRoute: typeof AppPharmacyProductIdIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppDoctorRoute: AppDoctorRouteWithChildren,
+  AppAuthSignInRoute: AppAuthSignInRoute,
+  AppAuthVerifyRoute: AppAuthVerifyRoute,
+  AppDashboardRoute: AppDashboardRouteWithChildren,
+  AppPharmacyCartRoute: AppPharmacyCartRoute,
+  AppConsultationConsultationsIndexRoute:
+    AppConsultationConsultationsIndexRoute,
+  AppAuthSignUpIndexRoute: AppAuthSignUpIndexRoute,
+  AppPharmacyProductIndexRoute: AppPharmacyProductIndexRoute,
+  AppPharmacyProductIdIndexRoute: AppPharmacyProductIdIndexRoute,
+}
+
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '': typeof AppDoctorRouteWithChildren
   '/auth/sign-in': typeof AppAuthSignInRoute
   '/auth/verify': typeof AppAuthVerifyRoute
-  '/dashboard': typeof AppDashboardIndexRoute
-  '/waitlist': typeof AppWaitlistIndexRoute
+  '/dashboard': typeof AppDashboardConsultationRouteWithChildren
+  '/pharmacy/cart': typeof AppPharmacyCartRoute
+  '/dashboard/': typeof AppDashboardIndexRoute
+  '/dashboard/clientconsultation': typeof AppDashboardConsultationClientconsultationRoute
+  '/dashboard/jitsiconsultation': typeof AppDashboardConsultationJitsiconsultationRoute
   '/consultations': typeof AppConsultationConsultationsIndexRoute
   '/doctor': typeof AppDoctorDoctorIndexRoute
   '/auth/sign-up': typeof AppAuthSignUpIndexRoute
@@ -412,23 +526,26 @@ export interface FileRoutesByFullPath {
   '/dashboard/profile': typeof AppDashboardProfileIndexRoute
   '/dashboard/schedule': typeof AppDashboardScheduleIndexRoute
   '/dashboard/wallet': typeof AppDashboardWalletIndexRoute
+  '/pharmacy/product': typeof AppPharmacyProductIndexRoute
   '/doctor/appointments': typeof AppDoctorDoctorAppointmentsIndexRoute
   '/doctor/lab': typeof AppDoctorDoctorLabIndexRoute
   '/doctor/message': typeof AppDoctorDoctorMessageIndexRoute
   '/doctor/patients': typeof AppDoctorDoctorPatientsIndexRoute
   '/doctor/support': typeof AppDoctorDoctorSupportIndexRoute
   '/dashboard/chats/$doctorId': typeof AppDashboardChatsDoctorIdIndexRoute
+  '/pharmacy/product/$id': typeof AppPharmacyProductIdIndexRoute
   '/doctor/message/$patientId': typeof AppDoctorDoctorMessagePatientIdIndexRoute
   '/dashboard/doctors/profile/$doctorId': typeof AppDashboardDoctorsProfileDoctorIdIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '': typeof AppDoctorRouteWithChildren
   '/auth/sign-in': typeof AppAuthSignInRoute
   '/auth/verify': typeof AppAuthVerifyRoute
   '/dashboard': typeof AppDashboardIndexRoute
-  '/waitlist': typeof AppWaitlistIndexRoute
+  '/pharmacy/cart': typeof AppPharmacyCartRoute
+  '/dashboard/clientconsultation': typeof AppDashboardConsultationClientconsultationRoute
+  '/dashboard/jitsiconsultation': typeof AppDashboardConsultationJitsiconsultationRoute
   '/consultations': typeof AppConsultationConsultationsIndexRoute
   '/doctor': typeof AppDoctorDoctorIndexRoute
   '/auth/sign-up': typeof AppAuthSignUpIndexRoute
@@ -436,25 +553,30 @@ export interface FileRoutesByTo {
   '/dashboard/profile': typeof AppDashboardProfileIndexRoute
   '/dashboard/schedule': typeof AppDashboardScheduleIndexRoute
   '/dashboard/wallet': typeof AppDashboardWalletIndexRoute
+  '/pharmacy/product': typeof AppPharmacyProductIndexRoute
   '/doctor/appointments': typeof AppDoctorDoctorAppointmentsIndexRoute
   '/doctor/lab': typeof AppDoctorDoctorLabIndexRoute
   '/doctor/message': typeof AppDoctorDoctorMessageIndexRoute
   '/doctor/patients': typeof AppDoctorDoctorPatientsIndexRoute
   '/doctor/support': typeof AppDoctorDoctorSupportIndexRoute
   '/dashboard/chats/$doctorId': typeof AppDashboardChatsDoctorIdIndexRoute
+  '/pharmacy/product/$id': typeof AppPharmacyProductIdIndexRoute
   '/doctor/message/$patientId': typeof AppDoctorDoctorMessagePatientIdIndexRoute
   '/dashboard/doctors/profile/$doctorId': typeof AppDashboardDoctorsProfileDoctorIdIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/_app/_doctor': typeof AppDoctorRouteWithChildren
   '/_app/auth/sign-in': typeof AppAuthSignInRoute
   '/_app/auth/verify': typeof AppAuthVerifyRoute
+  '/_app/dashboard': typeof AppDashboardRouteWithChildren
+  '/_app/dashboard/_consultation': typeof AppDashboardConsultationRouteWithChildren
+  '/_app/pharmacy/cart': typeof AppPharmacyCartRoute
   '/_app/dashboard/': typeof AppDashboardIndexRoute
-  '/_app/waitlist/': typeof AppWaitlistIndexRoute
+  '/_app/dashboard/_consultation/clientconsultation': typeof AppDashboardConsultationClientconsultationRoute
+  '/_app/dashboard/_consultation/jitsiconsultation': typeof AppDashboardConsultationJitsiconsultationRoute
   '/_app/_consultation/consultations/': typeof AppConsultationConsultationsIndexRoute
   '/_app/_doctor/doctor/': typeof AppDoctorDoctorIndexRoute
   '/_app/auth/sign-up/': typeof AppAuthSignUpIndexRoute
@@ -462,12 +584,14 @@ export interface FileRoutesById {
   '/_app/dashboard/profile/': typeof AppDashboardProfileIndexRoute
   '/_app/dashboard/schedule/': typeof AppDashboardScheduleIndexRoute
   '/_app/dashboard/wallet/': typeof AppDashboardWalletIndexRoute
+  '/_app/pharmacy/product/': typeof AppPharmacyProductIndexRoute
   '/_app/_doctor/doctor/appointments/': typeof AppDoctorDoctorAppointmentsIndexRoute
   '/_app/_doctor/doctor/lab/': typeof AppDoctorDoctorLabIndexRoute
   '/_app/_doctor/doctor/message/': typeof AppDoctorDoctorMessageIndexRoute
   '/_app/_doctor/doctor/patients/': typeof AppDoctorDoctorPatientsIndexRoute
   '/_app/_doctor/doctor/support/': typeof AppDoctorDoctorSupportIndexRoute
   '/_app/dashboard/chats/$doctorId/': typeof AppDashboardChatsDoctorIdIndexRoute
+  '/_app/pharmacy/product/$id/': typeof AppPharmacyProductIdIndexRoute
   '/_app/_doctor/doctor/message/$patientId/': typeof AppDoctorDoctorMessagePatientIdIndexRoute
   '/_app/dashboard/doctors/profile/$doctorId/': typeof AppDashboardDoctorsProfileDoctorIdIndexRoute
 }
@@ -475,12 +599,14 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | ''
     | '/auth/sign-in'
     | '/auth/verify'
     | '/dashboard'
-    | '/waitlist'
+    | '/pharmacy/cart'
+    | '/dashboard/'
+    | '/dashboard/clientconsultation'
+    | '/dashboard/jitsiconsultation'
     | '/consultations'
     | '/doctor'
     | '/auth/sign-up'
@@ -488,22 +614,25 @@ export interface FileRouteTypes {
     | '/dashboard/profile'
     | '/dashboard/schedule'
     | '/dashboard/wallet'
+    | '/pharmacy/product'
     | '/doctor/appointments'
     | '/doctor/lab'
     | '/doctor/message'
     | '/doctor/patients'
     | '/doctor/support'
     | '/dashboard/chats/$doctorId'
+    | '/pharmacy/product/$id'
     | '/doctor/message/$patientId'
     | '/dashboard/doctors/profile/$doctorId'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | ''
     | '/auth/sign-in'
     | '/auth/verify'
     | '/dashboard'
-    | '/waitlist'
+    | '/pharmacy/cart'
+    | '/dashboard/clientconsultation'
+    | '/dashboard/jitsiconsultation'
     | '/consultations'
     | '/doctor'
     | '/auth/sign-up'
@@ -511,23 +640,28 @@ export interface FileRouteTypes {
     | '/dashboard/profile'
     | '/dashboard/schedule'
     | '/dashboard/wallet'
+    | '/pharmacy/product'
     | '/doctor/appointments'
     | '/doctor/lab'
     | '/doctor/message'
     | '/doctor/patients'
     | '/doctor/support'
     | '/dashboard/chats/$doctorId'
+    | '/pharmacy/product/$id'
     | '/doctor/message/$patientId'
     | '/dashboard/doctors/profile/$doctorId'
   id:
     | '__root__'
-    | '/'
     | '/_app'
     | '/_app/_doctor'
     | '/_app/auth/sign-in'
     | '/_app/auth/verify'
+    | '/_app/dashboard'
+    | '/_app/dashboard/_consultation'
+    | '/_app/pharmacy/cart'
     | '/_app/dashboard/'
-    | '/_app/waitlist/'
+    | '/_app/dashboard/_consultation/clientconsultation'
+    | '/_app/dashboard/_consultation/jitsiconsultation'
     | '/_app/_consultation/consultations/'
     | '/_app/_doctor/doctor/'
     | '/_app/auth/sign-up/'
@@ -535,24 +669,24 @@ export interface FileRouteTypes {
     | '/_app/dashboard/profile/'
     | '/_app/dashboard/schedule/'
     | '/_app/dashboard/wallet/'
+    | '/_app/pharmacy/product/'
     | '/_app/_doctor/doctor/appointments/'
     | '/_app/_doctor/doctor/lab/'
     | '/_app/_doctor/doctor/message/'
     | '/_app/_doctor/doctor/patients/'
     | '/_app/_doctor/doctor/support/'
     | '/_app/dashboard/chats/$doctorId/'
+    | '/_app/pharmacy/product/$id/'
     | '/_app/_doctor/doctor/message/$patientId/'
     | '/_app/dashboard/doctors/profile/$doctorId/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
 }
 
@@ -566,12 +700,8 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
         "/_app"
       ]
-    },
-    "/": {
-      "filePath": "index.tsx"
     },
     "/_app": {
       "filePath": "_app.tsx",
@@ -579,16 +709,12 @@ export const routeTree = rootRoute
         "/_app/_doctor",
         "/_app/auth/sign-in",
         "/_app/auth/verify",
-        "/_app/dashboard/",
-        "/_app/waitlist/",
+        "/_app/dashboard",
+        "/_app/pharmacy/cart",
         "/_app/_consultation/consultations/",
         "/_app/auth/sign-up/",
-        "/_app/dashboard/doctors/",
-        "/_app/dashboard/profile/",
-        "/_app/dashboard/schedule/",
-        "/_app/dashboard/wallet/",
-        "/_app/dashboard/chats/$doctorId/",
-        "/_app/dashboard/doctors/profile/$doctorId/"
+        "/_app/pharmacy/product/",
+        "/_app/pharmacy/product/$id/"
       ]
     },
     "/_app/_doctor": {
@@ -612,13 +738,43 @@ export const routeTree = rootRoute
       "filePath": "_app/auth/verify.tsx",
       "parent": "/_app"
     },
-    "/_app/dashboard/": {
-      "filePath": "_app/dashboard/index.tsx",
+    "/_app/dashboard": {
+      "filePath": "_app/dashboard",
+      "parent": "/_app",
+      "children": [
+        "/_app/dashboard/_consultation",
+        "/_app/dashboard/",
+        "/_app/dashboard/doctors/",
+        "/_app/dashboard/profile/",
+        "/_app/dashboard/schedule/",
+        "/_app/dashboard/wallet/",
+        "/_app/dashboard/chats/$doctorId/",
+        "/_app/dashboard/doctors/profile/$doctorId/"
+      ]
+    },
+    "/_app/dashboard/_consultation": {
+      "filePath": "_app/dashboard/_consultation.tsx",
+      "parent": "/_app/dashboard",
+      "children": [
+        "/_app/dashboard/_consultation/clientconsultation",
+        "/_app/dashboard/_consultation/jitsiconsultation"
+      ]
+    },
+    "/_app/pharmacy/cart": {
+      "filePath": "_app/pharmacy/cart.tsx",
       "parent": "/_app"
     },
-    "/_app/waitlist/": {
-      "filePath": "_app/waitlist/index.tsx",
-      "parent": "/_app"
+    "/_app/dashboard/": {
+      "filePath": "_app/dashboard/index.tsx",
+      "parent": "/_app/dashboard"
+    },
+    "/_app/dashboard/_consultation/clientconsultation": {
+      "filePath": "_app/dashboard/_consultation/clientconsultation.tsx",
+      "parent": "/_app/dashboard/_consultation"
+    },
+    "/_app/dashboard/_consultation/jitsiconsultation": {
+      "filePath": "_app/dashboard/_consultation/jitsiconsultation.tsx",
+      "parent": "/_app/dashboard/_consultation"
     },
     "/_app/_consultation/consultations/": {
       "filePath": "_app/_consultation/consultations/index.tsx",
@@ -634,18 +790,22 @@ export const routeTree = rootRoute
     },
     "/_app/dashboard/doctors/": {
       "filePath": "_app/dashboard/doctors/index.tsx",
-      "parent": "/_app"
+      "parent": "/_app/dashboard"
     },
     "/_app/dashboard/profile/": {
       "filePath": "_app/dashboard/profile/index.tsx",
-      "parent": "/_app"
+      "parent": "/_app/dashboard"
     },
     "/_app/dashboard/schedule/": {
       "filePath": "_app/dashboard/schedule/index.tsx",
-      "parent": "/_app"
+      "parent": "/_app/dashboard"
     },
     "/_app/dashboard/wallet/": {
       "filePath": "_app/dashboard/wallet/index.tsx",
+      "parent": "/_app/dashboard"
+    },
+    "/_app/pharmacy/product/": {
+      "filePath": "_app/pharmacy/product/index.tsx",
       "parent": "/_app"
     },
     "/_app/_doctor/doctor/appointments/": {
@@ -670,6 +830,10 @@ export const routeTree = rootRoute
     },
     "/_app/dashboard/chats/$doctorId/": {
       "filePath": "_app/dashboard/chats/$doctorId/index.tsx",
+      "parent": "/_app/dashboard"
+    },
+    "/_app/pharmacy/product/$id/": {
+      "filePath": "_app/pharmacy/product/$id/index.tsx",
       "parent": "/_app"
     },
     "/_app/_doctor/doctor/message/$patientId/": {
@@ -678,7 +842,7 @@ export const routeTree = rootRoute
     },
     "/_app/dashboard/doctors/profile/$doctorId/": {
       "filePath": "_app/dashboard/doctors/profile/$doctorId/index.tsx",
-      "parent": "/_app"
+      "parent": "/_app/dashboard"
     }
   }
 }

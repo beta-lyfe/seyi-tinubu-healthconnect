@@ -8,6 +8,7 @@ import { BottomNav } from '../../-components/bottom-nav'
 import { useState } from 'react'
 import { cn } from '@beta-lyfe/ui/components/shad/lib/utils'
 import { DateTheme } from '@beta-lyfe/webapp/data/dateTheme'
+import { LayoutWithBottomNav } from '../-components/layout'
 
 export const Route = createFileRoute('/_app/dashboard/schedule/')({
   component: IndexPage
@@ -94,12 +95,13 @@ const scheduleData = [
 
 function IndexPage() {
   return (
+    <LayoutWithBottomNav>
     <main className="p-6">
       <DateHeader />
       <Calendar />
       <Schedule schedules={scheduleData} />
-      <BottomNav />
     </main>
+    </LayoutWithBottomNav>
   )
 }
 

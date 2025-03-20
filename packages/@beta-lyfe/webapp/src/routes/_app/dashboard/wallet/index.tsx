@@ -3,6 +3,7 @@ import { BottomNav } from '../../-components/bottom-nav'
 import { Button } from '@beta-lyfe/ui/components/shad/ui/button'
 import { createFileRoute } from '@tanstack/react-router'
 import { ArrowDownLeft, ArrowUpRight, Wallet2 } from 'lucide-react'
+import { LayoutWithBottomNav } from '../-components/layout'
 
 export const Route = createFileRoute('/_app/dashboard/wallet/')({
   component: WalletPage
@@ -10,7 +11,7 @@ export const Route = createFileRoute('/_app/dashboard/wallet/')({
 
 function WalletPage() {
   return (
-    <>
+    <LayoutWithBottomNav>
       <div className="p-5 bg-primary gap-5">
         <div>
           <Typography.PageHeading className="text-white">
@@ -25,8 +26,7 @@ function WalletPage() {
         <WalletCard />
         <Transaction />
       </div>
-      <BottomNav />
-    </>
+    </LayoutWithBottomNav>
   )
 }
 

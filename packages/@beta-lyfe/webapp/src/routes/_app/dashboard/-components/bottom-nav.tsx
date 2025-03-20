@@ -1,5 +1,5 @@
 import { cn } from '@beta-lyfe/ui/components/shad/lib/utils'
-import { useRouterState } from '@tanstack/react-router'
+import { Link, useRouterState } from '@tanstack/react-router'
 import {
   CalendarIcon,
   HomeIcon,
@@ -7,12 +7,13 @@ import {
   MessageSquareIcon,
   UserIcon
 } from 'lucide-react'
+import { FileRoutesByTo } from '../../../../routeTree.gen'
 
 type Item = {
   icon: LucideIcon
   key: string
   label: string
-  link: string
+  link: keyof FileRoutesByTo
 }
 
 const items: Item[] = [
@@ -26,19 +27,19 @@ const items: Item[] = [
     icon: MessageSquareIcon,
     key: 'conversations',
     label: 'Conversations',
-    link: '/conversations'
+    link: '/dashboard/chats/$doctorId'
   },
   {
     icon: CalendarIcon,
     key: 'schedules',
     label: 'Schedules',
-    link: '/schedules'
+    link: '/dashboard/schedule'
   },
   {
     icon: UserIcon,
     key: 'profile',
     label: 'Profile',
-    link: '/profile'
+    link: '/dashboard/profile'
   }
 ]
 
@@ -51,6 +52,7 @@ export const BottomNav = () => {
         {items.map((item) => {
           const isActive = router.location.href === item.link
           return (
+            <Link to={item.link}>
             <button
               key={item.key}
               type="button"
@@ -66,6 +68,7 @@ export const BottomNav = () => {
                 {item.label}
               </span>
             </button>
+           </Link>  
           )
         })}
       </div>
