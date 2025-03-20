@@ -1,4 +1,4 @@
-name: frontend-production
+name: frontend-staging
 
 on:
   pull_request:

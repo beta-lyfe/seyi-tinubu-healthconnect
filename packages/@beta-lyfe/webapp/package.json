@@ -6,7 +6,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "dotenv -- vite --port 3001",
-    "build": "./scripts/build.sh",
+		"build": "./scripts/build.sh",
 		"lint": "tsc"
 	},
 	"exports": {
