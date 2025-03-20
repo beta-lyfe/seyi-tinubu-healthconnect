@@ -26,10 +26,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        working-directory: packages
-        run: pnpm install
-
       - name: Create output folder
         run: mkdir __site
 
@@ -46,6 +42,16 @@ jobs:
       - name: Check built internal docs
         working-directory: docs/docs
         run: nix flake check
+
+      - name: Install dependencies
+        working-directory: packages
+        run: pnpm install
+
+      - name: Setup assets
+        working-directory: packages
+        run: |
+          pnpm compile
+          pnpm typegen
 
       - name: Build api docs
         working-directory: packages/@beta-lyfe/docs-api
