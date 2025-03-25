@@ -8,10 +8,11 @@ from rest_framework import status
 import cloudinary.uploader
 import uuid
 from django.utils import timezone
+import os
 
 from api.models import User
 from doctor.models import DoctorProfile
-from consultation.utils import create_room, AccessToken, notify_doctor_consultation_request, notify_patient_consultation_status
+from consultation.utils import create_room_name, notify_doctor_consultation_request, notify_patient_consultation_status, create_access_token
 from consultation.models import Consultation_Request, Consultations
 from consultation.serializer import ConsultationRequestSerializer, ConsultationSerializer
 
@@ -127,8 +128,8 @@ def request_consultation(request):
         # Return validation errors
         return Response({'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
     
-    # Default response for unsupported methods
-    return Response({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    # Default response in case of any unforeseen methods
+    return Response({'message': 'Method not allowed.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 @api_view(['GET'])
@@ -175,7 +176,7 @@ def consultation_accept_request(request, request_id):
 
     # Check if the consultation status is 'Pending'
     if consultation.status != 'Pending':
-        if consultation.status == 'Accept':
+        if consultation.status == 'Accept':            
             return Response({"message": f"Already accepted this request."},
                             status=status.HTTP_406_NOT_ACCEPTABLE)
         elif consultation.status == 'Decline':
@@ -184,18 +185,15 @@ def consultation_accept_request(request, request_id):
         else:
             return Response({"message": "Invalid consultation status."},
                             status=status.HTTP_400_BAD_REQUEST)
-    
-    new_user = User.objects.get(id=consultation.patient)
 
-    notify_patient_consultation_status(new_user)
+    # Get the doctor and patient of the consultation
+    doctor = User.objects.get(id=consultation.doctor)
+    patient = User.objects.get(id=consultation.patient)
 
-    # Try creating the video_room_id
-    status_code, response = create_room()
-    if not status_code:
-        return Response({'message': 'Generation of Huddle-01 room_id failed'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
-    if status_code != 201:
-        return Response({'message': f"Huddle-01 Error: ({status_code}) {response['message']}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    room_name = create_room_name()
+
+    doctor_token = create_access_token(user=doctor, room_name=room_name, is_moderator=True)
+    patient_token = create_access_token(user=patient, room_name=room_name)
 
     # Try to create a new consultation if everything is valid
     try:
@@ -203,13 +201,24 @@ def consultation_accept_request(request, request_id):
             id = uuid.uuid4(),
             doctor=consultation.doctor,
             patient=consultation.patient,
-            video_room_id=response['data']['roomId'],
+            doctor_token=doctor_token,
+            patient_token = patient_token,
+            room_name = room_name,
             start_time=consultation.start_time,
             end_time=consultation.end_time
         )
         # Optionally, update the request status if needed
         consultation.status = 'Accept'
         consultation.save()
+
+        patient_user = User.objects.get(id=consultation.patient)
+        doctor_user = User.objects.get(id=consultation.patient)
+
+
+        FRONTEND_VIDEO_CALL = os.environ.get('FRONTEND_VIDEO_CALL')
+
+        notify_patient_consultation_status(patient_user, f'{FRONTEND_VIDEO_CALL}?{patient_token}')
+        notify_doctor_consultation_request(doctor_user, f'{FRONTEND_VIDEO_CALL}?{doctor_token}')
 
         return Response({"message": "Consultation request accepted"}, status=status.HTTP_201_CREATED)
 
@@ -255,43 +264,47 @@ def consultation_by_id(request, consultation_id):
     return Response(ConsultationSerializer(consultation).data,
                     status=status.HTTP_200_OK)
 
-@api_view(['GET'])
-@permission_classes([CustomIsAuthenticated])
-def consultation_access_token(request, consultation_id):
-    try:
-        user = request.user
+# @api_view(['GET'])
+# @permission_classes([CustomIsAuthenticated])
+# def consultation_access_token(request, consultation_id):
+#     try:
+#         user = request.user
 
-        consultation = Consultations.objects.get(id=consultation_id)
+#         consultation = Consultations.objects.get(id=consultation_id)
 
-        if not consultation:
-            return Response({'message': f"Consultation not found"}, status=status.HTTP_404_NOT_FOUND)
-        if user.is_doctor and user.id != consultation.doctor.id:
-            return Response({"message": f"User Does Not have Permission to Access this Information"},
-                            status=status.HTTP_403_FORBIDDEN)
-        elif not(user.is_doctor) and consultation.patient.id != user.id:
-            return Response({"message": f"User Does Not have Permission to Access this Information"},
-                            status=status.HTTP_403_FORBIDDEN)
+#         if not consultation:
+#             return Response({'message': f"Consultation not found"}, status=status.HTTP_404_NOT_FOUND)
+#         if user.is_doctor and user.id != consultation.doctor.id:
+#             return Response({"message": f"User Does Not have Permission to Access this Information"},
+#                             status=status.HTTP_403_FORBIDDEN)
+#         elif not(user.is_doctor) and consultation.patient.id != user.id:
+#             return Response({"message": f"User Does Not have Permission to Access this Information"},
+#                             status=status.HTTP_403_FORBIDDEN)
 
-        access_token = AccessToken({
-            "roomId": consultation.video_room_id,
-            "role": "SPEAKER",
-            "permissions": {
-                "canConsume": True,
-                "canProduce": True,
-                "canRecvData": True,
-                "canSendData": True,
-                "canUpdateMetadata": True,
-                "canProduceSources": {"cam": True, "mic": True, "screen": True}
-            },
-            "options": {}
-        })
+#         # access_token = AccessToken({
+#         #     "roomId": consultation.video_room_id,
+#         #     "role": "SPEAKER",
+#         #     "permissions": {
+#         #         "canConsume": True,
+#         #         "canProduce": True,
+#         #         "canRecvData": True,
+#         #         "canSendData": True,
+#         #         "canUpdateMetadata": True,
+#         #         "canProduceSources": {"cam": True, "mic": True, "screen": True}
+#         #     },
+#         #     "options": {}
+#         # })
 
-        jwt_token = access_token.to_jwt()
-        # print(f"Token: {jwt_token}")
-        return Response({'token': jwt_token}, status=status.HTTP_200_OK)
-    except Exception as e:
-        print(f"Error: {e}")
-        return Response({'message': 'An unexpected error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+#         # Create access token for the doctor
+#         create_access_token(user, is_moderator=True)
+#         # Create access token for the patient
+#         patient create_access_token(user)
+        
+#         # print(f"Token: {jwt_token}")
+#         return Response({'token': jwt_token}, status=status.HTTP_200_OK)
+#     except Exception as e:
+#         print(f"Error: {e}")
+#         return Response({'message': 'An unexpected error occurred'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['POST'])

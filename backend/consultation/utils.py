@@ -3,7 +3,11 @@ import os
 from django.template.loader import get_template
 from django.core.mail import send_mail
 import json
-
+import random
+import jwt
+import string
+from django.core.exceptions import ObjectDoesNotExist
+from consultation.models import Consultations
 
 HUDDLE01_API_KEY = os.environ['HUDDLE01_API_KEY']
 
@@ -157,9 +161,10 @@ def notify_doctor_consultation_request(user):
 
     return
 
-def notify_patient_consultation_status(user):
+def notify_patient_consultation_status(user, consultation_link):
     html_content = get_template('consultation/notify_patient.html').render({
-        "username": user.username
+        "username": user.username,
+        "consultation_link": consultation_link
     })
 
     send_mail(
@@ -172,3 +177,76 @@ def notify_patient_consultation_status(user):
     )
 
     return
+
+def notify_doctor_consultation_status(user, consultation_link):
+    html_content = get_template('consultation/notify_patient.html').render({
+        "doctor_name": user.username,
+        "consultation_link": consultation_link
+    })
+
+    send_mail(
+        subject="Consultation email",
+        message="This Email is from Betalyfe",
+        from_email="BETA LYFE <cyrile450@gmail.com>",
+        recipient_list=[user.email],
+        html_message=html_content,
+        fail_silently=False
+    )
+
+    return
+
+
+
+# Replace with your actual private key (RSA)
+PRIVATE_KEY = os.environ.get("PRIVATE_KEY")
+
+# Define the payload
+def create_access_token(user, room_name, is_moderator=False):
+    payload = {
+        "aud": "jitsi",
+        "iss": "chat",
+        "iat": 1742651273,
+        "exp": 1742658473,
+        "nbf": 1742651268,
+        "sub": "vpaas-magic-cookie-4736d21d38e84ac6bb5a1c3830f92324",
+        "context": {
+            "features": {
+                "livestreaming": True,
+                "outbound-call": True,
+                "sip-outbound-call": False,
+                "transcription": True,
+                "recording": True
+            },
+            "user": {
+                "hidden-from-recorder": False,
+                "moderator": is_moderator,
+                "name": user['username'],
+                "id": user['id'],
+                "avatar": "",
+                "email": user['email']
+            }
+        },
+        "room": room_name
+    }
+
+    # Sign the JWT using RS256
+    token = jwt.encode(payload, PRIVATE_KEY, algorithm="RS256")
+    return token
+
+def generate_room_name():
+    """Generate a random 6-character alphanumeric room name."""
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+
+def create_room_name():
+    """Generate a unique room name for a consultation."""
+    while True:
+        room_name = generate_room_name()
+        try:
+            # Check if a consultation with this room name already exists
+            existing_consultation = Consultations.objects.get(room_name=room_name)
+        except ObjectDoesNotExist:
+            # If no existing consultation, return the unique room name
+            return room_name
+
+
+

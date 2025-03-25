@@ -561,10 +561,12 @@ namespace Api {
       id: Id;
       doctor: Id;
       patient: Id;
-      status: "pending" | "accepted" | "rejected";
+      // status: "pending" | "accepted" | "rejected";
       doctor_notes: DoctorNote[] | null;
       chats: Chat[] | null;
-      video_room_id: string | null;
+      room_name: string | null;
+      doctor_token: string | null;
+      patient_token: string | null;
       start_time: DateTime;
       end_time: DateTime;
       created_at: DateTime;

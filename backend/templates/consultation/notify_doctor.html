@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultation Accepted</title>
+    <title>New Consultation Assigned</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -51,16 +51,16 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Consultation Accepted</h1>
+            <h1>New Consultation Assigned</h1>
         </div>
         <div class="content">
-            {% if username %}
-                <p>Hello {{ username }},</p>
+            {% if doctor_name %}
+                <p>Hello Dr. {{ doctor_name }},</p>
             {% else %}
-                <p>Hello Patient,</p>
+                <p>Hello Doctor,</p>
             {% endif %}
-            <p>Your consultation request has been <strong>accepted</strong> by the doctor.</p>
-            <p>Click the button below to view the details of your consultation.</p>
+            <p>You have successfully accepted a new consultation request.</p>
+            <p>Click the button below to access the consultation details.</p>
             <a href="{{ consultation_link }}" class="button">View Consultation</a>
         </div>
         <div class="footer">
