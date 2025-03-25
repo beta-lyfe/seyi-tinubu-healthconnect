@@ -1,0 +1,17 @@
+import DatabaseConfig from './database'
+import EnvironmentConfig from './environment'
+import MailConfig from './mail'
+import ServerConfig from './server'
+import UploadConfig from './upload'
+import MediaServerConfig from './media-server'
+import AuthConfig from './auth'
+
+export default {
+  auth: AuthConfig,
+  db: DatabaseConfig,
+  environment: EnvironmentConfig,
+  mail: MailConfig,
+  upload: UploadConfig,
+  server: ServerConfig,
+  mediaServer: MediaServerConfig
+}

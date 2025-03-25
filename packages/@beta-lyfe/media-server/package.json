@@ -1,0 +1,17 @@
+{
+	"name": "@beta-lyfe/media-server",
+	"version": "0.0.0",
+	"description": "",
+	"main": "src/index.ts",
+	"packageManager": "pnpm@9.15.3",
+	"scripts": {
+		"dev": "tsx --watch server.ts",
+		"lint": "tsc"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/node": "^22.13.13"
+	}
+}
