@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from django.core.exceptions import ObjectDoesNotExist
 # import cloudinary
 
 from api.schemas import UserSerializer, LoginSerializer, EmailVerifySerializer
@@ -155,7 +156,7 @@ def verify_email(request):
             user.verified = True
             # Because I'm using some of allauth functionalities. I have to update the Email model created by allauth to login
             # Could remove this later
-            user_email = EmailAddress.objects.get(email=user.email)
+            user_email = EmailAddress.objects.get_or_create(email=user.email)
             user_email.verified = True
             user_email.primary = True
             user_email.save()
@@ -247,39 +248,57 @@ def login(request):
 
 
 # Verify Email Here
-@api_view(['POST'])
-@permission_classes([CustomAllowAny])
-def resend_verify_email(request):
-    try:
-        email = request.data['email']
-        unverified_email = EmailAddress.objects.get(email=email)
-        user = unverified_email.user
-
-        EmailAddress.objects.create(user=user, email=user.email)
-        key, expires_at = VerifyEmail_key(user.id)
-
-        html_content = get_template('auth/verify_email.html').render({
-            "user": user,
-            "otp": key,
-            "expirary_date": expires_at
-        })
+class ResendVerifyEmail(APIView):
+    permission_classes = [CustomAllowAny]
 
 
-        send_mail(
-            subject="Verify your email",
-            message="Please Verify your email. This Email is from Betalyfe",
-            from_email="BETA LYFE <cyrile450@gmail.com>",
-            recipient_list=[user.email],
-            html_message=html_content,
-            fail_silently=False
-        )
-        return Response({
-            "message": "Please check your email address for a verification code"}, 
-            status=status.HTTP_200_OK)
+    def post(self, request):
+        try:
+            email = request.data['email']
+            user = User.objects.get(email=email)
 
-    except Exception as e:
-        print(e)
-        return Response("Email does not exist", status=status.HTTP_400_BAD_REQUEST)
+            if (user.verified):
+                return Response({'message': 'User already verified'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+            
+            email_address = EmailAddress.objects.filter(user=user, email=user.email).first()
+            if (email_address and email_address.verified):
+                user.verified = True
+                user.save()
+                return Response({'message': 'User already verified'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+            elif (not email_address):
+                EmailAddress.objects.create(user=user, email=user.email)
+
+            key, exp = VerifyEmail_key(user.id)
+            print(exp)
+
+            print("Got here but stopped")
+            html_content = get_template('auth/verify_email.html').render({
+                "user": user,
+                "otp": key,
+                "expirary_date": exp
+            })
+
+
+            print("I got here now ")
+            send_mail(
+                subject="Verify your email",
+                message="Please Verify your email. This Email is from Betalyfe",
+                from_email="BETA LYFE <cyrile450@gmail.com>",
+                recipient_list=[user.email],
+                html_message=html_content,
+                fail_silently=False
+            )
+
+            return Response({
+                "message": "Please check your email address for a verification code"}, 
+                status=status.HTTP_200_OK)
+
+        except ObjectDoesNotExist as e:
+            print(e)
+            return Response({'message': f'{e}'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            print(e)
+            return Response({'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['POST'])
@@ -296,25 +315,40 @@ def logout(request):
 
 
 # Reset password Here
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def forget_password(request):
-    """
-        Receives Email
-        Check if Email is in database
-        Send (uid, token) in a url
-    """
-    data = request.data
-    if data:
-        try:
-            user = User.objects.get(email=data['email'])
-        except User.DoesNotExist:
-            return Response({'message': 'Email not found'}, status=status.HTTP_404_NOT_FOUND)
+class ForgetPassword(APIView):
+    permission_classes = [CustomAllowAny]
 
-        key, uid = ResetPassword_key(email=data['email'])
+    def post(self, request):
+        data = request.data
+        if data and data['email']:
+            try:
+                user = User.objects.get(email=data['email'])
+            except User.DoesNotExist:
+                return Response({'message': 'Email not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        return Response({'message': {'uid': uid, 'key': key}}, status=status.HTTP_201_CREATED)
-    return Response({'errors': 'Something went wrong!'}, status=status.HTTP_400_BAD_REQUEST)
+            key, uid, expires_at = ResetPassword_key(email=user.email)
+
+            html_content = get_template('auth/password_reset.html').render({
+                "otp": key,
+            })
+
+            try:
+                send_mail(
+                    subject="Verify your email",
+                    message="Please Verify your email. This Email is from Betalyfe",
+                    from_email="BETA LYFE <cyrile450@gmail.com>",
+                    recipient_list=[user.email],
+                    html_message=html_content,
+                    fail_silently=False
+                )
+            except Exception as e:
+                print(e)
+                return Response({'message': 'Internal Serever Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+            return Response({'message': {'uid': uid}}, status=status.HTTP_201_CREATED)
+        return Response({'message': 'Required Fields missing'}, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 # Verify Email Here
 @api_view(['POST'])
@@ -344,12 +378,8 @@ def confirm_forget_password(request, uid, otp):
         if reset_pwd_object.exp <= timezone.now():
                 return Response({'message': _('Key has expired.')}, status=status.HTTP_404_NOT_FOUND)
 
-        password = request.data.get('password')
-        password2 = request.data.get('password2')
+        password = request.data.get('new_password')
 
-        # Check if passwords match
-        if password != password2:
-            return Response({'message': _('Passwords do not match.')}, status=status.HTTP_400_BAD_REQUEST)
 
         # Update the user's password
         print(f"Old password: {user.password}")

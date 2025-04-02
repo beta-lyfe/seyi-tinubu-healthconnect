@@ -30,7 +30,7 @@ def VerifyEmail_key(user_id: int):
         if not EmailVerication_Keys.objects.filter(key=unique_key).exists():
             break
 
-    expriation = datetime.now() + timedelta(hours=24)
+    expriation = timezone.now() + timedelta(hours=24)
     EmailVerication_Keys.objects.create(
         id = uuid.uuid4(),
         user = user,
@@ -53,11 +53,11 @@ def ResetPassword_key(email: int):
         if not PasswordReset_keys.objects.filter(key=unique_key).exists():
             break
 
-    expriation = timezone.now() + timedelta(hours=1)
+    expriation = timezone.now() + timedelta(minutes=5)
     PasswordReset_keys.objects.create(
         id = uuid.uuid4(),
         user = user,
         key = unique_key,
         exp = expriation
     )
-    return unique_key, user.id # type: ignore Pylance warning
+    return unique_key, user.id, expriation # type: ignore Pylance warning
