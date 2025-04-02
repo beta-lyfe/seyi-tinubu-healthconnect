@@ -1,5 +1,5 @@
 import {
-  pgTable,
+  pgTableCreator,
   text,
   timestamp,
   boolean,
@@ -11,13 +11,16 @@ import {
 import { relations } from 'drizzle-orm'
 import { ulid } from 'ulidx'
 import { z } from 'zod'
+import { config } from '../config'
 
 export const media = z.object({
-  platform: z.literal('cloudinary'),
+  public_id: z.string(),
   url: z.string()
 })
 
 export type Media = z.infer<typeof media>
+
+const pgTable = pgTableCreator((name) => `${config.db.prefix}${name}`)
 
 export const pharmacyStores = pgTable('pharmacy_stores', {
   id: varchar('id')
@@ -44,6 +47,8 @@ export const pharmacyStores = pgTable('pharmacy_stores', {
     .notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true })
 })
+
+export type PharmacyStore = typeof pharmacyStores.$inferSelect
 
 export const pharmacyStoreItems = pgTable('pharmacy_store_items', {
   id: varchar('id')

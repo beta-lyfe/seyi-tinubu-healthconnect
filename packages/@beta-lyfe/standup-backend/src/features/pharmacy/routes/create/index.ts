@@ -1,8 +1,8 @@
 import { Hono } from 'hono'
-import { Repository } from '../..'
 import middleware from './middleware'
 import { AuthMiddleware } from '../../../auth'
-import { APIResponse } from '../../../http'
+import { APIResponse, StatusCodes } from '../../../http'
+import service from './service'
 
 export default new Hono().post(
   '/',
@@ -10,11 +10,14 @@ export default new Hono().post(
   middleware,
   async (c) => {
     const user = c.get('user')
-    const inputPayload = c.req.valid('json')
-    const store = await Repository.create({
-      ...inputPayload,
-      ownerId: user.data.id
-    })
+    const inputPayload = c.req.valid('form')
+    const result = await service(user, inputPayload)
+    if (result.isErr)
+      return c.json(
+        APIResponse.err('Failed to create store'),
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
+    const store = result.value
     return c.json(APIResponse.ok(store))
   }
 )

@@ -3,7 +3,7 @@ import EnvironmentConfig from './environment'
 import MailConfig from './mail'
 import ServerConfig from './server'
 import UploadConfig from './upload'
-import MediaServerConfig from './media-server'
+import StorageConfig from './storage'
 import AuthConfig from './auth'
 
 export default {
@@ -13,5 +13,5 @@ export default {
   mail: MailConfig,
   upload: UploadConfig,
   server: ServerConfig,
-  mediaServer: MediaServerConfig
+  storage: StorageConfig
 }

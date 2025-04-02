@@ -1,9 +1,13 @@
 {
+	"$schema": "https://json.schemastore.org/package.json",
 	"name": "@beta-lyfe/media-server",
 	"version": "0.0.0",
 	"description": "",
 	"main": "src/index.ts",
 	"packageManager": "pnpm@9.15.3",
+	"exports": {
+		".": "./src/lib.ts"
+	},
 	"scripts": {
 		"dev": "tsx --watch server.ts",
 		"lint": "tsc"

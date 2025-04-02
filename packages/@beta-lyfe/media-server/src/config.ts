@@ -1,9 +1,12 @@
-const port = process.env.MEDIA_SERVER_PORT as unknown as number
+import { env } from './env'
+import { parseUrl } from './lib'
+
+const urlScheme = parseUrl(env.MEDIA_SERVER_URL)
 
 const config = {
   server: {
-    url: `http://127.0.0.1:${port}`,
-    port
+    url: urlScheme.serverUrl,
+    port: urlScheme.port
   }
 }
 

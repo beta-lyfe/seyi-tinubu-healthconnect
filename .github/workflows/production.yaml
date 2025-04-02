@@ -1,4 +1,4 @@
-name: docs-production
+name: production
 
 on:
   push:
@@ -32,6 +32,19 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@v27
 
+      - name: Install dependencies
+        working-directory: packages
+        run: pnpm install
+
+      - name: Setup assets
+        working-directory: packages
+        run: |
+          pnpm compile
+          pnpm typegen
+
+      - name: Load .env file
+        run: echo '${{ secrets.ENV }}' > ./packages/.env
+
       - name: Build internal docs
         working-directory: docs/docs
         run: |
@@ -43,20 +56,17 @@ jobs:
         working-directory: docs/docs
         run: nix flake check
 
-      - name: Install dependencies
-        working-directory: packages
-        run: pnpm install
-
-      - name: Setup assets
+      - name: Build stack
         working-directory: packages
         run: |
-          pnpm compile
-          pnpm typegen
+          set -a            
+          source .env
+          set +a
+          pnpm build
 
-      - name: Build api docs
+      - name: Move api docs to output folder
         working-directory: packages/@beta-lyfe/docs-api
         run: |
-          pnpm build --base /api
           mkdir -p ../../../__site/docs/api
           cp -r dist/* ../../../__site/docs/api
 
@@ -70,3 +80,37 @@ jobs:
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_API_DOCS_PROJECT_ID }}
+
+      - name: Deploy website
+        working-directory: packages
+        run: |
+          set -a
+          source .env
+          set +a
+          pnpm --filter @beta-lyfe/website run deploy --target production 
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_WEBSITE_PROJECT_ID }}
+
+      - name: Deploy webapp
+        working-directory: packages
+        run: |
+          set -a            
+          source .env
+          set +a
+          pnpm --filter @beta-lyfe/webapp run deploy --target production
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_WEBAPP_PROJECT_ID }}
+
+      - name: Deploy standup backend
+        working-directory: packages
+        run: |
+          set -a            
+          source .env
+          set +a
+          pnpm --filter @beta-lyfe/standup-backend run deploy --target production
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_STANDUP_BACKEND_PROJECT_ID }}
+
