@@ -1,17 +1,17 @@
 import type { schema } from '@beta-lyfe/api'
 import { proxy, useSnapshot } from 'valtio'
 
-type Doctor = schema.components['schemas']['Api.Doctor.Doctor']
-type Patient = schema.components['schemas']['Api.Patient.Patient']
+type DoctorProfile = schema.components['schemas']['Api.Doctor.DoctorProfile']
+type PatientProfile = schema.components['schemas']['Api.Patient.PatientProfile']
 
 type UserDoctor = {
-  type: 'doctor'
-  data: Doctor
+  role: 'doctor'
+  data: DoctorProfile
 }
 
 type UserPatient = {
-  type: 'patient'
-  data: Patient
+  role: 'patient'
+  data: PatientProfile
 }
 
 type AuthToken = {

@@ -2,7 +2,7 @@ import { cn } from '@beta-lyfe/ui/components/shad/lib/utils'
 import { createFileRoute } from '@tanstack/react-router'
 import { Calendar, Megaphone, User, UserPlus, Users, Video } from 'lucide-react'
 import { FunctionComponent } from 'react'
-import { Schedule } from '../../dashboard/schedule'
+import { Schedule } from '../../_dashboard/dashboard/schedule'
 import { Button } from '@beta-lyfe/ui/components/shad/ui/button'
 import {
   BarChart,

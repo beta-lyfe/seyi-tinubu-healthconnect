@@ -14,35 +14,52 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AppImport } from './routes/_app'
+import { Route as IndexImport } from './routes/index'
 import { Route as AppDoctorImport } from './routes/_app/_doctor'
-import { Route as AppDashboardIndexImport } from './routes/_app/dashboard/index'
-import { Route as AppPharmacyCartImport } from './routes/_app/pharmacy/cart'
-import { Route as AppDashboardConsultationImport } from './routes/_app/dashboard/_consultation'
+import { Route as AppDashboardImport } from './routes/_app/_dashboard'
+import { Route as AppTermsIndexImport } from './routes/_app/terms/index'
+import { Route as AppPrivacyIndexImport } from './routes/_app/privacy/index'
+import { Route as AppOnboardingIndexImport } from './routes/_app/onboarding/index'
+import { Route as AppHelpIndexImport } from './routes/_app/help/index'
 import { Route as AppAuthVerifyImport } from './routes/_app/auth/verify'
+import { Route as AppAuthSignUpImport } from './routes/_app/auth/sign-up'
 import { Route as AppAuthSignInImport } from './routes/_app/auth/sign-in'
-import { Route as AppPharmacyProductIndexImport } from './routes/_app/pharmacy/product/index'
-import { Route as AppDashboardWalletIndexImport } from './routes/_app/dashboard/wallet/index'
-import { Route as AppDashboardScheduleIndexImport } from './routes/_app/dashboard/schedule/index'
-import { Route as AppDashboardProfileIndexImport } from './routes/_app/dashboard/profile/index'
-import { Route as AppDashboardDoctorsIndexImport } from './routes/_app/dashboard/doctors/index'
-import { Route as AppAuthSignUpIndexImport } from './routes/_app/auth/sign-up/index'
+import { Route as AppAuthForgotPasswordIndexImport } from './routes/_app/auth/forgot-password/index'
 import { Route as AppDoctorDoctorIndexImport } from './routes/_app/_doctor/doctor/index'
+import { Route as AppDashboardDashboardIndexImport } from './routes/_app/_dashboard/dashboard/index'
 import { Route as AppConsultationConsultationsIndexImport } from './routes/_app/_consultation/consultations/index'
-import { Route as AppDashboardConsultationJitsiconsultationImport } from './routes/_app/dashboard/_consultation/jitsiconsultation'
-import { Route as AppDashboardConsultationClientconsultationImport } from './routes/_app/dashboard/_consultation/clientconsultation'
-import { Route as AppPharmacyProductIdIndexImport } from './routes/_app/pharmacy/product/$id/index'
-import { Route as AppDashboardChatsDoctorIdIndexImport } from './routes/_app/dashboard/chats/$doctorId/index'
+import { Route as AppDashboardDashboardConsultationImport } from './routes/_app/_dashboard/dashboard/_consultation'
 import { Route as AppDoctorDoctorSupportIndexImport } from './routes/_app/_doctor/doctor/support/index'
 import { Route as AppDoctorDoctorPatientsIndexImport } from './routes/_app/_doctor/doctor/patients/index'
 import { Route as AppDoctorDoctorMessageIndexImport } from './routes/_app/_doctor/doctor/message/index'
 import { Route as AppDoctorDoctorLabIndexImport } from './routes/_app/_doctor/doctor/lab/index'
-import { Route as AppDoctorDoctorAppointmentsIndexImport } from './routes/_app/_doctor/doctor/appointments/index'
-import { Route as AppDashboardDoctorsProfileDoctorIdIndexImport } from './routes/_app/dashboard/doctors/profile/$doctorId/index'
+import { Route as AppDoctorDoctorDashboardIndexImport } from './routes/_app/_doctor/doctor/dashboard/index'
+import { Route as AppDashboardDashboardWalletIndexImport } from './routes/_app/_dashboard/dashboard/wallet/index'
+import { Route as AppDashboardDashboardScheduleIndexImport } from './routes/_app/_dashboard/dashboard/schedule/index'
+import { Route as AppDashboardDashboardProfileIndexImport } from './routes/_app/_dashboard/dashboard/profile/index'
+import { Route as AppDashboardDashboardDoctorsIndexImport } from './routes/_app/_dashboard/dashboard/doctors/index'
+import { Route as AppDashboardDashboardPharmacyCartImport } from './routes/_app/_dashboard/dashboard/pharmacy/cart'
+import { Route as AppDashboardDashboardConsultationJitsiconsultationImport } from './routes/_app/_dashboard/dashboard/_consultation/jitsiconsultation'
+import { Route as AppDashboardDashboardConsultationClientconsultationImport } from './routes/_app/_dashboard/dashboard/_consultation/clientconsultation'
 import { Route as AppDoctorDoctorMessagePatientIdIndexImport } from './routes/_app/_doctor/doctor/message/$patientId/index'
+import { Route as AppDoctorDoctorDashboardWalletIndexImport } from './routes/_app/_doctor/doctor/dashboard/wallet/index'
+import { Route as AppDoctorDoctorDashboardProfileIndexImport } from './routes/_app/_doctor/doctor/dashboard/profile/index'
+import { Route as AppDoctorDoctorDashboardPatientsIndexImport } from './routes/_app/_doctor/doctor/dashboard/patients/index'
+import { Route as AppDoctorDoctorDashboardEarningsIndexImport } from './routes/_app/_doctor/doctor/dashboard/earnings/index'
+import { Route as AppDoctorDoctorDashboardAppointmentsIndexImport } from './routes/_app/_doctor/doctor/dashboard/appointments/index'
+import { Route as AppDashboardDashboardPharmacyProductIndexImport } from './routes/_app/_dashboard/dashboard/pharmacy/product/index'
+import { Route as AppDashboardDashboardMessagesDoctorIdIndexImport } from './routes/_app/_dashboard/dashboard/messages/$doctorId/index'
+import { Route as AppDashboardDashboardDoctorsIdIndexImport } from './routes/_app/_dashboard/dashboard/doctors/$id/index'
+import { Route as AppDashboardDashboardChatsDoctorIdIndexImport } from './routes/_app/_dashboard/dashboard/chats/$doctorId/index'
+import { Route as AppDoctorDoctorDashboardPatientsIdIndexImport } from './routes/_app/_doctor/doctor/dashboard/patients/$id/index'
+import { Route as AppDashboardDashboardPharmacyProductIdIndexImport } from './routes/_app/_dashboard/dashboard/pharmacy/product/$id/index'
+import { Route as AppDashboardDashboardDoctorsProfileDoctorIdIndexImport } from './routes/_app/_dashboard/dashboard/doctors/profile/$doctorId/index'
 
 // Create Virtual Routes
 
-const AppDashboardImport = createFileRoute('/_app/dashboard')()
+const AppDashboardDashboardImport = createFileRoute(
+  '/_app/_dashboard/dashboard',
+)()
 
 // Create/Update Routes
 
@@ -51,10 +68,10 @@ const AppRoute = AppImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AppDashboardRoute = AppDashboardImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AppRoute,
+const IndexRoute = IndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const AppDoctorRoute = AppDoctorImport.update({
@@ -62,26 +79,50 @@ const AppDoctorRoute = AppDoctorImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
-const AppDashboardIndexRoute = AppDashboardIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AppDashboardRoute,
-} as any)
-
-const AppPharmacyCartRoute = AppPharmacyCartImport.update({
-  id: '/pharmacy/cart',
-  path: '/pharmacy/cart',
+const AppDashboardRoute = AppDashboardImport.update({
+  id: '/_dashboard',
   getParentRoute: () => AppRoute,
 } as any)
 
-const AppDashboardConsultationRoute = AppDashboardConsultationImport.update({
-  id: '/_consultation',
+const AppDashboardDashboardRoute = AppDashboardDashboardImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => AppDashboardRoute,
+} as any)
+
+const AppTermsIndexRoute = AppTermsIndexImport.update({
+  id: '/terms/',
+  path: '/terms/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppPrivacyIndexRoute = AppPrivacyIndexImport.update({
+  id: '/privacy/',
+  path: '/privacy/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppOnboardingIndexRoute = AppOnboardingIndexImport.update({
+  id: '/onboarding/',
+  path: '/onboarding/',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppHelpIndexRoute = AppHelpIndexImport.update({
+  id: '/help/',
+  path: '/help/',
+  getParentRoute: () => AppRoute,
 } as any)
 
 const AppAuthVerifyRoute = AppAuthVerifyImport.update({
   id: '/auth/verify',
   path: '/auth/verify',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppAuthSignUpRoute = AppAuthSignUpImport.update({
+  id: '/auth/sign-up',
+  path: '/auth/sign-up',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -91,47 +132,27 @@ const AppAuthSignInRoute = AppAuthSignInImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
-const AppPharmacyProductIndexRoute = AppPharmacyProductIndexImport.update({
-  id: '/pharmacy/product/',
-  path: '/pharmacy/product/',
-  getParentRoute: () => AppRoute,
-} as any)
-
-const AppDashboardWalletIndexRoute = AppDashboardWalletIndexImport.update({
-  id: '/wallet/',
-  path: '/wallet/',
-  getParentRoute: () => AppDashboardRoute,
-} as any)
-
-const AppDashboardScheduleIndexRoute = AppDashboardScheduleIndexImport.update({
-  id: '/schedule/',
-  path: '/schedule/',
-  getParentRoute: () => AppDashboardRoute,
-} as any)
-
-const AppDashboardProfileIndexRoute = AppDashboardProfileIndexImport.update({
-  id: '/profile/',
-  path: '/profile/',
-  getParentRoute: () => AppDashboardRoute,
-} as any)
-
-const AppDashboardDoctorsIndexRoute = AppDashboardDoctorsIndexImport.update({
-  id: '/doctors/',
-  path: '/doctors/',
-  getParentRoute: () => AppDashboardRoute,
-} as any)
-
-const AppAuthSignUpIndexRoute = AppAuthSignUpIndexImport.update({
-  id: '/auth/sign-up/',
-  path: '/auth/sign-up/',
-  getParentRoute: () => AppRoute,
-} as any)
+const AppAuthForgotPasswordIndexRoute = AppAuthForgotPasswordIndexImport.update(
+  {
+    id: '/auth/forgot-password/',
+    path: '/auth/forgot-password/',
+    getParentRoute: () => AppRoute,
+  } as any,
+)
 
 const AppDoctorDoctorIndexRoute = AppDoctorDoctorIndexImport.update({
   id: '/doctor/',
   path: '/doctor/',
   getParentRoute: () => AppDoctorRoute,
 } as any)
+
+const AppDashboardDashboardIndexRoute = AppDashboardDashboardIndexImport.update(
+  {
+    id: '/',
+    path: '/',
+    getParentRoute: () => AppDashboardDashboardRoute,
+  } as any,
+)
 
 const AppConsultationConsultationsIndexRoute =
   AppConsultationConsultationsIndexImport.update({
@@ -140,31 +161,10 @@ const AppConsultationConsultationsIndexRoute =
     getParentRoute: () => AppRoute,
   } as any)
 
-const AppDashboardConsultationJitsiconsultationRoute =
-  AppDashboardConsultationJitsiconsultationImport.update({
-    id: '/jitsiconsultation',
-    path: '/jitsiconsultation',
-    getParentRoute: () => AppDashboardConsultationRoute,
-  } as any)
-
-const AppDashboardConsultationClientconsultationRoute =
-  AppDashboardConsultationClientconsultationImport.update({
-    id: '/clientconsultation',
-    path: '/clientconsultation',
-    getParentRoute: () => AppDashboardConsultationRoute,
-  } as any)
-
-const AppPharmacyProductIdIndexRoute = AppPharmacyProductIdIndexImport.update({
-  id: '/pharmacy/product/$id/',
-  path: '/pharmacy/product/$id/',
-  getParentRoute: () => AppRoute,
-} as any)
-
-const AppDashboardChatsDoctorIdIndexRoute =
-  AppDashboardChatsDoctorIdIndexImport.update({
-    id: '/chats/$doctorId/',
-    path: '/chats/$doctorId/',
-    getParentRoute: () => AppDashboardRoute,
+const AppDashboardDashboardConsultationRoute =
+  AppDashboardDashboardConsultationImport.update({
+    id: '/_consultation',
+    getParentRoute: () => AppDashboardDashboardRoute,
   } as any)
 
 const AppDoctorDoctorSupportIndexRoute =
@@ -194,18 +194,60 @@ const AppDoctorDoctorLabIndexRoute = AppDoctorDoctorLabIndexImport.update({
   getParentRoute: () => AppDoctorRoute,
 } as any)
 
-const AppDoctorDoctorAppointmentsIndexRoute =
-  AppDoctorDoctorAppointmentsIndexImport.update({
-    id: '/doctor/appointments/',
-    path: '/doctor/appointments/',
+const AppDoctorDoctorDashboardIndexRoute =
+  AppDoctorDoctorDashboardIndexImport.update({
+    id: '/doctor/dashboard/',
+    path: '/doctor/dashboard/',
     getParentRoute: () => AppDoctorRoute,
   } as any)
 
-const AppDashboardDoctorsProfileDoctorIdIndexRoute =
-  AppDashboardDoctorsProfileDoctorIdIndexImport.update({
-    id: '/doctors/profile/$doctorId/',
-    path: '/doctors/profile/$doctorId/',
-    getParentRoute: () => AppDashboardRoute,
+const AppDashboardDashboardWalletIndexRoute =
+  AppDashboardDashboardWalletIndexImport.update({
+    id: '/wallet/',
+    path: '/wallet/',
+    getParentRoute: () => AppDashboardDashboardRoute,
+  } as any)
+
+const AppDashboardDashboardScheduleIndexRoute =
+  AppDashboardDashboardScheduleIndexImport.update({
+    id: '/schedule/',
+    path: '/schedule/',
+    getParentRoute: () => AppDashboardDashboardRoute,
+  } as any)
+
+const AppDashboardDashboardProfileIndexRoute =
+  AppDashboardDashboardProfileIndexImport.update({
+    id: '/profile/',
+    path: '/profile/',
+    getParentRoute: () => AppDashboardDashboardRoute,
+  } as any)
+
+const AppDashboardDashboardDoctorsIndexRoute =
+  AppDashboardDashboardDoctorsIndexImport.update({
+    id: '/doctors/',
+    path: '/doctors/',
+    getParentRoute: () => AppDashboardDashboardRoute,
+  } as any)
+
+const AppDashboardDashboardPharmacyCartRoute =
+  AppDashboardDashboardPharmacyCartImport.update({
+    id: '/pharmacy/cart',
+    path: '/pharmacy/cart',
+    getParentRoute: () => AppDashboardDashboardRoute,
+  } as any)
+
+const AppDashboardDashboardConsultationJitsiconsultationRoute =
+  AppDashboardDashboardConsultationJitsiconsultationImport.update({
+    id: '/jitsiconsultation',
+    path: '/jitsiconsultation',
+    getParentRoute: () => AppDashboardDashboardConsultationRoute,
+  } as any)
+
+const AppDashboardDashboardConsultationClientconsultationRoute =
+  AppDashboardDashboardConsultationClientconsultationImport.update({
+    id: '/clientconsultation',
+    path: '/clientconsultation',
+    getParentRoute: () => AppDashboardDashboardConsultationRoute,
   } as any)
 
 const AppDoctorDoctorMessagePatientIdIndexRoute =
@@ -215,16 +257,114 @@ const AppDoctorDoctorMessagePatientIdIndexRoute =
     getParentRoute: () => AppDoctorRoute,
   } as any)
 
+const AppDoctorDoctorDashboardWalletIndexRoute =
+  AppDoctorDoctorDashboardWalletIndexImport.update({
+    id: '/doctor/dashboard/wallet/',
+    path: '/doctor/dashboard/wallet/',
+    getParentRoute: () => AppDoctorRoute,
+  } as any)
+
+const AppDoctorDoctorDashboardProfileIndexRoute =
+  AppDoctorDoctorDashboardProfileIndexImport.update({
+    id: '/doctor/dashboard/profile/',
+    path: '/doctor/dashboard/profile/',
+    getParentRoute: () => AppDoctorRoute,
+  } as any)
+
+const AppDoctorDoctorDashboardPatientsIndexRoute =
+  AppDoctorDoctorDashboardPatientsIndexImport.update({
+    id: '/doctor/dashboard/patients/',
+    path: '/doctor/dashboard/patients/',
+    getParentRoute: () => AppDoctorRoute,
+  } as any)
+
+const AppDoctorDoctorDashboardEarningsIndexRoute =
+  AppDoctorDoctorDashboardEarningsIndexImport.update({
+    id: '/doctor/dashboard/earnings/',
+    path: '/doctor/dashboard/earnings/',
+    getParentRoute: () => AppDoctorRoute,
+  } as any)
+
+const AppDoctorDoctorDashboardAppointmentsIndexRoute =
+  AppDoctorDoctorDashboardAppointmentsIndexImport.update({
+    id: '/doctor/dashboard/appointments/',
+    path: '/doctor/dashboard/appointments/',
+    getParentRoute: () => AppDoctorRoute,
+  } as any)
+
+const AppDashboardDashboardPharmacyProductIndexRoute =
+  AppDashboardDashboardPharmacyProductIndexImport.update({
+    id: '/pharmacy/product/',
+    path: '/pharmacy/product/',
+    getParentRoute: () => AppDashboardDashboardRoute,
+  } as any)
+
+const AppDashboardDashboardMessagesDoctorIdIndexRoute =
+  AppDashboardDashboardMessagesDoctorIdIndexImport.update({
+    id: '/messages/$doctorId/',
+    path: '/messages/$doctorId/',
+    getParentRoute: () => AppDashboardDashboardRoute,
+  } as any)
+
+const AppDashboardDashboardDoctorsIdIndexRoute =
+  AppDashboardDashboardDoctorsIdIndexImport.update({
+    id: '/doctors/$id/',
+    path: '/doctors/$id/',
+    getParentRoute: () => AppDashboardDashboardRoute,
+  } as any)
+
+const AppDashboardDashboardChatsDoctorIdIndexRoute =
+  AppDashboardDashboardChatsDoctorIdIndexImport.update({
+    id: '/chats/$doctorId/',
+    path: '/chats/$doctorId/',
+    getParentRoute: () => AppDashboardDashboardRoute,
+  } as any)
+
+const AppDoctorDoctorDashboardPatientsIdIndexRoute =
+  AppDoctorDoctorDashboardPatientsIdIndexImport.update({
+    id: '/doctor/dashboard/patients/$id/',
+    path: '/doctor/dashboard/patients/$id/',
+    getParentRoute: () => AppDoctorRoute,
+  } as any)
+
+const AppDashboardDashboardPharmacyProductIdIndexRoute =
+  AppDashboardDashboardPharmacyProductIdIndexImport.update({
+    id: '/pharmacy/product/$id/',
+    path: '/pharmacy/product/$id/',
+    getParentRoute: () => AppDashboardDashboardRoute,
+  } as any)
+
+const AppDashboardDashboardDoctorsProfileDoctorIdIndexRoute =
+  AppDashboardDashboardDoctorsProfileDoctorIdIndexImport.update({
+    id: '/doctors/profile/$doctorId/',
+    path: '/doctors/profile/$doctorId/',
+    getParentRoute: () => AppDashboardDashboardRoute,
+  } as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
     '/_app': {
       id: '/_app'
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AppImport
       parentRoute: typeof rootRoute
+    }
+    '/_app/_dashboard': {
+      id: '/_app/_dashboard'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppDashboardImport
+      parentRoute: typeof AppImport
     }
     '/_app/_doctor': {
       id: '/_app/_doctor'
@@ -240,6 +380,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAuthSignInImport
       parentRoute: typeof AppImport
     }
+    '/_app/auth/sign-up': {
+      id: '/_app/auth/sign-up'
+      path: '/auth/sign-up'
+      fullPath: '/auth/sign-up'
+      preLoaderRoute: typeof AppAuthSignUpImport
+      parentRoute: typeof AppImport
+    }
     '/_app/auth/verify': {
       id: '/_app/auth/verify'
       path: '/auth/verify'
@@ -247,47 +394,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAuthVerifyImport
       parentRoute: typeof AppImport
     }
-    '/_app/dashboard': {
-      id: '/_app/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AppDashboardImport
+    '/_app/help/': {
+      id: '/_app/help/'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof AppHelpIndexImport
       parentRoute: typeof AppImport
     }
-    '/_app/dashboard/_consultation': {
-      id: '/_app/dashboard/_consultation'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AppDashboardConsultationImport
-      parentRoute: typeof AppDashboardRoute
-    }
-    '/_app/pharmacy/cart': {
-      id: '/_app/pharmacy/cart'
-      path: '/pharmacy/cart'
-      fullPath: '/pharmacy/cart'
-      preLoaderRoute: typeof AppPharmacyCartImport
+    '/_app/onboarding/': {
+      id: '/_app/onboarding/'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof AppOnboardingIndexImport
       parentRoute: typeof AppImport
     }
-    '/_app/dashboard/': {
-      id: '/_app/dashboard/'
-      path: '/'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof AppDashboardIndexImport
+    '/_app/privacy/': {
+      id: '/_app/privacy/'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof AppPrivacyIndexImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/terms/': {
+      id: '/_app/terms/'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof AppTermsIndexImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/_dashboard/dashboard': {
+      id: '/_app/_dashboard/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardDashboardImport
       parentRoute: typeof AppDashboardImport
     }
-    '/_app/dashboard/_consultation/clientconsultation': {
-      id: '/_app/dashboard/_consultation/clientconsultation'
-      path: '/clientconsultation'
-      fullPath: '/dashboard/clientconsultation'
-      preLoaderRoute: typeof AppDashboardConsultationClientconsultationImport
-      parentRoute: typeof AppDashboardConsultationImport
-    }
-    '/_app/dashboard/_consultation/jitsiconsultation': {
-      id: '/_app/dashboard/_consultation/jitsiconsultation'
-      path: '/jitsiconsultation'
-      fullPath: '/dashboard/jitsiconsultation'
-      preLoaderRoute: typeof AppDashboardConsultationJitsiconsultationImport
-      parentRoute: typeof AppDashboardConsultationImport
+    '/_app/_dashboard/dashboard/_consultation': {
+      id: '/_app/_dashboard/dashboard/_consultation'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardDashboardConsultationImport
+      parentRoute: typeof AppDashboardDashboardRoute
     }
     '/_app/_consultation/consultations/': {
       id: '/_app/_consultation/consultations/'
@@ -296,6 +443,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppConsultationConsultationsIndexImport
       parentRoute: typeof AppImport
     }
+    '/_app/_dashboard/dashboard/': {
+      id: '/_app/_dashboard/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AppDashboardDashboardIndexImport
+      parentRoute: typeof AppDashboardDashboardImport
+    }
     '/_app/_doctor/doctor/': {
       id: '/_app/_doctor/doctor/'
       path: '/doctor'
@@ -303,53 +457,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDoctorDoctorIndexImport
       parentRoute: typeof AppDoctorImport
     }
-    '/_app/auth/sign-up/': {
-      id: '/_app/auth/sign-up/'
-      path: '/auth/sign-up'
-      fullPath: '/auth/sign-up'
-      preLoaderRoute: typeof AppAuthSignUpIndexImport
+    '/_app/auth/forgot-password/': {
+      id: '/_app/auth/forgot-password/'
+      path: '/auth/forgot-password'
+      fullPath: '/auth/forgot-password'
+      preLoaderRoute: typeof AppAuthForgotPasswordIndexImport
       parentRoute: typeof AppImport
     }
-    '/_app/dashboard/doctors/': {
-      id: '/_app/dashboard/doctors/'
+    '/_app/_dashboard/dashboard/_consultation/clientconsultation': {
+      id: '/_app/_dashboard/dashboard/_consultation/clientconsultation'
+      path: '/clientconsultation'
+      fullPath: '/dashboard/clientconsultation'
+      preLoaderRoute: typeof AppDashboardDashboardConsultationClientconsultationImport
+      parentRoute: typeof AppDashboardDashboardConsultationImport
+    }
+    '/_app/_dashboard/dashboard/_consultation/jitsiconsultation': {
+      id: '/_app/_dashboard/dashboard/_consultation/jitsiconsultation'
+      path: '/jitsiconsultation'
+      fullPath: '/dashboard/jitsiconsultation'
+      preLoaderRoute: typeof AppDashboardDashboardConsultationJitsiconsultationImport
+      parentRoute: typeof AppDashboardDashboardConsultationImport
+    }
+    '/_app/_dashboard/dashboard/pharmacy/cart': {
+      id: '/_app/_dashboard/dashboard/pharmacy/cart'
+      path: '/pharmacy/cart'
+      fullPath: '/dashboard/pharmacy/cart'
+      preLoaderRoute: typeof AppDashboardDashboardPharmacyCartImport
+      parentRoute: typeof AppDashboardDashboardImport
+    }
+    '/_app/_dashboard/dashboard/doctors/': {
+      id: '/_app/_dashboard/dashboard/doctors/'
       path: '/doctors'
       fullPath: '/dashboard/doctors'
-      preLoaderRoute: typeof AppDashboardDoctorsIndexImport
-      parentRoute: typeof AppDashboardImport
+      preLoaderRoute: typeof AppDashboardDashboardDoctorsIndexImport
+      parentRoute: typeof AppDashboardDashboardImport
     }
-    '/_app/dashboard/profile/': {
-      id: '/_app/dashboard/profile/'
+    '/_app/_dashboard/dashboard/profile/': {
+      id: '/_app/_dashboard/dashboard/profile/'
       path: '/profile'
       fullPath: '/dashboard/profile'
-      preLoaderRoute: typeof AppDashboardProfileIndexImport
-      parentRoute: typeof AppDashboardImport
+      preLoaderRoute: typeof AppDashboardDashboardProfileIndexImport
+      parentRoute: typeof AppDashboardDashboardImport
     }
-    '/_app/dashboard/schedule/': {
-      id: '/_app/dashboard/schedule/'
+    '/_app/_dashboard/dashboard/schedule/': {
+      id: '/_app/_dashboard/dashboard/schedule/'
       path: '/schedule'
       fullPath: '/dashboard/schedule'
-      preLoaderRoute: typeof AppDashboardScheduleIndexImport
-      parentRoute: typeof AppDashboardImport
+      preLoaderRoute: typeof AppDashboardDashboardScheduleIndexImport
+      parentRoute: typeof AppDashboardDashboardImport
     }
-    '/_app/dashboard/wallet/': {
-      id: '/_app/dashboard/wallet/'
+    '/_app/_dashboard/dashboard/wallet/': {
+      id: '/_app/_dashboard/dashboard/wallet/'
       path: '/wallet'
       fullPath: '/dashboard/wallet'
-      preLoaderRoute: typeof AppDashboardWalletIndexImport
-      parentRoute: typeof AppDashboardImport
+      preLoaderRoute: typeof AppDashboardDashboardWalletIndexImport
+      parentRoute: typeof AppDashboardDashboardImport
     }
-    '/_app/pharmacy/product/': {
-      id: '/_app/pharmacy/product/'
-      path: '/pharmacy/product'
-      fullPath: '/pharmacy/product'
-      preLoaderRoute: typeof AppPharmacyProductIndexImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/_doctor/doctor/appointments/': {
-      id: '/_app/_doctor/doctor/appointments/'
-      path: '/doctor/appointments'
-      fullPath: '/doctor/appointments'
-      preLoaderRoute: typeof AppDoctorDoctorAppointmentsIndexImport
+    '/_app/_doctor/doctor/dashboard/': {
+      id: '/_app/_doctor/doctor/dashboard/'
+      path: '/doctor/dashboard'
+      fullPath: '/doctor/dashboard'
+      preLoaderRoute: typeof AppDoctorDoctorDashboardIndexImport
       parentRoute: typeof AppDoctorImport
     }
     '/_app/_doctor/doctor/lab/': {
@@ -380,19 +548,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDoctorDoctorSupportIndexImport
       parentRoute: typeof AppDoctorImport
     }
-    '/_app/dashboard/chats/$doctorId/': {
-      id: '/_app/dashboard/chats/$doctorId/'
+    '/_app/_dashboard/dashboard/chats/$doctorId/': {
+      id: '/_app/_dashboard/dashboard/chats/$doctorId/'
       path: '/chats/$doctorId'
       fullPath: '/dashboard/chats/$doctorId'
-      preLoaderRoute: typeof AppDashboardChatsDoctorIdIndexImport
-      parentRoute: typeof AppDashboardImport
+      preLoaderRoute: typeof AppDashboardDashboardChatsDoctorIdIndexImport
+      parentRoute: typeof AppDashboardDashboardImport
     }
-    '/_app/pharmacy/product/$id/': {
-      id: '/_app/pharmacy/product/$id/'
-      path: '/pharmacy/product/$id'
-      fullPath: '/pharmacy/product/$id'
-      preLoaderRoute: typeof AppPharmacyProductIdIndexImport
-      parentRoute: typeof AppImport
+    '/_app/_dashboard/dashboard/doctors/$id/': {
+      id: '/_app/_dashboard/dashboard/doctors/$id/'
+      path: '/doctors/$id'
+      fullPath: '/dashboard/doctors/$id'
+      preLoaderRoute: typeof AppDashboardDashboardDoctorsIdIndexImport
+      parentRoute: typeof AppDashboardDashboardImport
+    }
+    '/_app/_dashboard/dashboard/messages/$doctorId/': {
+      id: '/_app/_dashboard/dashboard/messages/$doctorId/'
+      path: '/messages/$doctorId'
+      fullPath: '/dashboard/messages/$doctorId'
+      preLoaderRoute: typeof AppDashboardDashboardMessagesDoctorIdIndexImport
+      parentRoute: typeof AppDashboardDashboardImport
+    }
+    '/_app/_dashboard/dashboard/pharmacy/product/': {
+      id: '/_app/_dashboard/dashboard/pharmacy/product/'
+      path: '/pharmacy/product'
+      fullPath: '/dashboard/pharmacy/product'
+      preLoaderRoute: typeof AppDashboardDashboardPharmacyProductIndexImport
+      parentRoute: typeof AppDashboardDashboardImport
+    }
+    '/_app/_doctor/doctor/dashboard/appointments/': {
+      id: '/_app/_doctor/doctor/dashboard/appointments/'
+      path: '/doctor/dashboard/appointments'
+      fullPath: '/doctor/dashboard/appointments'
+      preLoaderRoute: typeof AppDoctorDoctorDashboardAppointmentsIndexImport
+      parentRoute: typeof AppDoctorImport
+    }
+    '/_app/_doctor/doctor/dashboard/earnings/': {
+      id: '/_app/_doctor/doctor/dashboard/earnings/'
+      path: '/doctor/dashboard/earnings'
+      fullPath: '/doctor/dashboard/earnings'
+      preLoaderRoute: typeof AppDoctorDoctorDashboardEarningsIndexImport
+      parentRoute: typeof AppDoctorImport
+    }
+    '/_app/_doctor/doctor/dashboard/patients/': {
+      id: '/_app/_doctor/doctor/dashboard/patients/'
+      path: '/doctor/dashboard/patients'
+      fullPath: '/doctor/dashboard/patients'
+      preLoaderRoute: typeof AppDoctorDoctorDashboardPatientsIndexImport
+      parentRoute: typeof AppDoctorImport
+    }
+    '/_app/_doctor/doctor/dashboard/profile/': {
+      id: '/_app/_doctor/doctor/dashboard/profile/'
+      path: '/doctor/dashboard/profile'
+      fullPath: '/doctor/dashboard/profile'
+      preLoaderRoute: typeof AppDoctorDoctorDashboardProfileIndexImport
+      parentRoute: typeof AppDoctorImport
+    }
+    '/_app/_doctor/doctor/dashboard/wallet/': {
+      id: '/_app/_doctor/doctor/dashboard/wallet/'
+      path: '/doctor/dashboard/wallet'
+      fullPath: '/doctor/dashboard/wallet'
+      preLoaderRoute: typeof AppDoctorDoctorDashboardWalletIndexImport
+      parentRoute: typeof AppDoctorImport
     }
     '/_app/_doctor/doctor/message/$patientId/': {
       id: '/_app/_doctor/doctor/message/$patientId/'
@@ -401,292 +618,449 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDoctorDoctorMessagePatientIdIndexImport
       parentRoute: typeof AppDoctorImport
     }
-    '/_app/dashboard/doctors/profile/$doctorId/': {
-      id: '/_app/dashboard/doctors/profile/$doctorId/'
+    '/_app/_dashboard/dashboard/doctors/profile/$doctorId/': {
+      id: '/_app/_dashboard/dashboard/doctors/profile/$doctorId/'
       path: '/doctors/profile/$doctorId'
       fullPath: '/dashboard/doctors/profile/$doctorId'
-      preLoaderRoute: typeof AppDashboardDoctorsProfileDoctorIdIndexImport
-      parentRoute: typeof AppDashboardImport
+      preLoaderRoute: typeof AppDashboardDashboardDoctorsProfileDoctorIdIndexImport
+      parentRoute: typeof AppDashboardDashboardImport
+    }
+    '/_app/_dashboard/dashboard/pharmacy/product/$id/': {
+      id: '/_app/_dashboard/dashboard/pharmacy/product/$id/'
+      path: '/pharmacy/product/$id'
+      fullPath: '/dashboard/pharmacy/product/$id'
+      preLoaderRoute: typeof AppDashboardDashboardPharmacyProductIdIndexImport
+      parentRoute: typeof AppDashboardDashboardImport
+    }
+    '/_app/_doctor/doctor/dashboard/patients/$id/': {
+      id: '/_app/_doctor/doctor/dashboard/patients/$id/'
+      path: '/doctor/dashboard/patients/$id'
+      fullPath: '/doctor/dashboard/patients/$id'
+      preLoaderRoute: typeof AppDoctorDoctorDashboardPatientsIdIndexImport
+      parentRoute: typeof AppDoctorImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface AppDoctorRouteChildren {
-  AppDoctorDoctorIndexRoute: typeof AppDoctorDoctorIndexRoute
-  AppDoctorDoctorAppointmentsIndexRoute: typeof AppDoctorDoctorAppointmentsIndexRoute
-  AppDoctorDoctorLabIndexRoute: typeof AppDoctorDoctorLabIndexRoute
-  AppDoctorDoctorMessageIndexRoute: typeof AppDoctorDoctorMessageIndexRoute
-  AppDoctorDoctorPatientsIndexRoute: typeof AppDoctorDoctorPatientsIndexRoute
-  AppDoctorDoctorSupportIndexRoute: typeof AppDoctorDoctorSupportIndexRoute
-  AppDoctorDoctorMessagePatientIdIndexRoute: typeof AppDoctorDoctorMessagePatientIdIndexRoute
+interface AppDashboardDashboardConsultationRouteChildren {
+  AppDashboardDashboardConsultationClientconsultationRoute: typeof AppDashboardDashboardConsultationClientconsultationRoute
+  AppDashboardDashboardConsultationJitsiconsultationRoute: typeof AppDashboardDashboardConsultationJitsiconsultationRoute
 }
 
-const AppDoctorRouteChildren: AppDoctorRouteChildren = {
-  AppDoctorDoctorIndexRoute: AppDoctorDoctorIndexRoute,
-  AppDoctorDoctorAppointmentsIndexRoute: AppDoctorDoctorAppointmentsIndexRoute,
-  AppDoctorDoctorLabIndexRoute: AppDoctorDoctorLabIndexRoute,
-  AppDoctorDoctorMessageIndexRoute: AppDoctorDoctorMessageIndexRoute,
-  AppDoctorDoctorPatientsIndexRoute: AppDoctorDoctorPatientsIndexRoute,
-  AppDoctorDoctorSupportIndexRoute: AppDoctorDoctorSupportIndexRoute,
-  AppDoctorDoctorMessagePatientIdIndexRoute:
-    AppDoctorDoctorMessagePatientIdIndexRoute,
-}
-
-const AppDoctorRouteWithChildren = AppDoctorRoute._addFileChildren(
-  AppDoctorRouteChildren,
-)
-
-interface AppDashboardConsultationRouteChildren {
-  AppDashboardConsultationClientconsultationRoute: typeof AppDashboardConsultationClientconsultationRoute
-  AppDashboardConsultationJitsiconsultationRoute: typeof AppDashboardConsultationJitsiconsultationRoute
-}
-
-const AppDashboardConsultationRouteChildren: AppDashboardConsultationRouteChildren =
+const AppDashboardDashboardConsultationRouteChildren: AppDashboardDashboardConsultationRouteChildren =
   {
-    AppDashboardConsultationClientconsultationRoute:
-      AppDashboardConsultationClientconsultationRoute,
-    AppDashboardConsultationJitsiconsultationRoute:
-      AppDashboardConsultationJitsiconsultationRoute,
+    AppDashboardDashboardConsultationClientconsultationRoute:
+      AppDashboardDashboardConsultationClientconsultationRoute,
+    AppDashboardDashboardConsultationJitsiconsultationRoute:
+      AppDashboardDashboardConsultationJitsiconsultationRoute,
   }
 
-const AppDashboardConsultationRouteWithChildren =
-  AppDashboardConsultationRoute._addFileChildren(
-    AppDashboardConsultationRouteChildren,
+const AppDashboardDashboardConsultationRouteWithChildren =
+  AppDashboardDashboardConsultationRoute._addFileChildren(
+    AppDashboardDashboardConsultationRouteChildren,
+  )
+
+interface AppDashboardDashboardRouteChildren {
+  AppDashboardDashboardConsultationRoute: typeof AppDashboardDashboardConsultationRouteWithChildren
+  AppDashboardDashboardIndexRoute: typeof AppDashboardDashboardIndexRoute
+  AppDashboardDashboardPharmacyCartRoute: typeof AppDashboardDashboardPharmacyCartRoute
+  AppDashboardDashboardDoctorsIndexRoute: typeof AppDashboardDashboardDoctorsIndexRoute
+  AppDashboardDashboardProfileIndexRoute: typeof AppDashboardDashboardProfileIndexRoute
+  AppDashboardDashboardScheduleIndexRoute: typeof AppDashboardDashboardScheduleIndexRoute
+  AppDashboardDashboardWalletIndexRoute: typeof AppDashboardDashboardWalletIndexRoute
+  AppDashboardDashboardChatsDoctorIdIndexRoute: typeof AppDashboardDashboardChatsDoctorIdIndexRoute
+  AppDashboardDashboardDoctorsIdIndexRoute: typeof AppDashboardDashboardDoctorsIdIndexRoute
+  AppDashboardDashboardMessagesDoctorIdIndexRoute: typeof AppDashboardDashboardMessagesDoctorIdIndexRoute
+  AppDashboardDashboardPharmacyProductIndexRoute: typeof AppDashboardDashboardPharmacyProductIndexRoute
+  AppDashboardDashboardDoctorsProfileDoctorIdIndexRoute: typeof AppDashboardDashboardDoctorsProfileDoctorIdIndexRoute
+  AppDashboardDashboardPharmacyProductIdIndexRoute: typeof AppDashboardDashboardPharmacyProductIdIndexRoute
+}
+
+const AppDashboardDashboardRouteChildren: AppDashboardDashboardRouteChildren = {
+  AppDashboardDashboardConsultationRoute:
+    AppDashboardDashboardConsultationRouteWithChildren,
+  AppDashboardDashboardIndexRoute: AppDashboardDashboardIndexRoute,
+  AppDashboardDashboardPharmacyCartRoute:
+    AppDashboardDashboardPharmacyCartRoute,
+  AppDashboardDashboardDoctorsIndexRoute:
+    AppDashboardDashboardDoctorsIndexRoute,
+  AppDashboardDashboardProfileIndexRoute:
+    AppDashboardDashboardProfileIndexRoute,
+  AppDashboardDashboardScheduleIndexRoute:
+    AppDashboardDashboardScheduleIndexRoute,
+  AppDashboardDashboardWalletIndexRoute: AppDashboardDashboardWalletIndexRoute,
+  AppDashboardDashboardChatsDoctorIdIndexRoute:
+    AppDashboardDashboardChatsDoctorIdIndexRoute,
+  AppDashboardDashboardDoctorsIdIndexRoute:
+    AppDashboardDashboardDoctorsIdIndexRoute,
+  AppDashboardDashboardMessagesDoctorIdIndexRoute:
+    AppDashboardDashboardMessagesDoctorIdIndexRoute,
+  AppDashboardDashboardPharmacyProductIndexRoute:
+    AppDashboardDashboardPharmacyProductIndexRoute,
+  AppDashboardDashboardDoctorsProfileDoctorIdIndexRoute:
+    AppDashboardDashboardDoctorsProfileDoctorIdIndexRoute,
+  AppDashboardDashboardPharmacyProductIdIndexRoute:
+    AppDashboardDashboardPharmacyProductIdIndexRoute,
+}
+
+const AppDashboardDashboardRouteWithChildren =
+  AppDashboardDashboardRoute._addFileChildren(
+    AppDashboardDashboardRouteChildren,
   )
 
 interface AppDashboardRouteChildren {
-  AppDashboardConsultationRoute: typeof AppDashboardConsultationRouteWithChildren
-  AppDashboardIndexRoute: typeof AppDashboardIndexRoute
-  AppDashboardDoctorsIndexRoute: typeof AppDashboardDoctorsIndexRoute
-  AppDashboardProfileIndexRoute: typeof AppDashboardProfileIndexRoute
-  AppDashboardScheduleIndexRoute: typeof AppDashboardScheduleIndexRoute
-  AppDashboardWalletIndexRoute: typeof AppDashboardWalletIndexRoute
-  AppDashboardChatsDoctorIdIndexRoute: typeof AppDashboardChatsDoctorIdIndexRoute
-  AppDashboardDoctorsProfileDoctorIdIndexRoute: typeof AppDashboardDoctorsProfileDoctorIdIndexRoute
+  AppDashboardDashboardRoute: typeof AppDashboardDashboardRouteWithChildren
 }
 
 const AppDashboardRouteChildren: AppDashboardRouteChildren = {
-  AppDashboardConsultationRoute: AppDashboardConsultationRouteWithChildren,
-  AppDashboardIndexRoute: AppDashboardIndexRoute,
-  AppDashboardDoctorsIndexRoute: AppDashboardDoctorsIndexRoute,
-  AppDashboardProfileIndexRoute: AppDashboardProfileIndexRoute,
-  AppDashboardScheduleIndexRoute: AppDashboardScheduleIndexRoute,
-  AppDashboardWalletIndexRoute: AppDashboardWalletIndexRoute,
-  AppDashboardChatsDoctorIdIndexRoute: AppDashboardChatsDoctorIdIndexRoute,
-  AppDashboardDoctorsProfileDoctorIdIndexRoute:
-    AppDashboardDoctorsProfileDoctorIdIndexRoute,
+  AppDashboardDashboardRoute: AppDashboardDashboardRouteWithChildren,
 }
 
 const AppDashboardRouteWithChildren = AppDashboardRoute._addFileChildren(
   AppDashboardRouteChildren,
 )
 
+interface AppDoctorRouteChildren {
+  AppDoctorDoctorIndexRoute: typeof AppDoctorDoctorIndexRoute
+  AppDoctorDoctorDashboardIndexRoute: typeof AppDoctorDoctorDashboardIndexRoute
+  AppDoctorDoctorLabIndexRoute: typeof AppDoctorDoctorLabIndexRoute
+  AppDoctorDoctorMessageIndexRoute: typeof AppDoctorDoctorMessageIndexRoute
+  AppDoctorDoctorPatientsIndexRoute: typeof AppDoctorDoctorPatientsIndexRoute
+  AppDoctorDoctorSupportIndexRoute: typeof AppDoctorDoctorSupportIndexRoute
+  AppDoctorDoctorDashboardAppointmentsIndexRoute: typeof AppDoctorDoctorDashboardAppointmentsIndexRoute
+  AppDoctorDoctorDashboardEarningsIndexRoute: typeof AppDoctorDoctorDashboardEarningsIndexRoute
+  AppDoctorDoctorDashboardPatientsIndexRoute: typeof AppDoctorDoctorDashboardPatientsIndexRoute
+  AppDoctorDoctorDashboardProfileIndexRoute: typeof AppDoctorDoctorDashboardProfileIndexRoute
+  AppDoctorDoctorDashboardWalletIndexRoute: typeof AppDoctorDoctorDashboardWalletIndexRoute
+  AppDoctorDoctorMessagePatientIdIndexRoute: typeof AppDoctorDoctorMessagePatientIdIndexRoute
+  AppDoctorDoctorDashboardPatientsIdIndexRoute: typeof AppDoctorDoctorDashboardPatientsIdIndexRoute
+}
+
+const AppDoctorRouteChildren: AppDoctorRouteChildren = {
+  AppDoctorDoctorIndexRoute: AppDoctorDoctorIndexRoute,
+  AppDoctorDoctorDashboardIndexRoute: AppDoctorDoctorDashboardIndexRoute,
+  AppDoctorDoctorLabIndexRoute: AppDoctorDoctorLabIndexRoute,
+  AppDoctorDoctorMessageIndexRoute: AppDoctorDoctorMessageIndexRoute,
+  AppDoctorDoctorPatientsIndexRoute: AppDoctorDoctorPatientsIndexRoute,
+  AppDoctorDoctorSupportIndexRoute: AppDoctorDoctorSupportIndexRoute,
+  AppDoctorDoctorDashboardAppointmentsIndexRoute:
+    AppDoctorDoctorDashboardAppointmentsIndexRoute,
+  AppDoctorDoctorDashboardEarningsIndexRoute:
+    AppDoctorDoctorDashboardEarningsIndexRoute,
+  AppDoctorDoctorDashboardPatientsIndexRoute:
+    AppDoctorDoctorDashboardPatientsIndexRoute,
+  AppDoctorDoctorDashboardProfileIndexRoute:
+    AppDoctorDoctorDashboardProfileIndexRoute,
+  AppDoctorDoctorDashboardWalletIndexRoute:
+    AppDoctorDoctorDashboardWalletIndexRoute,
+  AppDoctorDoctorMessagePatientIdIndexRoute:
+    AppDoctorDoctorMessagePatientIdIndexRoute,
+  AppDoctorDoctorDashboardPatientsIdIndexRoute:
+    AppDoctorDoctorDashboardPatientsIdIndexRoute,
+}
+
+const AppDoctorRouteWithChildren = AppDoctorRoute._addFileChildren(
+  AppDoctorRouteChildren,
+)
+
 interface AppRouteChildren {
+  AppDashboardRoute: typeof AppDashboardRouteWithChildren
   AppDoctorRoute: typeof AppDoctorRouteWithChildren
   AppAuthSignInRoute: typeof AppAuthSignInRoute
+  AppAuthSignUpRoute: typeof AppAuthSignUpRoute
   AppAuthVerifyRoute: typeof AppAuthVerifyRoute
-  AppDashboardRoute: typeof AppDashboardRouteWithChildren
-  AppPharmacyCartRoute: typeof AppPharmacyCartRoute
+  AppHelpIndexRoute: typeof AppHelpIndexRoute
+  AppOnboardingIndexRoute: typeof AppOnboardingIndexRoute
+  AppPrivacyIndexRoute: typeof AppPrivacyIndexRoute
+  AppTermsIndexRoute: typeof AppTermsIndexRoute
   AppConsultationConsultationsIndexRoute: typeof AppConsultationConsultationsIndexRoute
-  AppAuthSignUpIndexRoute: typeof AppAuthSignUpIndexRoute
-  AppPharmacyProductIndexRoute: typeof AppPharmacyProductIndexRoute
-  AppPharmacyProductIdIndexRoute: typeof AppPharmacyProductIdIndexRoute
+  AppAuthForgotPasswordIndexRoute: typeof AppAuthForgotPasswordIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppDashboardRoute: AppDashboardRouteWithChildren,
   AppDoctorRoute: AppDoctorRouteWithChildren,
   AppAuthSignInRoute: AppAuthSignInRoute,
+  AppAuthSignUpRoute: AppAuthSignUpRoute,
   AppAuthVerifyRoute: AppAuthVerifyRoute,
-  AppDashboardRoute: AppDashboardRouteWithChildren,
-  AppPharmacyCartRoute: AppPharmacyCartRoute,
+  AppHelpIndexRoute: AppHelpIndexRoute,
+  AppOnboardingIndexRoute: AppOnboardingIndexRoute,
+  AppPrivacyIndexRoute: AppPrivacyIndexRoute,
+  AppTermsIndexRoute: AppTermsIndexRoute,
   AppConsultationConsultationsIndexRoute:
     AppConsultationConsultationsIndexRoute,
-  AppAuthSignUpIndexRoute: AppAuthSignUpIndexRoute,
-  AppPharmacyProductIndexRoute: AppPharmacyProductIndexRoute,
-  AppPharmacyProductIdIndexRoute: AppPharmacyProductIdIndexRoute,
+  AppAuthForgotPasswordIndexRoute: AppAuthForgotPasswordIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '': typeof AppDoctorRouteWithChildren
   '/auth/sign-in': typeof AppAuthSignInRoute
+  '/auth/sign-up': typeof AppAuthSignUpRoute
   '/auth/verify': typeof AppAuthVerifyRoute
-  '/dashboard': typeof AppDashboardConsultationRouteWithChildren
-  '/pharmacy/cart': typeof AppPharmacyCartRoute
-  '/dashboard/': typeof AppDashboardIndexRoute
-  '/dashboard/clientconsultation': typeof AppDashboardConsultationClientconsultationRoute
-  '/dashboard/jitsiconsultation': typeof AppDashboardConsultationJitsiconsultationRoute
+  '/help': typeof AppHelpIndexRoute
+  '/onboarding': typeof AppOnboardingIndexRoute
+  '/privacy': typeof AppPrivacyIndexRoute
+  '/terms': typeof AppTermsIndexRoute
+  '/dashboard': typeof AppDashboardDashboardConsultationRouteWithChildren
   '/consultations': typeof AppConsultationConsultationsIndexRoute
+  '/dashboard/': typeof AppDashboardDashboardIndexRoute
   '/doctor': typeof AppDoctorDoctorIndexRoute
-  '/auth/sign-up': typeof AppAuthSignUpIndexRoute
-  '/dashboard/doctors': typeof AppDashboardDoctorsIndexRoute
-  '/dashboard/profile': typeof AppDashboardProfileIndexRoute
-  '/dashboard/schedule': typeof AppDashboardScheduleIndexRoute
-  '/dashboard/wallet': typeof AppDashboardWalletIndexRoute
-  '/pharmacy/product': typeof AppPharmacyProductIndexRoute
-  '/doctor/appointments': typeof AppDoctorDoctorAppointmentsIndexRoute
+  '/auth/forgot-password': typeof AppAuthForgotPasswordIndexRoute
+  '/dashboard/clientconsultation': typeof AppDashboardDashboardConsultationClientconsultationRoute
+  '/dashboard/jitsiconsultation': typeof AppDashboardDashboardConsultationJitsiconsultationRoute
+  '/dashboard/pharmacy/cart': typeof AppDashboardDashboardPharmacyCartRoute
+  '/dashboard/doctors': typeof AppDashboardDashboardDoctorsIndexRoute
+  '/dashboard/profile': typeof AppDashboardDashboardProfileIndexRoute
+  '/dashboard/schedule': typeof AppDashboardDashboardScheduleIndexRoute
+  '/dashboard/wallet': typeof AppDashboardDashboardWalletIndexRoute
+  '/doctor/dashboard': typeof AppDoctorDoctorDashboardIndexRoute
   '/doctor/lab': typeof AppDoctorDoctorLabIndexRoute
   '/doctor/message': typeof AppDoctorDoctorMessageIndexRoute
   '/doctor/patients': typeof AppDoctorDoctorPatientsIndexRoute
   '/doctor/support': typeof AppDoctorDoctorSupportIndexRoute
-  '/dashboard/chats/$doctorId': typeof AppDashboardChatsDoctorIdIndexRoute
-  '/pharmacy/product/$id': typeof AppPharmacyProductIdIndexRoute
+  '/dashboard/chats/$doctorId': typeof AppDashboardDashboardChatsDoctorIdIndexRoute
+  '/dashboard/doctors/$id': typeof AppDashboardDashboardDoctorsIdIndexRoute
+  '/dashboard/messages/$doctorId': typeof AppDashboardDashboardMessagesDoctorIdIndexRoute
+  '/dashboard/pharmacy/product': typeof AppDashboardDashboardPharmacyProductIndexRoute
+  '/doctor/dashboard/appointments': typeof AppDoctorDoctorDashboardAppointmentsIndexRoute
+  '/doctor/dashboard/earnings': typeof AppDoctorDoctorDashboardEarningsIndexRoute
+  '/doctor/dashboard/patients': typeof AppDoctorDoctorDashboardPatientsIndexRoute
+  '/doctor/dashboard/profile': typeof AppDoctorDoctorDashboardProfileIndexRoute
+  '/doctor/dashboard/wallet': typeof AppDoctorDoctorDashboardWalletIndexRoute
   '/doctor/message/$patientId': typeof AppDoctorDoctorMessagePatientIdIndexRoute
-  '/dashboard/doctors/profile/$doctorId': typeof AppDashboardDoctorsProfileDoctorIdIndexRoute
+  '/dashboard/doctors/profile/$doctorId': typeof AppDashboardDashboardDoctorsProfileDoctorIdIndexRoute
+  '/dashboard/pharmacy/product/$id': typeof AppDashboardDashboardPharmacyProductIdIndexRoute
+  '/doctor/dashboard/patients/$id': typeof AppDoctorDoctorDashboardPatientsIdIndexRoute
 }
 
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '': typeof AppDoctorRouteWithChildren
   '/auth/sign-in': typeof AppAuthSignInRoute
+  '/auth/sign-up': typeof AppAuthSignUpRoute
   '/auth/verify': typeof AppAuthVerifyRoute
-  '/dashboard': typeof AppDashboardIndexRoute
-  '/pharmacy/cart': typeof AppPharmacyCartRoute
-  '/dashboard/clientconsultation': typeof AppDashboardConsultationClientconsultationRoute
-  '/dashboard/jitsiconsultation': typeof AppDashboardConsultationJitsiconsultationRoute
+  '/help': typeof AppHelpIndexRoute
+  '/onboarding': typeof AppOnboardingIndexRoute
+  '/privacy': typeof AppPrivacyIndexRoute
+  '/terms': typeof AppTermsIndexRoute
+  '/dashboard': typeof AppDashboardDashboardIndexRoute
   '/consultations': typeof AppConsultationConsultationsIndexRoute
   '/doctor': typeof AppDoctorDoctorIndexRoute
-  '/auth/sign-up': typeof AppAuthSignUpIndexRoute
-  '/dashboard/doctors': typeof AppDashboardDoctorsIndexRoute
-  '/dashboard/profile': typeof AppDashboardProfileIndexRoute
-  '/dashboard/schedule': typeof AppDashboardScheduleIndexRoute
-  '/dashboard/wallet': typeof AppDashboardWalletIndexRoute
-  '/pharmacy/product': typeof AppPharmacyProductIndexRoute
-  '/doctor/appointments': typeof AppDoctorDoctorAppointmentsIndexRoute
+  '/auth/forgot-password': typeof AppAuthForgotPasswordIndexRoute
+  '/dashboard/clientconsultation': typeof AppDashboardDashboardConsultationClientconsultationRoute
+  '/dashboard/jitsiconsultation': typeof AppDashboardDashboardConsultationJitsiconsultationRoute
+  '/dashboard/pharmacy/cart': typeof AppDashboardDashboardPharmacyCartRoute
+  '/dashboard/doctors': typeof AppDashboardDashboardDoctorsIndexRoute
+  '/dashboard/profile': typeof AppDashboardDashboardProfileIndexRoute
+  '/dashboard/schedule': typeof AppDashboardDashboardScheduleIndexRoute
+  '/dashboard/wallet': typeof AppDashboardDashboardWalletIndexRoute
+  '/doctor/dashboard': typeof AppDoctorDoctorDashboardIndexRoute
   '/doctor/lab': typeof AppDoctorDoctorLabIndexRoute
   '/doctor/message': typeof AppDoctorDoctorMessageIndexRoute
   '/doctor/patients': typeof AppDoctorDoctorPatientsIndexRoute
   '/doctor/support': typeof AppDoctorDoctorSupportIndexRoute
-  '/dashboard/chats/$doctorId': typeof AppDashboardChatsDoctorIdIndexRoute
-  '/pharmacy/product/$id': typeof AppPharmacyProductIdIndexRoute
+  '/dashboard/chats/$doctorId': typeof AppDashboardDashboardChatsDoctorIdIndexRoute
+  '/dashboard/doctors/$id': typeof AppDashboardDashboardDoctorsIdIndexRoute
+  '/dashboard/messages/$doctorId': typeof AppDashboardDashboardMessagesDoctorIdIndexRoute
+  '/dashboard/pharmacy/product': typeof AppDashboardDashboardPharmacyProductIndexRoute
+  '/doctor/dashboard/appointments': typeof AppDoctorDoctorDashboardAppointmentsIndexRoute
+  '/doctor/dashboard/earnings': typeof AppDoctorDoctorDashboardEarningsIndexRoute
+  '/doctor/dashboard/patients': typeof AppDoctorDoctorDashboardPatientsIndexRoute
+  '/doctor/dashboard/profile': typeof AppDoctorDoctorDashboardProfileIndexRoute
+  '/doctor/dashboard/wallet': typeof AppDoctorDoctorDashboardWalletIndexRoute
   '/doctor/message/$patientId': typeof AppDoctorDoctorMessagePatientIdIndexRoute
-  '/dashboard/doctors/profile/$doctorId': typeof AppDashboardDoctorsProfileDoctorIdIndexRoute
+  '/dashboard/doctors/profile/$doctorId': typeof AppDashboardDashboardDoctorsProfileDoctorIdIndexRoute
+  '/dashboard/pharmacy/product/$id': typeof AppDashboardDashboardPharmacyProductIdIndexRoute
+  '/doctor/dashboard/patients/$id': typeof AppDoctorDoctorDashboardPatientsIdIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
+  '/_app/_dashboard': typeof AppDashboardRouteWithChildren
   '/_app/_doctor': typeof AppDoctorRouteWithChildren
   '/_app/auth/sign-in': typeof AppAuthSignInRoute
+  '/_app/auth/sign-up': typeof AppAuthSignUpRoute
   '/_app/auth/verify': typeof AppAuthVerifyRoute
-  '/_app/dashboard': typeof AppDashboardRouteWithChildren
-  '/_app/dashboard/_consultation': typeof AppDashboardConsultationRouteWithChildren
-  '/_app/pharmacy/cart': typeof AppPharmacyCartRoute
-  '/_app/dashboard/': typeof AppDashboardIndexRoute
-  '/_app/dashboard/_consultation/clientconsultation': typeof AppDashboardConsultationClientconsultationRoute
-  '/_app/dashboard/_consultation/jitsiconsultation': typeof AppDashboardConsultationJitsiconsultationRoute
+  '/_app/help/': typeof AppHelpIndexRoute
+  '/_app/onboarding/': typeof AppOnboardingIndexRoute
+  '/_app/privacy/': typeof AppPrivacyIndexRoute
+  '/_app/terms/': typeof AppTermsIndexRoute
+  '/_app/_dashboard/dashboard': typeof AppDashboardDashboardRouteWithChildren
+  '/_app/_dashboard/dashboard/_consultation': typeof AppDashboardDashboardConsultationRouteWithChildren
   '/_app/_consultation/consultations/': typeof AppConsultationConsultationsIndexRoute
+  '/_app/_dashboard/dashboard/': typeof AppDashboardDashboardIndexRoute
   '/_app/_doctor/doctor/': typeof AppDoctorDoctorIndexRoute
-  '/_app/auth/sign-up/': typeof AppAuthSignUpIndexRoute
-  '/_app/dashboard/doctors/': typeof AppDashboardDoctorsIndexRoute
-  '/_app/dashboard/profile/': typeof AppDashboardProfileIndexRoute
-  '/_app/dashboard/schedule/': typeof AppDashboardScheduleIndexRoute
-  '/_app/dashboard/wallet/': typeof AppDashboardWalletIndexRoute
-  '/_app/pharmacy/product/': typeof AppPharmacyProductIndexRoute
-  '/_app/_doctor/doctor/appointments/': typeof AppDoctorDoctorAppointmentsIndexRoute
+  '/_app/auth/forgot-password/': typeof AppAuthForgotPasswordIndexRoute
+  '/_app/_dashboard/dashboard/_consultation/clientconsultation': typeof AppDashboardDashboardConsultationClientconsultationRoute
+  '/_app/_dashboard/dashboard/_consultation/jitsiconsultation': typeof AppDashboardDashboardConsultationJitsiconsultationRoute
+  '/_app/_dashboard/dashboard/pharmacy/cart': typeof AppDashboardDashboardPharmacyCartRoute
+  '/_app/_dashboard/dashboard/doctors/': typeof AppDashboardDashboardDoctorsIndexRoute
+  '/_app/_dashboard/dashboard/profile/': typeof AppDashboardDashboardProfileIndexRoute
+  '/_app/_dashboard/dashboard/schedule/': typeof AppDashboardDashboardScheduleIndexRoute
+  '/_app/_dashboard/dashboard/wallet/': typeof AppDashboardDashboardWalletIndexRoute
+  '/_app/_doctor/doctor/dashboard/': typeof AppDoctorDoctorDashboardIndexRoute
   '/_app/_doctor/doctor/lab/': typeof AppDoctorDoctorLabIndexRoute
   '/_app/_doctor/doctor/message/': typeof AppDoctorDoctorMessageIndexRoute
   '/_app/_doctor/doctor/patients/': typeof AppDoctorDoctorPatientsIndexRoute
   '/_app/_doctor/doctor/support/': typeof AppDoctorDoctorSupportIndexRoute
-  '/_app/dashboard/chats/$doctorId/': typeof AppDashboardChatsDoctorIdIndexRoute
-  '/_app/pharmacy/product/$id/': typeof AppPharmacyProductIdIndexRoute
+  '/_app/_dashboard/dashboard/chats/$doctorId/': typeof AppDashboardDashboardChatsDoctorIdIndexRoute
+  '/_app/_dashboard/dashboard/doctors/$id/': typeof AppDashboardDashboardDoctorsIdIndexRoute
+  '/_app/_dashboard/dashboard/messages/$doctorId/': typeof AppDashboardDashboardMessagesDoctorIdIndexRoute
+  '/_app/_dashboard/dashboard/pharmacy/product/': typeof AppDashboardDashboardPharmacyProductIndexRoute
+  '/_app/_doctor/doctor/dashboard/appointments/': typeof AppDoctorDoctorDashboardAppointmentsIndexRoute
+  '/_app/_doctor/doctor/dashboard/earnings/': typeof AppDoctorDoctorDashboardEarningsIndexRoute
+  '/_app/_doctor/doctor/dashboard/patients/': typeof AppDoctorDoctorDashboardPatientsIndexRoute
+  '/_app/_doctor/doctor/dashboard/profile/': typeof AppDoctorDoctorDashboardProfileIndexRoute
+  '/_app/_doctor/doctor/dashboard/wallet/': typeof AppDoctorDoctorDashboardWalletIndexRoute
   '/_app/_doctor/doctor/message/$patientId/': typeof AppDoctorDoctorMessagePatientIdIndexRoute
-  '/_app/dashboard/doctors/profile/$doctorId/': typeof AppDashboardDoctorsProfileDoctorIdIndexRoute
+  '/_app/_dashboard/dashboard/doctors/profile/$doctorId/': typeof AppDashboardDashboardDoctorsProfileDoctorIdIndexRoute
+  '/_app/_dashboard/dashboard/pharmacy/product/$id/': typeof AppDashboardDashboardPharmacyProductIdIndexRoute
+  '/_app/_doctor/doctor/dashboard/patients/$id/': typeof AppDoctorDoctorDashboardPatientsIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | ''
     | '/auth/sign-in'
+    | '/auth/sign-up'
     | '/auth/verify'
+    | '/help'
+    | '/onboarding'
+    | '/privacy'
+    | '/terms'
     | '/dashboard'
-    | '/pharmacy/cart'
+    | '/consultations'
     | '/dashboard/'
+    | '/doctor'
+    | '/auth/forgot-password'
     | '/dashboard/clientconsultation'
     | '/dashboard/jitsiconsultation'
-    | '/consultations'
-    | '/doctor'
-    | '/auth/sign-up'
+    | '/dashboard/pharmacy/cart'
     | '/dashboard/doctors'
     | '/dashboard/profile'
     | '/dashboard/schedule'
     | '/dashboard/wallet'
-    | '/pharmacy/product'
-    | '/doctor/appointments'
+    | '/doctor/dashboard'
     | '/doctor/lab'
     | '/doctor/message'
     | '/doctor/patients'
     | '/doctor/support'
     | '/dashboard/chats/$doctorId'
-    | '/pharmacy/product/$id'
+    | '/dashboard/doctors/$id'
+    | '/dashboard/messages/$doctorId'
+    | '/dashboard/pharmacy/product'
+    | '/doctor/dashboard/appointments'
+    | '/doctor/dashboard/earnings'
+    | '/doctor/dashboard/patients'
+    | '/doctor/dashboard/profile'
+    | '/doctor/dashboard/wallet'
     | '/doctor/message/$patientId'
     | '/dashboard/doctors/profile/$doctorId'
+    | '/dashboard/pharmacy/product/$id'
+    | '/doctor/dashboard/patients/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | ''
     | '/auth/sign-in'
+    | '/auth/sign-up'
     | '/auth/verify'
+    | '/help'
+    | '/onboarding'
+    | '/privacy'
+    | '/terms'
     | '/dashboard'
-    | '/pharmacy/cart'
-    | '/dashboard/clientconsultation'
-    | '/dashboard/jitsiconsultation'
     | '/consultations'
     | '/doctor'
-    | '/auth/sign-up'
+    | '/auth/forgot-password'
+    | '/dashboard/clientconsultation'
+    | '/dashboard/jitsiconsultation'
+    | '/dashboard/pharmacy/cart'
     | '/dashboard/doctors'
     | '/dashboard/profile'
     | '/dashboard/schedule'
     | '/dashboard/wallet'
-    | '/pharmacy/product'
-    | '/doctor/appointments'
+    | '/doctor/dashboard'
     | '/doctor/lab'
     | '/doctor/message'
     | '/doctor/patients'
     | '/doctor/support'
     | '/dashboard/chats/$doctorId'
-    | '/pharmacy/product/$id'
+    | '/dashboard/doctors/$id'
+    | '/dashboard/messages/$doctorId'
+    | '/dashboard/pharmacy/product'
+    | '/doctor/dashboard/appointments'
+    | '/doctor/dashboard/earnings'
+    | '/doctor/dashboard/patients'
+    | '/doctor/dashboard/profile'
+    | '/doctor/dashboard/wallet'
     | '/doctor/message/$patientId'
     | '/dashboard/doctors/profile/$doctorId'
+    | '/dashboard/pharmacy/product/$id'
+    | '/doctor/dashboard/patients/$id'
   id:
     | '__root__'
+    | '/'
     | '/_app'
+    | '/_app/_dashboard'
     | '/_app/_doctor'
     | '/_app/auth/sign-in'
+    | '/_app/auth/sign-up'
     | '/_app/auth/verify'
-    | '/_app/dashboard'
-    | '/_app/dashboard/_consultation'
-    | '/_app/pharmacy/cart'
-    | '/_app/dashboard/'
-    | '/_app/dashboard/_consultation/clientconsultation'
-    | '/_app/dashboard/_consultation/jitsiconsultation'
+    | '/_app/help/'
+    | '/_app/onboarding/'
+    | '/_app/privacy/'
+    | '/_app/terms/'
+    | '/_app/_dashboard/dashboard'
+    | '/_app/_dashboard/dashboard/_consultation'
     | '/_app/_consultation/consultations/'
+    | '/_app/_dashboard/dashboard/'
     | '/_app/_doctor/doctor/'
-    | '/_app/auth/sign-up/'
-    | '/_app/dashboard/doctors/'
-    | '/_app/dashboard/profile/'
-    | '/_app/dashboard/schedule/'
-    | '/_app/dashboard/wallet/'
-    | '/_app/pharmacy/product/'
-    | '/_app/_doctor/doctor/appointments/'
+    | '/_app/auth/forgot-password/'
+    | '/_app/_dashboard/dashboard/_consultation/clientconsultation'
+    | '/_app/_dashboard/dashboard/_consultation/jitsiconsultation'
+    | '/_app/_dashboard/dashboard/pharmacy/cart'
+    | '/_app/_dashboard/dashboard/doctors/'
+    | '/_app/_dashboard/dashboard/profile/'
+    | '/_app/_dashboard/dashboard/schedule/'
+    | '/_app/_dashboard/dashboard/wallet/'
+    | '/_app/_doctor/doctor/dashboard/'
     | '/_app/_doctor/doctor/lab/'
     | '/_app/_doctor/doctor/message/'
     | '/_app/_doctor/doctor/patients/'
     | '/_app/_doctor/doctor/support/'
-    | '/_app/dashboard/chats/$doctorId/'
-    | '/_app/pharmacy/product/$id/'
+    | '/_app/_dashboard/dashboard/chats/$doctorId/'
+    | '/_app/_dashboard/dashboard/doctors/$id/'
+    | '/_app/_dashboard/dashboard/messages/$doctorId/'
+    | '/_app/_dashboard/dashboard/pharmacy/product/'
+    | '/_app/_doctor/doctor/dashboard/appointments/'
+    | '/_app/_doctor/doctor/dashboard/earnings/'
+    | '/_app/_doctor/doctor/dashboard/patients/'
+    | '/_app/_doctor/doctor/dashboard/profile/'
+    | '/_app/_doctor/doctor/dashboard/wallet/'
     | '/_app/_doctor/doctor/message/$patientId/'
-    | '/_app/dashboard/doctors/profile/$doctorId/'
+    | '/_app/_dashboard/dashboard/doctors/profile/$doctorId/'
+    | '/_app/_dashboard/dashboard/pharmacy/product/$id/'
+    | '/_app/_doctor/doctor/dashboard/patients/$id/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
 }
 
@@ -700,21 +1074,34 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/",
         "/_app"
       ]
+    },
+    "/": {
+      "filePath": "index.tsx"
     },
     "/_app": {
       "filePath": "_app.tsx",
       "children": [
+        "/_app/_dashboard",
         "/_app/_doctor",
         "/_app/auth/sign-in",
+        "/_app/auth/sign-up",
         "/_app/auth/verify",
-        "/_app/dashboard",
-        "/_app/pharmacy/cart",
+        "/_app/help/",
+        "/_app/onboarding/",
+        "/_app/privacy/",
+        "/_app/terms/",
         "/_app/_consultation/consultations/",
-        "/_app/auth/sign-up/",
-        "/_app/pharmacy/product/",
-        "/_app/pharmacy/product/$id/"
+        "/_app/auth/forgot-password/"
+      ]
+    },
+    "/_app/_dashboard": {
+      "filePath": "_app/_dashboard.tsx",
+      "parent": "/_app",
+      "children": [
+        "/_app/_dashboard/dashboard"
       ]
     },
     "/_app/_doctor": {
@@ -722,94 +1109,121 @@ export const routeTree = rootRoute
       "parent": "/_app",
       "children": [
         "/_app/_doctor/doctor/",
-        "/_app/_doctor/doctor/appointments/",
+        "/_app/_doctor/doctor/dashboard/",
         "/_app/_doctor/doctor/lab/",
         "/_app/_doctor/doctor/message/",
         "/_app/_doctor/doctor/patients/",
         "/_app/_doctor/doctor/support/",
-        "/_app/_doctor/doctor/message/$patientId/"
+        "/_app/_doctor/doctor/dashboard/appointments/",
+        "/_app/_doctor/doctor/dashboard/earnings/",
+        "/_app/_doctor/doctor/dashboard/patients/",
+        "/_app/_doctor/doctor/dashboard/profile/",
+        "/_app/_doctor/doctor/dashboard/wallet/",
+        "/_app/_doctor/doctor/message/$patientId/",
+        "/_app/_doctor/doctor/dashboard/patients/$id/"
       ]
     },
     "/_app/auth/sign-in": {
       "filePath": "_app/auth/sign-in.tsx",
       "parent": "/_app"
     },
+    "/_app/auth/sign-up": {
+      "filePath": "_app/auth/sign-up.tsx",
+      "parent": "/_app"
+    },
     "/_app/auth/verify": {
       "filePath": "_app/auth/verify.tsx",
       "parent": "/_app"
     },
-    "/_app/dashboard": {
-      "filePath": "_app/dashboard",
-      "parent": "/_app",
-      "children": [
-        "/_app/dashboard/_consultation",
-        "/_app/dashboard/",
-        "/_app/dashboard/doctors/",
-        "/_app/dashboard/profile/",
-        "/_app/dashboard/schedule/",
-        "/_app/dashboard/wallet/",
-        "/_app/dashboard/chats/$doctorId/",
-        "/_app/dashboard/doctors/profile/$doctorId/"
-      ]
-    },
-    "/_app/dashboard/_consultation": {
-      "filePath": "_app/dashboard/_consultation.tsx",
-      "parent": "/_app/dashboard",
-      "children": [
-        "/_app/dashboard/_consultation/clientconsultation",
-        "/_app/dashboard/_consultation/jitsiconsultation"
-      ]
-    },
-    "/_app/pharmacy/cart": {
-      "filePath": "_app/pharmacy/cart.tsx",
+    "/_app/help/": {
+      "filePath": "_app/help/index.tsx",
       "parent": "/_app"
     },
-    "/_app/dashboard/": {
-      "filePath": "_app/dashboard/index.tsx",
-      "parent": "/_app/dashboard"
+    "/_app/onboarding/": {
+      "filePath": "_app/onboarding/index.tsx",
+      "parent": "/_app"
     },
-    "/_app/dashboard/_consultation/clientconsultation": {
-      "filePath": "_app/dashboard/_consultation/clientconsultation.tsx",
-      "parent": "/_app/dashboard/_consultation"
+    "/_app/privacy/": {
+      "filePath": "_app/privacy/index.tsx",
+      "parent": "/_app"
     },
-    "/_app/dashboard/_consultation/jitsiconsultation": {
-      "filePath": "_app/dashboard/_consultation/jitsiconsultation.tsx",
-      "parent": "/_app/dashboard/_consultation"
+    "/_app/terms/": {
+      "filePath": "_app/terms/index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/_dashboard/dashboard": {
+      "filePath": "_app/_dashboard/dashboard",
+      "parent": "/_app/_dashboard",
+      "children": [
+        "/_app/_dashboard/dashboard/_consultation",
+        "/_app/_dashboard/dashboard/",
+        "/_app/_dashboard/dashboard/pharmacy/cart",
+        "/_app/_dashboard/dashboard/doctors/",
+        "/_app/_dashboard/dashboard/profile/",
+        "/_app/_dashboard/dashboard/schedule/",
+        "/_app/_dashboard/dashboard/wallet/",
+        "/_app/_dashboard/dashboard/chats/$doctorId/",
+        "/_app/_dashboard/dashboard/doctors/$id/",
+        "/_app/_dashboard/dashboard/messages/$doctorId/",
+        "/_app/_dashboard/dashboard/pharmacy/product/",
+        "/_app/_dashboard/dashboard/doctors/profile/$doctorId/",
+        "/_app/_dashboard/dashboard/pharmacy/product/$id/"
+      ]
+    },
+    "/_app/_dashboard/dashboard/_consultation": {
+      "filePath": "_app/_dashboard/dashboard/_consultation.tsx",
+      "parent": "/_app/_dashboard/dashboard",
+      "children": [
+        "/_app/_dashboard/dashboard/_consultation/clientconsultation",
+        "/_app/_dashboard/dashboard/_consultation/jitsiconsultation"
+      ]
     },
     "/_app/_consultation/consultations/": {
       "filePath": "_app/_consultation/consultations/index.tsx",
       "parent": "/_app"
     },
+    "/_app/_dashboard/dashboard/": {
+      "filePath": "_app/_dashboard/dashboard/index.tsx",
+      "parent": "/_app/_dashboard/dashboard"
+    },
     "/_app/_doctor/doctor/": {
       "filePath": "_app/_doctor/doctor/index.tsx",
       "parent": "/_app/_doctor"
     },
-    "/_app/auth/sign-up/": {
-      "filePath": "_app/auth/sign-up/index.tsx",
+    "/_app/auth/forgot-password/": {
+      "filePath": "_app/auth/forgot-password/index.tsx",
       "parent": "/_app"
     },
-    "/_app/dashboard/doctors/": {
-      "filePath": "_app/dashboard/doctors/index.tsx",
-      "parent": "/_app/dashboard"
+    "/_app/_dashboard/dashboard/_consultation/clientconsultation": {
+      "filePath": "_app/_dashboard/dashboard/_consultation/clientconsultation.tsx",
+      "parent": "/_app/_dashboard/dashboard/_consultation"
     },
-    "/_app/dashboard/profile/": {
-      "filePath": "_app/dashboard/profile/index.tsx",
-      "parent": "/_app/dashboard"
+    "/_app/_dashboard/dashboard/_consultation/jitsiconsultation": {
+      "filePath": "_app/_dashboard/dashboard/_consultation/jitsiconsultation.tsx",
+      "parent": "/_app/_dashboard/dashboard/_consultation"
     },
-    "/_app/dashboard/schedule/": {
-      "filePath": "_app/dashboard/schedule/index.tsx",
-      "parent": "/_app/dashboard"
+    "/_app/_dashboard/dashboard/pharmacy/cart": {
+      "filePath": "_app/_dashboard/dashboard/pharmacy/cart.tsx",
+      "parent": "/_app/_dashboard/dashboard"
     },
-    "/_app/dashboard/wallet/": {
-      "filePath": "_app/dashboard/wallet/index.tsx",
-      "parent": "/_app/dashboard"
+    "/_app/_dashboard/dashboard/doctors/": {
+      "filePath": "_app/_dashboard/dashboard/doctors/index.tsx",
+      "parent": "/_app/_dashboard/dashboard"
     },
-    "/_app/pharmacy/product/": {
-      "filePath": "_app/pharmacy/product/index.tsx",
-      "parent": "/_app"
+    "/_app/_dashboard/dashboard/profile/": {
+      "filePath": "_app/_dashboard/dashboard/profile/index.tsx",
+      "parent": "/_app/_dashboard/dashboard"
     },
-    "/_app/_doctor/doctor/appointments/": {
-      "filePath": "_app/_doctor/doctor/appointments/index.tsx",
+    "/_app/_dashboard/dashboard/schedule/": {
+      "filePath": "_app/_dashboard/dashboard/schedule/index.tsx",
+      "parent": "/_app/_dashboard/dashboard"
+    },
+    "/_app/_dashboard/dashboard/wallet/": {
+      "filePath": "_app/_dashboard/dashboard/wallet/index.tsx",
+      "parent": "/_app/_dashboard/dashboard"
+    },
+    "/_app/_doctor/doctor/dashboard/": {
+      "filePath": "_app/_doctor/doctor/dashboard/index.tsx",
       "parent": "/_app/_doctor"
     },
     "/_app/_doctor/doctor/lab/": {
@@ -828,21 +1242,57 @@ export const routeTree = rootRoute
       "filePath": "_app/_doctor/doctor/support/index.tsx",
       "parent": "/_app/_doctor"
     },
-    "/_app/dashboard/chats/$doctorId/": {
-      "filePath": "_app/dashboard/chats/$doctorId/index.tsx",
-      "parent": "/_app/dashboard"
+    "/_app/_dashboard/dashboard/chats/$doctorId/": {
+      "filePath": "_app/_dashboard/dashboard/chats/$doctorId/index.tsx",
+      "parent": "/_app/_dashboard/dashboard"
     },
-    "/_app/pharmacy/product/$id/": {
-      "filePath": "_app/pharmacy/product/$id/index.tsx",
-      "parent": "/_app"
+    "/_app/_dashboard/dashboard/doctors/$id/": {
+      "filePath": "_app/_dashboard/dashboard/doctors/$id/index.tsx",
+      "parent": "/_app/_dashboard/dashboard"
+    },
+    "/_app/_dashboard/dashboard/messages/$doctorId/": {
+      "filePath": "_app/_dashboard/dashboard/messages/$doctorId/index.tsx",
+      "parent": "/_app/_dashboard/dashboard"
+    },
+    "/_app/_dashboard/dashboard/pharmacy/product/": {
+      "filePath": "_app/_dashboard/dashboard/pharmacy/product/index.tsx",
+      "parent": "/_app/_dashboard/dashboard"
+    },
+    "/_app/_doctor/doctor/dashboard/appointments/": {
+      "filePath": "_app/_doctor/doctor/dashboard/appointments/index.tsx",
+      "parent": "/_app/_doctor"
+    },
+    "/_app/_doctor/doctor/dashboard/earnings/": {
+      "filePath": "_app/_doctor/doctor/dashboard/earnings/index.tsx",
+      "parent": "/_app/_doctor"
+    },
+    "/_app/_doctor/doctor/dashboard/patients/": {
+      "filePath": "_app/_doctor/doctor/dashboard/patients/index.tsx",
+      "parent": "/_app/_doctor"
+    },
+    "/_app/_doctor/doctor/dashboard/profile/": {
+      "filePath": "_app/_doctor/doctor/dashboard/profile/index.tsx",
+      "parent": "/_app/_doctor"
+    },
+    "/_app/_doctor/doctor/dashboard/wallet/": {
+      "filePath": "_app/_doctor/doctor/dashboard/wallet/index.tsx",
+      "parent": "/_app/_doctor"
     },
     "/_app/_doctor/doctor/message/$patientId/": {
       "filePath": "_app/_doctor/doctor/message/$patientId/index.tsx",
       "parent": "/_app/_doctor"
     },
-    "/_app/dashboard/doctors/profile/$doctorId/": {
-      "filePath": "_app/dashboard/doctors/profile/$doctorId/index.tsx",
-      "parent": "/_app/dashboard"
+    "/_app/_dashboard/dashboard/doctors/profile/$doctorId/": {
+      "filePath": "_app/_dashboard/dashboard/doctors/profile/$doctorId/index.tsx",
+      "parent": "/_app/_dashboard/dashboard"
+    },
+    "/_app/_dashboard/dashboard/pharmacy/product/$id/": {
+      "filePath": "_app/_dashboard/dashboard/pharmacy/product/$id/index.tsx",
+      "parent": "/_app/_dashboard/dashboard"
+    },
+    "/_app/_doctor/doctor/dashboard/patients/$id/": {
+      "filePath": "_app/_doctor/doctor/dashboard/patients/$id/index.tsx",
+      "parent": "/_app/_doctor"
     }
   }
 }

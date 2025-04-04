@@ -19,6 +19,12 @@ scalar PhoneNumber extends string;
 @example("2021-09-01T12:00:00Z")
 scalar DateTime extends string;
 
+@example("745731af4484f323968969eda289aeee")
+scalar Token extends string;
+
+@example("123456")
+scalar Otp extends string;
+
 enum Role {
   patient,
   doctor,
@@ -29,6 +35,13 @@ scalar Password extends string;
 
 @example("mary.slessor@mail.com")
 scalar Email extends string;
+
+model Media {
+  public_ic: Id;
+
+  @example("https://google.com")
+  url: string;
+}
 
 model Paginated {
   @example(100)
@@ -46,50 +59,40 @@ model Paginated {
 namespace Api {
   @error
   model UnexpectedError {
-    @statusCode code: 500;
-
-    @example("An unexpected error occurred")
-    message: string;
+    @statusCode _code: 500;
+    code: "UNEXPECTED_ERROR";
   }
 
   @error
   model NoTokenProvidedError {
-    @statusCode code: 401;
-
-    @example("Authentication credentials were not provided or are invalid.")
-    message: string;
+    @statusCode _code: 401;
+    code: "UNAUTHORIZED_ERROR";
   }
 
   @error
   model BadRequestError {
-    @statusCode code: 400;
+    @statusCode _code: 400;
+    code: "EXPECTED_DATA_NOT_RECEIVED_ERROR";
+  }
 
-    @example("Required fields missing")
-    message: string;
+  @error
+  model UnauthorizedError {
+    @statusCode _code: 401;
+    code: "UNAUTHORIZED_ERROR";
   }
 
   @error
   model NotFoundError<T extends valueof string> {
-    @statusCode code: 404;
+    @statusCode _code: 404;
 
     @example("${T} not found")
     message: string;
   }
 
   @error
-  model VerifyOtpError {
-    @statusCode code: 404;
-
-    @example("Invalid verification OTP or OTP has expired.")
-    message: string;
-  }
-
-  @error
   model AuthenticationRequiredError {
-    @statusCode code: 401;
-
-    @example("Authentication required")
-    message: string;
+    @statusCode _code: 401;
+    code: "AUTHENTICATION_REQUIRED_ERROR";
   }
 
   @tag("Auth")
@@ -109,9 +112,7 @@ namespace Api {
 
       email: Email;
       password: Password;
-      password2: Password;
       phone_number: PhoneNumber;
-      date_of_birth: DateOfBirth;
 
       @example(true)
       is_doctor: boolean;
@@ -127,68 +128,91 @@ namespace Api {
     }
 
     model PasswordResetInitResponse {
-      @example("Please check your email address for a password reset link")
-      message: string;
+      code: "CHECK_EMAIL_FOR_RESET_LINK";
     }
 
-    model ForgotPasswordPayload {
+    @error
+    model PasswordResetMailAlreadySentError {
+      @statusCode _code: 400;
+      code: "PASSWORD_RESET_MAIL_ALREADY_SENT_ERROR";
+      data: {
+        expires_at: DateTime;
+      };
+    }
+
+    model PasswordResetPayload {
       email: Email;
     }
 
-    model ConfirmForgotPasswordPayload {
+    model ConfirmPasswordResetPayload {
       password: Password;
-      password2: Password;
+    }
+
+    model PasswordResetSuccessful {
+      code: "PASSWORD_RESET_SUCCESSFUL";
+    }
+
+    @error
+    model InvalidOrExpiredTokenError {
+      @statusCode _code: 400;
+      code: "INVALID_OR_EXPIRED_TOKEN_ERROR";
     }
 
     @doc("Authentication token")
     model AuthCredentials {
-      @example("745731af4484f323968969eda289aeee")
-      access: string;
-
-      @example("745731af4484f323968969eda289aeee")
-      refresh: string;
-
-      user: Doctor.Doctor;
+      code: "AUTH_CREDENTIALS";
+      data: {
+        access_token: Token;
+        refresh_token: Token;
+      };
     }
 
-    model WelcomeMessage {
-      @example("Please check your email address for a verification code")
-      message: string;
+    model SignupSuccessful {
+      code: "SIGNUP_SUCCESSFUL";
+    }
+
+    model EmailAlreadyInUseError {
+      @statusCode _code: 409;
+      code: "EMAIL_ALREADY_IN_USE_ERROR";
     }
 
     model VerifyEmailPayload {
-      @example("123456")
-      otp: string;
+      email: Email;
+      otp: Otp;
     }
 
     model VerificationSuccessful {
-      @example("Email verified successfully")
-      message: string;
+      code: "VERIFICATION_SUCCESSFUL";
     }
 
-    model VerificationError {
-      @statusCode code: 202;
-
-      @example("User Registered Successfully, Verification Otp wasn't sent please resend")
-      message: string;
+    model SendVerificationEmailPayload {
+      email: Email;
     }
 
-    model ResendVerificationEmailPayload {
-      @example("mary.slessor@mail.com")
-      email: string;
+    model VerificationMailSentSuccessfully {
+      code: "VERIFICATION_MAIL_SENT";
     }
 
-    model SignOutSuccessful {
-      @example("Sign out successful")
-      message: string;
+    model VerificationMailAlreadySentError {
+      @statusCode _code: 400;
+      code: "VERIFICATION_MAIL_ALREADY_SENT_ERROR";
+      data: {
+        expires_at: DateTime;
+      };
+    }
+
+    @error
+    model InvalidOrExpiredOtpError {
+      @statusCode _code: 400;
+      code: "INVALID_OR_EXPIRED_OTP_ERROR";
     }
 
     @route("/sign-up")
     @post
     @doc("Sign up new user")
     op signUp(@body payload: SignUpPayload):
-      | WelcomeMessage
-      | VerificationError
+      | SignupSuccessful
+      | EmailAlreadyInUseError
       | BadRequestError
       | UnexpectedError;
 
@@ -197,69 +221,44 @@ namespace Api {
     @doc("Verify email address")
     op verifyEmail(@body payload: VerifyEmailPayload):
       | VerificationSuccessful
-      | VerifyOtpError
+      | InvalidOrExpiredOtpError
       | BadRequestError
       | UnexpectedError;
 
-    @route("/resend-verify-email")
+    @route("/send-verification-email")
     @post
-    @doc("Resend verification email")
-    op resendVerificationEmail(
-      @body payload: ResendVerificationEmailPayload,
-    ): WelcomeMessage | BadRequestError | UnexpectedError;
+    @doc("Send verification email")
+    op sendVerificationEmail(
+      @body payload: SendVerificationEmailPayload,
+    ): VerificationMailSentSuccessfully | VerificationMailAlreadySentError | UnexpectedError;
 
-    @route("/forget-password")
+    @route("/reset-password")
     @post
-    @doc("""
-        Initiates the password reset process.
-        
-        Receives an email address and generates a password reset token if the email exists in the database.
-        Returns a UID and reset key that will be used to verify the reset request.
-      """)
-    op initiatePasswordReset(
-      @body payload: ForgotPasswordPayload,
-    ): PasswordResetInitResponse | BadRequestError;
+    @doc("Initiates the password reset process.")
+    op initiatePasswordReset(@body payload: PasswordResetPayload):
+      | PasswordResetInitResponse
+      | PasswordResetMailAlreadySentError
+      | BadRequestError
+      | UnexpectedError;
 
-    @route("/forget-password/{uid}/{otp}")
+    @route("/reset-password/{token}")
     @post
-    @doc("""
-        Confirms password reset request and updates the password.
-        
-        Validates the provided UID and OTP token, then updates the user's password if:
-        - The reset token hasn't expired
-        - The provided passwords match
-        - The user exists and token is valid
-      """)
+    @doc("Confirms password reset request and updates the password.")
     op confirmPasswordReset(
-      @path uid: string,
-      @path otp: string,
-      @body payload: ConfirmForgotPasswordPayload,
-    ): WelcomeMessage | BadRequestError | UnexpectedError;
+      @path token: string,
+      @body payload: ConfirmPasswordResetPayload,
+    ):
+      | PasswordResetSuccessful
+      | InvalidOrExpiredTokenError
+      | BadRequestError
+      | UnexpectedError;
 
     @route("/sign-in")
     @post
     @doc("Sign in user")
     op signIn(
       @body payload: SignInPayload,
-    ): AuthCredentials | BadRequestError | UnexpectedError;
-
-    @route("/reset-password/send-email")
-    @post
-    @doc("Send reset password email")
-    op sendResetPasswordEmail(
-      @body payload: SendResetPasswordEmailPayload,
-    ): WelcomeMessage | BadRequestError | UnexpectedError;
-
-    @route("/reset-password")
-    @put
-    @doc("Reset password")
-    op resetPassword(
-      @body payload: ResetPasswordPayload,
-    ): WelcomeMessage | BadRequestError | UnexpectedError;
-
-    @route("/sign-out")
-    @doc("Sign out user")
-    op signOut(): SignOutSuccessful | UnexpectedError;
+    ): AuthCredentials | UnauthorizedError | UnexpectedError;
   }
 
   model EmailPayload {
@@ -275,7 +274,7 @@ namespace Api {
       message: string;
     }
 
-    model Patient {
+    model PatientProfile {
       id: Id;
 
       @example("Mary")
@@ -285,10 +284,12 @@ namespace Api {
       last_name: string;
 
       other_names: string | null;
+      email: Email;
       phone_number: PhoneNumber;
       date_of_birth: DateOfBirth;
-      email: Email;
-      profile_picture_url: string;
+      profile_picture: Media;
+      created_at: DateTime;
+      updated_at: DateTime | null;
     }
 
     model PaginatedPatients {
@@ -296,7 +297,7 @@ namespace Api {
         @example("Successful")
         message: string;
 
-        data: Patient[];
+        data: PatientProfile[];
       };
 
       @example(18)
@@ -321,13 +322,14 @@ namespace Api {
     @get
     @useAuth(BearerAuth)
     @doc("Fetch patient profile")
-    op fetchProfile(): Patient | AuthenticationRequiredError | UnexpectedError;
+    op fetchProfile(
+    ): PatientProfile | AuthenticationRequiredError | UnexpectedError;
 
     @route("/{id}")
     @get
     @doc("Fetch patient by ID")
     op fetchPatientById(@path id: string):
-      | Patient
+      | PatientProfile
       | PatientNotFoundError
       | AuthenticationRequiredError
       | UnexpectedError;
@@ -335,7 +337,7 @@ namespace Api {
     @route("/profile/")
     @patch
     @doc("Update patient profile")
-    op updatePatientById(@body patient: Patient):
+    op updatePatientById(@body patient: PatientProfile):
       | PatientProfileUpdatedResponse
       | PatientNotFoundError
       | AuthenticationRequiredError
@@ -376,7 +378,7 @@ namespace Api {
       start_date: string;
 
       @example("January 2021")
-      end_date?: string;
+      end_date: string | null;
     }
 
     model WorkingHour {
@@ -404,7 +406,7 @@ namespace Api {
       street: string;
 
       @example("5.4836, 7.0336")
-      coordinates?: string;
+      coordinates: string | null;
 
       @example("Owerri")
       city: string;
@@ -418,11 +420,8 @@ namespace Api {
       message: string;
     }
 
-    model Doctor {
+    model DoctorProfile {
       id: Id;
-
-      @example("https://example.com/image.jpg")
-      profile_picture_url: string;
 
       @example("John")
       first_name: string;
@@ -430,17 +429,17 @@ namespace Api {
       @example("Doe")
       last_name: string;
 
+      other_names: string | null;
       email: Email;
       phone_number: PhoneNumber;
       date_of_birth: DateOfBirth;
+      profile_picture: Media;
       specialization: Specialization | null;
       patients_treated: int64;
       years_of_experience: int64;
-      reviews: int64;
+      number_of_reviews: int64;
       rating: float64;
       description: string | null;
-      other_names: string | null;
-      is_doctor: boolean;
 
       @example(500.00)
       home_consultation_charge: float64;
@@ -455,6 +454,8 @@ namespace Api {
       experiences: Experience[] | null;
       working_hours: WorkingHour[] | null;
       location: Location | null;
+      created_at: DateTime;
+      updated_at: DateTime | null;
     }
 
     model DoctorNotFoundError extends NotFoundError<"Doctor"> {}
@@ -463,7 +464,7 @@ namespace Api {
         @example("Successful")
         message: string;
 
-        data: Doctor[];
+        data: DoctorProfile[];
       };
 
       @example(18)
@@ -487,13 +488,14 @@ namespace Api {
     @get
     @useAuth(BearerAuth)
     @doc("Fetch doctor profile")
-    op fetchProfile(): Doctor | AuthenticationRequiredError | UnexpectedError;
+    op fetchProfile(
+    ): DoctorProfile | AuthenticationRequiredError | UnexpectedError;
 
     @route("profile/{id}")
     @get
     @doc("Fetch doctor by ID")
     op fetchDoctorById(@path id: string):
-      | Doctor
+      | DoctorProfile
       | DoctorNotFoundError
       | AuthenticationRequiredError
       | UnexpectedError;
@@ -502,7 +504,7 @@ namespace Api {
     @patch
     @useAuth(BearerAuth)
     @doc("Update doctor profile")
-    op updateDoctorById(@body doctor: Doctor):
+    op updateDoctorById(@body doctor: DoctorProfile):
       | DoctorProfileUpdatedResponse
       | DoctorNotFoundError
       | AuthenticationRequiredError
@@ -561,8 +563,10 @@ namespace Api {
       id: Id;
       doctor: Id;
       patient: Id;
+
       // status: "pending" | "accepted" | "rejected";
       doctor_notes: DoctorNote[] | null;
+
       chats: Chat[] | null;
       room_name: string | null;
       doctor_token: string | null;
@@ -570,7 +574,7 @@ namespace Api {
       start_time: DateTime;
       end_time: DateTime;
       created_at: DateTime;
-      updated_at: DateTime;
+      updated_at: DateTime | null;
     }
 
     @error
@@ -591,11 +595,11 @@ namespace Api {
     @error
     model UnauthorisedRequest {
       @statusCode code: 403;
+
       @example("User Does Not have Permission to Access this Information")
       message: string;
     }
 
-    
     model PaginatedConsultations {
       results: Consultation;
 
@@ -610,10 +614,10 @@ namespace Api {
     }
 
     @route("/")
-      @get
-      @doc("Fetch all consultations")
-      op fetchConsultations(
-      ): PaginatedConsultations | AuthenticationRequiredError | UnexpectedError;
+    @get
+    @doc("Fetch all consultations")
+    op fetchConsultations(
+    ): PaginatedConsultations | AuthenticationRequiredError | UnexpectedError;
 
     @route("/{id}")
     @get
@@ -706,6 +710,7 @@ namespace Api {
       @error
       model UnauthorisedRequestID {
         @statusCode code: 403;
+
         @example("User Does Not have Permission to Access this Information")
         message: string;
       }
@@ -851,4 +856,3 @@ namespace Api {
     ): UserCreatedMessage | UnexpectedError;
   }
 }
-

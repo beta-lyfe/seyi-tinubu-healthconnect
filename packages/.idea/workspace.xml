@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d6809451-3b6b-4076-b6ab-6a699d28fb54" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/@beta-lyfe/media-server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/media-server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/@beta-lyfe/webapp/android/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/webapp/android/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/@beta-lyfe/webapp/android/app/capacitor.build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/webapp/android/app/capacitor.build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/@beta-lyfe/webapp/android/capacitor.settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/webapp/android/capacitor.settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/@beta-lyfe/webapp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/webapp/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/@beta-lyfe/webapp/src/app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/webapp/src/app.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/@beta-lyfe/webapp/src/routes/__root.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/webapp/src/routes/__root.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/@beta-lyfe/webapp/src/routes/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/webapp/src/routes/_app.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2u4c0chx0UcFjBxZ8xZsehw6RcJ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/fi__newwebapp&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hp/Documents/projects/beta-lyfe/packages&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
+    &quot;npm.webapp &gt; npm vite build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.webapp &gt; test-build.executor&quot;: &quot;Run&quot;,
+    &quot;npm.webapp &gt; vite build.executor&quot;: &quot;Run&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\hp\\Documents\\projects\\beta-lyfe\\packages\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hp\Documents\projects\beta-lyfe\packages\@beta-lyfe\webapp\src\routes\_app\_dashboard" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="webapp &gt; npm vite build" type="js.build_tools.npm" temporary="true">
+      <package-json value="$PROJECT_DIR$/@beta-lyfe/webapp/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test-build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs>
+        <env name="CLOUD_API_KEY" value="" />
+        <env name="CLOUD_API_SECRET" value="" />
+        <env name="CLOUD_NAME" value="" />
+        <env name="DB_HOST" value="&quot;127.0.0.1&quot;" />
+        <env name="DB_NAME" value="&quot;betalyfe&quot;" />
+        <env name="DB_PASS" value="&quot;betalyfe&quot;" />
+        <env name="DB_PORT" value="5432" />
+        <env name="DB_USER" value="&quot;betalyfe&quot;" />
+        <env name="EMAIL_HOST" value="&quot;localhost&quot;" />
+        <env name="EMAIL_HOST_PASSWORD" value="&quot;info@betalyfe.com.ng&quot;" />
+        <env name="EMAIL_HOST_USER" value="&quot;info@betalyfe.com.ng&quot;" />
+        <env name="EMAIL_PORT" value="1025" />
+        <env name="EMAIL_SECURITY" value="&quot;STARTTLS&quot;" />
+        <env name="HUDDLE01_API_KEY" value="" />
+        <env name="NODE_ENV" value="&quot;development&quot;" />
+        <env name="SECRET_KEY" value="&quot;django-insecure-c*wgba97*qi+!h5#6(*_616wt52t$4ihj-$%k@j0bzi3u5**3f&quot;" />
+        <env name="STAGE" value="&quot;development&quot;" />
+        <env name="VITE_BACKEND_URL" value="https://778e-102-90-102-82.ngrok-free.app/" />
+        <env name="VITE_HUDDLE01_PROJECT_ID" value="jjnjnjnjnjnjnmomf" />
+      </envs>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.webapp &gt; npm vite build" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-WS-242.21829.149" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d6809451-3b6b-4076-b6ab-6a699d28fb54" name="Changes" comment="" />
+      <created>1741511064658</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1741511064658</updated>
+      <workItem from="1741511066287" duration="5090000" />
+      <workItem from="1742696994376" duration="237000" />
+      <workItem from="1742853603012" duration="1576000" />
+      <workItem from="1742908795551" duration="594000" />
+      <workItem from="1743278824773" duration="3803000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

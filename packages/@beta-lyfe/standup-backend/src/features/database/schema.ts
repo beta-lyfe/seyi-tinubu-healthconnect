@@ -20,6 +20,58 @@ export const media = z.object({
 
 export type Media = z.infer<typeof media>
 
+export const certification = z.object({
+  name: z.string(),
+  institution: z.string(),
+  date: z.string()
+})
+
+export type Certification = z.infer<typeof certification>
+
+export const experience = z.object({
+  title: z.string(),
+  institution: z.string(),
+  start_date: z.string(),
+  end_date: z.string().nullable()
+})
+
+export type Experience = z.infer<typeof experience>
+
+export const workingHour = z.object({
+  day: z.enum([
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday',
+    'sunday'
+  ]),
+  start_time: z.string(),
+  end_time: z.string()
+})
+
+export type WorkingHour = z.infer<typeof workingHour>
+
+export const location = z.object({
+  landmark: z.string(),
+  street: z.string(),
+  coordinates: z.string().nullable(),
+  city: z.string(),
+  state: z.string()
+})
+
+export type Location = z.infer<typeof location>
+
+export const authenticationMethodMeta = z.discriminatedUnion('provider', [
+  z.object({
+    provider: z.literal('credentials'),
+    data: z.string()
+  })
+])
+
+export type AuthenticationMethodMeta = z.infer<typeof authenticationMethodMeta>
+
 const pgTable = pgTableCreator((name) => `${config.db.prefix}${name}`)
 
 export const pharmacyStores = pgTable('pharmacy_stores', {
@@ -126,3 +178,113 @@ export const pharmacyStoreReviewRelations = relations(
     })
   })
 )
+
+export const users = pgTable('users', {
+  id: varchar('id')
+    .primaryKey()
+    .notNull()
+    .$default(() => ulid()),
+  firstName: varchar('first_name').notNull(),
+  lastName: varchar('last_name').notNull(),
+  email: varchar('email').notNull(),
+  phoneNumber: numeric('phone_number').notNull(),
+  role: varchar('role').notNull().$type<'patient' | 'doctor'>(),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true })
+})
+
+export type User = typeof users.$inferSelect
+
+export const patientProfiles = pgTable('patient_profiles', {
+  id: varchar('id')
+    .primaryKey()
+    .notNull()
+    .$default(() => ulid()),
+  firstName: varchar('first_name').notNull(),
+  lastName: varchar('last_name').notNull(),
+  otherNames: varchar('other_names'),
+  email: varchar('email').notNull(),
+  phoneNumber: numeric('phone_number').notNull(),
+  dateOfBirth: numeric('date_of_birth').notNull(),
+  profilePicture: jsonb('profile_picture').notNull().$type<Media>(),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true })
+})
+
+export type PatientProfile = typeof patientProfiles.$inferSelect
+
+export const doctorProfiles = pgTable('doctor_profiles', {
+  id: varchar('id')
+    .primaryKey()
+    .notNull()
+    .$default(() => ulid()),
+  firstName: varchar('first_name').notNull(),
+  lastName: varchar('last_name').notNull(),
+  otherNames: varchar('other_names'),
+  email: varchar('email').notNull(),
+  phoneNumber: numeric('phone_number').notNull(),
+  dateOfBirth: numeric('date_of_birth').notNull(),
+  profilePicture: jsonb('profile_picture').notNull().$type<Media>(),
+  specialization: varchar('specialization'),
+  patientsTreated: numeric('patients_treated').notNull(),
+  yearsOfExperience: numeric('years_of_experience').notNull(),
+  numberOfReviews: numeric('number_of_reviews').notNull(),
+  rating: numeric('rating').notNull(),
+  description: text('description').notNull(),
+  home_consultation_charge: numeric('home_consultation_charge').notNull(),
+  video_consultation_charge: numeric('video_consultation_charge').notNull(),
+  clinic_consultation_charge: numeric('clinic_consultation_charge').notNull(),
+  certifications: jsonb('certifications').$type<Certification[]>(),
+  experiences: jsonb('experiences').$type<Experience[]>(),
+  working_hours: jsonb('working_hours').$type<WorkingHour[]>(),
+  location: jsonb('location').$type<Location>(),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true })
+})
+
+export type DoctorProfile = typeof doctorProfiles.$inferSelect
+
+export const authenticationMethods = pgTable('authentication_methods', {
+  id: varchar('id')
+    .primaryKey()
+    .notNull()
+    .$default(() => ulid()),
+  userId: varchar('user_id')
+    .notNull()
+    .references(() => users.id),
+  meta: jsonb('meta').notNull().$type<AuthenticationMethodMeta>(),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true })
+})
+
+export type AuthenticationMethod = typeof authenticationMethods.$inferSelect
+
+export const tokens = pgTable('tokens', {
+  id: varchar('id')
+    .primaryKey()
+    .notNull()
+    .$default(() => ulid()),
+  token: varchar('token').notNull(),
+  purpose: varchar('purpose')
+    .notNull()
+    .$type<'verification' | 'password_reset'>(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+  userId: varchar('user_id')
+    .notNull()
+    .unique()
+    .references(() => users.id),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true })
+})
+
+export type Token = typeof tokens.$inferSelect

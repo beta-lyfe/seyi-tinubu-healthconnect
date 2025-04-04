@@ -1,14 +1,28 @@
 import type { schema } from '@beta-lyfe/api'
+import type {
+  User as DbUser,
+  DoctorProfile,
+  PatientProfile
+} from '../database/schema'
 
-export type Doctor = schema.components['schemas']['Api.Doctor.Doctor']
-export type Patient = schema.components['schemas']['Api.Patient.Patient']
+// export type User = DbUser extends { role: 'doctor' }
+//   ? {
+//     data: DbUser
+//     profiles: {
+//       doctor: DoctorProfile
+//     }
+//   }
+//   : {
+//     data: DbUser
+//     profiles: {
+//       patient: PatientProfile
+//     }
+//   }
 
-export type User =
-  | {
-      role: 'doctor'
-      data: Doctor
-    }
-  | {
-      role: 'patient'
-      data: Patient
-    }
+export type User = {
+  data: DbUser
+  profiles: {
+    doctor?: DoctorProfile
+    patient?: PatientProfile
+  }
+}

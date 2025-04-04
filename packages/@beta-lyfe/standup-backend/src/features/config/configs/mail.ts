@@ -1,14 +1,15 @@
 import { env } from '../env'
 
 const MailConfig = {
-  host: env.MAIL_HOST,
-  port: env.MAIL_PORT,
-  secure: false,
-  auth: {
-    user: env.MAIL_USERNAME,
-    pass: env.MAIL_PASSWORD
+  url: env.MAIL_URL,
+  sender: {
+    name: env.MAIL_SENDER_NAME,
+    email: env.MAIL_SENDER_EMAIL
   },
-  sender: env.MAIL_USERNAME
+  support: {
+    name: env.MAIL_SUPPORT_NAME,
+    email: env.MAIL_SUPPORT_EMAIL
+  },
 }
 
 export default MailConfig

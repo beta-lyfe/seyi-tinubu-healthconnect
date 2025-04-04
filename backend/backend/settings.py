@@ -274,6 +274,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://www.betalyfe.com.ng",
     "https://betalyfe-website.vercel.app"
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 AUTH_USER_MODEL = "api.User"

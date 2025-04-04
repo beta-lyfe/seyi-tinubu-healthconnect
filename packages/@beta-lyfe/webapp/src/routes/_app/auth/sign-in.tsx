@@ -1,12 +1,14 @@
-import { Button } from '@beta-lyfe/ui/components/shad/ui/button'
-import {
-  createFileRoute,
-  useRouter,
-  Link,
-  useNavigate
-} from '@tanstack/react-router'
-import { Input } from '@beta-lyfe/ui/components/shad/ui/input'
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
+
+import { useState } from 'react'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { Stethoscope, Loader2, Eye, EyeOff } from 'lucide-react'
+
+import { Button } from '@beta-lyfe/ui/components/button'
+import { Input } from '@beta-lyfe/ui/components/shad/ui/input'
 import {
   Form,
   FormControl,
@@ -15,159 +17,213 @@ import {
   FormLabel,
   FormMessage
 } from '@beta-lyfe/ui/components/shad/ui/form'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { AuthLayout } from './-components/layout'
-import { $api } from '@beta-lyfe/webapp/lib/backend'
+import {
+  Card,
+  CardContent,
+  CardFooter
+} from '@beta-lyfe/ui/components/shad/ui/card'
+import { Checkbox } from '@beta-lyfe/ui/components/shad/ui/checkbox'
+import { Separator } from '@beta-lyfe/ui/components/shad/ui/separator'
+import { $api } from '../../../lib/backend'
 import { toast } from 'sonner'
-import { useEffect, useRef, useState } from 'react'
-import { defaultValues } from './-components/credentials'
-import { ArrowLeftIcon, Loader, Loader2 } from 'lucide-react'
-import { useSignUpForm } from './sign-up/-components/context'
-import { useAuth } from '../../../hooks/auth'
 
 export const Route = createFileRoute('/_app/auth/sign-in')({
   component: SignInPage
 })
 
 const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string()
+  email: z.string().email('Please enter a valid email address'),
+  password: z.string().min(1, 'Password is required'),
+  rememberMe: z.boolean().optional()
 })
 
-type FormSchema = z.infer<typeof formSchema>
-
-function SignInPage() {
-  const toastId = useRef<string | number>()
-  const navigate = useNavigate()
-  const auth = useAuth()
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
-    defaultValues: defaultValues.signIn
-  })
-
-  const resender = $api.useMutation('post', '/api/auth/resend-verify-email', {
-    onError: (error) => {
-      toast.dismiss(toastId.current)
-      toast.error(error.message)
-    },
-    onSuccess: (_data) => {
-      toast.message('otp sent to email')
-      return navigate({
-        to: '/auth/verify',
-        search: {
-          email: form.getValues('email')
-        }
+export default function SignInPage() {
+  const router = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const mutateVerify = $api.useMutation(
+    'post',
+    '/api/auth/send-verification-email',
+    {
+      onSuccess: () => {
+        router.navigate({
+          to: '/auth/verify',
+          search: {
+            email: form.getValues('email')
+          }
+        })
+      },
+      onError: () => {
+        toast.error('Error sending otp')
+      }
+    }
+  )
+  const { mutate } = $api.useMutation('post', '/api/auth/sign-in', {
+    onSuccess: (data) => {
+      // router.navigate({
+      //   to: data.user.is_doctor ? '/doctor/dashboard' : '/dashboard'
+      // })
+      // TODO: probably fetch user profile here and store in auth along with access and refresh tokens
+      router.navigate({
+        to: '/dashboard'
       })
+    },
+    onError: (err) => {
+      toast.error(err.code)
+
+      // if (err.code === 'Email is not verified') {
+      //   mutateVerify.mutate({
+      //     body: {
+      //       email: form.getValues('email')
+      //     }
+      //   })
+      // }
+
+      setIsSubmitting(false)
     }
   })
 
-  const { mutate, status } = $api.useMutation('post', '/api/auth/sign-in')
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false
+    }
+  })
 
-  const onSubmit = (data: FormSchema) => {
-    toastId.current = toast.loading('Signing in...')
-    mutate(
-      { body: data },
-      {
-        onSuccess: (_data) => {
-          auth.update({
-            status: 'authenticated',
-            data: {
-              token: {
-                access_token: _data.access,
-                refresh_token: _data.refresh
-              },
-              user: _data.user.is_doctor
-                ? { type: 'doctor', data: _data.user }
-                : { type: 'patient', data: _data.user }
-            }
-          })
-          toast.dismiss(toastId.current)
-          toast.success('Sign in successful')
-          navigate({
-            to: '/dashboard'
-          })
-        },
-        onError: (error) => {
-          if (error.message.startsWith('Email is not verified ')) {
-            toast.dismiss(toastId.current)
-            toast.error('Email is not verified')
-            resender.mutate({ body: { email: data.email } })
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true)
+
+    try {
+      // Simulate API call
+      await new Promise(() => {
+        mutate({
+          body: {
+            email: form.getValues('email'),
+            password: form.getValues('password')
           }
-          toast.dismiss(toastId.current)
-          toast.error(error.message)
-        }
-      }
-    )
+        })
+      })
+
+      // Navigate to dashboard
+      router.navigate({ to: '/dashboard' })
+    } catch (error) {
+      console.error('Login error:', error)
+      form.setError('root', {
+        message: 'Invalid email or password. Please try again.'
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
-  const isSubmitting = form.formState.isSubmitting || status === 'pending'
-
-  const router = useRouter()
-  const goBack = () => router.history.back()
-
   return (
-    <AuthLayout.Container>
-      <div className="h-full flex flex-col justify-between items-center p-6 lg:items-start lg:p-12">
-        <div className="max-w-md w-full">
-          <button type="button" onClick={goBack}>
-            <ArrowLeftIcon className="size-6" />
-          </button>
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-b from-primary-50 to-background">
+      <div className="w-full max-w-md">
+        <div className="flex flex-col items-center mb-8">
+          <div className="bg-primary/10 p-3 rounded-full mb-4">
+            <img
+              src="/images/betalyfe-icon.svg"
+              className="w-14 h-14 rounded-full"
+            />
+          </div>
+          <h1 className="text-2xl font-bold">Welcome back to Beta-Lyfe</h1>
+          <p className="text-muted-foreground mt-1">Sign in to your account</p>
         </div>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="w-full max-w-md flex flex-col gap-4"
-          >
-            <header className="text-xl font-semibold text-center">
-              Sign in
-            </header>
-            <div className="flex flex-col gap-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input type="email" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+
+        <Card className="border-none">
+          <CardContent className="pt-6">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="name@example.com" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex items-center justify-between">
+                        <FormLabel>Password</FormLabel>
+                        <Link
+                          to="/auth/forgot-password"
+                          className="text-sm text-primary hover:underline"
+                        >
+                          Forgot password?
+                        </Link>
+                      </div>
+                      <FormControl>
+                        <div className="relative">
+                          <Input
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder="••••••••"
+                            {...field}
+                          />
+                          <button
+                            type="button"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
+                            {showPassword ? (
+                              <EyeOff className="h-4 w-4" />
+                            ) : (
+                              <Eye className="h-4 w-4" />
+                            )}
+                          </button>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {form.formState.errors.root && (
+                  <p className="text-sm font-medium text-destructive">
+                    {form.formState.errors.root.message}
+                  </p>
                 )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div>
-              {/*<Link href="">Forgot password?</Link>*/}
+
+                <Button
+                  type="submit"
+                  className="w-full text-white"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing
+                      in
+                    </>
+                  ) : (
+                    'Sign In'
+                  )}
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+          <CardFooter className="flex flex-col items-center pt-0">
+            <p className="text-center text-sm mt-6">
               Don't have an account?{' '}
-              <Link to="/auth/sign-up" className="text-primary">
+              <Link to="/auth/sign-up" className="text-primary hover:underline">
                 Sign up
               </Link>
-            </div>
-            <Button
-              type="submit"
-              className="text-white"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? <Loader2 className="animate-spin" /> : 'Submit'}
-            </Button>
-          </form>
-        </Form>
-        <div />
+            </p>
+          </CardFooter>
+        </Card>
       </div>
-    </AuthLayout.Container>
+    </div>
   )
 }

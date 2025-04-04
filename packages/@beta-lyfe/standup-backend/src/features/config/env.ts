@@ -9,13 +9,16 @@ export const env = createEnv({
     PORT: z.coerce.number().min(0).max(65535),
     DATABASE_URL: z.string().url(),
     DATABASE_PREFIX: z.string().optional(),
-    MAIL_HOST: z.string(),
-    MAIL_PORT: z.coerce.number().min(1).max(65535),
-    MAIL_USERNAME: z.string().min(1),
-    MAIL_PASSWORD: z.string().min(1),
     MEDIA_SERVER_URL: z.string().url(),
     AUTH_SERVER_URL: z.string().url(),
-    BASE_URL: z.string().url()
+    MAIL_URL: z.string().url(),
+    MAIL_SENDER_NAME: z.string(),
+    MAIL_SENDER_EMAIL: z.string().email(),
+    MAIL_SUPPORT_NAME: z.string(),
+    MAIL_SUPPORT_EMAIL: z.string().email(),
+    BASE_URL: z.string().url(),
+    FRONTEND_WEBSITE_URL: z.string().url(),
+    FRONTEND_WEBAPP_URL: z.string().url()
   },
   /**
    * Makes sure you explicitly access **all** environment variables
@@ -27,11 +30,14 @@ export const env = createEnv({
     PORT: process.env.PORT,
     DATABASE_URL: process.env.DATABASE_URL,
     DATABASE_PREFIX: process.env.DATABASE_PREFIX,
-    MAIL_HOST: process.env.MAIL_HOST,
-    MAIL_PORT: process.env.MAIL_PORT,
-    MAIL_USERNAME: process.env.MAIL_USERNAME,
-    MAIL_PASSWORD: process.env.MAIL_PASSWORD,
     AUTH_SERVER_URL: process.env.AUTH_SERVER_URL,
-    BASE_URL: process.env.BASE_URL
+    MAIL_URL: process.env.MAIL_URL,
+    MAIL_SENDER_NAME: process.env.MAIL_SENDER_NAME,
+    MAIL_SENDER_EMAIL: process.env.MAIL_SENDER_EMAIL,
+    MAIL_SUPPORT_NAME: process.env.MAIL_SUPPORT_NAME,
+    MAIL_SUPPORT_EMAIL: process.env.MAIL_SUPPORT_EMAIL,
+    BASE_URL: process.env.BASE_URL,
+    FRONTEND_WEBSITE_URL: process.env.FRONTEND_WEBSITE_URL,
+    FRONTEND_WEBAPP_URL: process.env.FRONTEND_WEBAPP_URL
   }
 })

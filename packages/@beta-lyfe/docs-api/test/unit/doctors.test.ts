@@ -57,7 +57,7 @@ suite('Doctors test', async () => {
     email: doctorData.email,
     password: doctorData.password
   })
-  let doctorProfile: schema.components['schemas']['Api.Doctor.Doctor']
+  let doctorProfile: schema.components['schemas']['Api.Doctor.DoctorProfile']
 
   test('Should return the correct response for [GET] /api/doctors', async () => {
     const res = await client.GET('/api/doctors/')
@@ -77,13 +77,15 @@ suite('Doctors test', async () => {
 
   test('Should return the correct response for [GET] /api/doctors/profile', async () => {
     const res = await client.GET('/api/doctors/profile', {
-      headers: { Authorization: `Bearer ${auth.access}` }
+      headers: { Authorization: `Bearer ${auth.data.access_token}` }
     })
 
     expect(res.response.status).to.equal(200)
     expect(res.error).to.be.undefined
 
-    const validationResult = ozc.schemas.Api_Doctor_Doctor.safeParse(res.data)
+    const validationResult = ozc.schemas.Api_Doctor_DoctorProfile.safeParse(
+      res.data
+    )
 
     expect(validationResult.success).to.equal(
       true,
@@ -98,13 +100,15 @@ suite('Doctors test', async () => {
   test('Should return the correct response for [GET] /api/doctors/profile/{id}', async () => {
     const res = await client.GET('/api/doctors/profile/{id}', {
       params: { path: { id: doctorProfile.id } },
-      headers: { Authorization: `Bearer ${auth.access}` }
+      headers: { Authorization: `Bearer ${auth.data.access_token}` }
     })
 
     expect(res.response.status).to.equal(200)
     expect(res.error).to.be.undefined
 
-    const validationResult = ozc.schemas.Api_Doctor_Doctor.safeParse(res.data)
+    const validationResult = ozc.schemas.Api_Doctor_DoctorProfile.safeParse(
+      res.data
+    )
 
     expect(validationResult.success).to.equal(
       true,
@@ -115,7 +119,7 @@ suite('Doctors test', async () => {
   test('Should return the correct response for [PATCH] /api/doctors/profile', async () => {
     const newPhoneNumber = faker.phone.number({ style: 'international' })
     const res = await client.PATCH('/api/doctors/profile', {
-      headers: { Authorization: `Bearer ${auth.access}` },
+      headers: { Authorization: `Bearer ${auth.data.access_token}` },
       body: {
         phone_number: newPhoneNumber
       }

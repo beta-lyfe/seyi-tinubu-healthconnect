@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { router as authRouter } from './features/auth'
 import { router as pharmacyRouter } from './features/pharmacy'
 import { compress } from 'hono/compress'
 import { cors } from 'hono/cors'
@@ -6,7 +7,7 @@ import { logger as honoLogger } from 'hono/logger'
 import { Logger } from './features/logger'
 import { StatusCodes } from './features/http'
 
-const apiRoutes = new Hono().route('/pharmacy', pharmacyRouter)
+const apiRoutes = new Hono().route('/auth', authRouter).route('/pharmacy', pharmacyRouter)
 
 export const logger = Logger.getSubLogger({ name: 'ServerLogger' })
 

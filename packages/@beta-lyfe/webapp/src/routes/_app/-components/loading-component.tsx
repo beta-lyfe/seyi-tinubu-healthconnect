@@ -2,7 +2,7 @@ import { Loader2, Pill, Video } from "lucide-react"
 
 export default function LoadingScreen() {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm animate-fade-in">
       <div className="text-center">
         <div className="relative flex items-center justify-center">
           {/* Rotating Semi-circle */}
