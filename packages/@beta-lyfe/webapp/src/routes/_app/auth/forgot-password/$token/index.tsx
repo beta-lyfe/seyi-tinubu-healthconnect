@@ -9,7 +9,7 @@ import { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { Stethoscope, ArrowLeft, Loader2, CheckCircle } from 'lucide-react'
+import { Stethoscope, ArrowLeft, Loader2, CheckCircle, EyeOff, Eye } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import { Button } from '@beta-lyfe/ui/components/button'
@@ -42,6 +42,7 @@ const formSchema = z.object({
 export default function ForgotPasswordPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [showPassword,setShowPassword]=useState(false)
   const router=useRouter()
   const {token}=useParams({strict:false})
   const {mutate}=$api.useMutation('post','/api/auth/reset-password/{token}',{
@@ -168,10 +169,24 @@ export default function ForgotPasswordPage() {
                           <FormItem>
                             <FormLabel>New password</FormLabel>
                             <FormControl>
-                              <Input
-                                placeholder="Set new Password"
-                                {...field}
-                              />
+                              <div className="relative">
+                          <Input
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder="••••••••"
+                            {...field}
+                          />
+                          <button
+                            type="button"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
+                            {showPassword ? (
+                              <EyeOff className="h-4 w-4" />
+                            ) : (
+                              <Eye className="h-4 w-4" />
+                            )}
+                          </button>
+                        </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -191,10 +206,13 @@ export default function ForgotPasswordPage() {
                           <FormItem>
                             <FormLabel>Confirm new Password</FormLabel>
                             <FormControl>
-                              <Input
-                                placeholder="Confirm new Password"
-                                {...field}
-                              />
+                             <div className="relative">
+                          <Input
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder="••••••••"
+                            {...field}
+                          />
+                        </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

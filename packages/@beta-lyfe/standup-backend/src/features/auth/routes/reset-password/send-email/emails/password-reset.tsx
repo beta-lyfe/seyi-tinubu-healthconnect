@@ -14,6 +14,7 @@ import type { User } from '../../../../../database/schema'
 
 interface PasswordResetEmailProps {
   user: User
+  token:string,
   resetPasswordLink: string
   websiteLink: string
 }
@@ -46,6 +47,7 @@ const anchor = {
 
 export default function PasswordResetEmail({
   user,
+  token,
   resetPasswordLink,
   websiteLink
 }: PasswordResetEmailProps) {
@@ -74,6 +76,20 @@ export default function PasswordResetEmail({
             >
               Reset password
             </Button>
+            <Text style={{ ...text, fontSize: 12, color: '#555', marginTop: 20 }}>
+          If the button above doesn't work, use the token below to reset your password manually:
+        </Text>
+        <Text
+          style={{
+            ...text,
+            backgroundColor: '#f4f4f4',
+            padding: '10px',
+            borderRadius: '4px',
+            wordBreak: 'break-word',
+            fontFamily: 'monospace',
+            fontSize: 14,
+          }}
+        >{token}</Text>
             <Text style={text}>
               If you don&apos;t want to change your password or didn&apos;t
               request this, just ignore and delete this message.

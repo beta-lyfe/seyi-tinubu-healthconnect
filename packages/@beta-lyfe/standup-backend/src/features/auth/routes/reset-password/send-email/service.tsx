@@ -61,10 +61,11 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
 
   Mailer.send({
     recipients: [user.email],
-    subject: 'Verify Account',
+    subject: 'Reset Account password',
     email: (
       <PasswordResetEmail
         user={user}
+        token={token.token}
         resetPasswordLink={resetPasswordLink}
         websiteLink={config.frontend.websiteUrl}
       />

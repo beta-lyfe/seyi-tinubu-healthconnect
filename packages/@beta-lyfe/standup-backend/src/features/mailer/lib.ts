@@ -11,12 +11,7 @@ export namespace Mailer {
   const logger = Logger.getSubLogger({ name: 'mailer' })
 
   const transporter = nodemailer.createTransport({
-    host: "smtp.purelymail.com",
-  port: 587,
-  auth: {
-    user: "info@betalyfe.com.ng",
-    pass: "c5500bc77a6c4f96"
-  }
+   url:config.mail.url
   })
 
   export type Payload = {

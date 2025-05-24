@@ -31,6 +31,7 @@ import { Route as AppAuthForgotPasswordIndexImport } from './routes/_app/auth/fo
 import { Route as AppDoctorDoctorIndexImport } from './routes/_app/_doctor/doctor/index'
 import { Route as AppDashboardDashboardIndexImport } from './routes/_app/_dashboard/dashboard/index'
 import { Route as AppConsultationConsultationsIndexImport } from './routes/_app/_consultation/consultations/index'
+import { Route as AppAuthForgotPasswordTokenImport } from './routes/_app/auth/forgot-password/token'
 import { Route as AppDashboardDashboardConsultationImport } from './routes/_app/_dashboard/dashboard/_consultation'
 import { Route as AppAuthForgotPasswordTokenIndexImport } from './routes/_app/auth/forgot-password/$token/index'
 import { Route as AppDoctorDoctorSupportIndexImport } from './routes/_app/_doctor/doctor/support/index'
@@ -181,6 +182,14 @@ const AppConsultationConsultationsIndexRoute =
     path: '/consultations/',
     getParentRoute: () => AppRoute,
   } as any)
+
+const AppAuthForgotPasswordTokenRoute = AppAuthForgotPasswordTokenImport.update(
+  {
+    id: '/auth/forgot-password/token',
+    path: '/auth/forgot-password/token',
+    getParentRoute: () => AppRoute,
+  } as any,
+)
 
 const AppDashboardDashboardConsultationRoute =
   AppDashboardDashboardConsultationImport.update({
@@ -470,6 +479,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard'
       preLoaderRoute: typeof AppDashboardDashboardConsultationImport
       parentRoute: typeof AppDashboardDashboardRoute
+    }
+    '/_app/auth/forgot-password/token': {
+      id: '/_app/auth/forgot-password/token'
+      path: '/auth/forgot-password/token'
+      fullPath: '/auth/forgot-password/token'
+      preLoaderRoute: typeof AppAuthForgotPasswordTokenImport
+      parentRoute: typeof AppImport
     }
     '/_app/_consultation/consultations/': {
       id: '/_app/_consultation/consultations/'
@@ -816,6 +832,7 @@ interface AppRouteChildren {
   AppPrivacyIndexRoute: typeof AppPrivacyIndexRoute
   AppTermsIndexRoute: typeof AppTermsIndexRoute
   AppTestcallIndexRoute: typeof AppTestcallIndexRoute
+  AppAuthForgotPasswordTokenRoute: typeof AppAuthForgotPasswordTokenRoute
   AppConsultationConsultationsIndexRoute: typeof AppConsultationConsultationsIndexRoute
   AppAuthForgotPasswordIndexRoute: typeof AppAuthForgotPasswordIndexRoute
   AppAuthSetProfileIndexRoute: typeof AppAuthSetProfileIndexRoute
@@ -834,6 +851,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppPrivacyIndexRoute: AppPrivacyIndexRoute,
   AppTermsIndexRoute: AppTermsIndexRoute,
   AppTestcallIndexRoute: AppTestcallIndexRoute,
+  AppAuthForgotPasswordTokenRoute: AppAuthForgotPasswordTokenRoute,
   AppConsultationConsultationsIndexRoute:
     AppConsultationConsultationsIndexRoute,
   AppAuthForgotPasswordIndexRoute: AppAuthForgotPasswordIndexRoute,
@@ -856,6 +874,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof AppTermsIndexRoute
   '/testcall': typeof AppTestcallIndexRoute
   '/dashboard': typeof AppDashboardDashboardConsultationRouteWithChildren
+  '/auth/forgot-password/token': typeof AppAuthForgotPasswordTokenRoute
   '/consultations': typeof AppConsultationConsultationsIndexRoute
   '/dashboard/': typeof AppDashboardDashboardIndexRoute
   '/doctor': typeof AppDoctorDoctorIndexRoute
@@ -901,6 +920,7 @@ export interface FileRoutesByTo {
   '/terms': typeof AppTermsIndexRoute
   '/testcall': typeof AppTestcallIndexRoute
   '/dashboard': typeof AppDashboardDashboardIndexRoute
+  '/auth/forgot-password/token': typeof AppAuthForgotPasswordTokenRoute
   '/consultations': typeof AppConsultationConsultationsIndexRoute
   '/doctor': typeof AppDoctorDoctorIndexRoute
   '/auth/forgot-password': typeof AppAuthForgotPasswordIndexRoute
@@ -949,6 +969,7 @@ export interface FileRoutesById {
   '/_app/testcall/': typeof AppTestcallIndexRoute
   '/_app/_dashboard/dashboard': typeof AppDashboardDashboardRouteWithChildren
   '/_app/_dashboard/dashboard/_consultation': typeof AppDashboardDashboardConsultationRouteWithChildren
+  '/_app/auth/forgot-password/token': typeof AppAuthForgotPasswordTokenRoute
   '/_app/_consultation/consultations/': typeof AppConsultationConsultationsIndexRoute
   '/_app/_dashboard/dashboard/': typeof AppDashboardDashboardIndexRoute
   '/_app/_doctor/doctor/': typeof AppDoctorDoctorIndexRoute
@@ -996,6 +1017,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/testcall'
     | '/dashboard'
+    | '/auth/forgot-password/token'
     | '/consultations'
     | '/dashboard/'
     | '/doctor'
@@ -1040,6 +1062,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/testcall'
     | '/dashboard'
+    | '/auth/forgot-password/token'
     | '/consultations'
     | '/doctor'
     | '/auth/forgot-password'
@@ -1086,6 +1109,7 @@ export interface FileRouteTypes {
     | '/_app/testcall/'
     | '/_app/_dashboard/dashboard'
     | '/_app/_dashboard/dashboard/_consultation'
+    | '/_app/auth/forgot-password/token'
     | '/_app/_consultation/consultations/'
     | '/_app/_dashboard/dashboard/'
     | '/_app/_doctor/doctor/'
@@ -1160,6 +1184,7 @@ export const routeTree = rootRoute
         "/_app/privacy/",
         "/_app/terms/",
         "/_app/testcall/",
+        "/_app/auth/forgot-password/token",
         "/_app/_consultation/consultations/",
         "/_app/auth/forgot-password/",
         "/_app/auth/set-profile/",
@@ -1253,6 +1278,10 @@ export const routeTree = rootRoute
         "/_app/_dashboard/dashboard/_consultation/clientconsultation",
         "/_app/_dashboard/dashboard/_consultation/jitsiconsultation"
       ]
+    },
+    "/_app/auth/forgot-password/token": {
+      "filePath": "_app/auth/forgot-password/token.tsx",
+      "parent": "/_app"
     },
     "/_app/_consultation/consultations/": {
       "filePath": "_app/_consultation/consultations/index.tsx",

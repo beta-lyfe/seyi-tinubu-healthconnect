@@ -92,7 +92,7 @@ namespace Repository {
     const token = (
       await db
         .insert(tokens)
-        .values({ ...payload, purpose: 'verification' })
+        .values({ ...payload })
         .returning()
     )[0]
     return Result.ok(token)

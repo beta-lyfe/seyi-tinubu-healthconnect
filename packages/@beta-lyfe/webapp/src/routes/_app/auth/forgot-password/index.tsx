@@ -47,6 +47,12 @@ export default function ForgotPasswordPage() {
       setIsSubmitted(true)
     },onError:err=>{
       setIsSubmitted(false)
+      if(err.code==='PASSWORD_RESET_MAIL_ALREADY_SENT_ERROR'){
+        router.navigate({
+          to:'/auth/forgot-password/token',
+        })
+      }
+      
       toast.error(err.code)
     }
   })
@@ -58,15 +64,20 @@ export default function ForgotPasswordPage() {
     }
   })
 
+  
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
+    await new Promise((res) => setTimeout(res, 700));
 
     try {
-      mutate({
+       
+        mutate({
         body:{
           email:values.email
-        }
-      })
+        }})
+
+      
     } catch (error) {
       console.error('Error:', error)
       form.setError('root', {
@@ -115,6 +126,10 @@ export default function ForgotPasswordPage() {
                   <CardDescription>
                     We've sent a password reset link to your email address.
                     Please check your inbox.
+                  </CardDescription>
+                  <CardDescription className='font-bold text-black'>
+                    If you have a token, you can use it to reset your password.<br ></br>
+                   <Link to='/auth/forgot-password/token' className='font-bold text-primary'>To Use token click here</Link> 
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="text-center">
@@ -182,7 +197,7 @@ export default function ForgotPasswordPage() {
                         className="w-full"
                         disabled={isSubmitting}
                       >
-                        {isSubmitting ? (
+                        {form.formState.isSubmitting ? (
                           <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />{' '}
                             Sending

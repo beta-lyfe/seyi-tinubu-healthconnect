@@ -27,7 +27,7 @@ export default new Hono().post('/', middleware, async (c) => {
       }
       case 'USER_NOT_FOUND_ERROR': {
         response = {
-          code: 'CHECK_EMAIL_FOR_RESET_LINK'
+          code: 'EXPECTED_DATA_NOT_RECEIVED_ERROR'
         }
 
         return c.json(response)

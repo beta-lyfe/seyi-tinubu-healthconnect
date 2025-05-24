@@ -3,6 +3,8 @@ import { hashPassword } from '../../utils/password-utils'
 import Repository from '../../repository'
 import type { Schema } from './schema'
 import type { User } from '../../types'
+import { Mailer } from '../../../mailer/lib'
+import GreetingEmail from './email/Greetings'
 
 export type Payload = Schema
 
@@ -41,5 +43,12 @@ export default async (
   if (authenticationMethodCreationResult.isErr)
     return Result.err('UNEXPECTED_ERROR')
 
+  Mailer.send(
+    {
+      email:<GreetingEmail user={user}/> ,
+      recipients:[user.email],
+      subject:"Welcome "
+    }
+  )
   return Result.ok(user)
 }
