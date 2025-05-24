@@ -60,14 +60,13 @@ suite('Doctors test', async () => {
   let doctorProfile: schema.components['schemas']['Api.Doctor.DoctorProfile']
 
   test('Should return the correct response for [GET] /api/doctors', async () => {
-    const res = await client.GET('/api/doctors/')
+    const res = await client.GET('/api/doctors')
 
     expect(res.response.status).to.equal(200)
     expect(res.error).to.be.undefined
 
-    const validationResult = ozc.schemas.Api_Doctor_PaginatedDoctors.safeParse(
-      res.data
-    )
+    const validationResult =
+      ozc.schemas.Api_Doctor_List_response_Success.safeParse(res.data)
 
     expect(validationResult.success).to.equal(
       true,
@@ -93,12 +92,13 @@ suite('Doctors test', async () => {
     )
 
     assert(res.data)
+    assert(res.data.code, 'FETCH_DOCTOR_PROFILE_SUCCESSFUL')
 
-    doctorProfile = res.data
+    doctorProfile = res.data.data
   })
 
   test('Should return the correct response for [GET] /api/doctors/profile/{id}', async () => {
-    const res = await client.GET('/api/doctors/profile/{id}', {
+    const res = await client.GET('/api/doctors/{id}', {
       params: { path: { id: doctorProfile.id } },
       headers: { Authorization: `Bearer ${auth.data.access_token}` }
     })
@@ -118,7 +118,7 @@ suite('Doctors test', async () => {
 
   test('Should return the correct response for [PATCH] /api/doctors/profile', async () => {
     const newPhoneNumber = faker.phone.number({ style: 'international' })
-    const res = await client.PATCH('/api/doctors/profile', {
+    const res = await client.PUT('/api/doctors/profile', {
       headers: { Authorization: `Bearer ${auth.data.access_token}` },
       body: {
         phone_number: newPhoneNumber
@@ -129,7 +129,7 @@ suite('Doctors test', async () => {
     expect(res.error).to.be.undefined
 
     const validationResult =
-      ozc.schemas.Api_Doctor_DoctorProfileUpdatedResponse.safeParse(res.data)
+      ozc.schemas.Api_Doctor_Profile_Update_response_Success.safeParse(res.data)
 
     expect(validationResult.success).to.equal(
       true,

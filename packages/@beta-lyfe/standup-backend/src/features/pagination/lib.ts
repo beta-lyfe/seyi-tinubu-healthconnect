@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
 namespace Pagination {
-  export const fields = ['page', 'perPage'] as const
+  export const fields = ['page', 'per_page'] as const
 
   export const defaults = {
     page: 1,
-    perPage: 20
+    per_page: 20
   }
 
   export const schema = z.object({
@@ -14,12 +14,14 @@ namespace Pagination {
       .pipe(z.coerce.number().min(1))
       .optional()
       .default(defaults.page.toString()),
-    perPage: z
+    per_page: z
       .string()
       .pipe(z.coerce.number().max(50).min(1))
       .optional()
-      .default(defaults.perPage.toString())
+      .default(defaults.per_page.toString())
   })
+
+  export type Schema = z.infer<typeof schema>
 
   export type Options = z.infer<typeof schema>
 
@@ -27,7 +29,7 @@ namespace Pagination {
     data: T[]
     meta: {
       page: number
-      perPage: number
+      per_page: number
       total: number
     }
   }

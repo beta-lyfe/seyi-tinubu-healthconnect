@@ -1,13 +1,7 @@
-import { z } from 'zod'
+import type { z } from 'zod'
+import { schemas } from '@beta-lyfe/api/zod'
 
-const schema = z.object({
-  first_name: z.string(),
-  last_name: z.string(),
-  email: z.string().email(),
-  password: z.string(),
-  phone_number: z.string(),
-  is_doctor: z.boolean()
-})
+const schema = schemas.Api_Authentication_SignUp_Body
 
 export type Schema = z.infer<typeof schema>
 export default schema

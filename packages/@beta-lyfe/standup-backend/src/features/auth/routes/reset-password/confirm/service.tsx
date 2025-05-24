@@ -15,12 +15,14 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
 
   const token = findTokenResult.value
 
+  console.log(token,findTokenResult)
+
   if (!token) return Result.err('INVALID_OR_EXPIRED_TOKEN')
 
   const newHashedPassword = await hashPassword(payload.password)
 
   const findAuthMethodResult =
-    await Repository.findAuthenticationMethodByUserId(token.userId)
+    await Repository.findAuthenticationMethodByUserId(token.user_id)
 
   if (findAuthMethodResult.isErr) return Result.err('UNEXPECTED_ERROR')
 
@@ -28,7 +30,7 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
 
   if (!authMethod) {
     const createAuthMethodResult = await Repository.createAuthenticationMethod({
-      userId: token.userId,
+      user_id: token.user_id,
       meta: {
         provider: 'credentials',
         data: newHashedPassword

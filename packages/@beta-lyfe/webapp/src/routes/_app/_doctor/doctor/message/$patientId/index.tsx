@@ -1,31 +1,88 @@
-import React, { useState } from 'react';
-import { createFileRoute, useParams } from '@tanstack/react-router';
+import React, { useState } from 'react'
+import { createFileRoute, useParams } from '@tanstack/react-router'
 
-export const Route=createFileRoute('/_app/_doctor/doctor/message/$patientId/')({
-  component:ChatPage
+export const Route = createFileRoute(
+  '/_app/_doctor/doctor/message/$patientId/'
+)({
+  component: ChatPage
 })
 
 const initialMessages = [
-  { id: '1', sender: 'Patient', content: 'Hello, I have a question about my results.', timestamp: '2024-09-01 10:00 AM' },
-  { id: '2', sender: 'Doctor', content: 'Sure, what would you like to know?', timestamp: '2024-09-01 10:05 AM' },
-  { id: '3', sender: 'Patient', content: 'Can you explain the results in more detail?', timestamp: '2024-09-01 10:15 AM' },
-  { id: '4', sender: 'Doctor', content: 'Of course. Your results show elevated glucose levels, which could indicate diabetes. I recommend a follow-up test.', timestamp: '2024-09-01 10:25 AM' },
-  { id: '5', sender: 'Patient', content: 'Thanks for the explanation. How should I prepare for the follow-up test?', timestamp: '2024-09-01 10:35 AM' },
-  { id: '6', sender: 'Doctor', content: 'You should fast for at least 8 hours before the test. Avoid sugary foods and drinks.', timestamp: '2024-09-01 10:45 AM' },
-  { id: '7', sender: 'Patient', content: 'Got it. How long will it take to get the results?', timestamp: '2024-09-01 10:55 AM' },
-  { id: '8', sender: 'Doctor', content: 'Results typically come in within 24-48 hours. We’ll notify you as soon as they are available.', timestamp: '2024-09-01 11:05 AM' },
-  { id: '9', sender: 'Patient', content: 'Great, thank you for your help!', timestamp: '2024-09-01 11:15 AM' },
-  { id: '10', sender: 'Doctor', content: 'You’re welcome! If you have any more questions, feel free to reach out.', timestamp: '2024-09-01 11:25 AM' },
-];
+  {
+    id: '1',
+    sender: 'Patient',
+    content: 'Hello, I have a question about my results.',
+    timestamp: '2024-09-01 10:00 AM'
+  },
+  {
+    id: '2',
+    sender: 'Doctor',
+    content: 'Sure, what would you like to know?',
+    timestamp: '2024-09-01 10:05 AM'
+  },
+  {
+    id: '3',
+    sender: 'Patient',
+    content: 'Can you explain the results in more detail?',
+    timestamp: '2024-09-01 10:15 AM'
+  },
+  {
+    id: '4',
+    sender: 'Doctor',
+    content:
+      'Of course. Your results show elevated glucose levels, which could indicate diabetes. I recommend a follow-up test.',
+    timestamp: '2024-09-01 10:25 AM'
+  },
+  {
+    id: '5',
+    sender: 'Patient',
+    content:
+      'Thanks for the explanation. How should I prepare for the follow-up test?',
+    timestamp: '2024-09-01 10:35 AM'
+  },
+  {
+    id: '6',
+    sender: 'Doctor',
+    content:
+      'You should fast for at least 8 hours before the test. Avoid sugary foods and drinks.',
+    timestamp: '2024-09-01 10:45 AM'
+  },
+  {
+    id: '7',
+    sender: 'Patient',
+    content: 'Got it. How long will it take to get the results?',
+    timestamp: '2024-09-01 10:55 AM'
+  },
+  {
+    id: '8',
+    sender: 'Doctor',
+    content:
+      'Results typically come in within 24-48 hours. We’ll notify you as soon as they are available.',
+    timestamp: '2024-09-01 11:05 AM'
+  },
+  {
+    id: '9',
+    sender: 'Patient',
+    content: 'Great, thank you for your help!',
+    timestamp: '2024-09-01 11:15 AM'
+  },
+  {
+    id: '10',
+    sender: 'Doctor',
+    content:
+      'You’re welcome! If you have any more questions, feel free to reach out.',
+    timestamp: '2024-09-01 11:25 AM'
+  }
+]
 
-function ChatPage  () {
+function ChatPage() {
   //const { patientId } = useParams({from:""});
-  const [messages, setMessages] = useState(initialMessages);
-  const [newMessage, setNewMessage] = useState('');
+  const [messages, setMessages] = useState(initialMessages)
+  const [newMessage, setNewMessage] = useState('')
 
-  const handleMessageChange = (e:any) => {
-    setNewMessage(e.target.value);
-  };
+  const handleMessageChange = (e: any) => {
+    setNewMessage(e.target.value)
+  }
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
@@ -33,12 +90,12 @@ function ChatPage  () {
         id: (messages.length + 1).toString(),
         sender: 'Doctor', // Change to 'Patient' if the current user is a patient
         content: newMessage,
-        timestamp: new Date().toLocaleString(),
-      };
-      setMessages([...messages, newMsg]);
-      setNewMessage('');
+        timestamp: new Date().toLocaleString()
+      }
+      setMessages([...messages, newMsg])
+      setNewMessage('')
     }
-  };
+  }
 
   return (
     <div className="p-6 max-w-6xl mx-auto bg-white rounded-lg shadow-lg">
@@ -70,7 +127,7 @@ function ChatPage  () {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ChatPage;
+export default ChatPage

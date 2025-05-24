@@ -1,3 +1,3 @@
-export { default as router } from './routes'
-export { default as Repository } from './repository'
-export * from './middleware'
+export { default as authRouter } from './routes'
+export { default as AuthRepository } from './repository'
+export { default as AuthMiddleware } from './middleware'

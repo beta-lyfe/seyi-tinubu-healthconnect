@@ -1,5 +1,10 @@
-import { inputOtp, InputOTP, InputOTPGroup, InputOTPSlot } from "@beta-lyfe/ui/components/shad/ui/input-otp";
-import { Dispatch ,SetStateAction} from "react";
+import {
+  inputOtp,
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot
+} from '@beta-lyfe/ui/components/shad/ui/input-otp'
+import { Dispatch, SetStateAction } from 'react'
 
 export const InputOTPPattern = ({
   otp,

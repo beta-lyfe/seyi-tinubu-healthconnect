@@ -9,13 +9,14 @@ export const env = createEnv({
     VITE_NODE_ENV: z
       .enum(['production', 'development', 'test'])
       .default('development'),
-    VITE_HUDDLE01_PROJECT_ID: z.string(),
-    VITE_BACKEND_URL: z.string().url()
+      
+    VITE_BACKEND_URL: z.string().url(),
+    VITE_JITSI_APP_ID:z.string()
   },
-  server: { },
+  server: {},
   runtimeEnv: {
     NODE_ENV: ENV.NODE_ENV,
-    VITE_HUDDLE01_PROJECT_ID: ENV.VITE_HUDDLE01_PROJECT_ID,
     VITE_BACKEND_URL: ENV.VITE_BACKEND_URL,
+    VITE_JITSI_APP_ID:ENV.VITE_JITSI_APP_ID
   }
 })

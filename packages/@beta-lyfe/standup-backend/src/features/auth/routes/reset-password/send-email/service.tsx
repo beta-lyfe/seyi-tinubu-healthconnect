@@ -32,7 +32,7 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
   const existingToken = findExistingTokenResult.value
   if (existingToken) {
     const hasTokenExpired =
-      compareAsc(existingToken.expiresAt, Date.now()) === -1
+      compareAsc(existingToken.expires_at, Date.now()) === -1
     if (!hasTokenExpired) {
       return Result.err({
         code: 'TOKEN_NOT_EXPIRED',
@@ -47,9 +47,10 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
   }
 
   const result = await Repository.createVerificationToken({
-    userId: user.id,
+    user_id: user.id,
     token: ulid(),
-    expiresAt: addMinutes(Date.now(), 30)
+    expires_at: addMinutes(Date.now(), 30).toISOString(),
+    purpose:'password_reset'
   })
 
   if (result.isErr) return Result.err({ code: 'UNEXPECTED_ERROR' })

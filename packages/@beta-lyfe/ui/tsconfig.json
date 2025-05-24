@@ -5,10 +5,12 @@
 		"jsx": "react-jsx",
 		"strict": true,
 		"moduleResolution": "bundler",
+		"module": "ESNext",
 		"allowImportingTsExtensions": true,
 		"moduleDetection": "force",
 		"esModuleInterop": true,
 		"isolatedModules": true,
+		"skipLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
 			"@beta-lyfe/ui/*": ["./src/*"]

@@ -1,21 +1,20 @@
-import type { z } from 'zod'
 import type { User } from '../../../auth/types'
-import Repository from '../../repository'
-import type schema from './schema'
+import { PharmacyRepository } from '../..'
+import type { Schema } from './schema'
 import { Storage } from '../../../storage'
 import { Result } from 'true-myth'
 import type { PharmacyStore } from '../../../database/schema'
 
 export type Error = 'IMAGE_UPLOAD_FAILED'
 
-type PayloadSchema = z.infer<typeof schema>
+type Payload = Schema
 
 export default async (
   user: User,
-  payload: PayloadSchema
+  payload: Payload
 ): Promise<Result<PharmacyStore, Error>> => {
-  const { coverImage, ..._payload } = payload
-  const uploadResult = await Storage.service.upload(coverImage)
+  const { cover_image, ..._payload } = payload
+  const uploadResult = await Storage.service.upload(cover_image)
 
   if (uploadResult.isErr) {
     return Result.err('IMAGE_UPLOAD_FAILED')
@@ -23,10 +22,10 @@ export default async (
 
   const uploadedCoverImage = uploadResult.value
 
-  const store = await Repository.create({
+  const store = await PharmacyRepository.createStore({
     ..._payload,
-    coverImage: uploadedCoverImage,
-    ownerId: user.data.id
+    cover_image: uploadedCoverImage,
+    owner_id: user.data.id
   })
 
   return Result.ok(store)

@@ -1,6 +1,5 @@
 import './app'
 
 window.addEventListener('DOMContentLoaded', () => {
-  window.addEventListener('beforeinstallprompt', (event) => {
-  })
+  window.addEventListener('beforeinstallprompt', (event) => {})
 })

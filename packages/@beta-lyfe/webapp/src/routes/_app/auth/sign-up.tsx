@@ -15,7 +15,9 @@ import {
   Mail,
   Phone,
   Lock,
-  CheckCircle2
+  CheckCircle2,
+  EyeIcon,
+  EyeOff
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -71,7 +73,6 @@ const step5Schema = z
 const formSchema = step1Schema
   .merge(step2Schema)
   .merge(step3Schema)
-  .merge(step4Schema)
   .merge(
     z.object({
       password: z.string().min(8, 'Password must be at least 8 characters'),
@@ -102,7 +103,6 @@ export default function SignUpPage() {
     { title: 'Personal Information', description: "Let's get to know you" },
     { title: 'Select Role', description: 'Are you a doctor or a patient?' },
     { title: 'Contact Information', description: 'How can we reach you?' },
-    { title: 'Date of Birth', description: 'Just one more step' },
     { title: 'Create Password', description: 'Secure your account' }
   ]
 
@@ -122,7 +122,7 @@ export default function SignUpPage() {
     }
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (password: string) => {
     setIsSubmitting(true)
 
     try {
@@ -135,7 +135,7 @@ export default function SignUpPage() {
             first_name: _formData.firstname,
             last_name: _formData.lastname,
             is_doctor: _formData.role === 'doctor',
-            password: _formData.password,
+            password: password,
             phone_number: _formData.phone
           }
         })
@@ -223,14 +223,6 @@ export default function SignUpPage() {
                   />
                 )}
                 {step === 3 && (
-                  <Step4Form
-                    data={formData}
-                    updateData={updateFormData}
-                    onNext={nextStep}
-                    onPrev={prevStep}
-                  />
-                )}
-                {step === 4 && (
                   <Step5Form
                     data={formData}
                     updateData={updateFormData}
@@ -502,68 +494,6 @@ function Step3Form({
   )
 }
 
-// Step 4: Date of Birth
-function Step4Form({
-  data,
-  updateData,
-  onNext,
-  onPrev
-}: {
-  data: Partial<FormData>
-  updateData: (data: Partial<FormData>) => void
-  onNext: () => void
-  onPrev: () => void
-}) {
-  const form = useForm<z.infer<typeof step4Schema>>({
-    resolver: zodResolver(step4Schema),
-    defaultValues: {
-      dob: data.dob || ''
-    }
-  })
-
-  function onSubmit(values: z.infer<typeof step4Schema>) {
-    updateData(values)
-    onNext()
-  }
-
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <div className="flex justify-center mb-4">
-          <Calendar className="h-16 w-16 text-primary" />
-        </div>
-
-        <FormField
-          control={form.control}
-          name="dob"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="flex items-center">Date of Birth</FormLabel>
-              <FormControl>
-                <Input type="date" {...field} />
-              </FormControl>
-              <FormMessage />
-              <p className="text-xs text-muted-foreground mt-1">
-                We need your date of birth to verify your identity and provide
-                age-appropriate services.
-              </p>
-            </FormItem>
-          )}
-        />
-
-        <div className="flex justify-between pt-4">
-          <Button type="button" variant="outline" onClick={onPrev}>
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back
-          </Button>
-          <Button type="submit" className="text-white">
-            Continue <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      </form>
-    </Form>
-  )
-}
-
 // Step 5: Security (Password and Confirm Password)
 function Step5Form({
   data,
@@ -575,7 +505,7 @@ function Step5Form({
   data: Partial<FormData>
   updateData: (data: Partial<FormData>) => void
   onPrev: () => void
-  onSubmit: () => void
+  onSubmit: (password: string) => void
   isSubmitting: boolean
 }) {
   const form = useForm<z.infer<typeof step5Schema>>({
@@ -588,8 +518,10 @@ function Step5Form({
 
   function handleSubmit(values: z.infer<typeof step5Schema>) {
     updateData(values)
-    onSubmit()
+    onSubmit(form.getValues('password'))
   }
+
+  const [showPassword,setShowPassword]=useState(false)
 
   return (
     <Form {...form}>
@@ -605,8 +537,21 @@ function Step5Form({
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="••••••••" {...field} />
+                <div className='relative'>
+                  <div onClick={()=>setShowPassword(!showPassword)}>
+                    {
+                    showPassword ? 
+                     <EyeIcon className='absolute top-1/2 right-1 mr-2 -translate-y-1/2' size={20}/>
+                    :
+                     <EyeOff className='absolute top-1/2 right-1 mr-2 -translate-y-1/2' size={20}/>
+                  }
+                  </div>
+                  
+                 
+                  <Input type={showPassword ? "text":"password" } placeholder="••••••••" {...field} />
+                </div>
               </FormControl>
+            
               <FormMessage />
             </FormItem>
           )}
@@ -618,7 +563,7 @@ function Step5Form({
             <FormItem>
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="••••••••" {...field} />
+                <Input type={showPassword ? "text":"password" } placeholder="••••••••" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -4,17 +4,15 @@ import service from './service'
 import middleware from './middleware'
 import type { schema } from '@beta-lyfe/api'
 
-export type ApiResponse =
-  | schema.components['schemas']['Api.Authentication.SignupSuccessful']
-  | schema.components['schemas']['Api.Authentication.EmailAlreadyInUseError']
-  | schema.components['schemas']['Api.UnexpectedError']
+export type Response =
+  schema.paths['/api/auth/sign-up']['post']['responses'][keyof schema.paths['/api/auth/sign-up']['post']['responses']]['content']['application/json']
 
 export default new Hono().post('/sign-up', middleware, async (c) => {
   const payload = c.req.valid('json')
 
   const result = await service(payload)
 
-  let response: ApiResponse
+  let response: Response
 
   if (result.isErr) {
     switch (result.error) {

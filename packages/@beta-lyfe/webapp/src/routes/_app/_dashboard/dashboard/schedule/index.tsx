@@ -5,171 +5,174 @@ import { Datepicker } from 'flowbite-react'
 
 import { CalendarCheckIcon, PillIcon, StethoscopeIcon } from 'lucide-react'
 import { BottomNav } from '../../../-components/bottom-nav'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { cn } from '@beta-lyfe/ui/components/shad/lib/utils'
 import { DateTheme } from '@beta-lyfe/webapp/data/dateTheme'
 import { LayoutWithBottomNav } from '../-components/layout'
 
-import { MainLayout } from "../-components/main-layout"
-import { Card, CardContent, CardHeader, CardTitle } from "@beta-lyfe/ui/components/shad/ui/card"
-import { Button } from "@beta-lyfe/ui/components/button"
-import { Badge } from "@beta-lyfe/ui/components/shad/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@beta-lyfe/ui/components/shad/ui/tabs"
-import {  Clock, Video, MessageSquare } from "lucide-react"
-
+import { MainLayout } from '../-components/main-layout'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle
+} from '@beta-lyfe/ui/components/shad/ui/card'
+import { Button } from '@beta-lyfe/ui/components/button'
+import { Badge } from '@beta-lyfe/ui/components/shad/ui/badge'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
+} from '@beta-lyfe/ui/components/shad/ui/tabs'
+import { Clock, Video, MessageSquare } from 'lucide-react'
+import { $api } from '../../../../../lib/backend'
+import { schema } from '@beta-lyfe/api'
+import { toast } from 'sonner'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { useAuth } from '../../../../../hooks/auth'
+import { config } from '../../../../../lib/config'
+import { env } from '../../../../../env'
 
 export const Route = createFileRoute('/_app/_dashboard/dashboard/schedule/')({
-  component: SchedulePage,
+  component: SchedulePage
 })
+
+type ConsultationDataType=schema.components["schemas"]["Api.Consultation.Request.ConsultationRequest"][];
+type ProfileDataType=schema.components["schemas"]["Api.Doctor.Profile.Get.response.Success"];
+
+
 
 
 function SchedulePage() {
+  
   return (
-  
-        <div className="space-y-6">
-          {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h1 className="text-xl md:text-2xl font-bold tracking-tight">Your Appointments</h1>
-              <p className="text-muted-foreground">Manage your telehealth consultations</p>
-            </div>
-            <Button>Book New Appointment</Button>
-          </div>
-
-          {/* Calendar view */}
-          <Card>
-            <CardContent className="p-4">
-              <div className="text-center p-6 border rounded-md">
-                <p className="text-muted-foreground">Calendar view will be displayed here</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Appointments tabs */}
-          <Tabs defaultValue="upcoming">
-            <TabsList className="mb-4">
-              <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
-              <TabsTrigger value="past">Past</TabsTrigger>
-              <TabsTrigger value="canceled">Canceled</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="upcoming" className="space-y-4">
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 p-3 rounded-md">
-                      <Video className="h-6 w-6 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                        <div>
-                          <h3 className="font-bold text-sm md:text-md">Dr. Sarah Johnson</h3>
-                          <p className="text-sm text-muted-foreground">Cardiologist</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="outline" className="flex items-center gap-1">
-                            <Clock className="h-3 w-3" /> 10:00 AM
-                          </Badge>
-                        </div>
-                      </div>
-                      <div className="flex flex-col md:flex-row md:items-center justify-between mt-4">
-                        <p className="text-sm">Follow-up consultation for heart condition</p>
-                        <div className="flex gap-2 mt-2 md:mt-0">
-                          <Button variant="outline" size="sm">
-                            Reschedule
-                          </Button>
-                          <Button size="sm">Join Call</Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 p-3 rounded-md">
-                      <MessageSquare className="h-6 w-6 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                        <div>
-                          <h3 className="font-bold text-sm md:text-md">Dr. Michael Chen</h3>
-                          <p className="text-sm text-muted-foreground">Dermatologist</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="outline" className="flex items-center gap-1">
-                            <Clock className="h-3 w-3" /> 2:30 PM
-                          </Badge>
-                        </div>
-                      </div>
-                      <div className="flex flex-col md:flex-row md:items-center justify-between mt-4">
-                        <p className="text-sm">Consultation for skin condition</p>
-                        <div className="flex gap-2 mt-2 md:mt-0">
-                          <Button variant="outline" size="sm">
-                            Reschedule
-                          </Button>
-                          <Button variant="outline" size="sm">
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="past" className="space-y-4">
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-muted p-3 rounded-md">
-                      <Video className="h-6 w-6 text-muted-foreground" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                        <div>
-                          <h3 className="font-semibold">Dr. Sarah Johnson</h3>
-                          <p className="text-sm text-muted-foreground">Cardiologist</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="outline" className="flex items-center gap-1">
-                            <Calendar /> 2 weeks ago
-                          </Badge>
-                        </div>
-                      </div>
-                      <div className="flex flex-col md:flex-row md:items-center justify-between mt-4">
-                        <p className="text-sm">Initial consultation for heart condition</p>
-                        <div className="flex gap-2 mt-2 md:mt-0">
-                          <Button variant="outline" size="sm">
-                            View Summary
-                          </Button>
-                          <Button size="sm">Book</Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="canceled" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-center text-muted-foreground">No canceled appointments</CardTitle>
-                </CardHeader>
-              </Card>
-            </TabsContent>
-          </Tabs>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-xl md:text-2xl font-bold tracking-tight">
+            Your Appointments
+          </h1>
+          <p className="text-muted-foreground">
+            Manage your telehealth consultations
+          </p>
         </div>
-  
+        <Button>Book New Appointment</Button>
+      </div>
+
+      {/* Calendar view */}
+      <Card>
+        <CardContent className="p-4">
+          <div className="text-center p-6 border rounded-md">
+            <p className="text-muted-foreground">
+              Calendar view will be displayed here
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Appointments tabs */}
+      <Tabs defaultValue="upcoming">
+        <TabsList className="mb-4">
+          <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+          <TabsTrigger value="past">Past</TabsTrigger>
+          <TabsTrigger value="canceled">Canceled</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="upcoming" className="space-y-4"> 
+          <GetAllAppointments />
+        
+        </TabsContent>
+
+        <TabsContent value="canceled" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-center text-muted-foreground">
+                No canceled appointments
+              </CardTitle>
+            </CardHeader>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </div>
   )
 }
 
 
+export function GetAllAppointments({number}:{number?:number}){
+ 
+  const token=useAuth(true).data.data.token.access_token
 
+  const query=$api.useQuery('get','/api/consultation/request',{
+    headers:{
+      Authorization:`Bearer ${token}`
+    } ,
+    params:{
+      query:!number ? {
+        profile:"true"
+      } : {
+        profile:'true',
+        page:1,
+        per_page:3
+      }
+    } 
+  })
+
+  const consultations=query.data?.data.data
+
+
+  return (
+    <>
+    {
+    consultations && consultations.map((consultation)=>(
+
+      <Card>
+      <CardContent className="p-4">
+        <div className="flex items-start gap-4">
+          <div className="bg-primary/10 p-3 rounded-md">
+            <Video className="h-6 w-6 text-primary" />
+          </div>
+          <div className="flex-1">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+              <div>
+                <h3 className="font-bold text-sm md:text-md">
+                  Dr {consultation.doctor_profile!.first_name} {consultation.doctor_profile!.last_name}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {consultation.doctor_profile!.specialization}
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Badge
+                  variant="outline"
+                  className="flex items-center gap-1"
+                >
+                  <Clock className="h-3 w-3" /> {new Date(consultation.start_time).toLocaleString()}
+                </Badge>
+              </div>
+            </div>
+            <div className="flex flex-col md:flex-row md:items-center justify-between mt-4">
+              <p className="text-sm">
+                {consultation.message}
+              </p>
+              <div className="flex gap-2 mt-2 md:mt-0">
+                {consultation.status==='pending' ? <Button variant="outline" size="sm">
+                  Pending
+                </Button> : 
+                <Button size="sm">Join Call</Button>}
+              </div>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+
+    ))
+  }
+  </>
+  )
+}
 
 export const quickNav = [
   {
@@ -253,11 +256,11 @@ const scheduleData = [
 function IndexPage() {
   return (
     <LayoutWithBottomNav>
-    <main className="p-6">
-      <DateHeader />
-      <Calendar />
-      <Schedule schedules={scheduleData} />
-    </main>
+      <main className="p-6">
+        <DateHeader />
+        <Calendar />
+        <Schedule schedules={scheduleData} />
+      </main>
     </LayoutWithBottomNav>
   )
 }

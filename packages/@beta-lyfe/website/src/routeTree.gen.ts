@@ -29,74 +29,74 @@ import { Route as AppExtrasGetTheAppImport } from './routes/_app/_extras/get-the
 const AboutRoute = AboutImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const AppPharmacyIndexRoute = AppPharmacyIndexImport.update({
   id: '/_app/pharmacy/',
   path: '/pharmacy/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const AppHowToUseIndexRoute = AppHowToUseIndexImport.update({
   id: '/_app/how-to-use/',
   path: '/how-to-use/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const AppContactUsIndexRoute = AppContactUsIndexImport.update({
   id: '/_app/contact-us/',
   path: '/contact-us/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const AppChatSupportIndexRoute = AppChatSupportIndexImport.update({
   id: '/_app/chat-support/',
   path: '/chat-support/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const AppCareServicesIndexRoute = AppCareServicesIndexImport.update({
   id: '/_app/care-services/',
   path: '/care-services/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const AppAboutUsIndexRoute = AppAboutUsIndexImport.update({
   id: '/_app/about-us/',
   path: '/about-us/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const AppExtrasVirtualConsultationsRoute =
   AppExtrasVirtualConsultationsImport.update({
     id: '/_app/_extras/virtual-consultations',
     path: '/virtual-consultations',
-    getParentRoute: () => rootRoute,
+    getParentRoute: () => rootRoute
   } as any)
 
 const AppExtrasSpecialtiesRoute = AppExtrasSpecialtiesImport.update({
   id: '/_app/_extras/specialties',
   path: '/specialties',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const AppExtrasSignupRoute = AppExtrasSignupImport.update({
   id: '/_app/_extras/signup',
   path: '/signup',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const AppExtrasGetTheAppRoute = AppExtrasGetTheAppImport.update({
   id: '/_app/_extras/get-the-app',
   path: '/get-the-app',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -311,7 +311,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppChatSupportIndexRoute: AppChatSupportIndexRoute,
   AppContactUsIndexRoute: AppContactUsIndexRoute,
   AppHowToUseIndexRoute: AppHowToUseIndexRoute,
-  AppPharmacyIndexRoute: AppPharmacyIndexRoute,
+  AppPharmacyIndexRoute: AppPharmacyIndexRoute
 }
 
 export const routeTree = rootRoute

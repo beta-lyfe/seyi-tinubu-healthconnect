@@ -1,40 +1,54 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 
 import {
-    Video,
-    Stethoscope,
-    Pill,
-    HeartPulse,
-    Baby,
-    Brain,
-    Thermometer,
-    Microscope,
-    Activity,
-    CheckCircle2,
-    Calendar,
-    Clock,
-    Shield,
-    Star,
-    ArrowRight,
-  } from "lucide-react"
-  
-  import { Button } from "@beta-lyfe/ui/components/button"
-  import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@beta-lyfe/ui/components/shad/ui/card"
-  import { Tabs, TabsContent, TabsList, TabsTrigger } from "@beta-lyfe/ui/components/shad/ui/tabs"
-  import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@beta-lyfe/ui/components/shad/ui/accordion"
-  import { Badge } from "@beta-lyfe/ui/components/shad/ui/badge"
-  import WhatsAppButton from "@beta-lyfe/ui/components/whatappbtn"
+  Video,
+  Stethoscope,
+  Pill,
+  HeartPulse,
+  Baby,
+  Brain,
+  Thermometer,
+  Microscope,
+  Activity,
+  CheckCircle2,
+  Calendar,
+  Clock,
+  Shield,
+  Star,
+  ArrowRight
+} from 'lucide-react'
+
+import { Button } from '@beta-lyfe/ui/components/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@beta-lyfe/ui/components/shad/ui/card'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
+} from '@beta-lyfe/ui/components/shad/ui/tabs'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from '@beta-lyfe/ui/components/shad/ui/accordion'
+import { Badge } from '@beta-lyfe/ui/components/shad/ui/badge'
+import WhatsAppButton from '@beta-lyfe/ui/components/whatappbtn'
 
 export const Route = createFileRoute('/_app/care-services/')({
-  component: CareServicesPage,
+  component: CareServicesPage
 })
-
 
 function CareServicesPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      
-
       <main className="flex-1">
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-blue-50 to-white">
@@ -46,8 +60,8 @@ function CareServicesPage() {
                     Comprehensive Healthcare Services
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Access quality healthcare services from licensed Nigerian professionals, all from the comfort of
-                    your home.
+                    Access quality healthcare services from licensed Nigerian
+                    professionals, all from the comfort of your home.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -73,7 +87,9 @@ function CareServicesPage() {
                       <Stethoscope className="h-5 w-5 text-green-600" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium">36+ Medical Specialties</p>
+                      <p className="text-sm font-medium">
+                        36+ Medical Specialties
+                      </p>
                       <p className="text-xl font-bold">2,500+ Care Providers</p>
                     </div>
                   </div>
@@ -88,8 +104,12 @@ function CareServicesPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">Our Services</div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">Primary Healthcare Services</h2>
+                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
+                  Our Services
+                </div>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                  Primary Healthcare Services
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   BetaLyfe offers a complete healthcare ecosystem for Nigerians.
                 </p>
@@ -103,8 +123,9 @@ function CareServicesPage() {
                   </div>
                   <h3 className="text-xl font-bold">Virtual Consultations</h3>
                   <p className="text-muted-foreground">
-                    Connect with licensed Nigerian doctors via video, voice, or chat. Get medical advice, prescriptions,
-                    and referrals from the comfort of your home.
+                    Connect with licensed Nigerian doctors via video, voice, or
+                    chat. Get medical advice, prescriptions, and referrals from
+                    the comfort of your home.
                   </p>
                   <ul className="text-left w-full space-y-2">
                     <li className="flex items-start gap-2">
@@ -134,8 +155,8 @@ function CareServicesPage() {
                   </div>
                   <h3 className="text-xl font-bold">Online Pharmacy</h3>
                   <p className="text-muted-foreground">
-                    Order prescription and over-the-counter medications online. Enjoy fast delivery to your doorstep
-                    anywhere in Nigeria.
+                    Order prescription and over-the-counter medications online.
+                    Enjoy fast delivery to your doorstep anywhere in Nigeria.
                   </p>
                   <ul className="text-left w-full space-y-2">
                     <li className="flex items-start gap-2">
@@ -165,8 +186,9 @@ function CareServicesPage() {
                   </div>
                   <h3 className="text-xl font-bold">Specialist Care</h3>
                   <p className="text-muted-foreground">
-                    Access specialists across 36+ medical fields including pediatrics, gynecology, cardiology,
-                    dermatology, and mental health.
+                    Access specialists across 36+ medical fields including
+                    pediatrics, gynecology, cardiology, dermatology, and mental
+                    health.
                   </p>
                   <ul className="text-left w-full space-y-2">
                     <li className="flex items-start gap-2">
@@ -201,7 +223,9 @@ function CareServicesPage() {
                 <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
                   Specialist Care
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Medical Specialties</h2>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+                  Medical Specialties
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Access expert care across a wide range of medical specialties
                 </p>
@@ -219,22 +243,60 @@ function CareServicesPage() {
               <TabsContent value="popular" className="mt-0">
                 <div className="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {[
-                    { name: "General Medicine", icon: <Stethoscope className="h-6 w-6" />, count: 350 },
-                    { name: "Pediatrics", icon: <Baby className="h-6 w-6" />, count: 215 },
-                    { name: "Gynecology", icon: <HeartPulse className="h-6 w-6" />, count: 180 },
-                    { name: "Cardiology", icon: <Activity className="h-6 w-6" />, count: 120 },
-                    { name: "Dermatology", icon: <Thermometer className="h-6 w-6" />, count: 95 },
-                    { name: "Orthopedics", icon: <Activity className="h-6 w-6" />, count: 85 },
-                    { name: "Neurology", icon: <Brain className="h-6 w-6" />, count: 75 },
-                    { name: "Ophthalmology", icon: <Microscope className="h-6 w-6" />, count: 65 },
+                    {
+                      name: 'General Medicine',
+                      icon: <Stethoscope className="h-6 w-6" />,
+                      count: 350
+                    },
+                    {
+                      name: 'Pediatrics',
+                      icon: <Baby className="h-6 w-6" />,
+                      count: 215
+                    },
+                    {
+                      name: 'Gynecology',
+                      icon: <HeartPulse className="h-6 w-6" />,
+                      count: 180
+                    },
+                    {
+                      name: 'Cardiology',
+                      icon: <Activity className="h-6 w-6" />,
+                      count: 120
+                    },
+                    {
+                      name: 'Dermatology',
+                      icon: <Thermometer className="h-6 w-6" />,
+                      count: 95
+                    },
+                    {
+                      name: 'Orthopedics',
+                      icon: <Activity className="h-6 w-6" />,
+                      count: 85
+                    },
+                    {
+                      name: 'Neurology',
+                      icon: <Brain className="h-6 w-6" />,
+                      count: 75
+                    },
+                    {
+                      name: 'Ophthalmology',
+                      icon: <Microscope className="h-6 w-6" />,
+                      count: 65
+                    }
                   ].map((specialty, index) => (
                     <Card key={index} className="overflow-hidden">
                       <CardContent className="p-6 flex flex-col items-center text-center space-y-4">
-                        <div className="p-3 bg-primary/10 rounded-full">{specialty.icon}</div>
+                        <div className="p-3 bg-primary/10 rounded-full">
+                          {specialty.icon}
+                        </div>
                         <h3 className="font-bold">{specialty.name}</h3>
-                        <Badge variant="outline">{specialty.count} Specialists</Badge>
+                        <Badge variant="outline">
+                          {specialty.count} Specialists
+                        </Badge>
                         <Button asChild variant="link" className="mt-2 p-0">
-                          <a href={`/specialty/${specialty.name.toLowerCase().replace(/\s+/g, "-")}`}>
+                          <a
+                            href={`/specialty/${specialty.name.toLowerCase().replace(/\s+/g, '-')}`}
+                          >
                             Find Specialists
                           </a>
                         </Button>
@@ -247,18 +309,40 @@ function CareServicesPage() {
               <TabsContent value="chronic" className="mt-0">
                 <div className="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {[
-                    { name: "Diabetes Care", icon: <Thermometer className="h-6 w-6" />, count: 110 },
-                    { name: "Hypertension", icon: <Activity className="h-6 w-6" />, count: 125 },
-                    { name: "Asthma", icon: <HeartPulse className="h-6 w-6" />, count: 85 },
-                    { name: "Arthritis", icon: <Activity className="h-6 w-6" />, count: 70 },
+                    {
+                      name: 'Diabetes Care',
+                      icon: <Thermometer className="h-6 w-6" />,
+                      count: 110
+                    },
+                    {
+                      name: 'Hypertension',
+                      icon: <Activity className="h-6 w-6" />,
+                      count: 125
+                    },
+                    {
+                      name: 'Asthma',
+                      icon: <HeartPulse className="h-6 w-6" />,
+                      count: 85
+                    },
+                    {
+                      name: 'Arthritis',
+                      icon: <Activity className="h-6 w-6" />,
+                      count: 70
+                    }
                   ].map((specialty, index) => (
                     <Card key={index} className="overflow-hidden">
                       <CardContent className="p-6 flex flex-col items-center text-center space-y-4">
-                        <div className="p-3 bg-primary/10 rounded-full">{specialty.icon}</div>
+                        <div className="p-3 bg-primary/10 rounded-full">
+                          {specialty.icon}
+                        </div>
                         <h3 className="font-bold">{specialty.name}</h3>
-                        <Badge variant="outline">{specialty.count} Specialists</Badge>
+                        <Badge variant="outline">
+                          {specialty.count} Specialists
+                        </Badge>
                         <Button asChild variant="link" className="mt-2 p-0">
-                          <a href={`/specialty/${specialty.name.toLowerCase().replace(/\s+/g, "-")}`}>
+                          <a
+                            href={`/specialty/${specialty.name.toLowerCase().replace(/\s+/g, '-')}`}
+                          >
                             Find Specialists
                           </a>
                         </Button>
@@ -271,18 +355,40 @@ function CareServicesPage() {
               <TabsContent value="preventive" className="mt-0">
                 <div className="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {[
-                    { name: "Wellness Checks", icon: <CheckCircle2 className="h-6 w-6" />, count: 180 },
-                    { name: "Nutrition", icon: <Pill className="h-6 w-6" />, count: 95 },
-                    { name: "Vaccination", icon: <Shield className="h-6 w-6" />, count: 75 },
-                    { name: "Health Screening", icon: <Microscope className="h-6 w-6" />, count: 110 },
+                    {
+                      name: 'Wellness Checks',
+                      icon: <CheckCircle2 className="h-6 w-6" />,
+                      count: 180
+                    },
+                    {
+                      name: 'Nutrition',
+                      icon: <Pill className="h-6 w-6" />,
+                      count: 95
+                    },
+                    {
+                      name: 'Vaccination',
+                      icon: <Shield className="h-6 w-6" />,
+                      count: 75
+                    },
+                    {
+                      name: 'Health Screening',
+                      icon: <Microscope className="h-6 w-6" />,
+                      count: 110
+                    }
                   ].map((specialty, index) => (
                     <Card key={index} className="overflow-hidden">
                       <CardContent className="p-6 flex flex-col items-center text-center space-y-4">
-                        <div className="p-3 bg-primary/10 rounded-full">{specialty.icon}</div>
+                        <div className="p-3 bg-primary/10 rounded-full">
+                          {specialty.icon}
+                        </div>
                         <h3 className="font-bold">{specialty.name}</h3>
-                        <Badge variant="outline">{specialty.count} Specialists</Badge>
+                        <Badge variant="outline">
+                          {specialty.count} Specialists
+                        </Badge>
                         <Button asChild variant="link" className="mt-2 p-0">
-                          <a href={`/specialty/${specialty.name.toLowerCase().replace(/\s+/g, "-")}`}>
+                          <a
+                            href={`/specialty/${specialty.name.toLowerCase().replace(/\s+/g, '-')}`}
+                          >
                             Find Specialists
                           </a>
                         </Button>
@@ -295,18 +401,40 @@ function CareServicesPage() {
               <TabsContent value="mental" className="mt-0">
                 <div className="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {[
-                    { name: "Psychiatry", icon: <Brain className="h-6 w-6" />, count: 65 },
-                    { name: "Psychology", icon: <Brain className="h-6 w-6" />, count: 85 },
-                    { name: "Therapy", icon: <HeartPulse className="h-6 w-6" />, count: 95 },
-                    { name: "Counseling", icon: <HeartPulse className="h-6 w-6" />, count: 110 },
+                    {
+                      name: 'Psychiatry',
+                      icon: <Brain className="h-6 w-6" />,
+                      count: 65
+                    },
+                    {
+                      name: 'Psychology',
+                      icon: <Brain className="h-6 w-6" />,
+                      count: 85
+                    },
+                    {
+                      name: 'Therapy',
+                      icon: <HeartPulse className="h-6 w-6" />,
+                      count: 95
+                    },
+                    {
+                      name: 'Counseling',
+                      icon: <HeartPulse className="h-6 w-6" />,
+                      count: 110
+                    }
                   ].map((specialty, index) => (
                     <Card key={index} className="overflow-hidden">
                       <CardContent className="p-6 flex flex-col items-center text-center space-y-4">
-                        <div className="p-3 bg-primary/10 rounded-full">{specialty.icon}</div>
+                        <div className="p-3 bg-primary/10 rounded-full">
+                          {specialty.icon}
+                        </div>
                         <h3 className="font-bold">{specialty.name}</h3>
-                        <Badge variant="outline">{specialty.count} Specialists</Badge>
+                        <Badge variant="outline">
+                          {specialty.count} Specialists
+                        </Badge>
                         <Button asChild variant="link" className="mt-2 p-0">
-                          <a href={`/specialty/${specialty.name.toLowerCase().replace(/\s+/g, "-")}`}>
+                          <a
+                            href={`/specialty/${specialty.name.toLowerCase().replace(/\s+/g, '-')}`}
+                          >
                             Find Specialists
                           </a>
                         </Button>
@@ -487,7 +615,8 @@ function CareServicesPage() {
                   The Benefits of Our Healthcare Services
                 </h2>
                 <p className="text-muted-foreground md:text-xl/relaxed">
-                  Experience healthcare that's designed around your needs and lifestyle.
+                  Experience healthcare that's designed around your needs and
+                  lifestyle.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                   <div className="flex items-start gap-4">
@@ -497,7 +626,8 @@ function CareServicesPage() {
                     <div>
                       <h3 className="font-bold">Convenient Access</h3>
                       <p className="text-muted-foreground">
-                        Access healthcare services 24/7 from anywhere in Nigeria. No more long waits or travel time.
+                        Access healthcare services 24/7 from anywhere in
+                        Nigeria. No more long waits or travel time.
                       </p>
                     </div>
                   </div>
@@ -508,8 +638,8 @@ function CareServicesPage() {
                     <div>
                       <h3 className="font-bold">Quality Assurance</h3>
                       <p className="text-muted-foreground">
-                        All our healthcare providers are licensed, verified, and continuously evaluated for quality
-                        care.
+                        All our healthcare providers are licensed, verified, and
+                        continuously evaluated for quality care.
                       </p>
                     </div>
                   </div>
@@ -520,7 +650,8 @@ function CareServicesPage() {
                     <div>
                       <h3 className="font-bold">Flexible Scheduling</h3>
                       <p className="text-muted-foreground">
-                        Book appointments at times that work for you, with options for same-day consultations.
+                        Book appointments at times that work for you, with
+                        options for same-day consultations.
                       </p>
                     </div>
                   </div>
@@ -531,8 +662,8 @@ function CareServicesPage() {
                     <div>
                       <h3 className="font-bold">Comprehensive Care</h3>
                       <p className="text-muted-foreground">
-                        From preventive care to specialist consultations, we offer a full spectrum of healthcare
-                        services.
+                        From preventive care to specialist consultations, we
+                        offer a full spectrum of healthcare services.
                       </p>
                     </div>
                   </div>
@@ -545,7 +676,6 @@ function CareServicesPage() {
                 <img
                   src="/placeholder.svg?height=500&width=600&text=Healthcare+Benefits"
                   alt="BetaLyfe Healthcare Benefits"
-      
                   className="object-cover"
                 />
               </div>
@@ -558,10 +688,15 @@ function CareServicesPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">Testimonials</div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">What Our Patients Say</h2>
+                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
+                  Testimonials
+                </div>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+                  What Our Patients Say
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Real experiences from Nigerians who have used our healthcare services
+                  Real experiences from Nigerians who have used our healthcare
+                  services
                 </p>
               </div>
             </div>
@@ -570,28 +705,28 @@ function CareServicesPage() {
               {[
                 {
                   quote:
-                    "BetaLyfe has transformed how I manage my diabetes. The regular consultations with my specialist and medication delivery service have made my life so much easier.",
-                  author: "Oluwaseun Adeyemi",
-                  location: "Lagos",
+                    'BetaLyfe has transformed how I manage my diabetes. The regular consultations with my specialist and medication delivery service have made my life so much easier.',
+                  author: 'Oluwaseun Adeyemi',
+                  location: 'Lagos',
                   rating: 5,
-                  service: "Chronic Care",
+                  service: 'Chronic Care'
                 },
                 {
                   quote:
-                    "As a busy mother of three, being able to consult with pediatricians without leaving home has been a game-changer. The doctors are professional and caring.",
-                  author: "Amina Ibrahim",
-                  location: "Abuja",
+                    'As a busy mother of three, being able to consult with pediatricians without leaving home has been a game-changer. The doctors are professional and caring.',
+                  author: 'Amina Ibrahim',
+                  location: 'Abuja',
                   rating: 5,
-                  service: "Pediatrics",
+                  service: 'Pediatrics'
                 },
                 {
                   quote:
                     "I was skeptical about virtual consultations, but my experience with BetaLyfe's dermatologist was excellent. Clear diagnosis, effective treatment, and convenient follow-ups.",
-                  author: "Chinedu Okonkwo",
-                  location: "Port Harcourt",
+                  author: 'Chinedu Okonkwo',
+                  location: 'Port Harcourt',
                   rating: 4,
-                  service: "Dermatology",
-                },
+                  service: 'Dermatology'
+                }
               ].map((testimonial, index) => (
                 <Card key={index} className="relative overflow-hidden">
                   <CardContent className="p-6">
@@ -601,12 +736,14 @@ function CareServicesPage() {
                         .map((_, i) => (
                           <Star
                             key={i}
-                            className={`h-5 w-5 ${i < testimonial.rating ? "text-yellow-400 fill-yellow-400" : "text-muted"}`}
+                            className={`h-5 w-5 ${i < testimonial.rating ? 'text-yellow-400 fill-yellow-400' : 'text-muted'}`}
                           />
                         ))}
                     </div>
                     <Badge className="mb-4">{testimonial.service}</Badge>
-                    <blockquote className="text-lg mb-4">"{testimonial.quote}"</blockquote>
+                    <blockquote className="text-lg mb-4">
+                      "{testimonial.quote}"
+                    </blockquote>
                     <div className="flex items-center">
                       <div className="h-10 w-10 rounded-full bg-muted">
                         <img
@@ -618,8 +755,12 @@ function CareServicesPage() {
                         />
                       </div>
                       <div className="ml-4">
-                        <p className="text-sm font-medium">{testimonial.author}</p>
-                        <p className="text-sm text-muted-foreground">{testimonial.location}</p>
+                        <p className="text-sm font-medium">
+                          {testimonial.author}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {testimonial.location}
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -634,8 +775,12 @@ function CareServicesPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">FAQs</div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Frequently Asked Questions</h2>
+                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
+                  FAQs
+                </div>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+                  Frequently Asked Questions
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Find answers to common questions about our healthcare services
                 </p>
@@ -645,57 +790,83 @@ function CareServicesPage() {
             <div className="max-w-3xl mx-auto">
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger>How do virtual consultations work?</AccordionTrigger>
+                  <AccordionTrigger>
+                    How do virtual consultations work?
+                  </AccordionTrigger>
                   <AccordionContent>
-                    Virtual consultations take place through our secure video platform. After booking an appointment,
-                    you'll receive a link to join the video call at the scheduled time. During the consultation, the
-                    doctor will discuss your symptoms, provide a diagnosis, and recommend treatment. If needed, they can
-                    issue prescriptions or referrals, which will be available in your account immediately.
+                    Virtual consultations take place through our secure video
+                    platform. After booking an appointment, you'll receive a
+                    link to join the video call at the scheduled time. During
+                    the consultation, the doctor will discuss your symptoms,
+                    provide a diagnosis, and recommend treatment. If needed,
+                    they can issue prescriptions or referrals, which will be
+                    available in your account immediately.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">
-                  <AccordionTrigger>What types of conditions can be treated through BetaLyfe?</AccordionTrigger>
+                  <AccordionTrigger>
+                    What types of conditions can be treated through BetaLyfe?
+                  </AccordionTrigger>
                   <AccordionContent>
-                    BetaLyfe can address a wide range of conditions, including common illnesses (cold, flu, allergies),
-                    chronic disease management (diabetes, hypertension), skin conditions, mental health concerns,
-                    pediatric issues, and more. However, emergency situations requiring immediate physical intervention
-                    should be directed to the nearest emergency room.
+                    BetaLyfe can address a wide range of conditions, including
+                    common illnesses (cold, flu, allergies), chronic disease
+                    management (diabetes, hypertension), skin conditions, mental
+                    health concerns, pediatric issues, and more. However,
+                    emergency situations requiring immediate physical
+                    intervention should be directed to the nearest emergency
+                    room.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">
-                  <AccordionTrigger>How much do consultations cost?</AccordionTrigger>
+                  <AccordionTrigger>
+                    How much do consultations cost?
+                  </AccordionTrigger>
                   <AccordionContent>
-                    Consultation fees vary depending on the type of specialist and whether you have a subscription plan.
-                    General practitioner consultations start at ₦3,000, while specialist consultations range from ₦5,000
-                    to ₦15,000. With our subscription plans, you can access consultations at reduced rates or as part of
-                    your monthly package.
+                    Consultation fees vary depending on the type of specialist
+                    and whether you have a subscription plan. General
+                    practitioner consultations start at ₦3,000, while specialist
+                    consultations range from ₦5,000 to ₦15,000. With our
+                    subscription plans, you can access consultations at reduced
+                    rates or as part of your monthly package.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4">
-                  <AccordionTrigger>Are the doctors on BetaLyfe licensed?</AccordionTrigger>
+                  <AccordionTrigger>
+                    Are the doctors on BetaLyfe licensed?
+                  </AccordionTrigger>
                   <AccordionContent>
-                    Yes, all healthcare providers on BetaLyfe are licensed and registered with the appropriate Nigerian
-                    medical boards and councils. We verify credentials, experience, and standing with regulatory bodies
-                    before onboarding any provider. You can view each doctor's qualifications and licensing information
-                    on their profile.
+                    Yes, all healthcare providers on BetaLyfe are licensed and
+                    registered with the appropriate Nigerian medical boards and
+                    councils. We verify credentials, experience, and standing
+                    with regulatory bodies before onboarding any provider. You
+                    can view each doctor's qualifications and licensing
+                    information on their profile.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-5">
-                  <AccordionTrigger>How quickly can I get an appointment?</AccordionTrigger>
+                  <AccordionTrigger>
+                    How quickly can I get an appointment?
+                  </AccordionTrigger>
                   <AccordionContent>
-                    Appointment availability varies by specialty and provider. For general consultations, same-day
-                    appointments are often available. For specialists, you may need to book 1-3 days in advance. Premium
-                    and Family plan members receive priority scheduling and can often secure same-day appointments with
+                    Appointment availability varies by specialty and provider.
+                    For general consultations, same-day appointments are often
+                    available. For specialists, you may need to book 1-3 days in
+                    advance. Premium and Family plan members receive priority
+                    scheduling and can often secure same-day appointments with
                     specialists.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-6">
-                  <AccordionTrigger>Can I use health insurance with BetaLyfe?</AccordionTrigger>
+                  <AccordionTrigger>
+                    Can I use health insurance with BetaLyfe?
+                  </AccordionTrigger>
                   <AccordionContent>
-                    Yes, BetaLyfe works with several health insurance providers in Nigeria. During registration, you can
-                    add your insurance information, and we'll verify your coverage. Depending on your policy,
-                    consultations and medications may be partially or fully covered. We're continuously expanding our
-                    insurance partnerships to serve more patients.
+                    Yes, BetaLyfe works with several health insurance providers
+                    in Nigeria. During registration, you can add your insurance
+                    information, and we'll verify your coverage. Depending on
+                    your policy, consultations and medications may be partially
+                    or fully covered. We're continuously expanding our insurance
+                    partnerships to serve more patients.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -712,8 +883,8 @@ function CareServicesPage() {
                   Ready to experience better healthcare?
                 </h2>
                 <p className="max-w-[600px] md:text-xl">
-                  Join thousands of Nigerians who are already using BetaLyfe for convenient, quality healthcare
-                  services.
+                  Join thousands of Nigerians who are already using BetaLyfe for
+                  convenient, quality healthcare services.
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -741,7 +912,10 @@ function CareServicesPage() {
               &copy; {new Date().getFullYear()} BetaLyfe. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground">
+              <a
+                href="#"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
                 <span className="sr-only">Twitter</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -758,7 +932,10 @@ function CareServicesPage() {
                   <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
                 </svg>
               </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground">
+              <a
+                href="#"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
                 <span className="sr-only">Facebook</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -775,7 +952,10 @@ function CareServicesPage() {
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                 </svg>
               </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground">
+              <a
+                href="#"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
                 <span className="sr-only">Instagram</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -802,4 +982,3 @@ function CareServicesPage() {
     </div>
   )
 }
-

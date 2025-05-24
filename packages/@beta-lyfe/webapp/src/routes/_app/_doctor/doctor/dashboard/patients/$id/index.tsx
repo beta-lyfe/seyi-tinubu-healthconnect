@@ -1,10 +1,25 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@beta-lyfe/ui/components/shad/ui/card"
-import { Button } from "@beta-lyfe/ui/components/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@beta-lyfe/ui/components/shad/ui/avatar"
-import { Badge } from "@beta-lyfe/ui/components/shad/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@beta-lyfe/ui/components/shad/ui/tabs"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from '@beta-lyfe/ui/components/shad/ui/card'
+import { Button } from '@beta-lyfe/ui/components/button'
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage
+} from '@beta-lyfe/ui/components/shad/ui/avatar'
+import { Badge } from '@beta-lyfe/ui/components/shad/ui/badge'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
+} from '@beta-lyfe/ui/components/shad/ui/tabs'
 import {
   Calendar,
   Clock,
@@ -20,18 +35,15 @@ import {
   AlertCircle,
   Clipboard,
   ArrowLeft,
-  Video,
-} from "lucide-react"
+  Video
+} from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute(
-  '/_app/_doctor/doctor/dashboard/patients/$id/',
+  '/_app/_doctor/doctor/dashboard/patients/$id/'
 )({
   component: PatientDetailPage
 })
-
-
-
 
 export default function PatientDetailPage() {
   // In a real app, you would fetch patient data based on the ID
@@ -54,12 +66,15 @@ export default function PatientDetailPage() {
           <div className="flex flex-col md:flex-row gap-6">
             <div className="flex flex-col items-center md:items-start">
               <Avatar className="h-24 w-24 mb-4">
-                <AvatarImage src="/placeholder.svg?height=96&width=96" alt="Patient" />
+                <AvatarImage
+                  src="/placeholder.svg?height=96&width=96"
+                  alt="Patient"
+                />
                 <AvatarFallback>
                   {patientName
-                    .split(" ")
+                    .split(' ')
                     .map((n) => n[0])
-                    .join("")}
+                    .join('')}
                 </AvatarFallback>
               </Avatar>
 
@@ -81,7 +96,9 @@ export default function PatientDetailPage() {
                     Patient ID: P-{Math.floor(Math.random() * 10000)}
                   </Badge>
                 </div>
-                <p className="text-muted-foreground">45 years • Male • Blood Type: O+</p>
+                <p className="text-muted-foreground">
+                  45 years • Male • Blood Type: O+
+                </p>
               </div>
 
               <div className="flex flex-wrap gap-2">
@@ -142,7 +159,9 @@ export default function PatientDetailPage() {
           <Card>
             <CardHeader>
               <CardTitle>Medical Conditions</CardTitle>
-              <CardDescription>Patient's diagnosed conditions and health issues</CardDescription>
+              <CardDescription>
+                Patient's diagnosed conditions and health issues
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-4">
@@ -154,13 +173,15 @@ export default function PatientDetailPage() {
                     <div className="flex flex-col md:flex-row md:items-center justify-between">
                       <div>
                         <p className="font-medium">Hypertension (Stage 2)</p>
-                        <p className="text-sm text-muted-foreground">Diagnosed: March 2020</p>
+                        <p className="text-sm text-muted-foreground">
+                          Diagnosed: March 2020
+                        </p>
                       </div>
                       <Badge>Active</Badge>
                     </div>
                     <p className="text-sm mt-2">
-                      Blood pressure consistently above 140/90 mmHg. Patient is on medication and lifestyle
-                      modifications.
+                      Blood pressure consistently above 140/90 mmHg. Patient is
+                      on medication and lifestyle modifications.
                     </p>
                   </div>
                 </div>
@@ -173,12 +194,15 @@ export default function PatientDetailPage() {
                     <div className="flex flex-col md:flex-row md:items-center justify-between">
                       <div>
                         <p className="font-medium">Type 2 Diabetes Mellitus</p>
-                        <p className="text-sm text-muted-foreground">Diagnosed: June 2021</p>
+                        <p className="text-sm text-muted-foreground">
+                          Diagnosed: June 2021
+                        </p>
                       </div>
                       <Badge>Active</Badge>
                     </div>
                     <p className="text-sm mt-2">
-                      HbA1c: 7.2%. Patient is on oral hypoglycemic agents and dietary control.
+                      HbA1c: 7.2%. Patient is on oral hypoglycemic agents and
+                      dietary control.
                     </p>
                   </div>
                 </div>
@@ -198,8 +222,12 @@ export default function PatientDetailPage() {
                 </div>
                 <div className="flex-1">
                   <p className="font-medium">Penicillin</p>
-                  <p className="text-sm text-muted-foreground">Severity: Moderate</p>
-                  <p className="text-sm mt-2">Develops rash and hives. No anaphylaxis reported.</p>
+                  <p className="text-sm text-muted-foreground">
+                    Severity: Moderate
+                  </p>
+                  <p className="text-sm mt-2">
+                    Develops rash and hives. No anaphylaxis reported.
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -219,10 +247,15 @@ export default function PatientDetailPage() {
                   <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
                       <p className="font-medium">Appendectomy</p>
-                      <p className="text-sm text-muted-foreground">Date: May 2015</p>
+                      <p className="text-sm text-muted-foreground">
+                        Date: May 2015
+                      </p>
                     </div>
                   </div>
-                  <p className="text-sm mt-2">Laparoscopic appendectomy for acute appendicitis. No complications.</p>
+                  <p className="text-sm mt-2">
+                    Laparoscopic appendectomy for acute appendicitis. No
+                    complications.
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -235,7 +268,9 @@ export default function PatientDetailPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>Upcoming Appointments</CardTitle>
-                  <CardDescription>Scheduled consultations with this patient</CardDescription>
+                  <CardDescription>
+                    Scheduled consultations with this patient
+                  </CardDescription>
                 </div>
                 <Button>
                   <Calendar className="mr-2 h-4 w-4" /> Schedule New
@@ -251,13 +286,21 @@ export default function PatientDetailPage() {
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                     <div>
                       <h3 className="font-semibold">Follow-up consultation</h3>
-                      <p className="text-sm text-muted-foreground">Review of medication effectiveness</p>
+                      <p className="text-sm text-muted-foreground">
+                        Review of medication effectiveness
+                      </p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="flex items-center gap-1">
+                      <Badge
+                        variant="outline"
+                        className="flex items-center gap-1"
+                      >
                         <Calendar className="h-3 w-3" /> Today
                       </Badge>
-                      <Badge variant="outline" className="flex items-center gap-1">
+                      <Badge
+                        variant="outline"
+                        className="flex items-center gap-1"
+                      >
                         <Clock className="h-3 w-3" /> 10:00 AM
                       </Badge>
                     </div>
@@ -276,7 +319,9 @@ export default function PatientDetailPage() {
           <Card>
             <CardHeader>
               <CardTitle>Past Appointments</CardTitle>
-              <CardDescription>Previous consultations with this patient</CardDescription>
+              <CardDescription>
+                Previous consultations with this patient
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-start gap-4">
@@ -287,10 +332,15 @@ export default function PatientDetailPage() {
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                     <div>
                       <h3 className="font-semibold">Initial consultation</h3>
-                      <p className="text-sm text-muted-foreground">Evaluation of heart condition</p>
+                      <p className="text-sm text-muted-foreground">
+                        Evaluation of heart condition
+                      </p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="flex items-center gap-1">
+                      <Badge
+                        variant="outline"
+                        className="flex items-center gap-1"
+                      >
                         <Calendar className="h-3 w-3" /> 2 weeks ago
                       </Badge>
                     </div>
@@ -329,7 +379,9 @@ export default function PatientDetailPage() {
                   <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
                       <p className="font-medium">Lisinopril</p>
-                      <p className="text-sm text-muted-foreground">10mg, Once daily</p>
+                      <p className="text-sm text-muted-foreground">
+                        10mg, Once daily
+                      </p>
                     </div>
                     <Badge>Active</Badge>
                   </div>
@@ -358,7 +410,9 @@ export default function PatientDetailPage() {
                   <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
                       <p className="font-medium">Metformin</p>
-                      <p className="text-sm text-muted-foreground">500mg, Twice daily with meals</p>
+                      <p className="text-sm text-muted-foreground">
+                        500mg, Twice daily with meals
+                      </p>
                     </div>
                     <Badge>Active</Badge>
                   </div>
@@ -395,7 +449,9 @@ export default function PatientDetailPage() {
                   <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
                       <p className="font-medium">Amlodipine</p>
-                      <p className="text-sm text-muted-foreground">5mg, Once daily</p>
+                      <p className="text-sm text-muted-foreground">
+                        5mg, Once daily
+                      </p>
                     </div>
                     <Badge variant="outline">Discontinued</Badge>
                   </div>
@@ -416,7 +472,9 @@ export default function PatientDetailPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>Lab Results</CardTitle>
-                  <CardDescription>Test results and diagnostics</CardDescription>
+                  <CardDescription>
+                    Test results and diagnostics
+                  </CardDescription>
                 </div>
                 <Button>
                   <Flask className="mr-2 h-4 w-4" /> Order New Test
@@ -432,7 +490,9 @@ export default function PatientDetailPage() {
                   <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
                       <p className="font-medium">Complete Blood Count (CBC)</p>
-                      <p className="text-sm text-muted-foreground">Ordered by: Dr. Sarah Johnson</p>
+                      <p className="text-sm text-muted-foreground">
+                        Ordered by: Dr. Sarah Johnson
+                      </p>
                     </div>
                     <Badge variant="outline">Results Available</Badge>
                   </div>
@@ -454,7 +514,9 @@ export default function PatientDetailPage() {
                   <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
                       <p className="font-medium">Lipid Panel</p>
-                      <p className="text-sm text-muted-foreground">Ordered by: Dr. Sarah Johnson</p>
+                      <p className="text-sm text-muted-foreground">
+                        Ordered by: Dr. Sarah Johnson
+                      </p>
                     </div>
                     <Badge variant="outline">Results Available</Badge>
                   </div>
@@ -476,7 +538,9 @@ export default function PatientDetailPage() {
                   <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
                       <p className="font-medium">HbA1c Test</p>
-                      <p className="text-sm text-muted-foreground">Ordered by: Dr. Sarah Johnson</p>
+                      <p className="text-sm text-muted-foreground">
+                        Ordered by: Dr. Sarah Johnson
+                      </p>
                     </div>
                     <Badge>Pending</Badge>
                   </div>
@@ -504,7 +568,9 @@ export default function PatientDetailPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>Clinical Notes</CardTitle>
-                  <CardDescription>Medical observations and treatment plans</CardDescription>
+                  <CardDescription>
+                    Medical observations and treatment plans
+                  </CardDescription>
                 </div>
                 <Button>
                   <FileText className="mr-2 h-4 w-4" /> Add Note
@@ -520,20 +586,29 @@ export default function PatientDetailPage() {
                   <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
                       <p className="font-medium">Follow-up Consultation</p>
-                      <p className="text-sm text-muted-foreground">By: Dr. Sarah Johnson</p>
+                      <p className="text-sm text-muted-foreground">
+                        By: Dr. Sarah Johnson
+                      </p>
                     </div>
-                    <Badge variant="outline" className="flex items-center gap-1">
+                    <Badge
+                      variant="outline"
+                      className="flex items-center gap-1"
+                    >
                       <Calendar className="h-3 w-3" /> 2 weeks ago
                     </Badge>
                   </div>
                   <div className="mt-2">
                     <p className="text-sm">
-                      Patient reports improved energy levels but still experiencing occasional chest discomfort. Blood
-                      pressure readings at home averaging 135/85 mmHg. Adjusted Lisinopril dosage from 5mg to 10mg
-                      daily. Advised to continue monitoring blood pressure twice daily and maintain low-sodium diet.
+                      Patient reports improved energy levels but still
+                      experiencing occasional chest discomfort. Blood pressure
+                      readings at home averaging 135/85 mmHg. Adjusted
+                      Lisinopril dosage from 5mg to 10mg daily. Advised to
+                      continue monitoring blood pressure twice daily and
+                      maintain low-sodium diet.
                     </p>
                     <p className="text-sm mt-2">
-                      Plan: Follow-up in 4 weeks. Order lipid panel and HbA1c prior to next visit.
+                      Plan: Follow-up in 4 weeks. Order lipid panel and HbA1c
+                      prior to next visit.
                     </p>
                   </div>
                   <div className="flex gap-2 mt-4">
@@ -555,26 +630,35 @@ export default function PatientDetailPage() {
                   <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
                       <p className="font-medium">Initial Consultation</p>
-                      <p className="text-sm text-muted-foreground">By: Dr. Sarah Johnson</p>
+                      <p className="text-sm text-muted-foreground">
+                        By: Dr. Sarah Johnson
+                      </p>
                     </div>
-                    <Badge variant="outline" className="flex items-center gap-1">
+                    <Badge
+                      variant="outline"
+                      className="flex items-center gap-1"
+                    >
                       <Calendar className="h-3 w-3" /> 2 months ago
                     </Badge>
                   </div>
                   <div className="mt-2">
                     <p className="text-sm">
-                      New patient presenting with complaints of fatigue, headaches, and occasional chest pain. Blood
-                      pressure elevated at 150/95 mmHg. Family history of hypertension and diabetes. Physical
-                      examination unremarkable except for elevated BP.
+                      New patient presenting with complaints of fatigue,
+                      headaches, and occasional chest pain. Blood pressure
+                      elevated at 150/95 mmHg. Family history of hypertension
+                      and diabetes. Physical examination unremarkable except for
+                      elevated BP.
                     </p>
                     <p className="text-sm mt-2">
-                      Assessment: Likely essential hypertension, rule out secondary causes. Possible type 2 diabetes
-                      given family history and symptoms.
+                      Assessment: Likely essential hypertension, rule out
+                      secondary causes. Possible type 2 diabetes given family
+                      history and symptoms.
                     </p>
                     <p className="text-sm mt-2">
-                      Plan: Start Lisinopril 5mg daily. Order CBC, comprehensive metabolic panel, lipid panel, and
-                      HbA1c. Lifestyle modifications discussed including DASH diet and regular exercise. Follow-up in 2
-                      weeks.
+                      Plan: Start Lisinopril 5mg daily. Order CBC, comprehensive
+                      metabolic panel, lipid panel, and HbA1c. Lifestyle
+                      modifications discussed including DASH diet and regular
+                      exercise. Follow-up in 2 weeks.
                     </p>
                   </div>
                   <div className="flex gap-2 mt-4">
@@ -594,4 +678,3 @@ export default function PatientDetailPage() {
     </div>
   )
 }
-

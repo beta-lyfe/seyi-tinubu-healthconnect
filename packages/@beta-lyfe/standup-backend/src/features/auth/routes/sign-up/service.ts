@@ -2,11 +2,14 @@ import { Result } from 'true-myth'
 import { hashPassword } from '../../utils/password-utils'
 import Repository from '../../repository'
 import type { Schema } from './schema'
+import type { User } from '../../types'
 
-type Payload = Schema
+export type Payload = Schema
 
 type Error = 'EMAIL_ALREADY_IN_USE' | 'UNEXPECTED_ERROR'
-export default async (payload: Payload): Promise<Result<null, Error>> => {
+export default async (
+  payload: Payload
+): Promise<Result<User['data'], Error>> => {
   const existingUserResult = await Repository.findByEmail(payload.email)
   if (existingUserResult.isErr) {
     return Result.err('UNEXPECTED_ERROR')
@@ -18,10 +21,7 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
   const hashedPassword = await hashPassword(payload.password)
 
   const userCreationResult = await Repository.createUser({
-    firstName: payload.first_name,
-    lastName: payload.last_name,
-    email: payload.email,
-    phoneNumber: payload.phone_number,
+    ...payload,
     role: payload.is_doctor ? 'doctor' : 'patient'
   })
 
@@ -31,7 +31,7 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
 
   const authenticationMethodCreationResult =
     await Repository.createAuthenticationMethod({
-      userId: user.id,
+      user_id: user.id,
       meta: {
         data: hashedPassword,
         provider: 'credentials'
@@ -41,5 +41,5 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
   if (authenticationMethodCreationResult.isErr)
     return Result.err('UNEXPECTED_ERROR')
 
-  return Result.ok(null)
+  return Result.ok(user)
 }

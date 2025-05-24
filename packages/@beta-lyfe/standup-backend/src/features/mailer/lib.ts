@@ -11,7 +11,12 @@ export namespace Mailer {
   const logger = Logger.getSubLogger({ name: 'mailer' })
 
   const transporter = nodemailer.createTransport({
-    url: config.mail.url
+    host: "smtp.purelymail.com",
+  port: 587,
+  auth: {
+    user: "info@betalyfe.com.ng",
+    pass: "c5500bc77a6c4f96"
+  }
   })
 
   export type Payload = {
@@ -23,20 +28,23 @@ export namespace Mailer {
   export const send = async (
     payload: Payload
   ): Promise<Result<null, Error>> => {
+    logger.debug('Sending mail to', payload.recipients)
+    console.log(config.mail.url)
     const recipients = payload.recipients.join(', ')
     try {
       const plainText = await render(payload.email)
       const htmlText = await render(payload.email)
 
       // TODO: proper mail handling should be done here
-
       const info = await transporter.sendMail({
-        from: `"${config.mail.sender.name}" <${config.mail.sender.email}>`,
+        from: `info@betalyfe.com.ng`,
         to: recipients,
         subject: payload.subject,
         text: plainText,
         html: htmlText
       })
+
+      logger.debug(info)
 
       return Result.ok(null)
     } catch (err) {

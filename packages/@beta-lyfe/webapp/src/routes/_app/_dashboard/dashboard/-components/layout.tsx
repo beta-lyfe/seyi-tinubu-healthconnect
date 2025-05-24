@@ -12,10 +12,9 @@ export const Layout: FunctionComponent<{ children: ReactNode }> = ({
   </div>
 )
 
-
-export const LayoutWithBottomNav: FunctionComponent<{ children: ReactNode }> = ({
-  children
-}) => (
+export const LayoutWithBottomNav: FunctionComponent<{
+  children: ReactNode
+}> = ({ children }) => (
   <div className="h-dvh flex flex-col">
     <div className="flex flex-col grow overflow-scroll">{children}</div>
     <BottomNav />

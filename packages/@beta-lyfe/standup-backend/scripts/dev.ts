@@ -1,5 +1,5 @@
 import { serve } from '@hono/node-server'
-import { config } from '@beta-lyfe/standup-backend/features/config/index'
+import { config } from '@beta-lyfe/standup-backend/config'
 import { app, logger } from '@beta-lyfe/standup-backend/app'
 
 serve(

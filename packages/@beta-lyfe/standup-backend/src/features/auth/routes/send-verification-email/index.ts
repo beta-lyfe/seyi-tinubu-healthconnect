@@ -4,10 +4,8 @@ import service from './service'
 import { StatusCodes } from 'http-status-codes'
 import middleware from './middleware'
 
-export type ApiResponse =
-  | schema.components['schemas']['Api.Authentication.VerificationMailSentSuccessfully']
-  | schema.components['schemas']['Api.Authentication.VerificationMailAlreadySentError']
-  | schema.components['schemas']['Api.UnexpectedError']
+export type Response =
+  schema.paths['/api/auth/send-verification-email']['post']['responses'][keyof schema.paths['/api/auth/send-verification-email']['post']['responses']]['content']['application/json']
 
 export default new Hono().post(
   '/send-verification-email',
@@ -15,7 +13,7 @@ export default new Hono().post(
   async (c) => {
     const payload = c.req.valid('json')
 
-    let response: ApiResponse
+    let response: Response
 
     const result = await service(payload)
     if (result.isErr) {
@@ -24,7 +22,7 @@ export default new Hono().post(
           response = {
             code: 'VERIFICATION_MAIL_ALREADY_SENT_ERROR',
             data: {
-              expires_at: result.error.data.token.expiresAt.toISOString()
+              expires_at: result.error.data.token.expires_at
             }
           }
 
@@ -32,7 +30,7 @@ export default new Hono().post(
         }
         case 'USER_NOT_FOUND_ERROR': {
           response = {
-            code: 'VERIFICATION_MAIL_SENT'
+            code: 'USER_NOT_FOUND_ERROR'
           }
 
           return c.json(response)
@@ -46,8 +44,13 @@ export default new Hono().post(
       }
     }
 
+    const token = result.value
+
     response = {
-      code: 'VERIFICATION_MAIL_SENT'
+      code: 'VERIFICATION_MAIL_SENT',
+      data: {
+        expires_at: token.expires_at
+      }
     }
 
     return c.json(response)

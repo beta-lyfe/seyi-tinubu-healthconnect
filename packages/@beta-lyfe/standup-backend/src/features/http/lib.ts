@@ -1,13 +1,13 @@
-import { StatusCodes } from "http-status-codes"
+import { StatusCodes } from 'http-status-codes'
 
 type ErrorResponse<E, Code extends StatusCodes> = {
-  variant: "error"
+  variant: 'error'
   code: Code
   error: E
 }
 
 type OkResponse<T, Code extends StatusCodes> = {
-  variant: "ok"
+  variant: 'ok'
   code: Code
   data: T
 }
@@ -18,7 +18,7 @@ export const APIResponse = {
     code?: Code
   ): ErrorResponse<E, Code> => {
     return {
-      variant: "error",
+      variant: 'error',
       code:
         code === undefined ? (StatusCodes.INTERNAL_SERVER_ERROR as Code) : code,
       error
@@ -29,7 +29,7 @@ export const APIResponse = {
     code?: Code
   ): OkResponse<T, Code> => {
     return {
-      variant: "ok",
+      variant: 'ok',
       code: code === undefined ? (StatusCodes.OK as Code) : code,
       data
     }

@@ -1,41 +1,53 @@
+import React, { useState, useEffect } from 'react'
 
-import React, { useState, useEffect } from "react"
-
-import { motion, AnimatePresence } from "framer-motion"
-import { ChevronRight, Stethoscope, Pill, FlaskRoundIcon as Flask, Calendar, ArrowRight } from "lucide-react"
-import { Button } from "@beta-lyfe/ui/components/button"
-import { Card, CardContent } from "@beta-lyfe/ui/components/shad/ui/card"
-import { Link } from "@tanstack/react-router"
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  ChevronRight,
+  Stethoscope,
+  Pill,
+  FlaskRoundIcon as Flask,
+  Calendar,
+  ArrowRight
+} from 'lucide-react'
+import { Button } from '@beta-lyfe/ui/components/button'
+import { Card, CardContent } from '@beta-lyfe/ui/components/shad/ui/card'
+import { Link } from '@tanstack/react-router'
 
 const onboardingSlides = [
   {
-    title: "Connect with Doctors",
-    description: "Schedule virtual consultations with qualified healthcare professionals anytime, anywhere.",
+    title: 'Connect with Doctors',
+    description:
+      'Schedule virtual consultations with qualified healthcare professionals anytime, anywhere.',
     icon: Stethoscope,
-    color: "bg-blue-100 text-blue-600",
-    illustration: "/placeholder.svg?height=200&width=200&text=Doctor+Consultation",
+    color: 'bg-blue-100 text-blue-600',
+    illustration:
+      '/placeholder.svg?height=200&width=200&text=Doctor+Consultation'
   },
   {
-    title: "Order Medications",
-    description: "Get prescriptions and medications delivered to your doorstep with just a few taps.",
+    title: 'Order Medications',
+    description:
+      'Get prescriptions and medications delivered to your doorstep with just a few taps.',
     icon: Pill,
-    color: "bg-green-100 text-green-600",
-    illustration: "/placeholder.svg?height=200&width=200&text=Medication+Delivery",
+    color: 'bg-green-100 text-green-600',
+    illustration:
+      '/placeholder.svg?height=200&width=200&text=Medication+Delivery'
   },
   {
-    title: "Book Lab Tests",
-    description: "Schedule lab appointments and receive results directly on the app.",
+    title: 'Book Lab Tests',
+    description:
+      'Schedule lab appointments and receive results directly on the app.',
     icon: Flask,
-    color: "bg-purple-100 text-purple-600",
-    illustration: "/placeholder.svg?height=200&width=200&text=Lab+Tests",
+    color: 'bg-purple-100 text-purple-600',
+    illustration: '/placeholder.svg?height=200&width=200&text=Lab+Tests'
   },
   {
-    title: "Manage Your Health",
-    description: "Keep track of appointments, medications, and health records all in one place.",
+    title: 'Manage Your Health',
+    description:
+      'Keep track of appointments, medications, and health records all in one place.',
     icon: Calendar,
-    color: "bg-orange-100 text-orange-600",
-    illustration: "/placeholder.svg?height=200&width=200&text=Health+Management",
-  },
+    color: 'bg-orange-100 text-orange-600',
+    illustration: '/placeholder.svg?height=200&width=200&text=Health+Management'
+  }
 ]
 
 export function OnboardingScreen() {
@@ -84,31 +96,34 @@ export function OnboardingScreen() {
   const slideVariants = {
     enter: (direction: number) => ({
       x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
+      opacity: 0
     }),
     center: {
       x: 0,
-      opacity: 1,
+      opacity: 1
     },
     exit: (direction: number) => ({
       x: direction > 0 ? -1000 : 1000,
-      opacity: 0,
-    }),
+      opacity: 0
+    })
   }
 
   const backgroundColors = [
-    "from-blue-50 to-background",
-    "from-green-50 to-background",
-    "from-purple-50 to-background",
-    "from-orange-50 to-background",
+    'from-blue-50 to-background',
+    'from-green-50 to-background',
+    'from-purple-50 to-background',
+    'from-orange-50 to-background'
   ]
 
   return (
     <div
       className={`flex flex-col h-dvh bg-gradient-to-b transition-colors duration-700 ${backgroundColors[currentSlide]}`}
     >
-        <div className="absolute top-4 left-4">
-        <img src="/images/betalyfe-icon.svg" className="w-12 h-12 rounded-full"/>
+      <div className="absolute top-4 left-4">
+        <img
+          src="/images/betalyfe-icon.svg"
+          className="w-12 h-12 rounded-full"
+        />
       </div>
 
       {/* Skip button */}
@@ -139,7 +154,7 @@ export function OnboardingScreen() {
                   transition={{ duration: 0.5 }}
                 >
                   {React.createElement(onboardingSlides[currentSlide].icon, {
-                    className: "w-16 h-16 text-primary",
+                    className: 'w-16 h-16 text-primary'
                   })}
                 </motion.div>
               </div>
@@ -173,7 +188,7 @@ export function OnboardingScreen() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                 className="absolute top-0 left-0 w-full"
               >
                 <Card className="border-none bg-white/80 backdrop-blur-sm">
@@ -182,12 +197,19 @@ export function OnboardingScreen() {
                       <div
                         className={`w-16 h-16 rounded-full ${onboardingSlides[currentSlide].color} flex items-center justify-center shrink-0`}
                       >
-                        {React.createElement(onboardingSlides[currentSlide].icon, { className: "w-8 h-8" })}
+                        {React.createElement(
+                          onboardingSlides[currentSlide].icon,
+                          { className: 'w-8 h-8' }
+                        )}
                       </div>
 
                       <div className="text-left">
-                        <h2 className="text-xl font-semibold mb-2">{onboardingSlides[currentSlide].title}</h2>
-                        <p className="text-muted-foreground">{onboardingSlides[currentSlide].description}</p>
+                        <h2 className="text-xl font-semibold mb-2">
+                          {onboardingSlides[currentSlide].title}
+                        </h2>
+                        <p className="text-muted-foreground">
+                          {onboardingSlides[currentSlide].description}
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -196,22 +218,24 @@ export function OnboardingScreen() {
             </AnimatePresence>
           </div>
           {currentSlide < onboardingSlides.length - 1 ? (
-          <></>
-        ) : (
-          <motion.div
-            className="w-full max-w-md space-y-3"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Button asChild className="w-full">
-              <Link to="/auth/sign-in" className="text-white">Sign In</Link>
-            </Button>
-            <Button asChild variant="outline" className="w-full">
-              <Link to="/auth/sign-up">Create Account</Link>
-            </Button>
-          </motion.div>
-        )}
+            <></>
+          ) : (
+            <motion.div
+              className="w-full max-w-md space-y-3"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Button asChild className="w-full">
+                <Link to="/auth/sign-in" className="text-white">
+                  Sign In
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="w-full">
+                <Link to="/auth/sign-up">Create Account</Link>
+              </Button>
+            </motion.div>
+          )}
 
           {/* Navigation controls */}
           <div className="flex items-center justify-between pt-4 mb-6">
@@ -220,7 +244,7 @@ export function OnboardingScreen() {
               size="sm"
               onClick={prevSlide}
               disabled={currentSlide === 0}
-              className={currentSlide === 0 ? "invisible" : ""}
+              className={currentSlide === 0 ? 'invisible' : ''}
             >
               <ChevronRight className="h-4 w-4 rotate-180 mr-1" /> Previous
             </Button>
@@ -231,7 +255,9 @@ export function OnboardingScreen() {
                   key={index}
                   onClick={() => goToSlide(index)}
                   className={`w-2 h-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
-                    currentSlide === index ? "bg-primary w-6" : "bg-muted hover:bg-primary/50"
+                    currentSlide === index
+                      ? 'bg-primary w-6'
+                      : 'bg-muted hover:bg-primary/50'
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
@@ -243,16 +269,15 @@ export function OnboardingScreen() {
               size="sm"
               onClick={nextSlide}
               disabled={currentSlide === onboardingSlides.length - 1}
-              className={currentSlide === onboardingSlides.length - 1 ? "invisible" : ""}
+              className={
+                currentSlide === onboardingSlides.length - 1 ? 'invisible' : ''
+              }
             >
               Next <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
           </div>
         </div>
-
-    
       </div>
     </div>
   )
 }
-

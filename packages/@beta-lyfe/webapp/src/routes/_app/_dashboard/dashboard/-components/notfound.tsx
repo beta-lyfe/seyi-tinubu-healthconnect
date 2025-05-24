@@ -1,11 +1,18 @@
-import { Button } from "@beta-lyfe/ui/components/button"
-import { Link,useRouter } from "@tanstack/react-router"
-import { Stethoscope, Home, Search, ArrowLeft, Pill, HeartPulse } from "lucide-react"
+import { Button } from '@beta-lyfe/ui/components/button'
+import { Link, useRouter } from '@tanstack/react-router'
+import {
+  Stethoscope,
+  Home,
+  Search,
+  ArrowLeft,
+  Pill,
+  HeartPulse
+} from 'lucide-react'
 
 export default function NotFound() {
-  const router=useRouter()
+  const router = useRouter()
 
-  router.navigate({to:'/dashboard'})
+  router.navigate({ to: '/dashboard' })
 
   return (
     <div className="h-dvh flex overflow-hidden flex-col items-center justify-center p-6 bg-gradient-to-b from-primary-50 to-background">
@@ -17,7 +24,10 @@ export default function NotFound() {
 
           <div className="relative flex flex-col items-center">
             <div className="bg-primary/10 p-4 rounded-full mb-4">
-            <img src="/images/betalyfe-icon.svg" className='w-14 h-14 rounded-full'/>
+              <img
+                src="/images/betalyfe-icon.svg"
+                className="w-14 h-14 rounded-full"
+              />
             </div>
 
             <h1 className="text-6xl font-bold text-primary mb-2">404</h1>
@@ -27,9 +37,12 @@ export default function NotFound() {
               <Pill className="h-5 w-5 text-primary animate-bounce" />
             </div>
 
-            <p className="text-muted-foreground mb-2">Oops! It seems we can't find the page you're looking for.</p>
+            <p className="text-muted-foreground mb-2">
+              Oops! It seems we can't find the page you're looking for.
+            </p>
             <p className="text-muted-foreground mb-8">
-              The page might have been moved, deleted, or is temporarily unavailable.
+              The page might have been moved, deleted, or is temporarily
+              unavailable.
             </p>
           </div>
         </div>
@@ -72,7 +85,7 @@ export default function NotFound() {
 
         <div className="mt-10 text-sm text-muted-foreground">
           <p>
-            Need help?{" "}
+            Need help?{' '}
             <Link to="/" className="text-primary hover:underline">
               Contact our support team
             </Link>
@@ -82,12 +95,17 @@ export default function NotFound() {
 
       {/* Animated elements for visual interest */}
       <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 opacity-10 hidden md:block">
-        <HeartPulse className="h-24 w-24 text-primary animate-pulse" style={{ animationDelay: "0.5s" }} />
+        <HeartPulse
+          className="h-24 w-24 text-primary animate-pulse"
+          style={{ animationDelay: '0.5s' }}
+        />
       </div>
       <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 opacity-10 hidden md:block">
-        <Pill className="h-24 w-24 text-primary animate-pulse" style={{ animationDelay: "1s" }} />
+        <Pill
+          className="h-24 w-24 text-primary animate-pulse"
+          style={{ animationDelay: '1s' }}
+        />
       </div>
     </div>
   )
 }
-

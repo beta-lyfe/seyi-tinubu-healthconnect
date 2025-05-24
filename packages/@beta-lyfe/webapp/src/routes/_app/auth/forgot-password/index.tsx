@@ -29,6 +29,9 @@ import {
   CardHeader,
   CardTitle
 } from '@beta-lyfe/ui/components/shad/ui/card'
+import { useRouter } from '@tanstack/react-router'
+import { $api } from '../../../../lib/backend'
+import { toast } from 'sonner'
 
 const formSchema = z.object({
   email: z.string().email('Please enter a valid email address')
@@ -37,6 +40,16 @@ const formSchema = z.object({
 export default function ForgotPasswordPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const router=useRouter()
+  const {mutate}=$api.useMutation('post','/api/auth/reset-password',{
+    onSuccess:res=>{
+      toast.success(res.code)
+      setIsSubmitted(true)
+    },onError:err=>{
+      setIsSubmitted(false)
+      toast.error(err.code)
+    }
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,10 +62,11 @@ export default function ForgotPasswordPage() {
     setIsSubmitting(true)
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-
-      setIsSubmitted(true)
+      mutate({
+        body:{
+          email:values.email
+        }
+      })
     } catch (error) {
       console.error('Error:', error)
       form.setError('root', {
@@ -70,6 +84,7 @@ export default function ForgotPasswordPage() {
           <div className="flex items-center">
             <div className="bg-primary/10 p-2 rounded-full">
               <img
+              onClick={()=>router.navigate({to:'/testcall'})}
                 src="/images/betalyfe-icon.svg"
                 className="w-14 h-14 rounded-full"
               />
@@ -83,7 +98,7 @@ export default function ForgotPasswordPage() {
           </Link>
         </div>
 
-        <Card className="border-none shadow-lg">
+        <Card className="border-none">
           <AnimatePresence mode="wait">
             {isSubmitted ? (
               <motion.div
@@ -127,7 +142,7 @@ export default function ForgotPasswordPage() {
                 exit={{ opacity: 0 }}
               >
                 <CardHeader>
-                  <CardTitle>Forgot your password?</CardTitle>
+                  <CardTitle className='text-md py-4'>Forgot your password?</CardTitle>
                   <CardDescription>
                     Enter your email address and we'll send you a link to reset
                     your password.

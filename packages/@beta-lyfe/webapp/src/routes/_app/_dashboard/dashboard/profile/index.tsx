@@ -1,36 +1,77 @@
-import { MainLayout } from "../-components/main-layout"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@beta-lyfe/ui/components/shad/ui/card"
-import { Button } from "@beta-lyfe/ui/components/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@beta-lyfe/ui/components/shad/ui/avatar"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@beta-lyfe/ui/components/shad/ui/tabs"
-import { Input } from "@beta-lyfe/ui/components/input"
-import { Label } from "@beta-lyfe/ui/components/shad/ui/label"
-import { Textarea } from "@beta-lyfe/ui/components/shad/ui/textarea"
-import { Switch } from "@beta-lyfe/ui/components/shad/ui/switch"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@beta-lyfe/ui/components/shad/ui/select"
-import { Upload } from "lucide-react"
+import { MainLayout } from '../-components/main-layout'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from '@beta-lyfe/ui/components/shad/ui/card'
+import { Button } from '@beta-lyfe/ui/components/button'
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage
+} from '@beta-lyfe/ui/components/shad/ui/avatar'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
+} from '@beta-lyfe/ui/components/shad/ui/tabs'
+import { Input } from '@beta-lyfe/ui/components/input'
+import { Label } from '@beta-lyfe/ui/components/shad/ui/label'
+import { Textarea } from '@beta-lyfe/ui/components/shad/ui/textarea'
+import { Switch } from '@beta-lyfe/ui/components/shad/ui/switch'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@beta-lyfe/ui/components/shad/ui/select'
+import { Upload } from 'lucide-react'
 import { Link, createFileRoute, useRouter } from '@tanstack/react-router'
+import { useAuth } from '../../../../../hooks/auth'
+import { toast } from 'sonner'
 
 export const Route = createFileRoute('/_app/_dashboard/dashboard/profile/')({
   component: ProfilePage
 })
 
 function ProfilePage() {
+  const user=useAuth(true).data.data.user
+  const profile=user.profiles.patient
+  const update=useAuth().update
+  const router=useRouter()
+
+    const logout=async ()=>{
+    update({status:'unauthenticated'})
+    toast.success("Logged user out")  
+    router.navigate({
+      to:'/auth/sign-in'
+    })
+  }
+  
+
   return (
     <>
       <div className="space-y-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-xl md:text-2xl font-bold tracking-tight">Your Profile</h1>
-            <p className="text-muted-foreground">Manage your personal information and preferences</p>
+            <h1 className="text-xl md:text-2xl font-bold tracking-tight">
+              Your Profile
+            </h1>
+            <p className="text-muted-foreground">
+              Manage your personal information and preferences
+            </p>
           </div>
           <Button>Save Changes</Button>
         </div>
 
         {/* Profile tabs */}
         <Tabs defaultValue="personal">
-          <TabsList className="mb-4 overflow-auto w-full pl-32 md:pl-0" >
+          <TabsList className="mb-4 overflow-auto w-full pl-32 md:pl-0">
             <TabsTrigger value="personal">Personal Info</TabsTrigger>
             <TabsTrigger value="medical">Medical History</TabsTrigger>
             <TabsTrigger value="security">Security</TabsTrigger>
@@ -59,32 +100,40 @@ function ProfilePage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="firstName">First name</Label>
-                        <Input id="firstName" defaultValue="John" />
+                        <Input id="firstName" defaultValue={profile?.first_name} />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="lastName">Last name</Label>
-                        <Input id="lastName" defaultValue="Doe" />
+                        <Input id="lastName" defaultValue={profile?.last_name} />
                       </div>
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="email">Email</Label>
-                      <Input id="email" type="email" defaultValue="john.doe@example.com" />
+                      <Input
+                        id="email"
+                        type="email"
+                        defaultValue={profile?.email}
+                      />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone number</Label>
-                      <Input id="phone" type="tel" defaultValue="+1 (555) 123-4567" />
+                      <Input
+                        id="phone"
+                        type="tel"
+                        defaultValue={profile?.phone_number}
+                      />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="dob">Date of birth</Label>
-                      <Input id="dob" type="date" defaultValue="1985-06-15" />
+                      <Input id="dob" type="date" defaultValue={profile?.date_of_birth!} />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="gender">Gender</Label>
-                      <Select defaultValue="male">
+                      <Select defaultValue='male'>
                         <SelectTrigger id="gender">
                           <SelectValue placeholder="Select gender" />
                         </SelectTrigger>
@@ -92,7 +141,9 @@ function ProfilePage() {
                           <SelectItem value="male">Male</SelectItem>
                           <SelectItem value="female">Female</SelectItem>
                           <SelectItem value="other">Other</SelectItem>
-                          <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+                          <SelectItem value="prefer-not-to-say">
+                            Prefer not to say
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -104,7 +155,9 @@ function ProfilePage() {
             <Card>
               <CardHeader>
                 <CardTitle>Contact Information</CardTitle>
-                <CardDescription>Update your address and contact details</CardDescription>
+                <CardDescription>
+                  Update your address and contact details
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
@@ -128,17 +181,23 @@ function ProfilePage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="emergencyContact">Emergency contact name</Label>
+                  <Label htmlFor="emergencyContact">
+                    Emergency contact name
+                  </Label>
                   <Input id="emergencyContact" defaultValue="Jane Doe" />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="emergencyPhone">Emergency contact phone</Label>
+                  <Label htmlFor="emergencyPhone">
+                    Emergency contact phone
+                  </Label>
                   <Input id="emergencyPhone" defaultValue="+1 (555) 987-6543" />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="relationship">Relationship to emergency contact</Label>
+                  <Label htmlFor="relationship">
+                    Relationship to emergency contact
+                  </Label>
                   <Input id="relationship" defaultValue="Spouse" />
                 </div>
               </CardContent>
@@ -149,11 +208,15 @@ function ProfilePage() {
             <Card>
               <CardHeader>
                 <CardTitle>Medical History</CardTitle>
-                <CardDescription>Provide information about your medical history</CardDescription>
+                <CardDescription>
+                  Provide information about your medical history
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="conditions">Existing medical conditions</Label>
+                  <Label htmlFor="conditions">
+                    Existing medical conditions
+                  </Label>
                   <Textarea
                     id="conditions"
                     placeholder="List any existing medical conditions..."
@@ -163,7 +226,11 @@ function ProfilePage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="allergies">Allergies</Label>
-                  <Textarea id="allergies" placeholder="List any allergies..." defaultValue="Penicillin, Peanuts" />
+                  <Textarea
+                    id="allergies"
+                    placeholder="List any allergies..."
+                    defaultValue="Penicillin, Peanuts"
+                  />
                 </div>
 
                 <div className="space-y-2">
@@ -198,7 +265,9 @@ function ProfilePage() {
             <Card>
               <CardHeader>
                 <CardTitle>Lifestyle Information</CardTitle>
-                <CardDescription>Information about your lifestyle habits</CardDescription>
+                <CardDescription>
+                  Information about your lifestyle habits
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
@@ -238,9 +307,15 @@ function ProfilePage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="sedentary">Sedentary</SelectItem>
-                      <SelectItem value="light">Light (1-2 days/week)</SelectItem>
-                      <SelectItem value="moderate">Moderate (3-4 days/week)</SelectItem>
-                      <SelectItem value="active">Active (5+ days/week)</SelectItem>
+                      <SelectItem value="light">
+                        Light (1-2 days/week)
+                      </SelectItem>
+                      <SelectItem value="moderate">
+                        Moderate (3-4 days/week)
+                      </SelectItem>
+                      <SelectItem value="active">
+                        Active (5+ days/week)
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -286,13 +361,17 @@ function ProfilePage() {
             <Card>
               <CardHeader>
                 <CardTitle>Two-Factor Authentication</CardTitle>
-                <CardDescription>Add an extra layer of security to your account</CardDescription>
+                <CardDescription>
+                  Add an extra layer of security to your account
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label htmlFor="2fa">Two-factor authentication</Label>
-                    <p className="text-sm text-muted-foreground">Receive a verification code via SMS when signing in</p>
+                    <p className="text-sm text-muted-foreground">
+                      Receive a verification code via SMS when signing in
+                    </p>
                   </div>
                   <Switch id="2fa" />
                 </div>
@@ -301,7 +380,8 @@ function ProfilePage() {
                   <div className="space-y-0.5">
                     <Label htmlFor="biometric">Biometric authentication</Label>
                     <p className="text-sm text-muted-foreground">
-                      Use fingerprint or face recognition to sign in on your devices
+                      Use fingerprint or face recognition to sign in on your
+                      devices
                     </p>
                   </div>
                   <Switch id="biometric" defaultChecked />
@@ -312,14 +392,19 @@ function ProfilePage() {
             <Card>
               <CardHeader>
                 <CardTitle>Privacy Settings</CardTitle>
-                <CardDescription>Control how your information is used</CardDescription>
+                <CardDescription>
+                  Control how your information is used
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label htmlFor="dataSharing">Data sharing with healthcare providers</Label>
+                    <Label htmlFor="dataSharing">
+                      Data sharing with healthcare providers
+                    </Label>
                     <p className="text-sm text-muted-foreground">
-                      Allow your data to be shared with your healthcare providers
+                      Allow your data to be shared with your healthcare
+                      providers
                     </p>
                   </div>
                   <Switch id="dataSharing" defaultChecked />
@@ -327,7 +412,9 @@ function ProfilePage() {
 
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label htmlFor="anonymousData">Anonymous data for research</Label>
+                    <Label htmlFor="anonymousData">
+                      Anonymous data for research
+                    </Label>
                     <p className="text-sm text-muted-foreground">
                       Allow your anonymized data to be used for medical research
                     </p>
@@ -338,7 +425,9 @@ function ProfilePage() {
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label htmlFor="marketing">Marketing communications</Label>
-                    <p className="text-sm text-muted-foreground">Receive marketing communications from Beta-Lyfe</p>
+                    <p className="text-sm text-muted-foreground">
+                      Receive marketing communications from Beta-Lyfe
+                    </p>
                   </div>
                   <Switch id="marketing" />
                 </div>
@@ -350,21 +439,31 @@ function ProfilePage() {
             <Card>
               <CardHeader>
                 <CardTitle>Notification Preferences</CardTitle>
-                <CardDescription>Control how you receive notifications</CardDescription>
+                <CardDescription>
+                  Control how you receive notifications
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label htmlFor="appointmentReminders">Appointment reminders</Label>
-                    <p className="text-sm text-muted-foreground">Receive reminders about upcoming appointments</p>
+                    <Label htmlFor="appointmentReminders">
+                      Appointment reminders
+                    </Label>
+                    <p className="text-sm text-muted-foreground">
+                      Receive reminders about upcoming appointments
+                    </p>
                   </div>
                   <Switch id="appointmentReminders" defaultChecked />
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label htmlFor="medicationReminders">Medication reminders</Label>
-                    <p className="text-sm text-muted-foreground">Receive reminders to take your medications</p>
+                    <Label htmlFor="medicationReminders">
+                      Medication reminders
+                    </Label>
+                    <p className="text-sm text-muted-foreground">
+                      Receive reminders to take your medications
+                    </p>
                   </div>
                   <Switch id="medicationReminders" defaultChecked />
                 </div>
@@ -383,7 +482,8 @@ function ProfilePage() {
                   <div className="space-y-0.5">
                     <Label htmlFor="prescriptions">Prescription updates</Label>
                     <p className="text-sm text-muted-foreground">
-                      Receive notifications about prescription refills and updates
+                      Receive notifications about prescription refills and
+                      updates
                     </p>
                   </div>
                   <Switch id="prescriptions" defaultChecked />
@@ -404,13 +504,19 @@ function ProfilePage() {
             <Card>
               <CardHeader>
                 <CardTitle>Notification Channels</CardTitle>
-                <CardDescription>Choose how you want to receive notifications</CardDescription>
+                <CardDescription>
+                  Choose how you want to receive notifications
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label htmlFor="emailNotifications">Email notifications</Label>
-                    <p className="text-sm text-muted-foreground">Receive notifications via email</p>
+                    <Label htmlFor="emailNotifications">
+                      Email notifications
+                    </Label>
+                    <p className="text-sm text-muted-foreground">
+                      Receive notifications via email
+                    </p>
                   </div>
                   <Switch id="emailNotifications" defaultChecked />
                 </div>
@@ -418,15 +524,21 @@ function ProfilePage() {
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label htmlFor="smsNotifications">SMS notifications</Label>
-                    <p className="text-sm text-muted-foreground">Receive notifications via SMS</p>
+                    <p className="text-sm text-muted-foreground">
+                      Receive notifications via SMS
+                    </p>
                   </div>
                   <Switch id="smsNotifications" defaultChecked />
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label htmlFor="pushNotifications">Push notifications</Label>
-                    <p className="text-sm text-muted-foreground">Receive push notifications on your devices</p>
+                    <Label htmlFor="pushNotifications">
+                      Push notifications
+                    </Label>
+                    <p className="text-sm text-muted-foreground">
+                      Receive push notifications on your devices
+                    </p>
                   </div>
                   <Switch id="pushNotifications" defaultChecked />
                 </div>
@@ -437,11 +549,9 @@ function ProfilePage() {
       </div>
       <div className="w-full flex justify-center items-center">
         <Link to="/auth/sign-in">
-          <Button className="text-white">Logout</Button>
+          <Button className="text-white" onClick={()=>logout()}>Logout</Button>
         </Link>
-         
       </div>
-  </>
+    </>
   )
 }
-

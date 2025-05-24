@@ -1,10 +1,10 @@
 import { Hono } from 'hono'
-import { Repository } from '../..'
+import { PharmacyRepository } from '../..'
 import middleware from './middleware'
 import { APIResponse } from '../../../http'
 
 export default new Hono().post('/items', middleware, async (c) => {
-  const inputPayload = c.req.valid('json')
-  const store = await Repository.createItem(inputPayload)
+  const payload = c.req.valid('json')
+  const store = await PharmacyRepository.createItem(payload)
   return c.json(APIResponse.ok(store))
 })

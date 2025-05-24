@@ -53,22 +53,22 @@ export const BottomNav = () => {
           const isActive = router.location.href === item.link
           return (
             <Link to={item.link}>
-            <button
-              key={item.key}
-              type="button"
-              className={cn(
-                'p-4 flex items-center gap-2',
-                isActive
-                  ? 'bg-white text-black rounded-full'
-                  : 'text-gray-200'
-              )}
-            >
-              <item.icon className="size-6" />
-              <span className={cn('text-sm', !isActive && 'hidden')}>
-                {item.label}
-              </span>
-            </button>
-           </Link>  
+              <button
+                key={item.key}
+                type="button"
+                className={cn(
+                  'p-4 flex items-center gap-2',
+                  isActive
+                    ? 'bg-white text-black rounded-full'
+                    : 'text-gray-200'
+                )}
+              >
+                <item.icon className="size-6" />
+                <span className={cn('text-sm', !isActive && 'hidden')}>
+                  {item.label}
+                </span>
+              </button>
+            </Link>
           )
         })}
       </div>

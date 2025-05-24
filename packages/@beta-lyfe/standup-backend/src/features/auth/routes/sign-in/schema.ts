@@ -1,6 +1,3 @@
-import { z } from 'zod'
+import { schemas } from '@beta-lyfe/api/zod'
 
-export default z.object({
-  email: z.string().email(),
-  password: z.string()
-})
+export default schemas.Api_Authentication_SignIn_Body

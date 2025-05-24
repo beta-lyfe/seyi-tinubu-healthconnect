@@ -1,9 +1,16 @@
 import type { MiddlewareHandler } from 'hono'
 import type { User } from './types'
 import { AuthServiceImpl } from './service'
-import { APIResponse, StatusCodes } from '../http'
+import { StatusCodes } from '../http'
+import { Logger } from '../logger'
+import type { schema } from '@beta-lyfe/api'
 
-namespace AuthMiddleware {
+export type Response =
+  | schema.components['schemas']['Api.UnauthorizedError']
+  | schema.components['schemas']['Api.UserNotVerifiedError']
+  | schema.components['schemas']['Api.UnexpectedError']
+
+namespace Middleware {
   export const middleware: MiddlewareHandler<{
     Variables: {
       user: User
@@ -11,41 +18,58 @@ namespace AuthMiddleware {
   }> = async (c, next) => {
     const authService = new AuthServiceImpl()
 
+    let response: Response
+
     const authHeader = c.req.header('authorization')
-    if (!authHeader)
-      return c.json(
-        APIResponse.err('Invalid token!', StatusCodes.UNAUTHORIZED),
-        {
-          status: StatusCodes.UNAUTHORIZED
-        }
-      )
-
-    const [, accessToken] = authHeader.split(' ')
-    if (!accessToken)
-      return c.json(
-        APIResponse.err('Invalid token!', StatusCodes.UNAUTHORIZED),
-        {
-          status: StatusCodes.UNAUTHORIZED
-        }
-      )
-
-    const res = await authService.getUserProfile(accessToken)
-
-    if (res.isErr) {
-      return c.json(APIResponse.err('Invalid token!', StatusCodes.UNAUTHORIZED))
+    Logger.info(authHeader)
+    if (!authHeader) {
+      response = {
+        code: 'UNAUTHORIZED_ERROR'
+      }
+      return c.json(response, StatusCodes.UNAUTHORIZED)
     }
 
-    const maybeUser = res.value
+    const [, accessToken] = authHeader.split(' ')
+    if (!accessToken) {
+      response = {
+        code: 'UNAUTHORIZED_ERROR'
+      }
+      return c.json(response, StatusCodes.UNAUTHORIZED)
+    }
 
-    if (maybeUser.isNothing)
-      return c.json(
-        APIResponse.err('Invalid token!', StatusCodes.UNAUTHORIZED),
-        {
-          status: StatusCodes.UNAUTHORIZED
+    const res = await authService.getUserWithProfile(accessToken)
+
+    if (res.isErr) {
+      switch (res.error) {
+        case 'USER_NOT_VERIFIED': {
+          response = {
+            code: 'USER_NOT_VERIFIED'
+          }
+          return c.json(response, StatusCodes.UNAUTHORIZED)
         }
-      )
+        case 'INVALID_OR_EXPIRED_TOKEN': {
+          response = {
+            code: 'UNAUTHORIZED_ERROR'
+          }
+          return c.json(response, StatusCodes.UNAUTHORIZED)
+        }
+        case 'FAILED_TO_FETCH_USER': {
+          response = {
+            code: 'UNEXPECTED_ERROR'
+          }
+          return c.json(response, StatusCodes.INTERNAL_SERVER_ERROR)
+        }
+      }
+    }
 
-    const user = maybeUser.value
+    const user = res.value
+
+    if (!user) {
+      response = {
+        code: 'UNAUTHORIZED_ERROR'
+      }
+      return c.json(response, StatusCodes.UNAUTHORIZED)
+    }
 
     c.set('user', user)
 
@@ -53,4 +77,4 @@ namespace AuthMiddleware {
   }
 }
 
-export { AuthMiddleware }
+export default Middleware

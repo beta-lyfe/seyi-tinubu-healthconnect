@@ -4,16 +4,13 @@ import service from './service'
 import { StatusCodes } from 'http-status-codes'
 import middleware from './middleware'
 
-export type ApiResponse =
-  | schema.components['schemas']['Api.Authentication.PasswordResetInitResponse']
-  | schema.components['schemas']['Api.Authentication.PasswordResetMailAlreadySentError']
-  | schema.components['schemas']['Api.BadRequestError']
-  | schema.components['schemas']['Api.UnexpectedError']
+export type Response =
+  schema.paths['/api/auth/reset-password']['post']['responses'][keyof schema.paths['/api/auth/reset-password']['post']['responses']]['content']['application/json']
 
 export default new Hono().post('/', middleware, async (c) => {
   const payload = c.req.valid('json')
 
-  let response: ApiResponse
+  let response: Response
 
   const result = await service(payload)
   if (result.isErr) {
@@ -22,7 +19,7 @@ export default new Hono().post('/', middleware, async (c) => {
         response = {
           code: 'PASSWORD_RESET_MAIL_ALREADY_SENT_ERROR',
           data: {
-            expires_at: result.error.data.token.expiresAt.toISOString()
+            expires_at: result.error.data.token.expires_at
           }
         }
 

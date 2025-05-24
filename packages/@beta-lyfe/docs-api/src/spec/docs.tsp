@@ -37,7 +37,7 @@ scalar Password extends string;
 scalar Email extends string;
 
 model Media {
-  public_ic: Id;
+  public_id: Id;
 
   @example("https://google.com")
   url: string;
@@ -57,6 +57,19 @@ model Paginated {
 @route("/api")
 @doc("API")
 namespace Api {
+  namespace Pagination {
+    model Meta {
+      page: int64;
+      per_page: int64;
+      total: int64;
+    }
+
+    model Paginated<T> {
+      data: T[];
+      meta: Meta;
+    }
+  }
+
   @error
   model UnexpectedError {
     @statusCode _code: 500;
@@ -76,34 +89,23 @@ namespace Api {
   }
 
   @error
+  model UserNotVerifiedError {
+    @statusCode _code: 401;
+    code: "USER_NOT_VERIFIED";
+  }
+
+  @error
   model UnauthorizedError {
     @statusCode _code: 401;
     code: "UNAUTHORIZED_ERROR";
   }
 
-  @error
-  model NotFoundError<T extends valueof string> {
-    @statusCode _code: 404;
-
-    @example("${T} not found")
-    message: string;
-  }
-
-  @error
-  model AuthenticationRequiredError {
-    @statusCode _code: 401;
-    code: "AUTHENTICATION_REQUIRED_ERROR";
-  }
-
   @tag("Auth")
   @route("/auth")
   namespace Authentication {
-    model SignInPayload {
-      email: Email;
-      password: Password;
-    }
+    model User {
+      id: Id;
 
-    model SignUpPayload {
       @example("Mary")
       first_name: string;
 
@@ -111,169 +113,233 @@ namespace Api {
       last_name: string;
 
       email: Email;
-      password: Password;
+      role:Role;
       phone_number: PhoneNumber;
-
-      @example(true)
-      is_doctor: boolean;
+      is_verified: boolean;
+      created_at: DateTime;
+      updated_at: DateTime | null;
     }
 
-    model SendResetPasswordEmailPayload {
-      email: Email;
-    }
+    @route("/sign-in")
+    namespace SignIn {
+      model Body {
+        email: Email;
+        password: Password;
+      }
 
-    model ResetPasswordPayload {
-      email: Email;
-      password: Password;
-    }
+      namespace response {
+        model AuthCredentials {
+          code: "AUTH_CREDENTIALS";
+          data: {
+            access_token: Token;
+            refresh_token: Token;
+          };
+        }
 
-    model PasswordResetInitResponse {
-      code: "CHECK_EMAIL_FOR_RESET_LINK";
-    }
+        alias Success = AuthCredentials;
+        alias Error = Api.UnauthorizedError | Api.UnexpectedError;
 
-    @error
-    model PasswordResetMailAlreadySentError {
-      @statusCode _code: 400;
-      code: "PASSWORD_RESET_MAIL_ALREADY_SENT_ERROR";
-      data: {
-        expires_at: DateTime;
-      };
-    }
+        alias Response = Success | Error;
+      }
 
-    model PasswordResetPayload {
-      email: Email;
-    }
-
-    model ConfirmPasswordResetPayload {
-      password: Password;
-    }
-
-    model PasswordResetSuccessful {
-      code: "PASSWORD_RESET_SUCCESSFUL";
-    }
-
-    @error
-    model InvalidOrExpiredTokenError {
-      @statusCode _code: 400;
-      code: "INVALID_OR_EXPIRED_TOKEN_ERROR";
-    }
-
-    @doc("Authentication token")
-    model AuthCredentials {
-      code: "AUTH_CREDENTIALS";
-      data: {
-        access_token: Token;
-        refresh_token: Token;
-      };
-    }
-
-    model SignupSuccessful {
-      code: "SIGNUP_SUCCESSFUL";
-    }
-
-    model EmailAlreadyInUseError {
-      @statusCode _code: 409;
-      code: "EMAIL_ALREADY_IN_USE_ERROR";
-    }
-
-    model VerifyEmailPayload {
-      email: Email;
-      otp: Otp;
-    }
-
-    model VerificationSuccessful {
-      code: "VERIFICATION_SUCCESSFUL";
-    }
-
-    model SendVerificationEmailPayload {
-      email: Email;
-    }
-
-    model VerificationMailSentSuccessfully {
-      code: "VERIFICATION_MAIL_SENT";
-    }
-
-    model VerificationMailAlreadySentError {
-      @statusCode _code: 400;
-      code: "VERIFICATION_MAIL_ALREADY_SENT_ERROR";
-      data: {
-        expires_at: DateTime;
-      };
-    }
-
-    @error
-    model InvalidOrExpiredOtpError {
-      @statusCode _code: 400;
-      code: "INVALID_OR_EXPIRED_OTP_ERROR";
+      @post
+      @doc("Sign in user")
+      op signIn(@body body: Body): response.Response;
     }
 
     @route("/sign-up")
-    @post
-    @doc("Sign up new user")
-    op signUp(@body payload: SignUpPayload):
-      | SignupSuccessful
-      | EmailAlreadyInUseError
-      | BadRequestError
-      | UnexpectedError;
+    namespace SignUp {
+      model Body {
+        @example("Mary")
+        first_name: string;
 
-    @route("/verify-email")
-    @post
-    @doc("Verify email address")
-    op verifyEmail(@body payload: VerifyEmailPayload):
-      | VerificationSuccessful
-      | InvalidOrExpiredOtpError
-      | BadRequestError
-      | UnexpectedError;
+        @example("Slessor")
+        last_name: string;
 
-    @route("/send-verification-email")
-    @post
-    @doc("Send verification email")
-    op sendVerificationEmail(
-      @body payload: SendVerificationEmailPayload,
-    ): VerificationMailSentSuccessfully | VerificationMailAlreadySentError | UnexpectedError;
+        email: Email;
+        password: Password;
+        phone_number: PhoneNumber;
+
+        @example(true)
+        is_doctor: boolean;
+      }
+
+      namespace response {
+        model SignupSuccessful {
+          code: "SIGNUP_SUCCESSFUL";
+        }
+
+        @error
+        model EmailAlreadyInUseError {
+          @statusCode _code: 409;
+          code: "EMAIL_ALREADY_IN_USE_ERROR";
+        }
+
+        alias Success = SignupSuccessful;
+
+        alias Error = EmailAlreadyInUseError | Api.BadRequestError | Api.UnexpectedError;
+
+        alias Response = Success | Error;
+      }
+
+      @post
+      @doc("Sign up new user")
+      op signUp(@body body: Body): response.Response;
+    }
 
     @route("/reset-password")
-    @post
-    @doc("Initiates the password reset process.")
-    op initiatePasswordReset(@body payload: PasswordResetPayload):
-      | PasswordResetInitResponse
-      | PasswordResetMailAlreadySentError
-      | BadRequestError
-      | UnexpectedError;
+    namespace PasswordReset {
+      namespace Initialize {
+        model Body {
+          email: Email;
+        }
 
-    @route("/reset-password/{token}")
-    @post
-    @doc("Confirms password reset request and updates the password.")
-    op confirmPasswordReset(
-      @path token: string,
-      @body payload: ConfirmPasswordResetPayload,
-    ):
-      | PasswordResetSuccessful
-      | InvalidOrExpiredTokenError
-      | BadRequestError
-      | UnexpectedError;
+        namespace response {
+          model Success {
+            code: "CHECK_EMAIL_FOR_RESET_LINK";
+          }
 
-    @route("/sign-in")
-    @post
-    @doc("Sign in user")
-    op signIn(
-      @body payload: SignInPayload,
-    ): AuthCredentials | UnauthorizedError | UnexpectedError;
-  }
+          @error
+          model PasswordResetMailAlreadySentError {
+            @statusCode _code: 400;
+            code: "PASSWORD_RESET_MAIL_ALREADY_SENT_ERROR";
+            data: {
+              expires_at: DateTime;
+            };
+          }
 
-  model EmailPayload {
-    email: Email;
+          alias Error = PasswordResetMailAlreadySentError | Api.BadRequestError | Api.UnexpectedError;
+
+          alias Response = Success | Error;
+        }
+
+        @post
+        @doc("Initiates the password reset process.")
+        op initializePasswordReset(@body body: Body): response.Response;
+      }
+
+      @route("/{token}")
+      namespace Confirm {
+        model Body {
+          password: Password;
+        }
+
+        namespace response {
+          model PasswordResetSuccessful {
+            code: "PASSWORD_RESET_SUCCESSFUL";
+          }
+
+          @error
+          model InvalidOrExpiredTokenError {
+            @statusCode _code: 400;
+            code: "INVALID_OR_EXPIRED_TOKEN_ERROR";
+          }
+
+          alias Success = PasswordResetSuccessful;
+          alias Error = InvalidOrExpiredTokenError | Api.BadRequestError | Api.UnexpectedError;
+
+          alias Response = Success | Error;
+        }
+
+        @post
+        @doc("Confirms password reset request and updates the password.")
+        op confirmPasswordReset(
+          @path token: string,
+          @body body: Body,
+        ): response.Response;
+      }
+    }
+
+    @route("/send-verification-email")
+    namespace SendVerificationEmail {
+      model Body {
+        email: Email;
+      }
+
+      namespace response {
+        model Success {
+          code: "VERIFICATION_MAIL_SENT";
+          data: {
+            expires_at: DateTime;
+          };
+        }
+
+        @error
+        model VerificationMailAlreadySentError {
+          @statusCode _code: 400;
+          code: "VERIFICATION_MAIL_ALREADY_SENT_ERROR";
+          data: {
+            expires_at: DateTime;
+          };
+        }
+
+        @error
+        model UserNotFoundError {
+          @statusCode _code: 404;
+          code: "USER_NOT_FOUND_ERROR";
+        }
+
+        alias Error = VerificationMailAlreadySentError | UserNotFoundError | Api.UnexpectedError;
+
+        alias Response = Success | Error;
+      }
+
+      @post
+      @doc("Send verification email")
+      op sendVerificationEmail(@body body: Body): response.Response;
+    }
+
+    @route("/verify-email")
+    namespace VerifyEmail {
+      model Body {
+        email: Email;
+        otp: Otp;
+      }
+
+      namespace response {
+        model VerificationSuccessful {
+          code: "VERIFICATION_SUCCESSFUL";
+        }
+
+        @error
+        model InvalidOrExpiredOtpError {
+          @statusCode _code: 400;
+          code: "INVALID_OR_EXPIRED_OTP_ERROR";
+        }
+
+        alias Success = VerificationSuccessful;
+        alias Error = InvalidOrExpiredOtpError | Api.BadRequestError | Api.UnexpectedError;
+        alias Response = Success | Error;
+      }
+
+      @post
+      @doc("Verify email address")
+      op verifyEmail(@body body: Body): response.Response;
+    }
+
+    @route("/profile")
+    namespace Profile {
+      namespace response {
+        model Success {
+          code: "FETCHED_PROFILE";
+          data: User;
+        }
+
+        alias Error = Api.UnauthorizedError | Api.UnexpectedError | Api.UserNotVerifiedError;
+
+        alias Response = Success | Error;
+      }
+
+      @useAuth(BearerAuth)
+      @doc("Fetch details of currently signed in user")
+      op fetchUserDetails(): response.Response;
+    }
   }
 
   @tag("Patient")
   @route("/patients")
   @useAuth(BearerAuth)
   namespace Patient {
-    model PatientProfileUpdatedResponse {
-      @example("Successful")
-      message: string;
-    }
-
     model PatientProfile {
       id: Id;
 
@@ -286,73 +352,126 @@ namespace Api {
       other_names: string | null;
       email: Email;
       phone_number: PhoneNumber;
-      date_of_birth: DateOfBirth;
-      profile_picture: Media;
+      date_of_birth: DateOfBirth | null;
+      profile_picture: Media | null;
       created_at: DateTime;
       updated_at: DateTime | null;
     }
 
-    model PaginatedPatients {
-      results: {
-        @example("Successful")
-        message: string;
+    namespace Create {
+      namespace request {
+        model Body {
+          date_of_birth: DateOfBirth;
+        }
+      }
 
-        data: PatientProfile[];
-      };
+      namespace response {
+        model Success {
+          @statusCode _code: 201;
+          code: "PATIENT_PROFILE_CREATED";
+        }
 
-      @example(18)
-      count: int64;
+        alias Error = Api.BadRequestError | Api.UnauthorizedError | Api.UnexpectedError;
+        alias Response = Success | Error;
+      }
 
-      @example("http://localhost:8000/api/patients?page=3")
-      next: string | null;
-
-      @example("http://localhost:8000/api/patients?page=2")
-      previous: string | null;
+      @post
+      @doc("Create patient profile")
+      op createPatientProfile(@body body: request.Body): response.Response;
     }
 
-    alias PatientNotFoundError = NotFoundError<"Patient">;
-
     @route("/")
-    @get
-    @doc("Fetch all patients")
-    op fetchPatients(
-    ): PaginatedPatients | AuthenticationRequiredError | UnexpectedError;
+    namespace List {
+      namespace response {
+        model Success {
+          code: "FETCH_PATIENT_PROFILES_SUCCESSFUL";
+          data: Pagination.Paginated<PatientProfile>;
+        }
 
-    @route("/profile/")
-    @get
-    @useAuth(BearerAuth)
-    @doc("Fetch patient profile")
-    op fetchProfile(
-    ): PatientProfile | AuthenticationRequiredError | UnexpectedError;
+        alias Error = Api.UnauthorizedError | Api.UnexpectedError;
+        alias Response = Success | Error;
+      }
+
+      @get
+      @doc("Fetch many patient profiles")
+      op fetchManyPatientProfiles(
+        @query page?: int64,
+        @query per_page?: int64,
+      ): response.Response;
+    }
 
     @route("/{id}")
-    @get
-    @doc("Fetch patient by ID")
-    op fetchPatientById(@path id: string):
-      | PatientProfile
-      | PatientNotFoundError
-      | AuthenticationRequiredError
-      | UnexpectedError;
+    namespace Get {
+      namespace response {
+        model Success {
+          code: "FETCH_PATIENT_PROFILE_SUCCESSFUL";
+          data: PatientProfile;
+        }
 
-    @route("/profile/")
-    @patch
-    @doc("Update patient profile")
-    op updatePatientById(@body patient: PatientProfile):
-      | PatientProfileUpdatedResponse
-      | PatientNotFoundError
-      | AuthenticationRequiredError
-      | UnexpectedError;
+        @error
+        model ProfileNotFoundError {
+          @statusCode _code: 404;
+          code: "PATIENT_PROFILE_NOT_FOUND_ERROR";
+        }
+
+        alias Error = ProfileNotFoundError | UnauthorizedError | UnexpectedError;
+        alias Response = Success | Error;
+      }
+
+      @get
+      @doc("Fetch patient by ID")
+      op fetchPatientProfileById(@path id: string): response.Response;
+    }
+
+    @route("/profile")
+    namespace Profie {
+      namespace Get {
+        namespace response {
+          model Success {
+            code: "FETCH_PATIENT_PROFILE_SUCCESSFUL";
+            data: PatientProfile;
+          }
+
+          @error
+          model ProfileNotFoundError {
+            @statusCode _code: 404;
+            code: "PATIENT_PROFILE_NOT_FOUND_ERROR";
+          }
+
+          alias Error = Api.UnauthorizedError | Api.UnexpectedError | ProfileNotFoundError;
+          alias Response = Success | Error;
+        }
+
+        @get
+        @doc("Fetch patient profile")
+        op fetchPatientProfile(): response.Response;
+      }
+
+      namespace Update {
+        model Body {
+          ...OptionalProperties<PatientProfile>;
+        }
+
+        namespace response {
+          model Success {
+            code: "PATIENT_PROFILE_UPDATED";
+          }
+
+          alias Error = Api.UnauthorizedError | Api.UnexpectedError;
+          alias Response = Success | Error;
+        }
+
+        @patch
+        @doc("Update patient profile")
+        op updatePatientProfile(@body body: Body): response.Response;
+      }
+    }
   }
 
   @tag("Doctor")
   @route("/doctors")
   @useAuth(BearerAuth)
   namespace Doctor {
-    model DoctorProfileUpdatedResponse {
-      @example("Successful")
-      message: string;
-    }
-
     @example("General Practitioner")
     scalar Specialization extends string;
 
@@ -435,20 +554,25 @@ namespace Api {
       date_of_birth: DateOfBirth;
       profile_picture: Media;
       specialization: Specialization | null;
+
+      @example(43)
       patients_treated: int64;
+
+      @example(5)
       years_of_experience: int64;
+
       number_of_reviews: int64;
-      rating: float64;
-      description: string | null;
+      rating: string;
+      description: string;
 
-      @example(500.00)
-      home_consultation_charge: float64;
+      @example("500.00")
+      home_consultation_charge: string;
 
-      @example(100.00)
-      video_consultation_charge: float64;
+      @example("100.00")
+      video_consultation_charge: string;
 
-      @example(300.00)
-      clinic_consultation_charge: float64;
+      @example("300.00")
+      clinic_consultation_charge: string;
 
       certifications: Certification[] | null;
       experiences: Experience[] | null;
@@ -458,101 +582,150 @@ namespace Api {
       updated_at: DateTime | null;
     }
 
-    model DoctorNotFoundError extends NotFoundError<"Doctor"> {}
-    model PaginatedDoctors {
-      results: {
-        @example("Successful")
-        message: string;
+    namespace Create {
+      namespace request {
+        model Body {
+          other_names: string | null;
+          date_of_birth: DateOfBirth;
+          profile_picture: Media;
+          specialization: Specialization | null;
 
-        data: DoctorProfile[];
-      };
+          @example(43)
+          patients_treated: int64;
 
-      @example(18)
-      count: int64;
+          @example(5)
+          years_of_experience: int64;
 
-      @example("http://localhost:8000/api/doctors/?page=3")
-      next: string | null;
+          number_of_reviews: int64;
+          rating: string;
+          description: string;
 
-      @example("http://localhost:8000/api/doctors/?page=2")
-      previous: string | null;
+          @example("500.00")
+          home_consultation_charge: string;
+
+          @example("100.00")
+          video_consultation_charge: string;
+
+          @example("300.00")
+          clinic_consultation_charge: string;
+
+          certifications: Certification[] | null;
+          experiences: Experience[] | null;
+          working_hours: WorkingHour[] | null;
+          location: Location | null;
+        }
+      }
+
+      namespace response {
+        model Success {
+          @statusCode _code: 201;
+          code: "DOCTOR_PROFILE_CREATED";
+        }
+
+        alias Error = Api.BadRequestError | Api.UnauthorizedError | Api.UnexpectedError;
+        alias Response = Success | Error;
+      }
+
+      @post
+      @doc("Create doctor profile")
+      op createDoctorProfile(@body body: request.Body): response.Response;
     }
 
-    @route("/")
-    @get
-    @doc("Fetch all doctors")
-    op fetchDoctors(
-      @query page?: string,
-    ): PaginatedDoctors | AuthenticationRequiredError | UnexpectedError;
+    namespace List {
+      namespace response {
+        model Success {
+          code: "FETCH_DOCTOR_PROFILES_SUCCESSFUL";
+          data: Pagination.Paginated<DoctorProfile>;
+        }
+
+        alias Error = Api.UnauthorizedError | Api.UnexpectedError;
+        alias Response = Success | Error;
+      }
+
+      @get
+      @doc("Fetch many doctor profiles")
+      op fetchManyDoctorProfiles(
+        @query page?: int64,
+        @query per_page?: int64,
+      ): response.Response;
+    }
 
     @route("/profile")
-    @get
-    @useAuth(BearerAuth)
-    @doc("Fetch doctor profile")
-    op fetchProfile(
-    ): DoctorProfile | AuthenticationRequiredError | UnexpectedError;
+    namespace Profile {
+      namespace Get {
+        namespace response {
+          model Success {
+            code: "FETCH_DOCTOR_PROFILE_SUCCESSFUL";
+            data: DoctorProfile;
+          }
 
-    @route("profile/{id}")
-    @get
-    @doc("Fetch doctor by ID")
-    op fetchDoctorById(@path id: string):
-      | DoctorProfile
-      | DoctorNotFoundError
-      | AuthenticationRequiredError
-      | UnexpectedError;
+          alias Error = Api.UnauthorizedError | Api.UnexpectedError;
+          alias Response = Success | Error;
+        }
 
-    @route("/profile")
-    @patch
-    @useAuth(BearerAuth)
-    @doc("Update doctor profile")
-    op updateDoctorById(@body doctor: DoctorProfile):
-      | DoctorProfileUpdatedResponse
-      | DoctorNotFoundError
-      | AuthenticationRequiredError
-      | UnexpectedError;
+        @get
+        @useAuth(BearerAuth)
+        @doc("Fetch doctor profile")
+        op fetchDoctorProfile(): response.Response;
+      }
+
+      namespace Update {
+        model Body {
+          ...OptionalProperties<DoctorProfile>;
+        }
+
+        namespace response {
+          model Success {
+            code: "DOCTOR_PROFILE_UPDATED";
+          }
+
+          alias Error = Api.UnauthorizedError | Api.UnexpectedError;
+          alias Response = Success | Error;
+        }
+
+        @useAuth(BearerAuth)
+        @put
+        @doc("Update doctor profile")
+        op updateDoctorProfile(@body body: Body): response.Response;
+      }
+    }
+
+    namespace Get {
+      namespace response {
+        model Success {
+          code: "FETCH_DOCTOR_PROFILE_SUCCESSFUL";
+          data: DoctorProfile;
+        }
+
+        @error
+        model ProfileNotFoundError {
+          @statusCode _code: 404;
+          code: "DOCTOR_PROFILE_NOT_FOUND_ERROR";
+        }
+
+        alias Error = ProfileNotFoundError | Api.UnauthorizedError | Api.UnexpectedError;
+        alias Response = Success | Error;
+      }
+
+      @route("/{id}")
+      @get
+      @doc("Fetch doctor profile by ID")
+      op fetchDoctorProfileById(@path id: string): response.Response;
+    }
   }
 
   @tag("Consultation")
   @route("/consultation")
   @useAuth(BearerAuth)
   namespace Consultation {
-    model DoctorNote {
-      id: Id;
+    // model DoctorNote {
+    //   id: Id;
 
-      @example("Patient is suffering from a cold")
-      content: string;
+    //   @example("Patient is suffering from a cold")
+    //   content: string;
 
-      created_at: DateTime;
-    }
-
-    model Media {
-      type: "image" | "video";
-
-      @example("https://example.com/image.jpg")
-      url: string;
-    }
-
-    model Chat {
-      id: Id;
-
-      @example("Hello, how are you feeling today?")
-      content: string;
-
-      media: Media[];
-      sent_by: Role;
-      created_at: DateTime;
-    }
-
-    alias ConsultationNotFoundError = NotFoundError<"Consultation">;
-
-    model ConsultationNoteAdded {
-      @example("Doctors notes added")
-      message: string;
-    }
-
-    model ConsultationChatAdded {
-      @example("Chat added")
-      message: string;
-    }
+    //   created_at: DateTime;
+    // }
 
     model AccessToken {
       @example("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik1hcnkgU2xlc3NvciIsImlhdCI6MTUxNjIzOTAyMn0.UFI1B6pCOrqlpaFHV58dqqTLYCCC8hukJAVY8Wb1Z9o")
@@ -565,96 +738,56 @@ namespace Api {
       patient: Id;
 
       // status: "pending" | "accepted" | "rejected";
-      doctor_notes: DoctorNote[] | null;
+      // doctor_notes: DoctorNote[] | null;
 
-      chats: Chat[] | null;
+      // chats: Chat[] | null;
       room_name: string | null;
-      doctor_token: string | null;
-      patient_token: string | null;
+
+      doctor_token: AccessToken;
+      patient_token: AccessToken;
       start_time: DateTime;
       end_time: DateTime;
       created_at: DateTime;
       updated_at: DateTime | null;
     }
 
-    @error
-    model ConsultationAlreadyAccepted {
-      @statusCode code: 406;
+    namespace List {
+      namespace response {
+        model Success {
+          code: "FETCH_CONSULTATIONS_SUCCESSFUL";
+          data: Pagination.Paginated<Consultation>;
+        }
 
-      @example("Already accepted this request.")
-      message: string;
+        alias Error = Api.UnauthorizedError | Api.UnexpectedError;
+        alias Response = Success | Error;
+      }
+
+      @get
+      @doc("Fetch many consultations")
+      op fetchManyConsultations(
+        @query page?: int64,
+        @query per_page?: int64,
+      ): response.Response;
     }
-
-    @error
-    model ConsultationDeclined {
-      @statusCode code: 406;
-
-      @example("Already declined this request.")
-      message: string;
-    }
-    @error
-    model UnauthorisedRequest {
-      @statusCode code: 403;
-
-      @example("User Does Not have Permission to Access this Information")
-      message: string;
-    }
-
-    model PaginatedConsultations {
-      results: Consultation;
-
-      @example(18)
-      count: int64;
-
-      @example("http://localhost:8000/api/doctors/?page=3")
-      next: string | null;
-
-      @example("http://localhost:8000/api/doctors/?page=2")
-      previous: string | null;
-    }
-
-    @route("/")
-    @get
-    @doc("Fetch all consultations")
-    op fetchConsultations(
-    ): PaginatedConsultations | AuthenticationRequiredError | UnexpectedError;
 
     @route("/{id}")
-    @get
-    @doc("Fetch consultation by ID")
-    op fetchConsultationById(@path id: string):
-      | Consultation
-      | ConsultationNotFoundError
-      | AuthenticationRequiredError
-      | UnexpectedError;
+    namespace Get {
+      @error
+      model NotFoundError {
+        @statusCode _code: 404;
+        code: "CONSULTATION_NOT_FOUND";
+      }
 
-    @route("/{id}/access-token")
-    @get
-    @doc("Generate access token")
-    op generateAccessToken(@path id: string):
-      | AccessToken
-      | UnauthorisedRequest
-      | ConsultationNotFoundError
-      | AuthenticationRequiredError
-      | UnexpectedError;
+      namespace response {
+        alias Success = Consultation;
+        alias Error = NotFoundError | Api.UnauthorizedError | Api.UnexpectedError;
+        alias Response = Success | Error;
+      }
 
-    @route("/{id}/note")
-    @post
-    @doc("Add doctors notes")
-    op addDoctorsNotes(@path id: string, @body note: string):
-      | ConsultationNoteAdded
-      | ConsultationNotFoundError
-      | AuthenticationRequiredError
-      | UnexpectedError;
-
-    @route("/{id}/chat")
-    @post
-    @doc("Add chat")
-    op fetchChat(@path id: string):
-      | ConsultationChatAdded
-      | ConsultationNotFoundError
-      | AuthenticationRequiredError
-      | UnexpectedError;
+      @get
+      @doc("Fetch consultation by ID")
+      op fetchConsultationById(@path id: string): response.Response;
+    }
 
     @route("/request")
     namespace Request {
@@ -667,11 +800,6 @@ namespace Api {
         message: string;
       }
 
-      model ConsultationRequestCreated {
-        @example("Consultation request created")
-        message: string;
-      }
-
       model ConsultationRequest {
         id: Id;
         doctor: Id;
@@ -680,7 +808,8 @@ namespace Api {
 
         @example("I am feeling unwell")
         message: string;
-
+        doctor_profile?: Api.Doctor.DoctorProfile;
+        patient_profile?: Api.Patient.PatientProfile;
         start_time: DateTime;
         end_time: DateTime;
         created_at: DateTime;
@@ -701,60 +830,133 @@ namespace Api {
       }
 
       @error
-      model ConsultationRequestPendingError {
-        @statusCode code: 406;
-
-        @example("Already a Pending request")
-        message: string;
-      }
-      @error
-      model UnauthorisedRequestID {
-        @statusCode code: 403;
-
-        @example("User Does Not have Permission to Access this Information")
-        message: string;
+      model NotFoundError {
+        @statusCode _code: 404;
+        code: "CONSULTATION_REQUEST_NOT_FOUND";
       }
 
-      model ConsultationRequestAccepted {
-        message: "Consultation request accepted";
+      namespace Request {
+        namespace Create {
+          namespace response {
+            model Success {
+              @statusCode _code: 201;
+              code: "CONSULTATION_REQUEST_CREATED_SUCCESSFULLY";
+            }
+
+            alias Error = Api.BadRequestError | Api.UnauthorizedError | Api.UnexpectedError;
+            alias Response = Success | Error;
+          }
+
+          @post
+          @doc("Request consultation")
+          op requestConsultation(
+            @body body: ConsultationRequestPayload,
+          ): response.Response;
+        }
+
+        namespace List {
+          namespace response {
+            model Success {
+              code: "FETCH_CONSULTATION_REQUESTS_SUCCESSFUL";
+              data: Pagination.Paginated<ConsultationRequest>;
+            }
+
+            alias Error = Api.UnauthorizedError | Api.UnexpectedError;
+            alias Response = Success | Error;
+          }
+
+          @get
+          @doc("Fetch many consultation requests")
+          op fetchManyConsultationRequests(
+            @query page?: int64,
+            @query per_page?: int64,
+            @query profile?: string,
+          ): response.Response;
+        }
+
+        @route("/{id}")
+        namespace Get {
+          namespace response {
+            alias Success = ConsultationRequest;
+            alias Error = Api.Consultation.Request.NotFoundError | Api.UnauthorizedError | Api.UnexpectedError;
+            alias Response = Success | Error;
+          }
+
+          @get
+          @doc("Fetch consultation request by ID")
+          op fetchConsultationRequestById(@path id: string): response.Response;
+        }
+
+        @route("/{id}/reject")
+        namespace Reject {
+          namespace response {
+            model AlreadyAcceptedError {
+              @statusCode _code: 406;
+              code: "CONSULTATION_REQUEST_ALREADY_ACCEPTED_ERROR" ;
+            }
+
+            @error
+            model AlreadyDeclinedError {
+              @statusCode _code: 406;
+              code: "CONSULTATION_REQUEST_ALREADY_DECLINED_ERROR";
+            }
+
+            model Success {
+              code: "CONSULTATION_REQUEST_REJECTED_SUCCESSFULLY";
+            }
+
+            alias Error =
+              | Api.Consultation.Request.NotFoundError
+              | AlreadyDeclinedError
+              | AlreadyAcceptedError
+              | Api.UnauthorizedError
+              | Api.UnexpectedError;
+
+            alias Response = Success | Error;
+          }
+
+          @post
+          @doc("Reject consultation request")
+          op rejectConsultationRequest(@path id: string): response.Response;
+        }
+
+
+        @route("/{id}/accept")
+        namespace Accept {
+          namespace response {
+            model AlreadyAcceptedError {
+              @statusCode _code: 406;
+               code: "CONSULTATION_REQUEST_ALREADY_ACCEPTED_ERROR";
+            }
+
+            @error
+            model AlreadyDeclinedError {
+              @statusCode _code: 406;
+              code: "CONSULTATION_REQUEST_ALREADY_DECLINED_ERROR";
+            }
+
+            model Success {
+              code: "CONSULTATION_REQUEST_ACCEPTED_SUCCESSFULLY";
+            }
+
+            alias Error =
+              | Api.Consultation.Request.NotFoundError
+              | AlreadyDeclinedError
+              | AlreadyAcceptedError
+              | Api.UnauthorizedError
+              | Api.UnexpectedError;
+
+            alias Response = Success | Error;
+          }
+
+          @post
+          @doc("Accept consultation request")
+          op acceptConsultationRequest(@path id: string): response.Response;
+        }
       }
 
-      @route("/")
-      @post
-      @doc("Request consultation")
-      op requestConsultation(@body body: ConsultationRequestPayload):
-        | ConsultationRequestCreated
-        | BadRequestError
-        | AuthenticationRequiredError
-        | UnexpectedError;
 
-      @route("/")
-      @get
-      @doc("Fetch consultation requests")
-      op fetchConsultationRequests(
-      ): PaginatedConsultationRequest | AuthenticationRequiredError | UnexpectedError;
-
-      @route("/{id}")
-      @get
-      @doc("Fetch consultation request by ID")
-      op fetchConsultationRequestById(@path id: string):
-        | ConsultationRequest
-        | NotFoundError<"Consultation Request">
-        | UnauthorisedRequestID
-        | AuthenticationRequiredError
-        | UnexpectedError;
-
-      @route("/{id}/accept")
-      @post
-      @doc("Accept consultation request")
-      op acceptConsultationRequest(@path id: string):
-        | ConsultationRequestAccepted[]
-        | NotFoundError<"Consultation Request">
-        | ConsultationNotFoundError
-        | ConsultationDeclined
-        | ConsultationAlreadyAccepted
-        | AuthenticationRequiredError
-        | UnexpectedError;
+      
     }
   }
 
@@ -769,7 +971,7 @@ namespace Api {
       balance: float64;
     }
 
-    model PaginatedWalletTransaction {
+    model Transaction {
       id: Id;
       type: "credit" | "debit";
 
@@ -783,76 +985,105 @@ namespace Api {
       note: string;
 
       created_at: DateTime;
-
-      @example(18)
-      count: int64;
-
-      @example("http://localhost:8000/api/doctors/?page=3")
-      next: string | null;
-
-      @example("http://localhost:8000/api/doctors/?page=2")
-      previous: string | null;
     }
 
-    model WalletTopupPayload {
-      amount: float64;
+    namespace Get {
+      namespace response {
+        model Success {
+          code: "FETCH_WALLET_SUCCESSFUL";
+          data: Wallet;
+        }
+        alias Error = Api.UnauthorizedError | Api.UnexpectedError;
+        alias Response = Success | Error;
+      }
+
+      op fetchWallet(): response.Response;
     }
 
-    model WalletTopupResponse {
-      @example("https://checkout.paystack.com/5mz7yvom8rzo498")
-      url: string;
-    }
+    namespace Topup {
+      model Body {
+        amount: float64;
+      }
 
-    op fetchWallet(): Wallet | AuthenticationRequiredError | UnexpectedError;
-    op topUpWallet(@body req: WalletTopupPayload):
-      | WalletTopupResponse
-      | BadRequestError
-      | AuthenticationRequiredError
-      | UnexpectedError;
+      namespace response {
+        model Success {
+          @example("https://checkout.paystack.com/5mz7yvom8rzo498")
+          url: string;
+        }
+        alias Error = BadRequestError | UnauthorizedError | UnexpectedError;
+        alias Response = Success | Error;
+      }
+
+      op topup(@body body: Body): response.Response;
+    }
 
     @route("/transactions")
-    op fetchWalletTransactions(
-    ): PaginatedWalletTransaction | AuthenticationRequiredError | UnexpectedError;
+    namespace Transactions {
+      namespace response {
+        model Success {
+          code: "FETCH_TRANSACTIONS_SUCCESSFUL";
+          data: Pagination.Paginated<Api.Wallet.Transaction>;
+        }
+
+        alias Error = Api.UnauthorizedError | Api.UnexpectedError;
+        alias Response = Success | Error;
+      }
+
+      namespace List {
+        op fetchWalletTransactions(
+          @query page?: int64,
+          @query per_page?: int64,
+        ): response.Response;
+      }
+    }
   }
 
   @tag("Waitlist")
   @route("/waitlist")
   namespace Waitlist {
-    @error
-    model WaitlistAlreadyJoinedError {
-      @statusCode code: 406;
-
-      @example("You're already in the waitlist")
-      message: string;
-    }
-
-    model JoinWaitlistPayload {
+    model Body {
       email: Email;
     }
 
-    model WaitlistJoined {
-      @example("You have been added to the waitlist")
-      message: string;
+    namespace response {
+      @error
+      model AlreadyJoinedError {
+        @statusCode _code: 406;
+        code: "WAITLIST_ALREADY_JOINED_ERROR";
+      }
+
+      model Success {
+        code: "WAITLIST_JOINED_SUCCESSFULLY";
+      }
+
+      alias Error = AlreadyJoinedError | Api.UnexpectedError;
+
+      alias Response = Success | Error;
     }
 
-    op joinWaitlist(
-      @body req: JoinWaitlistPayload,
-    ): WaitlistJoined | WaitlistAlreadyJoinedError | UnexpectedError;
+    op join(@body body: Body): response.Response;
   }
 
   @tag("Dev")
   @route("/dev")
   namespace Dev {
-    model UserCreatedMessage {
-      @example("User created successfully")
-      message: string;
-    }
-
     @route("/user")
-    @post
-    @doc("Create a user")
-    op createUser(
-      @body payload: Authentication.SignUpPayload,
-    ): UserCreatedMessage | UnexpectedError;
+    namespace CreateUser {
+      namespace response {
+        model UserCreatedMessage {
+          @example("User created successfully")
+          message: string;
+        }
+
+        alias Success = UserCreatedMessage;
+        alias Error = UnexpectedError;
+
+        alias Response = Success | Error;
+      }
+
+      @post
+      @doc("Create a user")
+      op create(@body body: Api.Authentication.SignUp.Body): response.Response;
+    }
   }
 }

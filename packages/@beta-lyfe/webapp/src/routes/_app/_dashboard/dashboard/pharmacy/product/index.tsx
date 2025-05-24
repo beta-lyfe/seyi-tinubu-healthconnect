@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/_app/_dashboard/dashboard/pharmacy/product/')({
+export const Route = createFileRoute(
+  '/_app/_dashboard/dashboard/pharmacy/product/'
+)({
   component: MedicationsPage
 })
 
@@ -311,11 +313,10 @@ export default function MedicationsPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-
-
       <div className="md:py-8 md:px-6 md:container">
-
-        <h1 className="text-xl md:text-3xl font-bold mb-2 md:mb-6">All Medications</h1>
+        <h1 className="text-xl md:text-3xl font-bold mb-2 md:mb-6">
+          All Medications
+        </h1>
 
         {/* Search and Sort Bar */}
         <div className="flex flex-col md:flex-row gap-4 mb-8">
@@ -671,85 +672,85 @@ export default function MedicationsPage() {
               availability !== null ||
               priceRange[0] > 0 ||
               priceRange[1] < 2000) && (
-                <div className="mb-4 flex flex-wrap gap-2 items-center">
-                  <span className="text-sm font-medium">Active Filters:</span>
+              <div className="mb-4 flex flex-wrap gap-2 items-center">
+                <span className="text-sm font-medium">Active Filters:</span>
 
-                  {selectedTypes.map((type) => (
-                    <Badge
-                      key={type}
-                      variant="secondary"
-                      className="flex items-center gap-1"
-                    >
-                      {type === 'otc' ? 'Over-the-Counter' : 'Prescription'}
-                      <button type="button" onClick={() => toggleType(type)}>
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  ))}
-
-                  {selectedCategories.map((category) => (
-                    <Badge
-                      key={category}
-                      variant="secondary"
-                      className="flex items-center gap-1"
-                    >
-                      {category}
-                      <button
-                        type="button"
-                        onClick={() => toggleCategory(category)}
-                      >
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  ))}
-
-                  {selectedBrands.map((brand) => (
-                    <Badge
-                      key={brand}
-                      variant="secondary"
-                      className="flex items-center gap-1"
-                    >
-                      {brand}
-                      <button onClick={() => toggleBrand(brand)}>
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  ))}
-
-                  {availability !== null && (
-                    <Badge
-                      variant="secondary"
-                      className="flex items-center gap-1"
-                    >
-                      In Stock
-                      <button onClick={() => setAvailability(null)}>
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  )}
-
-                  {(priceRange[0] > 0 || priceRange[1] < 2000) && (
-                    <Badge
-                      variant="secondary"
-                      className="flex items-center gap-1"
-                    >
-                      {formatPrice(priceRange[0])} - {formatPrice(priceRange[1])}
-                      <button onClick={() => setPriceRange([0, 2000])}>
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  )}
-
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={resetFilters}
-                    className="ml-auto"
+                {selectedTypes.map((type) => (
+                  <Badge
+                    key={type}
+                    variant="secondary"
+                    className="flex items-center gap-1"
                   >
-                    Clear All
-                  </Button>
-                </div>
-              )}
+                    {type === 'otc' ? 'Over-the-Counter' : 'Prescription'}
+                    <button type="button" onClick={() => toggleType(type)}>
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                ))}
+
+                {selectedCategories.map((category) => (
+                  <Badge
+                    key={category}
+                    variant="secondary"
+                    className="flex items-center gap-1"
+                  >
+                    {category}
+                    <button
+                      type="button"
+                      onClick={() => toggleCategory(category)}
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                ))}
+
+                {selectedBrands.map((brand) => (
+                  <Badge
+                    key={brand}
+                    variant="secondary"
+                    className="flex items-center gap-1"
+                  >
+                    {brand}
+                    <button onClick={() => toggleBrand(brand)}>
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                ))}
+
+                {availability !== null && (
+                  <Badge
+                    variant="secondary"
+                    className="flex items-center gap-1"
+                  >
+                    In Stock
+                    <button onClick={() => setAvailability(null)}>
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                )}
+
+                {(priceRange[0] > 0 || priceRange[1] < 2000) && (
+                  <Badge
+                    variant="secondary"
+                    className="flex items-center gap-1"
+                  >
+                    {formatPrice(priceRange[0])} - {formatPrice(priceRange[1])}
+                    <button onClick={() => setPriceRange([0, 2000])}>
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                )}
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={resetFilters}
+                  className="ml-auto"
+                >
+                  Clear All
+                </Button>
+              </div>
+            )}
 
             {/* Results Count */}
             <div className="mb-4">
@@ -858,7 +859,6 @@ export default function MedicationsPage() {
           </div>
         </div>
       </div>
-
     </div>
   )
 }

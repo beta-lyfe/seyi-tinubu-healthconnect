@@ -4,6 +4,7 @@ import signUpRouter from './sign-up'
 import sendVerificationEmailRouter from './send-verification-email'
 import verifyEmailRouter from './verify-email'
 import resetPasswordRouter from './reset-password'
+import authProfileRouter from './profile'
 
 export default new Hono()
   .route('/', signInRouter)
@@ -11,3 +12,4 @@ export default new Hono()
   .route('/', sendVerificationEmailRouter)
   .route('/', verifyEmailRouter)
   .route('/', resetPasswordRouter)
+  .route('/', authProfileRouter)

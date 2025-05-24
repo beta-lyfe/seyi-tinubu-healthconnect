@@ -5,14 +5,15 @@
 	"scripts": {
 		"start": "tsx ./scripts/prod.ts",
 		"dev": "dotenv -- tsx watch ./scripts/dev.ts",
-		"db:migrate": "drizzle-kit migrate",
+		"db:migrate": "dotenv -- drizzle-kit migrate",
 		"db:push": "dotenv -- drizzle-kit push",
 		"deploy": "vercel deploy --prebuilt --token $VERCEL_TOKEN",
 		"lint": "tsc",
 		"build": "tsx ./scripts/build.ts"
 	},
 	"exports": {
-		"./*": "./src/*.ts"
+		"./app": "./src/app.ts",
+		"./config": "./src/features/config/index.ts"
 	},
 	"dependencies": {
 		"@beta-lyfe/api": "workspace:^",

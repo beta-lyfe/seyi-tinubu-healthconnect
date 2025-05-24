@@ -46,7 +46,38 @@ jobs:
           pnpm typegen
 
       - name: Load .env file
-        run: echo '${{ secrets.ENV }}' > ./packages/.env
+        working-directory: packages
+        run: |
+          DOCS_ENV_FILE="$(mktemp)"
+          WEBAPP_ENV_FILE="$(mktemp)"
+          WEBSITE_ENV_FILE="$(mktemp)"
+          BACKEND_ENV_FILE="$(mktemp)"
+
+          VERCEL_ENVIRONMENT="preview"
+
+          export VERCEL_ORG_ID=${{ secrets.VERCEL_ORG_ID }}
+          export VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}
+
+          export VERCEL_PROJECT_ID=${{ secrets.VERCEL_DOCS_PROJECT_ID }}
+          pnpm vercel env pull "$DOCS_ENV_FILE" --yes --environment "$VERCEL_ENVIRONMENT" --token "$VERCEL_TOKEN"
+
+          export VERCEL_PROJECT_ID=${{ secrets.VERCEL_WEBAPP_PROJECT_ID }}
+          pnpm vercel env pull "$WEBAPP_ENV_FILE" --yes --environment "$VERCEL_ENVIRONMENT" --token "$VERCEL_TOKEN"
+
+          export VERCEL_PROJECT_ID=${{ secrets.VERCEL_WEBSITE_PROJECT_ID }}
+          pnpm vercel env pull "$WEBSITE_ENV_FILE" --yes --environment "$VERCEL_ENVIRONMENT" --token "$VERCEL_TOKEN"
+
+          export VERCEL_PROJECT_ID=${{ secrets.VERCEL_BACKEND_PROJECT_ID }}
+          pnpm vercel env pull "$BACKEND_ENV_FILE" --yes --environment "$VERCEL_ENVIRONMENT" --token "$VERCEL_TOKEN"
+
+          cat "$DOCS_ENV_FILE" >> .env
+          cat "$WEBAPP_ENV_FILE" >> .env
+          cat "$WEBSITE_ENV_FILE" >> .env
+          cat "$BACKEND_ENV_FILE" >> .env
+          echo VERCEL_TOKEN="$VERCEL_TOKEN" >> .env
+          echo VERCEL_ENVIRONMENT="$VERCEL_ENVIRONMENT" >> .env
+
+          cat .env | grep -v '^#' | sed -E 's/^(.*)?="(.*)"/\1=\2/' >> "$GITHUB_ENV"
 
       - name: Build internal docs
         working-directory: docs/docs
@@ -61,11 +92,7 @@ jobs:
 
       - name: Build stack
         working-directory: packages
-        run: |
-          set -a            
-          source .env
-          set +a
-          pnpm build
+        run: pnpm build
 
       - name: Move api docs to output folder
         working-directory: packages/@beta-lyfe/docs-api
@@ -79,41 +106,29 @@ jobs:
           mkdir -p .vercel/output/static
           echo '{ "version": 3 }' > .vercel/output/config.json
           mv docs/* .vercel/output/static
-          nix run nixpkgs#bun -- x vercel deploy --prebuilt --target preview --token ${{ secrets.VERCEL_TOKEN }}
+          nix run nixpkgs#bun -- x vercel deploy --prebuilt --target "$VERCEL_ENVIRONMENT" --token ${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_API_DOCS_PROJECT_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_DOCS_PROJECT_ID }}
 
       - name: Deploy website
         working-directory: packages
-        run: |
-          set -a
-          source .env
-          set +a
-          pnpm --filter @beta-lyfe/website run deploy --target preview
+        run: pnpm --filter @beta-lyfe/website run deploy --target "$VERCEL_ENVIRONMENT"
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_WEBSITE_PROJECT_ID }}
 
       - name: Deploy webapp
         working-directory: packages
-        run: |
-          set -a            
-          source .env
-          set +a
-          pnpm --filter @beta-lyfe/webapp run deploy --target preview
+        run: pnpm --filter @beta-lyfe/webapp run deploy --target "$VERCEL_ENVIRONMENT"
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_WEBAPP_PROJECT_ID }}
 
-      - name: Deploy standup backend
+      - name: Deploy backend
         working-directory: packages
-        run: |
-          set -a            
-          source .env
-          set +a
-          pnpm --filter @beta-lyfe/standup-backend run deploy --target staging
+        run: pnpm --filter @beta-lyfe/standup-backend run deploy --target "$VERCEL_ENVIRONMENT"
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_STANDUP_BACKEND_PROJECT_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_BACKEND_PROJECT_ID }}
 

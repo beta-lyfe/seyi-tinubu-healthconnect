@@ -30,9 +30,17 @@ namespace Repository {
     return Result.ok(user)
   }
 
+  export const findUserById = async (payload: { id: string }): Promise<
+    Result<User | null, Error>
+  > => {
+    const user =
+      (await db.select().from(users).where(eq(users.id, payload.id)))[0] ?? null
+    return Result.ok(user)
+  }
+
   export type CreateAuthenticationMethodPayload = Omit<
     typeof authenticationMethods.$inferInsert,
-    'id' | 'createdAt' | 'updatedAt'
+    'id' | 'created_at' | 'updated_at'
   >
 
   export const createAuthenticationMethod = async (
@@ -52,7 +60,7 @@ namespace Repository {
         await db
           .select()
           .from(authenticationMethods)
-          .where(eq(authenticationMethods.userId, userId))
+          .where(eq(authenticationMethods.user_id, userId))
       )[0] ?? null
 
     return Result.ok(authMethod)
@@ -75,7 +83,7 @@ namespace Repository {
 
   export type CreateVerificationTokenPayload = Omit<
     Token,
-    'id' | 'purpose' | 'createdAt' | 'updatedAt'
+    'id'  | 'created_at' | 'updated_at'
   >
 
   export const createVerificationToken = async (
@@ -99,7 +107,7 @@ namespace Repository {
           .select()
           .from(tokens)
           .where(
-            and(eq(tokens.userId, userId), eq(tokens.purpose, 'verification'))
+            and(eq(tokens.user_id, userId), eq(tokens.purpose, 'verification'))
           )
       )[0] ?? null
 
@@ -117,7 +125,7 @@ namespace Repository {
 
   export type CreatePasswordResetTokenPayload = Omit<
     Token,
-    'id' | 'purpose' | 'createdAt' | 'updatedAt'
+    'id' | 'purpose' | 'created_at' | 'updated_at'
   >
 
   export const createPasswordResetToken = async (
@@ -141,7 +149,10 @@ namespace Repository {
           .select()
           .from(tokens)
           .where(
-            and(eq(tokens.userId, userId), eq(tokens.purpose, 'password_reset'))
+            and(
+              eq(tokens.user_id, userId),
+              eq(tokens.purpose, 'password_reset')
+            )
           )
       )[0] ?? null
 
@@ -171,6 +182,18 @@ namespace Repository {
     await db
       .delete(tokens)
       .where(and(eq(tokens.id, tokenId), eq(tokens.purpose, 'password_reset')))
+    return Result.ok(null)
+  }
+
+  export const verifyUserById = async (
+    userId: string
+  ): Promise<Result<null, Error>> => {
+    await db
+      .update(users)
+      .set({
+        is_verified: true
+      })
+      .where(eq(users.id, userId))
     return Result.ok(null)
   }
 }

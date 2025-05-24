@@ -1,28 +1,52 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Loader2Icon } from 'lucide-react'
-import { Button } from "@beta-lyfe/ui/components/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@beta-lyfe/ui/components/shad/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@beta-lyfe/ui/components/shad/ui/tabs"
+import { Button } from '@beta-lyfe/ui/components/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@beta-lyfe/ui/components/shad/ui/card'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
+} from '@beta-lyfe/ui/components/shad/ui/tabs'
 
-import { Video, Calendar, ClipboardList, MessageSquare, Shield, Clock, CheckCircle2, ArrowRight, Star, Menu, Phone, MapPin, Pill, Stethoscope, Users, Map, Award } from 'lucide-react'
+import {
+  Video,
+  Calendar,
+  ClipboardList,
+  MessageSquare,
+  Shield,
+  Clock,
+  CheckCircle2,
+  ArrowRight,
+  Star,
+  Menu,
+  Phone,
+  MapPin,
+  Pill,
+  Stethoscope,
+  Users,
+  Map,
+  Award
+} from 'lucide-react'
 
-import WhatsAppButton from "@beta-lyfe/ui/components/whatappbtn"
+import WhatsAppButton from '@beta-lyfe/ui/components/whatappbtn'
 import { Link } from '@tanstack/react-router'
 
-
-
 export const Route = createFileRoute('/')({
-  component: LandingPage,
+  component: LandingPage
 })
 
-
-
 export default function LandingPage() {
-
   return (
     <div className="flex min-h-screen flex-col">
-      
       <main className="flex-1">
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-blue-50 to-white">
@@ -34,35 +58,49 @@ export default function LandingPage() {
                     Healthcare at Your Fingertips
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Connect with licensed doctors across Nigeria, get prescriptions, and order medications from our online pharmacy—all from the comfort of your home.
+                    Connect with licensed doctors across Nigeria, get
+                    prescriptions, and order medications from our online
+                    pharmacy—all from the comfort of your home.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Button asChild size="lg" className="px-8 text-white">
-                      Book a Consultation
+                    Book a Consultation
                   </Button>
                   <Button asChild variant="outline" size="lg" className="px-8">
-                    <p>
-                      Visit Our Pharmacy
-                    </p>
+                    <p>Visit Our Pharmacy</p>
                   </Button>
                 </div>
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mt-8">
                   <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-3xl font-bold text-primary">2,500+</span>
-                    <span className="text-sm text-muted-foreground text-center">Care Providers</span>
+                    <span className="text-3xl font-bold text-primary">
+                      2,500+
+                    </span>
+                    <span className="text-sm text-muted-foreground text-center">
+                      Care Providers
+                    </span>
                   </div>
                   <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
                     <span className="text-3xl font-bold text-primary">36+</span>
-                    <span className="text-sm text-muted-foreground text-center">Specialties</span>
+                    <span className="text-sm text-muted-foreground text-center">
+                      Specialties
+                    </span>
                   </div>
                   <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-3xl font-bold text-primary">100%</span>
-                    <span className="text-sm text-muted-foreground text-center">States in Nigeria + FCT</span>
+                    <span className="text-3xl font-bold text-primary">
+                      100%
+                    </span>
+                    <span className="text-sm text-muted-foreground text-center">
+                      States in Nigeria + FCT
+                    </span>
                   </div>
                   <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-3xl font-bold text-primary">8,000+</span>
-                    <span className="text-sm text-muted-foreground text-center">Completed Appointments</span>
+                    <span className="text-3xl font-bold text-primary">
+                      8,000+
+                    </span>
+                    <span className="text-sm text-muted-foreground text-center">
+                      Completed Appointments
+                    </span>
                   </div>
                 </div>
               </div>
@@ -114,7 +152,9 @@ export default function LandingPage() {
                   </div>
                   <h3 className="text-xl font-bold">Virtual Consultations</h3>
                   <p className="text-muted-foreground">
-                    Connect with licensed Nigerian doctors via video, voice, or chat. Get medical advice, prescriptions, and referrals from the comfort of your home.
+                    Connect with licensed Nigerian doctors via video, voice, or
+                    chat. Get medical advice, prescriptions, and referrals from
+                    the comfort of your home.
                   </p>
                   <Button asChild variant="link" className="mt-2">
                     <p>
@@ -130,7 +170,8 @@ export default function LandingPage() {
                   </div>
                   <h3 className="text-xl font-bold">Online Pharmacy</h3>
                   <p className="text-muted-foreground">
-                    Order prescription and over-the-counter medications online. Enjoy fast delivery to your doorstep anywhere in Nigeria.
+                    Order prescription and over-the-counter medications online.
+                    Enjoy fast delivery to your doorstep anywhere in Nigeria.
                   </p>
                   <Button asChild variant="link" className="mt-2">
                     <Link to="/pharmacy">
@@ -146,11 +187,14 @@ export default function LandingPage() {
                   </div>
                   <h3 className="text-xl font-bold">Specialist Care</h3>
                   <p className="text-muted-foreground">
-                    Access specialists across 36+ medical fields including pediatrics, gynecology, cardiology, dermatology, and mental health.
+                    Access specialists across 36+ medical fields including
+                    pediatrics, gynecology, cardiology, dermatology, and mental
+                    health.
                   </p>
                   <Button asChild variant="link" className="mt-2">
                     <Link to="/specialties">
-                      Explore Specialties <ArrowRight className="ml-2 h-4 w-4" />
+                      Explore Specialties{' '}
+                      <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
                 </CardContent>
@@ -160,7 +204,10 @@ export default function LandingPage() {
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+        <section
+          id="how-it-works"
+          className="w-full py-12 md:py-24 lg:py-32 bg-muted"
+        >
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -178,27 +225,35 @@ export default function LandingPage() {
             <div className="mx-auto grid max-w-5xl items-start gap-6 py-12 md:grid-cols-3">
               {[
                 {
-                  step: "01",
-                  title: "Download & Register",
-                  description: "Download the BetaLyfe app from Google Play or App Store. Create your account in minutes."
+                  step: '01',
+                  title: 'Download & Register',
+                  description:
+                    'Download the BetaLyfe app from Google Play or App Store. Create your account in minutes.'
                 },
                 {
-                  step: "02",
-                  title: "Choose a Specialist",
-                  description: "Browse our network of 2,500+ Nigerian healthcare providers and select a specialist."
+                  step: '02',
+                  title: 'Choose a Specialist',
+                  description:
+                    'Browse our network of 2,500+ Nigerian healthcare providers and select a specialist.'
                 },
                 {
-                  step: "03",
-                  title: "Consult & Get Care",
-                  description: "Connect via video call, receive diagnosis, prescriptions, and order medications if needed."
+                  step: '03',
+                  title: 'Consult & Get Care',
+                  description:
+                    'Connect via video call, receive diagnosis, prescriptions, and order medications if needed.'
                 }
               ].map((step, index) => (
-                <div key={index} className="group relative flex flex-col items-center space-y-4">
+                <div
+                  key={index}
+                  className="group relative flex flex-col items-center space-y-4"
+                >
                   <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-primary-foreground">
                     {step.step}
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-xl text-center font-bold">{step.title}</h3>
+                    <h3 className="text-xl text-center font-bold">
+                      {step.title}
+                    </h3>
                     <p className="text-center text-muted-foreground">
                       {step.description}
                     </p>
@@ -211,9 +266,7 @@ export default function LandingPage() {
             </div>
             <div className="flex justify-center mt-8">
               <Button asChild size="lg" className="px-8 text-white">
-                <Link to="/get-the-app">
-                  Download the App
-                </Link>
+                <Link to="/get-the-app">Download the App</Link>
               </Button>
             </div>
           </div>
@@ -231,53 +284,60 @@ export default function LandingPage() {
                   Meet Our Healthcare Professionals
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Our network includes 2,500+ licensed Nigerian doctors across 36+ specialties.
+                  Our network includes 2,500+ licensed Nigerian doctors across
+                  36+ specialties.
                 </p>
               </div>
             </div>
             <div className="grid gap-6 mt-8 md:grid-cols-2 lg:grid-cols-4">
               {[
                 {
-                  name: "Dr. Adebayo Johnson",
-                  specialty: "Cardiology",
-                  experience: "15+ years",
-                  img: "/placeholder.svg?height=300&width=300&text=Dr.+Johnson"
+                  name: 'Dr. Adebayo Johnson',
+                  specialty: 'Cardiology',
+                  experience: '15+ years',
+                  img: '/placeholder.svg?height=300&width=300&text=Dr.+Johnson'
                 },
                 {
-                  name: "Dr. Ngozi Okafor",
-                  specialty: "Pediatrics",
-                  experience: "12+ years",
-                  img: "/placeholder.svg?height=300&width=300&text=Dr.+Okafor"
+                  name: 'Dr. Ngozi Okafor',
+                  specialty: 'Pediatrics',
+                  experience: '12+ years',
+                  img: '/placeholder.svg?height=300&width=300&text=Dr.+Okafor'
                 },
                 {
-                  name: "Dr. Emeka Nwachukwu",
-                  specialty: "Dermatology",
-                  experience: "10+ years",
-                  img: "/placeholder.svg?height=300&width=300&text=Dr.+Nwachukwu"
+                  name: 'Dr. Emeka Nwachukwu',
+                  specialty: 'Dermatology',
+                  experience: '10+ years',
+                  img: '/placeholder.svg?height=300&width=300&text=Dr.+Nwachukwu'
                 },
                 {
-                  name: "Dr. Fatima Bello",
-                  specialty: "Gynecology",
-                  experience: "14+ years",
-                  img: "/placeholder.svg?height=300&width=300&text=Dr.+Bello"
+                  name: 'Dr. Fatima Bello',
+                  specialty: 'Gynecology',
+                  experience: '14+ years',
+                  img: '/placeholder.svg?height=300&width=300&text=Dr.+Bello'
                 }
               ].map((doctor, index) => (
                 <Card key={index} className="overflow-hidden">
                   <div className="aspect-square relative">
                     <img
-                      src={doctor.img || "/placeholder.svg"}
+                      src={doctor.img || '/placeholder.svg'}
                       alt={doctor.name}
                       className="object-cover"
                     />
                   </div>
                   <CardContent className="p-4">
                     <h3 className="font-bold">{doctor.name}</h3>
-                    <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
-                    <p className="text-sm text-muted-foreground">{doctor.experience} experience</p>
-                    <Button asChild variant="link" className="p-2 h-auto mt-2 hover:bg-primary hover:text-white no-underline">
-                      <p>
-                        View Profile
-                      </p>
+                    <p className="text-sm text-muted-foreground">
+                      {doctor.specialty}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {doctor.experience} experience
+                    </p>
+                    <Button
+                      asChild
+                      variant="link"
+                      className="p-2 h-auto mt-2 hover:bg-primary hover:text-white no-underline"
+                    >
+                      <p>View Profile</p>
                     </Button>
                   </CardContent>
                 </Card>
@@ -285,16 +345,17 @@ export default function LandingPage() {
             </div>
             <div className="flex justify-center mt-8">
               <Button asChild variant="outline">
-                <p>
-                  View All Care Providers
-                </p>
+                <p>View All Care Providers</p>
               </Button>
             </div>
           </div>
         </section>
 
         {/* Testimonials Section */}
-        <section id="testimonials" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+        <section
+          id="testimonials"
+          className="w-full py-12 md:py-24 lg:py-32 bg-muted"
+        >
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -305,39 +366,50 @@ export default function LandingPage() {
                   What our users are saying
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Hear from Nigerians who have experienced better healthcare through BetaLyfe.
+                  Hear from Nigerians who have experienced better healthcare
+                  through BetaLyfe.
                 </p>
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl gap-6 py-12 lg:grid-cols-3">
               {[
                 {
-                  quote: "BetaLyfe saved me hours of travel time. I consulted with a dermatologist from Lagos while I was in Abuja, and received my medication the next day.",
-                  author: "Chioma Eze",
-                  location: "Abuja",
+                  quote:
+                    'BetaLyfe saved me hours of travel time. I consulted with a dermatologist from Lagos while I was in Abuja, and received my medication the next day.',
+                  author: 'Chioma Eze',
+                  location: 'Abuja',
                   rating: 5
                 },
                 {
-                  quote: "As a busy professional, being able to consult with a doctor without leaving my office has been a game-changer. The service is fast, reliable, and the doctors are excellent.",
-                  author: "Oluwaseun Adeyemi",
-                  location: "Lagos",
+                  quote:
+                    'As a busy professional, being able to consult with a doctor without leaving my office has been a game-changer. The service is fast, reliable, and the doctors are excellent.',
+                  author: 'Oluwaseun Adeyemi',
+                  location: 'Lagos',
                   rating: 5
                 },
                 {
-                  quote: "I was skeptical about telehealth, but BetaLyfe changed my mind. The quality of care is outstanding, and the pharmacy delivery service is prompt and reliable.",
-                  author: "Emmanuel Okonkwo",
-                  location: "Port Harcourt",
+                  quote:
+                    'I was skeptical about telehealth, but BetaLyfe changed my mind. The quality of care is outstanding, and the pharmacy delivery service is prompt and reliable.',
+                  author: 'Emmanuel Okonkwo',
+                  location: 'Port Harcourt',
                   rating: 4
                 }
               ].map((testimonial, index) => (
                 <Card key={index} className="relative overflow-hidden">
                   <CardContent className="p-6">
                     <div className="flex mb-4">
-                      {Array(5).fill(0).map((_, i) => (
-                        <Star key={i} className={`h-5 w-5 ${i < testimonial.rating ? 'text-yellow-400 fill-yellow-400' : 'text-muted'}`} />
-                      ))}
+                      {Array(5)
+                        .fill(0)
+                        .map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`h-5 w-5 ${i < testimonial.rating ? 'text-yellow-400 fill-yellow-400' : 'text-muted'}`}
+                          />
+                        ))}
                     </div>
-                    <blockquote className="text-lg mb-4">"{testimonial.quote}"</blockquote>
+                    <blockquote className="text-lg mb-4">
+                      "{testimonial.quote}"
+                    </blockquote>
                     <div className="flex items-center">
                       <div className="h-10 w-10 rounded-full bg-muted">
                         <img
@@ -349,8 +421,12 @@ export default function LandingPage() {
                         />
                       </div>
                       <div className="ml-4">
-                        <p className="text-sm font-medium">{testimonial.author}</p>
-                        <p className="text-sm text-muted-foreground">{testimonial.location}</p>
+                        <p className="text-sm font-medium">
+                          {testimonial.author}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {testimonial.location}
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -372,7 +448,9 @@ export default function LandingPage() {
                   Serving All 36 States and FCT
                 </h2>
                 <p className="text-muted-foreground md:text-xl/relaxed">
-                  BetaLyfe provides healthcare services and medication delivery across all of Nigeria. No matter where you are, quality healthcare is just a tap away.
+                  BetaLyfe provides healthcare services and medication delivery
+                  across all of Nigeria. No matter where you are, quality
+                  healthcare is just a tap away.
                 </p>
                 <div className="grid grid-cols-2 gap-4 mt-6">
                   <div className="flex items-center gap-2">
@@ -393,9 +471,7 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <Button asChild className="mt-4 text-white">
-                  <p >
-                    Check Availability in Your Area
-                  </p>
+                  <p>Check Availability in Your Area</p>
                 </Button>
               </div>
               <div className="relative h-[400px] w-full overflow-hidden rounded-xl">
@@ -418,19 +494,21 @@ export default function LandingPage() {
                   Ready to transform your healthcare experience?
                 </h2>
                 <p className="max-w-[600px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Join thousands of Nigerians who are already using BetaLyfe for better healthcare access.
+                  Join thousands of Nigerians who are already using BetaLyfe for
+                  better healthcare access.
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
                 <Button asChild size="lg" variant="secondary" className="px-8">
-                  <Link to="/get-the-app">
-                    Download the App
-                  </Link>
+                  <Link to="/get-the-app">Download the App</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 px-8">
-                  <Link to="/contact-us">
-                    Contact Us
-                  </Link>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 px-8"
+                >
+                  <Link to="/contact-us">Contact Us</Link>
                 </Button>
               </div>
             </div>
@@ -442,18 +520,22 @@ export default function LandingPage() {
           <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <img src="/images/betalyfe-icon.svg" className='h-10 w-10 rounded-full'/>
+                <img
+                  src="/images/betalyfe-icon.svg"
+                  className="h-10 w-10 rounded-full"
+                />
                 <span className="text-lg font-bold">BetaLyfe</span>
               </div>
               <p className="text-sm text-muted-foreground">
-                Transforming healthcare in Nigeria through technology. Connect with licensed doctors anytime, anywhere.
+                Transforming healthcare in Nigeria through technology. Connect
+                with licensed doctors anytime, anywhere.
               </p>
             </div>
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Services</h3>
               <ul className="space-y-2">
                 <li>
-                  <p  className="text-sm text-muted-foreground hover:text-foreground">
+                  <p className="text-sm text-muted-foreground hover:text-foreground">
                     Virtual Consultations
                   </p>
                 </li>
@@ -463,12 +545,12 @@ export default function LandingPage() {
                   </p>
                 </li>
                 <li>
-                  <p  className="text-sm text-muted-foreground hover:text-foreground">
+                  <p className="text-sm text-muted-foreground hover:text-foreground">
                     Medical Specialties
                   </p>
                 </li>
                 <li>
-                  <p  className="text-sm text-muted-foreground hover:text-foreground">
+                  <p className="text-sm text-muted-foreground hover:text-foreground">
                     Lab Tests
                   </p>
                 </li>
@@ -483,17 +565,17 @@ export default function LandingPage() {
                   </p>
                 </li>
                 <li>
-                  <p  className="text-sm text-muted-foreground hover:text-foreground">
+                  <p className="text-sm text-muted-foreground hover:text-foreground">
                     Blog
                   </p>
                 </li>
                 <li>
-                  <p  className="text-sm text-muted-foreground hover:text-foreground">
+                  <p className="text-sm text-muted-foreground hover:text-foreground">
                     Careers
                   </p>
                 </li>
                 <li>
-                  <p  className="text-sm text-muted-foreground hover:text-foreground">
+                  <p className="text-sm text-muted-foreground hover:text-foreground">
                     Press
                   </p>
                 </li>
@@ -503,7 +585,7 @@ export default function LandingPage() {
               <h3 className="text-lg font-medium">Resources</h3>
               <ul className="space-y-2">
                 <li>
-                  <p  className="text-sm text-muted-foreground hover:text-foreground">
+                  <p className="text-sm text-muted-foreground hover:text-foreground">
                     Help Center
                   </p>
                 </li>
@@ -513,12 +595,12 @@ export default function LandingPage() {
                   </p>
                 </li>
                 <li>
-                  <p  className="text-sm text-muted-foreground hover:text-foreground">
+                  <p className="text-sm text-muted-foreground hover:text-foreground">
                     FAQs
                   </p>
                 </li>
                 <li>
-                  <p  className="text-sm text-muted-foreground hover:text-foreground">
+                  <p className="text-sm text-muted-foreground hover:text-foreground">
                     Health Tips
                   </p>
                 </li>
@@ -533,7 +615,7 @@ export default function LandingPage() {
                   </p>
                 </li>
                 <li>
-                  <p  className="text-sm text-muted-foreground hover:text-foreground">
+                  <p className="text-sm text-muted-foreground hover:text-foreground">
                     Privacy Policy
                   </p>
                 </li>
@@ -543,7 +625,7 @@ export default function LandingPage() {
                   </p>
                 </li>
                 <li>
-                  <p  className="text-sm text-muted-foreground hover:text-foreground">
+                  <p className="text-sm text-muted-foreground hover:text-foreground">
                     Licenses
                   </p>
                 </li>
@@ -555,32 +637,70 @@ export default function LandingPage() {
               &copy; {new Date().getFullYear()} BetaLyfe. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
- 
-                <span className="sr-only">Twitter</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                  <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-                </svg>
-=
-                <span className="sr-only">Facebook</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                </svg>
-
-                <span className="sr-only">Instagram</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
-                </svg>
- 
-             
-                <span className="sr-only">LinkedIn</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                  <rect width="4" height="12" x="2" y="9"></rect>
-                  <circle cx="4" cy="4" r="2"></circle>
-                </svg>
-
+              <span className="sr-only">Twitter</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+              >
+                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+              </svg>
+              =<span className="sr-only">Facebook</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+              >
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+              <span className="sr-only">Instagram</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+              >
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+              </svg>
+              <span className="sr-only">LinkedIn</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+              >
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect width="4" height="12" x="2" y="9"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
             </div>
           </div>
         </div>
@@ -589,4 +709,3 @@ export default function LandingPage() {
     </div>
   )
 }
-

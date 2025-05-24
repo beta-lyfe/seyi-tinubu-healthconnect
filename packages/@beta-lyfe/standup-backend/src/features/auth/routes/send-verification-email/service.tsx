@@ -5,6 +5,7 @@ import { Mailer } from '../../../mailer/lib'
 import VerificationEmail from './emails/verification'
 import type { Schema } from './schema'
 import type { Token } from '../../../database/schema'
+import { config } from '../../../config'
 
 export type Error =
   | { code: 'UNEXPECTED_ERROR' }
@@ -16,7 +17,7 @@ const generateOtp = (length: number) =>
 
 export type Payload = Schema
 
-export default async (payload: Payload): Promise<Result<null, Error>> => {
+export default async (payload: Payload): Promise<Result<Token, Error>> => {
   const findUserResult = await Repository.findByEmail(payload.email)
   if (findUserResult.isErr) return Result.err({ code: 'UNEXPECTED_ERROR' })
 
@@ -26,14 +27,13 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
 
   const findExistingTokenResult =
     await Repository.findVerificationTokenByUserId(user.id)
-
   if (findExistingTokenResult.isErr)
     return Result.err({ code: 'UNEXPECTED_ERROR' })
 
   const existingToken = findExistingTokenResult.value
   if (existingToken) {
     const hasTokenExpired =
-      compareAsc(existingToken.expiresAt, Date.now()) === -1
+      compareAsc(existingToken.expires_at, Date.now()) === -1
     if (!hasTokenExpired) {
       return Result.err({
         code: 'TOKEN_NOT_EXPIRED',
@@ -48,20 +48,24 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
   }
 
   const result = await Repository.createVerificationToken({
-    userId: user.id,
+    user_id: user.id,
     token: generateOtp(6).toString(),
-    expiresAt: addMinutes(Date.now(), 30)
+    expires_at: addMinutes(
+      Date.now(),
+      config.environment.PRODUCTION ? 60 : 60
+    ).toISOString(),
+    purpose: 'verification'
   })
 
   if (result.isErr) return Result.err({ code: 'UNEXPECTED_ERROR' })
 
   const token = result.value
 
-  Mailer.send({
+  await Mailer.send({
     recipients: [user.email],
     subject: 'Verify Account',
     email: <VerificationEmail user={user} token={token} />
   })
 
-  return Result.ok(null)
+  return Result.ok(token)
 }

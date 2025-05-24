@@ -7,12 +7,12 @@
 //             <div className=
 //             {'flex flex-1 py-2  rounded-lg items-center justify-center rounded-r-none text-center '.
 //                 concat(context?.isPatient ? 'bg-primary':'bg-transparent')}
-        
+
 //             >
 //                 <Typography.Info className={context?.isPatient ? 'text-white': 'text-primary'}>Patient</Typography.Info>
 //             </div>
-//             <div 
-            
+//             <div
+
 //             className={'flex flex-1 py-2 rounded-lg justify-center items-center rounded-l-none '.
 //                 concat(!context?.isPatient ? 'bg-primary':'bg-transparent')
 //             }

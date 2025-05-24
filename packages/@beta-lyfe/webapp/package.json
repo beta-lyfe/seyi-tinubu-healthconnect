@@ -6,10 +6,10 @@
 	"type": "module",
 	"scripts": {
 		"dev": "dotenv -- vite --host --port 3001",
-		"build": "./scripts/build.sh",
+		"build": "dotenv -- ./scripts/build.sh",
 		"deploy": "vercel deploy --prebuilt --token $VERCEL_TOKEN",
 		"lint": "tsc",
-		"test-build": "pnpm vite build"
+		"test-build": "dotenv -- vite build && pnpm cap sync & pnpm cap open android"
 	},
 	"exports": {
 		"./*": [
@@ -22,10 +22,11 @@
 		"@beta-lyfe/ui": "workspace:^",
 		"@beta-lyfe/webapp": "workspace:^",
 		"@capacitor/android": "^7.1.0",
-		"@capacitor/app": "^7.0.0",
+		"@capacitor/app": "^7.0.1",
 		"@capacitor/cli": "^7.0.1",
-		"@capacitor/core": "^7.0.1",
+		"@capacitor/core": "^7.2.0",
 		"@capacitor/device": "^7.0.0",
+		"@capacitor/splash-screen": "^7.0.1",
 		"@headlessui/react": "^2.1.2",
 		"@hookform/resolvers": "^3.9.1",
 		"@huddle01/react": "^2.3.6",
@@ -66,6 +67,7 @@
 		"lucide-react": "^0.315.0",
 		"motion": "^12.4.7",
 		"react": "^18",
+		"react-countdown": "^2.3.6",
 		"react-day-picker": "^8.10.0",
 		"react-dom": "^18",
 		"react-hook-form": "^7.53.1",
@@ -87,6 +89,7 @@
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {
+		"@capacitor/assets": "^3.0.5",
 		"@tanstack/router-vite-plugin": "^1.16.1",
 		"@types/lodash": "^4.14.202",
 		"@types/node": "^20.11.17",

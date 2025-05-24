@@ -9,7 +9,7 @@ const MailConfig = {
   support: {
     name: env.MAIL_SUPPORT_NAME,
     email: env.MAIL_SUPPORT_EMAIL
-  },
+  }
 }
 
 export default MailConfig

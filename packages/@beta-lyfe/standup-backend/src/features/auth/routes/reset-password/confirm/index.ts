@@ -4,11 +4,8 @@ import service from './service'
 import { StatusCodes } from 'http-status-codes'
 import middleware from './middleware'
 
-export type ApiResponse =
-  | schema.components['schemas']['Api.Authentication.PasswordResetSuccessful']
-  | schema.components['schemas']['Api.Authentication.InvalidOrExpiredTokenError']
-  | schema.components['schemas']['Api.BadRequestError']
-  | schema.components['schemas']['Api.UnexpectedError']
+export type Response =
+  schema.paths['/api/auth/reset-password/{token}']['post']['responses'][keyof schema.paths['/api/auth/reset-password/{token}']['post']['responses']]['content']['application/json']
 
 export default new Hono().post('/:token', ...middleware, async (c) => {
   const paramPayload = c.req.valid('param')
@@ -16,7 +13,7 @@ export default new Hono().post('/:token', ...middleware, async (c) => {
 
   const payload = Object.assign(paramPayload, bodyPayload)
 
-  let response: ApiResponse
+  let response: Response
 
   const result = await service(payload)
   if (result.isErr) {

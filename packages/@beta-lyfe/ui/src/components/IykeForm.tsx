@@ -12,7 +12,6 @@ export type IykeFormType = {
 }
 
 const IykeForm = ({ data }: { data: IykeFormType[] }) => {
-  
   return (
     <div className="pr-4 pb-3">
       <form className="flex flex-col py-6 pl-6 gap-4 justify-center item-center">

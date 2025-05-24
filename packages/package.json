@@ -4,7 +4,7 @@
 		"dev": "pnpm --recursive --parallel dev",
 		"build": "pnpm --recursive --parallel build",
 		"compile": "pnpm --recursive --parallel compile",
-		"typegen": "pnpm --recursive --parallel typegen",
+		"typegen": "pnpm --recursive --parallel typegen && pnpm --recursive --parallel generate:schema",
 		"lint": "pnpm --recursive --parallel lint",
 		"test": "pnpm --recursive --parallel test"
 	},

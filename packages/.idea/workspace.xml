@@ -5,14 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6809451-3b6b-4076-b6ab-6a699d28fb54" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/@beta-lyfe/media-server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/media-server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/@beta-lyfe/webapp/android/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/webapp/android/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/@beta-lyfe/webapp/android/app/capacitor.build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/webapp/android/app/capacitor.build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/@beta-lyfe/webapp/android/capacitor.settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/webapp/android/capacitor.settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/@beta-lyfe/webapp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/webapp/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/@beta-lyfe/webapp/src/app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/webapp/src/app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/@beta-lyfe/webapp/src/routes/__root.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/webapp/src/routes/__root.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/@beta-lyfe/webapp/src/routes/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/@beta-lyfe/webapp/src/routes/_app.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +26,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/fi__newwebapp&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/fi__jitsitest&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/hp/Documents/projects/beta-lyfe/packages&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -110,6 +102,8 @@
       <workItem from="1742853603012" duration="1576000" />
       <workItem from="1742908795551" duration="594000" />
       <workItem from="1743278824773" duration="3803000" />
+      <workItem from="1744407954213" duration="262000" />
+      <workItem from="1745309029727" duration="106000" />
     </task>
     <servers />
   </component>

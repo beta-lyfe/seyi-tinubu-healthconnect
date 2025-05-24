@@ -1,82 +1,87 @@
-import { Dispatch, type FunctionComponent, SetStateAction, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  Dispatch,
+  type FunctionComponent,
+  SetStateAction,
+  useState
+} from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 export type StepComponent = FunctionComponent<{
-	prev: () => void;
-	next: () => void;
-	submit: () => void;
-	cancel: () => void;
-	index: number
-}>;
+  prev: () => void
+  next: () => void
+  submit: () => void
+  cancel: () => void
+  index: number
+}>
 
 export const MultiStepForm: FunctionComponent<{
-	steps: StepComponent[];
-	onCancel?: () => void;
-	onSubmit?: () => void;
-	index?: number;
-	setIndex?: Dispatch<SetStateAction<number>>
+  steps: StepComponent[]
+  onCancel?: () => void
+  onSubmit?: () => void
+  index?: number
+  setIndex?: Dispatch<SetStateAction<number>>
 }> = ({ steps, onCancel, onSubmit, index, setIndex }) => {
-	const _step= useState(0)
-	const currentStep = index ?? _step[0]
-	const setCurrentStep = setIndex ?? _step[1]
-	// const [currentStep, setCurrentStep] = useState(0);
-	const [previousStep, setPreviousStep] = useState(0);
+  const _step = useState(0)
+  const currentStep = index ?? _step[0]
+  const setCurrentStep = setIndex ?? _step[1]
+  // const [currentStep, setCurrentStep] = useState(0);
+  const [previousStep, setPreviousStep] = useState(0)
 
-	const delta = currentStep - previousStep;
+  const delta = currentStep - previousStep
 
-	const onPrev = () => {
-		setCurrentStep((currentStep) => {
-			const prevStep = currentStep - 1;
-			if (prevStep >= 0) {
-				setPreviousStep(currentStep);
-				return prevStep;
-			}
+  const onPrev = () => {
+    setCurrentStep((currentStep) => {
+      const prevStep = currentStep - 1
+      if (prevStep >= 0) {
+        setPreviousStep(currentStep)
+        return prevStep
+      }
 
-			onCancel && onCancel();
-			return currentStep;
-		});
-	};
+      onCancel && onCancel()
+      return currentStep
+    })
+  }
 
-	const onNext = () => {
-		setCurrentStep((currentStep) => {
-			const nextStep = currentStep + 1;
-			if (nextStep < steps.length) {
-				setPreviousStep(currentStep);
-				return nextStep;
-			}
+  const onNext = () => {
+    setCurrentStep((currentStep) => {
+      const nextStep = currentStep + 1
+      if (nextStep < steps.length) {
+        setPreviousStep(currentStep)
+        return nextStep
+      }
 
-			onSubmit && onSubmit();
-			return currentStep;
-		});
-	};
+      onSubmit && onSubmit()
+      return currentStep
+    })
+  }
 
-	return steps.map(
-		(Step, index) =>
-			currentStep === index && (
-				<motion.div
-					key={index}
-					initial={{
-						x: delta >= 0 ? "50%" : "-50%",
-						opacity: 0,
-					}}
-					animate={{
-						x: 0,
-						opacity: 1,
-					}}
-					transition={{
-						duration: 0.3,
-						ease: "easeInOut",
-					}}
-				>
-					<Step
-						key={index}
-						prev={onPrev}
-						next={onNext}
-						submit={() => onSubmit && onSubmit()}
-						cancel={() => onCancel && onCancel()}
-						index={index}
-					/>
-				</motion.div>
-			),
-	);
-};
+  return steps.map(
+    (Step, index) =>
+      currentStep === index && (
+        <motion.div
+          key={index}
+          initial={{
+            x: delta >= 0 ? '50%' : '-50%',
+            opacity: 0
+          }}
+          animate={{
+            x: 0,
+            opacity: 1
+          }}
+          transition={{
+            duration: 0.3,
+            ease: 'easeInOut'
+          }}
+        >
+          <Step
+            key={index}
+            prev={onPrev}
+            next={onNext}
+            submit={() => onSubmit && onSubmit()}
+            cancel={() => onCancel && onCancel()}
+            index={index}
+          />
+        </motion.div>
+      )
+  )
+}

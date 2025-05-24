@@ -7,7 +7,7 @@ import { Result } from 'true-myth'
 import { Logger } from './logger'
 
 namespace Repository {
-  type RepositoryError = 'UNEXPECTED_ERROR'
+  type Error = 'UNEXPECTED_ERROR'
   const logger = Logger.getSubLogger({ name: 'RepositoryLogger' })
 
   export const findById = async (id: string) =>
@@ -32,7 +32,7 @@ namespace Repository {
     options?: FindManyPharmaciesWithCount
   ) => {
     const page = options?.page ?? Pagination.defaults.page
-    const perPage = options?.perPage ?? Pagination.defaults.perPage
+    const perPage = options?.per_page ?? Pagination.defaults.per_page
 
     const items = await db
       .select()
@@ -56,14 +56,11 @@ namespace Repository {
   export const findManyPharmacyItemsWithCount = async (
     options?: FindManyPharmacyItemsWithCount
   ): Promise<
-    Result<
-      { count: number; items: schema.PharmacyStoreItem[] },
-      RepositoryError
-    >
+    Result<{ count: number; items: schema.PharmacyStoreItem[] }, Error>
   > => {
     try {
       const page = options?.page ?? Pagination.defaults.page
-      const perPage = options?.perPage ?? Pagination.defaults.perPage
+      const perPage = options?.per_page ?? Pagination.defaults.per_page
 
       let chain: any = db.select().from(schema.pharmacyStores)
 
@@ -75,7 +72,7 @@ namespace Repository {
         if (options.price_range.min)
           chain = chain.where(
             gte(
-              schema.pharmacyStoreItems.sellingPrice,
+              schema.pharmacyStoreItems.selling_price,
               options.price_range.min.toString()
             )
           )
@@ -83,7 +80,7 @@ namespace Repository {
         if (options.price_range.max)
           chain = chain.where(
             lte(
-              schema.pharmacyStoreItems.sellingPrice,
+              schema.pharmacyStoreItems.selling_price,
               options.price_range.max.toString()
             )
           )
@@ -91,7 +88,7 @@ namespace Repository {
 
       if (options?.is_available !== undefined)
         chain = chain.where(
-          eq(schema.pharmacyStoreItems.isAvailable, options.is_available)
+          eq(schema.pharmacyStoreItems.is_available, options.is_available)
         )
 
       if (options?.categories) {
@@ -127,7 +124,7 @@ namespace Repository {
 
   export type CreatePayload = typeof schema.pharmacyStores.$inferInsert
 
-  export const create = async (payload: CreatePayload) => {
+  export const createStore = async (payload: CreatePayload) => {
     const pharmacy = (
       await db.insert(schema.pharmacyStores).values(payload).returning()
     )[0]

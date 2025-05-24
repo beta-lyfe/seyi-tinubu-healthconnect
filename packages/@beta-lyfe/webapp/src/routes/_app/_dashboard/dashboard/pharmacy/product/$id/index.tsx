@@ -21,7 +21,9 @@ import { Separator } from '@beta-lyfe/ui/components/shad/ui/separator'
 import { Link } from '@tanstack/react-router'
 import { MainLayout } from '../../../-components/main-layout'
 
-export const Route = createFileRoute('/_app/_dashboard/dashboard/pharmacy/product/$id/')({
+export const Route = createFileRoute(
+  '/_app/_dashboard/dashboard/pharmacy/product/$id/'
+)({
   component: DrugDetailsPage
 })
 
@@ -104,7 +106,6 @@ function DrugDetailsPage() {
 
   return (
     <div className="md:container py-0 max-w-7xl">
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-4">
         {/* Left Column - Drug Image */}
         <div className="flex justify-center items-start">
@@ -310,7 +311,6 @@ function DrugDetailsPage() {
           </div>
         </Tabs>
       </div>
-   
     </div>
   )
 }

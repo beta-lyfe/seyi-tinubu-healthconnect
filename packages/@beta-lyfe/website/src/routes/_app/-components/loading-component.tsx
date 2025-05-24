@@ -1,4 +1,4 @@
-import { Loader2, Pill, Video } from "lucide-react"
+import { Loader2, Pill, Video } from 'lucide-react'
 
 export default function LoadingScreen() {
   return (
@@ -6,13 +6,15 @@ export default function LoadingScreen() {
       <div className="text-center">
         <div className="relative flex items-center justify-center">
           {/* Rotating Semi-circle */}
-         <Loader2 className="animate-spin text-primary h-32 w-32 absolute" />
+          <Loader2 className="animate-spin text-primary h-32 w-32 absolute" />
 
           {/* Pill Icon */}
           <div className="absolute animate-pulse">
-          <img src='/images/betalyfe-icon.svg' className='w-24 h-24 rounded-full'/>
+            <img
+              src="/images/betalyfe-icon.svg"
+              className="w-24 h-24 rounded-full"
+            />
           </div>
-          
         </div>
 
         {/* Scaling Logo */}
@@ -20,9 +22,10 @@ export default function LoadingScreen() {
           <span className="text-2xl font-bold">BetaLyfe</span>
         </div>
 
-        <p className="mt-4 text-muted-foreground">Loading your healthcare experience...</p>
+        <p className="mt-4 text-muted-foreground">
+          Loading your healthcare experience...
+        </p>
       </div>
     </div>
   )
 }
-

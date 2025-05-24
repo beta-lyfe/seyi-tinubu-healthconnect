@@ -4,6 +4,14 @@ import { z } from 'zod'
 
 export default createInsertSchema(schema.pharmacyStoreItems)
   .omit({
-    images: true
+    images: true,
+    type: true,
+    categories: true,
+    brands: true
   })
-  .extend({ images: z.array(schema.media) })
+  .extend({
+    images: z.array(schema.media),
+    type: z.union([z.literal('otc'), z.literal('prescription')]),
+    categories: z.array(z.string()),
+    brands: z.array(z.string())
+  })

@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import middleware from './middleware'
-import { Repository } from '../..'
+import Repository from '../../repository'
 import { Pagination } from '../../../pagination'
 import { APIResponse, StatusCodes } from '../../../http'
 

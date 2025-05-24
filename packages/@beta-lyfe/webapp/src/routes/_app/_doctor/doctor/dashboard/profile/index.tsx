@@ -523,7 +523,7 @@ export default function DoctorProfilePage() {
                           <p className="font-medium truncate">
                             {
                               ['John Doe', 'Maria Garcia', 'Robert Brown'][
-                              index
+                                index
                               ]
                             }
                           </p>

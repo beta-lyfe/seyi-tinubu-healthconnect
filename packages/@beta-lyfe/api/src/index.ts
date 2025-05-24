@@ -1,1 +1,1 @@
-export { createClient, createReactQueryClient, schema } from "./api";
+export { createClient, createReactQueryClient, schema } from './api'

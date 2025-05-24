@@ -11,10 +11,10 @@
 		"prefix": ""
 	},
 	"aliases": {
-    "components": "@beta-lyfe/ui/components/shad",
-    "utils": "@beta-lyfe/ui/components/shad/lib/utils",
-    "ui": "@beta-lyfe/ui/components/shad/ui",
-    "lib": "@beta-lyfe/ui/components/shad/lib",
-    "hooks": "@beta-lyfe/ui/components/shad/hooks"
+		"components": "@beta-lyfe/ui/components/shad",
+		"utils": "@beta-lyfe/ui/components/shad/lib/utils",
+		"ui": "@beta-lyfe/ui/components/shad/ui",
+		"lib": "@beta-lyfe/ui/components/shad/lib",
+		"hooks": "@beta-lyfe/ui/components/shad/hooks"
 	}
 }

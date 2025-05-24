@@ -27,7 +27,8 @@ export default async (payload: Payload): Promise<Result<Response, Error>> => {
 
   if (!user) return Result.err('INVALID_CREDENTIALS')
 
-  const findAuthMethodResult = await Repository.findAuthenticationMethodByUserId(user.id)
+  const findAuthMethodResult =
+    await Repository.findAuthenticationMethodByUserId(user.id)
   if (findAuthMethodResult.isErr) return Result.err('INVALID_CREDENTIALS')
 
   const authMethod = findAuthMethodResult.value
@@ -44,6 +45,7 @@ export default async (payload: Payload): Promise<Result<Response, Error>> => {
 
   return Result.ok({
     accessToken,
-    refreshToken
+    refreshToken,
+    role: user.role
   })
 }

@@ -66,7 +66,7 @@ suite('Patients test', async () => {
     expect(res.error).to.be.undefined
 
     const validationResult =
-      ozc.schemas.Api_Patient_PaginatedPatients.safeParse(res.data)
+      ozc.schemas.Api_Patient_List_response_Success.safeParse(res.data)
 
     expect(validationResult.success).to.equal(
       true,
@@ -75,7 +75,7 @@ suite('Patients test', async () => {
   })
 
   test('Should return the correct response for [GET] /api/patients/profile/', async () => {
-    const res = await client.GET('/api/patients/profile/', {
+    const res = await client.GET('/api/patients/profile', {
       headers: { Authorization: `Bearer ${auth.data.access_token}` }
     })
 
@@ -90,10 +90,11 @@ suite('Patients test', async () => {
       true,
       fromError(validationResult.error).toString()
     )
-
+    
     assert(res.data)
+    assert(res.data.code, 'FETCH_PATIENT_PROFILE_SUCCESSFUL')
 
-    patientProfile = res.data
+    patientProfile = res.data.data
   })
 
   test('Should return the correct response for [GET] /api/patients/{id}', async () => {
@@ -117,7 +118,7 @@ suite('Patients test', async () => {
 
   test('Should return the correct response for [PATCH] /api/patients/profile', async () => {
     const newPhoneNumber = faker.phone.number({ style: 'international' })
-    const res = await client.PATCH('/api/patients/profile/', {
+    const res = await client.PATCH('/api/patients/profile', {
       headers: { Authorization: `Bearer ${auth.data.access_token}` },
       body: {
         phone_number: newPhoneNumber
@@ -128,7 +129,7 @@ suite('Patients test', async () => {
     expect(res.error).to.be.undefined
 
     const validationResult =
-      ozc.schemas.Api_Patient_PatientProfileUpdatedResponse.safeParse(res.data)
+      ozc.schemas.Api_Patient_Profie_Update_response_Success.safeParse(res.data)
 
     expect(validationResult.success).to.equal(
       true,

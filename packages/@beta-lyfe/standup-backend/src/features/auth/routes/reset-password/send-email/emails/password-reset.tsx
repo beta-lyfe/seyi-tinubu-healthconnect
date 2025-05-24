@@ -57,7 +57,7 @@ export default function PasswordResetEmail({
         <Container style={container}>
           <Img src={logoUrl} width="40" height="33" alt="BetaLyfe" />
           <Section>
-            <Text style={text}>Hi {user.firstName},</Text>
+            <Text style={text}>Hi {user.first_name},</Text>
             <Text style={text}>
               Someone recently requested a password change for your BetaLyfe
               account. If this was you, you can set a new password here:

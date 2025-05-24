@@ -4,18 +4,15 @@ import service from './service'
 import middleware from './middleware'
 import type { schema } from '@beta-lyfe/api'
 
-export type ApiResponse =
-  | schema.components['schemas']['Api.Authentication.VerificationSuccessful']
-  | schema.components['schemas']['Api.Authentication.InvalidOrExpiredOtpError']
-  | schema.components['schemas']['Api.BadRequestError']
-  | schema.components['schemas']['Api.UnexpectedError']
+export type Response =
+  schema.paths['/api/auth/verify-email']['post']['responses'][keyof schema.paths['/api/auth/verify-email']['post']['responses']]['content']['application/json']
 
 export default new Hono().post('/verify-email', middleware, async (c) => {
   const payload = c.req.valid('json')
 
   const result = await service(payload)
 
-  let response: ApiResponse
+  let response: Response
 
   if (result.isErr) {
     switch (result.error) {

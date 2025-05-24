@@ -1,20 +1,58 @@
-import { useState, useEffect } from "react"
-import { Calendar, MessageSquare, User, Search, Menu, Home, Bell, Settings, LogOut, X, Wallet, Pill } from "lucide-react"
-import { Button } from "@beta-lyfe/ui/components/button"
-import { Sheet, SheetContent, SheetTrigger } from "@beta-lyfe/ui/components/shad/ui/sheet"
-import { Avatar, AvatarFallback, AvatarImage } from "@beta-lyfe/ui/components/shad/ui/avatar"
-import { Badge } from "@beta-lyfe/ui/components/shad/ui/badge"
-import { Link,useRouter,useLocation} from "@tanstack/react-router"
-import { cn } from "@beta-lyfe/ui/components/shad/lib/utils"
+import { useState, useEffect } from 'react'
+import {
+  Calendar,
+  MessageSquare,
+  User,
+  Search,
+  Menu,
+  Home,
+  Bell,
+  Settings,
+  LogOut,
+  X,
+  Wallet,
+  Pill
+} from 'lucide-react'
+import { Button } from '@beta-lyfe/ui/components/button'
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger
+} from '@beta-lyfe/ui/components/shad/ui/sheet'
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage
+} from '@beta-lyfe/ui/components/shad/ui/avatar'
+import { Badge } from '@beta-lyfe/ui/components/shad/ui/badge'
+import { Link, useRouter, useLocation } from '@tanstack/react-router'
+import { cn } from '@beta-lyfe/ui/components/shad/lib/utils'
+import { auth, useAuth } from '../../../../../hooks/auth'
+import { toast } from 'sonner'
 
 interface MainLayoutProps {
   children: React.ReactNode
 }
 
-export function MainLayout({ children }: MainLayoutProps) {
+
+export  function MainLayout({ children }: MainLayoutProps) {
   const pathname = useLocation().pathname
   const [isMobile, setIsMobile] = useState(false)
-  const [sidebarOpen,setSidebarOpen]=useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const user=useAuth(true).data.data.user
+  const update=useAuth().update
+  const profile=user.profiles.patient
+  const router=useRouter()
+
+
+  const logout=async ()=>{
+  update({status:'unauthenticated'})
+  toast.success("Logged user out")  
+  router.navigate({
+    to:'/auth/sign-in'
+  })
+}
+
 
   useEffect(() => {
     const checkMobile = () => {
@@ -22,19 +60,19 @@ export function MainLayout({ children }: MainLayoutProps) {
     }
 
     checkMobile()
-    window.addEventListener("resize", checkMobile)
+    window.addEventListener('resize', checkMobile)
 
     return () => {
-      window.removeEventListener("resize", checkMobile)
+      window.removeEventListener('resize', checkMobile)
     }
   }, [])
 
   const navigation = [
-    { name: "Home", to: "/dashboard", icon: Home },
-    { name: "Doctors", to: "/dashboard/doctors", icon: Search },
-    { name: "schedule", to: "/dashboard/schedule", icon: Calendar },
-    { name: "Pharmacy", to: "/dashboard/pharmacy/product", icon: Pill },
-    { name: "Profile", to: "/dashboard/profile", icon: User },
+    { name: 'Home', to: '/dashboard', icon: Home },
+    { name: 'Doctors', to: '/dashboard/doctors', icon: Search },
+    { name: 'schedule', to: '/dashboard/schedule', icon: Calendar },
+    { name: 'Pharmacy', to: '/dashboard/pharmacy/product', icon: Pill },
+    { name: 'Profile', to: '/dashboard/profile', icon: User }
   ]
 
   return (
@@ -43,9 +81,12 @@ export function MainLayout({ children }: MainLayoutProps) {
       <header className="sticky top-0 z-30 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center">
           <div className="mr-4 flex items-center gap-3">
-            <img src="/images/betalyfe-icon.svg" className="w-10 h-10 rounded-full"/>
+            <img
+              src="/images/betalyfe-icon.svg"
+              className="w-10 h-10 rounded-full"
+            />
             <p className="text-primary font-bold">Beta lyfe</p>
-           </div>
+          </div>
 
           <div className="flex-1 flex justify-end md:justify-between items-center gap-2">
             <div className="relative w-full max-w-sm hidden md:flex">
@@ -60,12 +101,14 @@ export function MainLayout({ children }: MainLayoutProps) {
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="icon" className="relative">
                 <Bell className="h-5 w-5" />
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center">2</Badge>
+                <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center">
+                  2
+                </Badge>
               </Button>
               <Link to="/dashboard/wallet">
-              <Button variant="ghost" size="icon" className="relative">
-                <Wallet className="h-5 w-5" />
-              </Button>
+                <Button variant="ghost" size="icon" className="relative">
+                  <Wallet className="h-5 w-5" />
+                </Button>
               </Link>
 
               <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
@@ -94,7 +137,11 @@ export function MainLayout({ children }: MainLayoutProps) {
                         </div>
                         <span className="font-bold text-xl">Beta-Lyfe</span>
                       </div>
-                      <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(false)}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setSidebarOpen(false)}
+                      >
                         <X className="h-5 w-5" />
                       </Button>
                     </div>
@@ -106,10 +153,10 @@ export function MainLayout({ children }: MainLayoutProps) {
                           to={item.to}
                           onClick={() => setSidebarOpen(false)}
                           className={cn(
-                            "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium",
+                            'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium',
                             pathname === item.to
-                              ? "bg-primary/10 text-primary"
-                              : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                              ? 'bg-primary/10 text-primary'
+                              : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
                           )}
                         >
                           <item.icon className="h-5 w-5" />
@@ -127,14 +174,13 @@ export function MainLayout({ children }: MainLayoutProps) {
                         <Settings className="h-5 w-5" />
                         Settings
                       </Link>
-                      <Link
-                        to="/auth/sign-in"
-                        onClick={() => setSidebarOpen(false)}
+                      <Button
+                        onClick={()=>logout()}
                         className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                       >
                         <LogOut className="h-5 w-5" />
                         Sign Out
-                      </Link>
+                      </Button>
                     </div>
                   </div>
                 </SheetContent>
@@ -142,7 +188,10 @@ export function MainLayout({ children }: MainLayoutProps) {
 
               <Link to="/dashboard/profile" className="hidden md:flex">
                 <Avatar>
-                  <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
+                  <AvatarImage
+                    src="/placeholder.svg?height=32&width=32"
+                    alt="User"
+                  />
                   <AvatarFallback>JD</AvatarFallback>
                 </Avatar>
               </Link>
@@ -161,10 +210,10 @@ export function MainLayout({ children }: MainLayoutProps) {
                 key={item.name}
                 to={item.to}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium",
+                  'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium',
                   pathname === item.to
-                    ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
                 )}
               >
                 <item.icon className="h-5 w-5" />
@@ -176,12 +225,17 @@ export function MainLayout({ children }: MainLayoutProps) {
           <div className="p-4 border-t">
             <div className="flex items-center gap-3 mb-4">
               <Avatar>
-                <AvatarImage src="/placeholder.svg?height=40&width=40" alt="User" />
+                <AvatarImage
+                  src="/placeholder.svg?height=40&width=40"
+                  alt="User"
+                />
                 <AvatarFallback>JD</AvatarFallback>
               </Avatar>
               <div>
-                <p className="font-medium text-sm">John Doe</p>
-                <p className="text-xs text-muted-foreground">john.doe@example.com</p>
+                <p className="font-medium text-sm">{profile?.first_name} {profile?.last_name}</p>
+                <p className="text-xs text-muted-foreground">
+                  {profile?.email}
+                </p>
               </div>
             </div>
             <div className="flex flex-col gap-1">
@@ -192,13 +246,13 @@ export function MainLayout({ children }: MainLayoutProps) {
                 <Settings className="h-5 w-5" />
                 Settings
               </Link>
-              <Link
-                to="/auth/sign-in"
-                className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+              <Button
+                onClick={()=>logout()}
+                className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-white"
               >
                 <LogOut className="h-5 w-5" />
                 Sign Out
-              </Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -216,8 +270,10 @@ export function MainLayout({ children }: MainLayoutProps) {
                 key={item.name}
                 to={item.to}
                 className={cn(
-                  "flex flex-col items-center justify-center gap-1",
-                  pathname === item.to ? "text-primary font-bold" : "text-muted-foreground",
+                  'flex flex-col items-center justify-center gap-1',
+                  pathname === item.to
+                    ? 'text-primary font-bold'
+                    : 'text-muted-foreground'
                 )}
               >
                 <item.icon className="h-5 w-5 font-bold" />
@@ -230,4 +286,3 @@ export function MainLayout({ children }: MainLayoutProps) {
     </div>
   )
 }
-

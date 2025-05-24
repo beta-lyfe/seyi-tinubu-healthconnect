@@ -12,7 +12,9 @@ import {
 } from 'lucide-react'
 import doctorJohnDoe from '../../../../../../assets/images/doctors/john-doe.png'
 
-export const Route = createFileRoute('/_app/_dashboard/dashboard/messages/$doctorId/')({
+export const Route = createFileRoute(
+  '/_app/_dashboard/dashboard/messages/$doctorId/'
+)({
   component: DoctorChatPage
 })
 
@@ -177,7 +179,8 @@ function ChatSection() {
             <div
               className={cn(
                 'rounded-lg bg-primary p-2 text-white shadow-md w-[80%]',
-                chat.sender === 'patient' && 'justify-self-end bg-white text-black',
+                chat.sender === 'patient' &&
+                  'justify-self-end bg-white text-black',
                 chat.sender === 'patient'
                   ? 'rounded-br-none'
                   : 'rounded-bl-none'

@@ -1,12 +1,9 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
-
 import { useState } from 'react'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Stethoscope, Loader2, Eye, EyeOff } from 'lucide-react'
-
 import { Button } from '@beta-lyfe/ui/components/button'
 import { Input } from '@beta-lyfe/ui/components/shad/ui/input'
 import {
@@ -24,8 +21,10 @@ import {
 } from '@beta-lyfe/ui/components/shad/ui/card'
 import { Checkbox } from '@beta-lyfe/ui/components/shad/ui/checkbox'
 import { Separator } from '@beta-lyfe/ui/components/shad/ui/separator'
-import { $api } from '../../../lib/backend'
+import { $api, client } from '../../../lib/backend'
 import { toast } from 'sonner'
+import { useAuth, type Schema } from '../../../hooks/auth'
+import { AdditionalInfoModal } from '../_dashboard/dashboard/-components/profilemodal'
 
 export const Route = createFileRoute('/_app/auth/sign-in')({
   component: SignInPage
@@ -39,33 +38,105 @@ const formSchema = z.object({
 
 export default function SignInPage() {
   const router = useRouter()
+  const auth = useAuth()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const mutateVerify = $api.useMutation(
-    'post',
-    '/api/auth/send-verification-email',
-    {
-      onSuccess: () => {
-        router.navigate({
-          to: '/auth/verify',
-          search: {
-            email: form.getValues('email')
-          }
-        })
-      },
-      onError: () => {
-        toast.error('Error sending otp')
-      }
+  const [showProfileModal,setShowProfileModal]=useState(false)
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false
     }
-  )
+  })
+
+  
   const { mutate } = $api.useMutation('post', '/api/auth/sign-in', {
-    onSuccess: (data) => {
+    onSuccess: async (res) => {
       // router.navigate({
       //   to: data.user.is_doctor ? '/doctor/dashboard' : '/dashboard'
       // })
       // TODO: probably fetch user profile here and store in auth along with access and refresh tokens
+
+      
+      const userProfile = await client.GET("/api/auth/profile", {
+        headers: {
+          Authorization: `Bearer ${res.data.access_token}`
+        }
+      })
+
+      if (userProfile.error) {
+        if(userProfile.error.code==='USER_NOT_VERIFIED'){
+          router.navigate({
+            to:'/auth/verify', search:{
+              email: form.getValues('email')
+           }
+          })
+        }
+        toast.error("Failed to fetch profile!")
+        return
+      }
+
+      let doctorProfile: Schema.DoctorProfile| undefined=undefined
+      let patientProfile:Schema.PatientProfile | undefined = undefined
+
+      if (userProfile.data.data.role === 'doctor') {
+        const result = await client.GET('/api/doctors/profile', {
+          headers: {
+            Authorization: `Bearer ${res.data.access_token}`
+          }
+        })
+
+   
+
+        if (result.data){
+          doctorProfile=result.data.data
+        }
+      }
+
+      if (userProfile.data.data.role === 'patient') {
+        const result = await client.GET('/api/patients/profile', {
+          headers: {
+            Authorization: `Bearer ${res.data.access_token}`
+          }
+        })
+
+
+        if(result.error?.code==='PATIENT_PROFILE_NOT_FOUND_ERROR' || result.error?.code==='UNAUTHORIZED_ERROR' || 
+          result.error?.code==='UNEXPECTED_ERROR'
+        ){
+          router.navigate({
+            to:'/auth/set-profile',
+            search:{
+              token:res.data.access_token
+            }
+          })
+          return
+        }
+
+        if (result.data){
+          patientProfile=result.data.data
+        }
+      }
+
+      auth.update({
+        status:'authenticated',
+        data: {
+          token: {
+            access_token: res.data.access_token,
+            refresh_token: res.data.refresh_token
+          },
+          user: {
+            data: userProfile.data.data,
+            profiles: {doctor: doctorProfile, patient: patientProfile}
+          }
+        }
+
+      })
+
       router.navigate({
-        to: '/dashboard'
+        to: patientProfile ? '/dashboard' : '/doctor/dashboard'
       })
     },
     onError: (err) => {
@@ -83,14 +154,6 @@ export default function SignInPage() {
     }
   })
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-      rememberMe: false
-    }
-  })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
@@ -224,6 +287,7 @@ export default function SignInPage() {
           </CardFooter>
         </Card>
       </div>
+      <AdditionalInfoModal open={showProfileModal} onOpenChange={setShowProfileModal}/>
     </div>
   )
 }

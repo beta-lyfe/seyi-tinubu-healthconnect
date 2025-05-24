@@ -1,41 +1,57 @@
-import { Result, Maybe } from 'true-myth'
-import type { AuthService } from './interface'
+import { Result } from 'true-myth'
+import type { AuthService, AuthServiceError } from './interface'
 import type { User } from './types'
-import { client } from './lib'
 import { Logger } from '../logger'
+import DoctorRepository from '../doctor/repository'
+import { AuthRepository } from '.'
+import PatientRepository from '../patient/repository'
+import { verifyAccessToken } from './utils/token-utils'
 
 class AuthServiceImpl implements AuthService {
   logger = Logger.getSubLogger({ name: 'AuthServiceImplLogger' })
 
-  async getUserProfile(
+  async getUserWithProfile(
     token: string
-  ): Promise<Result<Maybe<User>, 'NETWORK_ERR'>> {
-    try {
-      const doctor = await client.GET('/api/doctors/profile', {
-        headers: {
-          authorization: `Bearer ${token}`
-        }
-      })
+  ): Promise<Result<User, AuthServiceError>> {
+    const jwtData = await verifyAccessToken(token)
 
-      if (doctor.data) {
-        return Result.ok(Maybe.just({ role: 'doctor', data: doctor.data }))
-      }
+    if (!jwtData) return Result.err('INVALID_OR_EXPIRED_TOKEN')
 
-      const patient = await client.GET('/api/patients/profile/', {
-        headers: {
-          authorization: `Bearer ${token}`
-        }
-      })
+    const { userId } = jwtData
 
-      if (patient.data) {
-        return Result.ok(Maybe.just({ role: 'patient', data: patient.data }))
-      }
+    const findUserResult = await AuthRepository.findUserById({ id: userId })
 
-      return Result.ok(Maybe.nothing())
-    } catch (err) {
-      this.logger.error('Error occurred while trying to get user profile:', err)
-      return Result.err('NETWORK_ERR')
+    if (findUserResult.isErr) return Result.err('FAILED_TO_FETCH_USER')
+
+    const user = findUserResult.value
+
+    if (!user) return Result.err('INVALID_OR_EXPIRED_TOKEN')
+
+    if (!user.is_verified) return Result.err('USER_NOT_VERIFIED')
+
+    const findPatientProfileResult = await PatientRepository.findByUserId(
+      user.id
+    )
+
+    if (findPatientProfileResult.isErr)
+      return Result.err('FAILED_TO_FETCH_USER')
+
+    const patientProfile = findPatientProfileResult.value
+
+    const findDoctorProfileResult = await DoctorRepository.findByUserId(user.id)
+    if (findDoctorProfileResult.isErr) return Result.err('FAILED_TO_FETCH_USER')
+
+    const doctorProfile = findDoctorProfileResult.value
+
+    const profiles = {
+      patient: patientProfile,
+      doctor: doctorProfile
     }
+
+    return Result.ok({
+      data: user,
+      profiles
+    })
   }
 }
 

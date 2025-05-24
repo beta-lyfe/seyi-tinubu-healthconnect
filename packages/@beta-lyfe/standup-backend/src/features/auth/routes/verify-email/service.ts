@@ -26,11 +26,15 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
   if (!verificationToken) return Result.err('INVALID_OR_EXPIRED_OTP_ERROR')
 
   const hasTokenExpired =
-    compareAsc(verificationToken.expiresAt, Date.now()) === -1
+    compareAsc(verificationToken.expires_at, Date.now()) === -1
   if (hasTokenExpired) return Result.err('INVALID_OR_EXPIRED_OTP_ERROR')
 
   if (verificationToken.token !== payload.otp)
     return Result.err('INVALID_OR_EXPIRED_OTP_ERROR')
+
+  const verificationResult = await Repository.verifyUserById(user.id)
+
+  if (verificationResult.isErr) return Result.err('UNEXPECTED_ERROR')
 
   return Result.ok(null)
 }

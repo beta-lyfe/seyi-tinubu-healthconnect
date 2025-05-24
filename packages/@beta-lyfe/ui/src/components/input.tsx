@@ -1,1 +1,1 @@
-export { Input } from "./shad/ui/input";
+export { Input } from './shad/ui/input'

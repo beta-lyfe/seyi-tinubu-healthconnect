@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import middleware from './middleware'
-import { Repository } from '../..'
+import Repository from '../../repository'
 import { APIResponse } from '../../../http'
 
 export default new Hono().patch('/:id', middleware, async (c) => {

@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-import { Repository } from '../..'
+import Repository from '../../repository'
 import { APIResponse } from '../../../http'
 
 export default new Hono().delete('/items/:id', async (c) => {

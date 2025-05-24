@@ -1,13 +1,30 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { Video, Clock, ArrowRight, Star, Menu, MapPin, Pill, Stethoscope, Users, Map, Award } from "lucide-react"
+import {
+  Video,
+  Clock,
+  ArrowRight,
+  Star,
+  Menu,
+  MapPin,
+  Pill,
+  Stethoscope,
+  Users,
+  Map,
+  Award
+} from 'lucide-react'
 
-import { Button } from "@beta-lyfe/ui/components/button"
-import { Card, CardContent } from "@beta-lyfe/ui/components/shad/ui/card"
-import WhatsAppButton from "@beta-lyfe/ui/components/whatappbtn"
-import { Input } from "@beta-lyfe/ui/components/shad/ui/input"
+import { Button } from '@beta-lyfe/ui/components/button'
+import { Card, CardContent } from '@beta-lyfe/ui/components/shad/ui/card'
+import WhatsAppButton from '@beta-lyfe/ui/components/whatappbtn'
+import { Input } from '@beta-lyfe/ui/components/shad/ui/input'
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@beta-lyfe/ui/components/shad/ui/tabs"
-import { Badge } from "@beta-lyfe/ui/components/shad/ui/badge"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
+} from '@beta-lyfe/ui/components/shad/ui/tabs'
+import { Badge } from '@beta-lyfe/ui/components/shad/ui/badge'
 import {
   Search,
   ShoppingCart,
@@ -16,19 +33,16 @@ import {
   ChevronRight,
   PillIcon as Capsule,
   Thermometer,
-  Phone,
-} from "lucide-react"
-
+  Phone
+} from 'lucide-react'
 
 export const Route = createFileRoute('/_app/pharmacy/')({
-  component: PharmacyPage,
+  component: PharmacyPage
 })
-
 
 function PharmacyPage() {
   return (
     <div className="flex min-h-screen flex-col">
-  
       <main className="flex-1">
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-green-50 to-white">
@@ -40,16 +54,20 @@ function PharmacyPage() {
                     Your Health, Delivered
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Order prescription and over-the-counter medications online. Enjoy fast delivery to your doorstep
-                    anywhere in Nigeria.
+                    Order prescription and over-the-counter medications online.
+                    Enjoy fast delivery to your doorstep anywhere in Nigeria.
                   </p>
                 </div>
                 <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
                   <div className="relative w-full max-w-lg">
                     <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                    <Input type="search" placeholder="Search for medications..." className="w-full pl-9 pr-4" />
+                    <Input
+                      type="search"
+                      placeholder="Search for medications..."
+                      className="w-full pl-9 pr-4"
+                    />
                   </div>
-                  <Button className='text-white'>Search</Button>
+                  <Button className="text-white">Search</Button>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="outline" className="bg-background">
@@ -84,7 +102,9 @@ function PharmacyPage() {
                     </div>
                     <div>
                       <p className="text-sm font-medium">Fast Delivery</p>
-                      <p className="text-xl font-bold">Same-day in major cities</p>
+                      <p className="text-xl font-bold">
+                        Same-day in major cities
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -98,7 +118,9 @@ function PharmacyPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">Browse by Category</h2>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                  Browse by Category
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Find the medications and health products you need.
                 </p>
@@ -106,23 +128,49 @@ function PharmacyPage() {
             </div>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 mt-8">
               {[
-                { name: "Prescription Drugs", icon: <Pill className="h-8 w-8" /> },
-                { name: "Over-the-Counter", icon: <Capsule className="h-8 w-8" /> },
-                { name: "Vitamins & Supplements", icon: <Pill className="h-8 w-8 rotate-45" /> },
-                { name: "Diabetes Care", icon: <Thermometer className="h-8 w-8" /> },
-                { name: "Blood Pressure", icon: <Stethoscope className="h-8 w-8" /> },
-                { name: "First Aid", icon: <Shield className="h-8 w-8" /> },
-                { name: "Pain Relief", icon: <Pill className="h-8 w-8" /> },
-                { name: "Antibiotics", icon: <Capsule className="h-8 w-8" /> },
-                { name: "Skincare", icon: <Pill className="h-8 w-8 rotate-45" /> },
-                { name: "Children's Health", icon: <Thermometer className="h-8 w-8" /> },
-                { name: "Women's Health", icon: <Stethoscope className="h-8 w-8" /> },
-                { name: "Men's Health", icon: <Shield className="h-8 w-8" /> },
+                {
+                  name: 'Prescription Drugs',
+                  icon: <Pill className="h-8 w-8" />
+                },
+                {
+                  name: 'Over-the-Counter',
+                  icon: <Capsule className="h-8 w-8" />
+                },
+                {
+                  name: 'Vitamins & Supplements',
+                  icon: <Pill className="h-8 w-8 rotate-45" />
+                },
+                {
+                  name: 'Diabetes Care',
+                  icon: <Thermometer className="h-8 w-8" />
+                },
+                {
+                  name: 'Blood Pressure',
+                  icon: <Stethoscope className="h-8 w-8" />
+                },
+                { name: 'First Aid', icon: <Shield className="h-8 w-8" /> },
+                { name: 'Pain Relief', icon: <Pill className="h-8 w-8" /> },
+                { name: 'Antibiotics', icon: <Capsule className="h-8 w-8" /> },
+                {
+                  name: 'Skincare',
+                  icon: <Pill className="h-8 w-8 rotate-45" />
+                },
+                {
+                  name: "Children's Health",
+                  icon: <Thermometer className="h-8 w-8" />
+                },
+                {
+                  name: "Women's Health",
+                  icon: <Stethoscope className="h-8 w-8" />
+                },
+                { name: "Men's Health", icon: <Shield className="h-8 w-8" /> }
               ].map((category, index) => (
                 <a href={`/pharmacy/category/${index}`} key={index}>
                   <Card className="h-full transition-colors hover:border-primary">
                     <CardContent className="flex flex-col items-center justify-center p-6 text-center">
-                      <div className="mb-3 rounded-full bg-primary/10 p-3">{category.icon}</div>
+                      <div className="mb-3 rounded-full bg-primary/10 p-3">
+                        {category.icon}
+                      </div>
                       <h3 className="text-sm font-medium">{category.name}</h3>
                     </CardContent>
                   </Card>
@@ -136,8 +184,13 @@ function PharmacyPage() {
         <section className="w-full py-12 md:py-16 lg:py-20 bg-muted/30">
           <div className="container px-4 md:px-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold tracking-tighter md:text-3xl">Featured Medications</h2>
-              <a href="/pharmacy/all" className="flex items-center text-sm font-medium text-primary">
+              <h2 className="text-2xl font-bold tracking-tighter md:text-3xl">
+                Featured Medications
+              </h2>
+              <a
+                href="/pharmacy/all"
+                className="flex items-center text-sm font-medium text-primary"
+              >
                 View All <ChevronRight className="ml-1 h-4 w-4" />
               </a>
             </div>
@@ -152,57 +205,66 @@ function PharmacyPage() {
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                   {[
                     {
-                      name: "Paracetamol",
-                      generic: "Acetaminophen",
-                      price: "₦500",
-                      img: "/placeholder.svg?height=200&width=200&text=Paracetamol",
+                      name: 'Paracetamol',
+                      generic: 'Acetaminophen',
+                      price: '₦500',
+                      img: '/placeholder.svg?height=200&width=200&text=Paracetamol'
                     },
                     {
-                      name: "Amoxicillin",
-                      generic: "Amoxicillin",
-                      price: "₦1,200",
+                      name: 'Amoxicillin',
+                      generic: 'Amoxicillin',
+                      price: '₦1,200',
                       prescription: true,
-                      img: "/placeholder.svg?height=200&width=200&text=Amoxicillin",
+                      img: '/placeholder.svg?height=200&width=200&text=Amoxicillin'
                     },
                     {
-                      name: "Vitamin C",
-                      generic: "Ascorbic Acid",
-                      price: "₦800",
-                      img: "/placeholder.svg?height=200&width=200&text=Vitamin+C",
+                      name: 'Vitamin C',
+                      generic: 'Ascorbic Acid',
+                      price: '₦800',
+                      img: '/placeholder.svg?height=200&width=200&text=Vitamin+C'
                     },
                     {
-                      name: "Lisinopril",
-                      generic: "Lisinopril",
-                      price: "₦1,500",
+                      name: 'Lisinopril',
+                      generic: 'Lisinopril',
+                      price: '₦1,500',
                       prescription: true,
-                      img: "/placeholder.svg?height=200&width=200&text=Lisinopril",
+                      img: '/placeholder.svg?height=200&width=200&text=Lisinopril'
                     },
                     {
-                      name: "Ibuprofen",
-                      generic: "Ibuprofen",
-                      price: "₦600",
-                      img: "/placeholder.svg?height=200&width=200&text=Ibuprofen",
-                    },
+                      name: 'Ibuprofen',
+                      generic: 'Ibuprofen',
+                      price: '₦600',
+                      img: '/placeholder.svg?height=200&width=200&text=Ibuprofen'
+                    }
                   ].map((product, index) => (
                     <a href={`/pharmacy/product/${index}`} key={index}>
                       <Card className="h-full overflow-hidden transition-all hover:border-primary">
                         <div className="aspect-square relative bg-muted/20">
                           <img
-                            src={product.img || "/placeholder.svg"}
+                            src={product.img || '/placeholder.svg'}
                             alt={product.name}
-
                             className="object-cover p-4"
                           />
                           {product.prescription && (
-                            <Badge className="absolute top-2 right-2 bg-amber-500">Prescription</Badge>
+                            <Badge className="absolute top-2 right-2 bg-amber-500">
+                              Prescription
+                            </Badge>
                           )}
                         </div>
                         <CardContent className="p-4">
-                          <h3 className="font-medium line-clamp-1">{product.name}</h3>
-                          <p className="text-xs text-muted-foreground">{product.generic}</p>
+                          <h3 className="font-medium line-clamp-1">
+                            {product.name}
+                          </h3>
+                          <p className="text-xs text-muted-foreground">
+                            {product.generic}
+                          </p>
                           <div className="mt-2 flex items-center justify-between">
                             <span className="font-bold">{product.price}</span>
-                            <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="h-8 w-8 p-0"
+                            >
                               <ShoppingCart className="h-4 w-4" />
                               <span className="sr-only">Add to cart</span>
                             </Button>
@@ -223,14 +285,22 @@ function PharmacyPage() {
                         alt="Lisinopril"
                         className="object-cover p-4"
                       />
-                      <Badge className="absolute top-2 right-2 bg-amber-500">Prescription</Badge>
+                      <Badge className="absolute top-2 right-2 bg-amber-500">
+                        Prescription
+                      </Badge>
                     </div>
                     <CardContent className="p-4">
                       <h3 className="font-medium line-clamp-1">Lisinopril</h3>
-                      <p className="text-xs text-muted-foreground">Lisinopril</p>
+                      <p className="text-xs text-muted-foreground">
+                        Lisinopril
+                      </p>
                       <div className="mt-2 flex items-center justify-between">
                         <span className="font-bold">₦1,500</span>
-                        <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-8 w-8 p-0"
+                        >
                           <ShoppingCart className="h-4 w-4" />
                           <span className="sr-only">Add to cart</span>
                         </Button>
@@ -261,7 +331,9 @@ function PharmacyPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">How Our Pharmacy Works</h2>
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                  How Our Pharmacy Works
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Getting your medications has never been easier.
                 </p>
@@ -270,30 +342,36 @@ function PharmacyPage() {
             <div className="mx-auto grid max-w-5xl items-start gap-6 py-12 md:grid-cols-3">
               {[
                 {
-                  step: "01",
-                  title: "Upload Prescription",
-                  description: "Upload your prescription through the app or website. Our pharmacists will verify it.",
+                  step: '01',
+                  title: 'Upload Prescription',
+                  description:
+                    'Upload your prescription through the app or website. Our pharmacists will verify it.'
                 },
                 {
-                  step: "02",
-                  title: "Place Your Order",
+                  step: '02',
+                  title: 'Place Your Order',
                   description:
-                    "Select your medications, add to cart, and proceed to checkout with secure payment options.",
+                    'Select your medications, add to cart, and proceed to checkout with secure payment options.'
                 },
                 {
-                  step: "03",
-                  title: "Fast Delivery",
+                  step: '03',
+                  title: 'Fast Delivery',
                   description:
-                    "Receive your medications at your doorstep. Same-day delivery available in major Nigerian cities.",
-                },
+                    'Receive your medications at your doorstep. Same-day delivery available in major Nigerian cities.'
+                }
               ].map((step, index) => (
-                <div key={index} className="group relative flex flex-col items-center space-y-4">
+                <div
+                  key={index}
+                  className="group relative flex flex-col items-center space-y-4"
+                >
                   <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-primary-foreground">
                     {step.step}
                   </div>
                   <div className="space-y-2">
                     <h3 className="text-xl font-bold">{step.title}</h3>
-                    <p className="text-center text-muted-foreground">{step.description}</p>
+                    <p className="text-center text-muted-foreground">
+                      {step.description}
+                    </p>
                   </div>
                   {index < 2 && (
                     <div className="absolute left-[calc(50%+4rem)] top-8 hidden h-0.5 w-[calc(100%-8rem)] bg-border md:block" />
@@ -318,37 +396,47 @@ function PharmacyPage() {
                 <div className="space-y-4">
                   {[
                     {
-                      title: "Genuine Medications",
-                      description: "All our medications are sourced from licensed manufacturers and distributors.",
-                      icon: <Shield className="h-5 w-5 text-primary" />,
+                      title: 'Genuine Medications',
+                      description:
+                        'All our medications are sourced from licensed manufacturers and distributors.',
+                      icon: <Shield className="h-5 w-5 text-primary" />
                     },
                     {
-                      title: "Fast Delivery",
-                      description: "Same-day delivery in Lagos, Abuja, and Port Harcourt. 1-3 day delivery nationwide.",
-                      icon: <Truck className="h-5 w-5 text-primary" />,
+                      title: 'Fast Delivery',
+                      description:
+                        'Same-day delivery in Lagos, Abuja, and Port Harcourt. 1-3 day delivery nationwide.',
+                      icon: <Truck className="h-5 w-5 text-primary" />
                     },
                     {
-                      title: "Pharmacist Consultation",
-                      description: "Free consultation with licensed pharmacists for medication guidance.",
-                      icon: <Stethoscope className="h-5 w-5 text-primary" />,
+                      title: 'Pharmacist Consultation',
+                      description:
+                        'Free consultation with licensed pharmacists for medication guidance.',
+                      icon: <Stethoscope className="h-5 w-5 text-primary" />
                     },
                     {
-                      title: "Secure Ordering",
-                      description: "End-to-end encryption for all your personal and prescription information.",
-                      icon: <Shield className="h-5 w-5 text-primary" />,
-                    },
+                      title: 'Secure Ordering',
+                      description:
+                        'End-to-end encryption for all your personal and prescription information.',
+                      icon: <Shield className="h-5 w-5 text-primary" />
+                    }
                   ].map((benefit, index) => (
                     <div key={index} className="flex items-start gap-3">
-                      <div className="rounded-full bg-primary/10 p-2 mt-0.5">{benefit.icon}</div>
+                      <div className="rounded-full bg-primary/10 p-2 mt-0.5">
+                        {benefit.icon}
+                      </div>
                       <div>
                         <h3 className="font-bold">{benefit.title}</h3>
-                        <p className="text-muted-foreground">{benefit.description}</p>
+                        <p className="text-muted-foreground">
+                          {benefit.description}
+                        </p>
                       </div>
                     </div>
                   ))}
                 </div>
                 <Button asChild className="mt-4">
-                  <Link to="/pharmacy" className='text-white'>Learn More About Our Pharmacy</Link>
+                  <Link to="/pharmacy" className="text-white">
+                    Learn More About Our Pharmacy
+                  </Link>
                 </Button>
               </div>
               <div className="relative h-[500px] w-full overflow-hidden rounded-xl">
@@ -371,8 +459,8 @@ function PharmacyPage() {
                   Ready to simplify your medication experience?
                 </h2>
                 <p className="max-w-[600px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Download the BetaLyfe app to order medications, consult with doctors, and manage your health in one
-                  place.
+                  Download the BetaLyfe app to order medications, consult with
+                  doctors, and manage your health in one place.
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -397,33 +485,49 @@ function PharmacyPage() {
           <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-              <img src='/images/betalyfe-icon.svg' className='w-10 h-10 rounded-full'/>
+                <img
+                  src="/images/betalyfe-icon.svg"
+                  className="w-10 h-10 rounded-full"
+                />
                 <span className="text-lg font-bold">BetaLyfe Pharmacy</span>
               </div>
               <p className="text-sm text-muted-foreground">
-                Your trusted online pharmacy in Nigeria. Quality medications delivered to your doorstep.
+                Your trusted online pharmacy in Nigeria. Quality medications
+                delivered to your doorstep.
               </p>
             </div>
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Shop</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link to="/pharmacy" className="text-sm text-muted-foreground hover:text-foreground">
+                  <Link
+                    to="/pharmacy"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                  >
                     Prescription Drugs
                   </Link>
                 </li>
                 <li>
-                  <Link to="/pharmacy" className="text-sm text-muted-foreground hover:text-foreground">
+                  <Link
+                    to="/pharmacy"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                  >
                     Over-the-Counter
                   </Link>
                 </li>
                 <li>
-                  <Link to="/pharmacy" className="text-sm text-muted-foreground hover:text-foreground">
+                  <Link
+                    to="/pharmacy"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                  >
                     Vitamins & Supplements
                   </Link>
                 </li>
                 <li>
-                  <Link to="/pharmacy" className="text-sm text-muted-foreground hover:text-foreground">
+                  <Link
+                    to="/pharmacy"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                  >
                     Health Devices
                   </Link>
                 </li>
@@ -433,22 +537,34 @@ function PharmacyPage() {
               <h3 className="text-lg font-medium">Information</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link to="/pharmacy" className="text-sm text-muted-foreground hover:text-foreground">
+                  <Link
+                    to="/pharmacy"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                  >
                     About Our Pharmacy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/pharmacy" className="text-sm text-muted-foreground hover:text-foreground">
+                  <Link
+                    to="/pharmacy"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                  >
                     Delivery Information
                   </Link>
                 </li>
                 <li>
-                  <Link to="/pharmacy" className="text-sm text-muted-foreground hover:text-foreground">
+                  <Link
+                    to="/pharmacy"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                  >
                     Returns Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/pharmacy" className="text-sm text-muted-foreground hover:text-foreground">
+                  <Link
+                    to="/pharmacy"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                  >
                     Pharmacy FAQs
                   </Link>
                 </li>
@@ -459,15 +575,21 @@ function PharmacyPage() {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <MapPin className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-muted-foreground">123 Health Street, Lagos, Nigeria</span>
+                  <span className="text-sm text-muted-foreground">
+                    123 Health Street, Lagos, Nigeria
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Phone className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-muted-foreground">+234 800 000 0000</span>
+                  <span className="text-sm text-muted-foreground">
+                    +234 800 000 0000
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Clock className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-muted-foreground">Open 24/7 for online orders</span>
+                  <span className="text-sm text-muted-foreground">
+                    Open 24/7 for online orders
+                  </span>
                 </li>
               </ul>
             </div>
@@ -475,22 +597,34 @@ function PharmacyPage() {
               <h3 className="text-lg font-medium">Legal</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="/terms" className="text-sm text-muted-foreground hover:text-foreground">
+                  <a
+                    href="/terms"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                  >
                     Terms of Service
                   </a>
                 </li>
                 <li>
-                  <a href="/privacy" className="text-sm text-muted-foreground hover:text-foreground">
+                  <a
+                    href="/privacy"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                  >
                     Privacy Policy
                   </a>
                 </li>
                 <li>
-                  <a href="/cookies" className="text-sm text-muted-foreground hover:text-foreground">
+                  <a
+                    href="/cookies"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                  >
                     Cookie Policy
                   </a>
                 </li>
                 <li>
-                  <a href="/licenses" className="text-sm text-muted-foreground hover:text-foreground">
+                  <a
+                    href="/licenses"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                  >
                     Licenses
                   </a>
                 </li>
@@ -502,7 +636,10 @@ function PharmacyPage() {
               &copy; {new Date().getFullYear()} BetaLyfe. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground">
+              <a
+                href="#"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
                 <span className="sr-only">Twitter</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -519,7 +656,10 @@ function PharmacyPage() {
                   <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
                 </svg>
               </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground">
+              <a
+                href="#"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
                 <span className="sr-only">Facebook</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -536,7 +676,10 @@ function PharmacyPage() {
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                 </svg>
               </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground">
+              <a
+                href="#"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
                 <span className="sr-only">Instagram</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -555,7 +698,10 @@ function PharmacyPage() {
                   <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
                 </svg>
               </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-foreground">
+              <a
+                href="#"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
                 <span className="sr-only">LinkedIn</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

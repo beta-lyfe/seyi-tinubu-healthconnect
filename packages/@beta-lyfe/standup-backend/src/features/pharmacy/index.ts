@@ -1,2 +1,2 @@
-export { default as router } from './routes'
-export { default as Repository } from './repository'
+export { default as pharmacyRouter } from './routes'
+export { default as PharmacyRepository } from './repository'

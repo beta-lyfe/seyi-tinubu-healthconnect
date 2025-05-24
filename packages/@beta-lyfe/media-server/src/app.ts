@@ -6,10 +6,7 @@ import { cors } from 'hono/cors'
 
 export const app = new Hono()
   .use(logger())
-  .use(
-    '/*',
-    cors()
-  )
+  .use('/*', cors())
   .get(
     '/public/*',
     serveStatic({

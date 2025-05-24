@@ -23,7 +23,7 @@ const config = {
 }
 
 const buildSource = (target: 'production' | 'development') =>
-  Effect.gen(function*() {
+  Effect.gen(function* () {
     const buildDirectory = './build'
 
     console.log('⚙️ Building server...')
@@ -58,51 +58,51 @@ const cli = Command.make(
         onSome: (target) =>
           target === 'development'
             ? buildSource(target).pipe(
-              Effect.andThen(() => console.log('✅ Build complete'))
-            )
-            : buildSource(target).pipe(
-              Effect.andThen(() =>
-                Effect.gen(function*() {
-                  const fs = yield* FileSystem.FileSystem
-                  const outputDirectory = './.vercel/output'
-
-                  yield* fs.remove(outputDirectory, {
-                    recursive: true,
-                    force: true
-                  })
-
-                  yield* fs.makeDirectory(
-                    `${outputDirectory}/functions/index.func`,
-                    { recursive: true }
-                  )
-
-                  yield* fs.writeFile(
-                    `${outputDirectory}/config.json`,
-                    new TextEncoder().encode(
-                      JSON.stringify(config.prod.config)
-                    )
-                  )
-
-                  yield* fs.writeFile(
-                    `${outputDirectory}/functions/index.func/.vc-config.json`,
-                    new TextEncoder().encode(
-                      JSON.stringify(config.prod.functions)
-                    )
-                  )
-
-                  yield* fs.copy(
-                    './build',
-                    `${outputDirectory}/functions/index.func`
-                  )
-
-                  console.log('✅ Build complete')
-                })
+                Effect.andThen(() => console.log('✅ Build complete'))
               )
-            ),
+            : buildSource(target).pipe(
+                Effect.andThen(() =>
+                  Effect.gen(function* () {
+                    const fs = yield* FileSystem.FileSystem
+                    const outputDirectory = './.vercel/output'
+
+                    yield* fs.remove(outputDirectory, {
+                      recursive: true,
+                      force: true
+                    })
+
+                    yield* fs.makeDirectory(
+                      `${outputDirectory}/functions/index.func`,
+                      { recursive: true }
+                    )
+
+                    yield* fs.writeFile(
+                      `${outputDirectory}/config.json`,
+                      new TextEncoder().encode(
+                        JSON.stringify(config.prod.config)
+                      )
+                    )
+
+                    yield* fs.writeFile(
+                      `${outputDirectory}/functions/index.func/.vc-config.json`,
+                      new TextEncoder().encode(
+                        JSON.stringify(config.prod.functions)
+                      )
+                    )
+
+                    yield* fs.copy(
+                      './build',
+                      `${outputDirectory}/functions/index.func`
+                    )
+
+                    console.log('✅ Build complete')
+                  })
+                )
+              ),
         onNone: () =>
           buildSource('production').pipe(
             Effect.andThen(() =>
-              Effect.gen(function*() {
+              Effect.gen(function* () {
                 const fs = yield* FileSystem.FileSystem
                 const outputDirectory = './.vercel/output'
 

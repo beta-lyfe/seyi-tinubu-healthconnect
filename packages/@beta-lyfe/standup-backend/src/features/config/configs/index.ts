@@ -6,6 +6,7 @@ import UploadConfig from './upload'
 import StorageConfig from './storage'
 import AuthConfig from './auth'
 import FrontendConfig from './frontend'
+import JitsiConfig from './jitsi'
 
 export default {
   auth: AuthConfig,
@@ -15,5 +16,6 @@ export default {
   mail: MailConfig,
   upload: UploadConfig,
   server: ServerConfig,
-  storage: StorageConfig
+  storage: StorageConfig,
+  jitsi:JitsiConfig
 }

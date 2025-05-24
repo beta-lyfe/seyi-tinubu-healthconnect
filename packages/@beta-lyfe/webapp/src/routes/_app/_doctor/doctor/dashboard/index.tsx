@@ -27,19 +27,25 @@ import {
   Activity,
   Star
 } from 'lucide-react'
+import { useAuth } from '../../../../../hooks/auth'
+import { ConsultationRequest } from './appointments'
 
 export const Route = createFileRoute('/_app/_doctor/doctor/dashboard/')({
   component: DoctorDashboardPage
 })
 
 function DoctorDashboardPage() {
+  const user = useAuth(true).data.data.user.data
+
   return (
     <div className="space-y-6 overflow-x-clip">
+      
       {/* Welcome section */}
+      {user && (<>
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl md:text-2xl font-bold tracking-tight">
-            Welcome back, Dr. Johnson!
+            Welcome back, Dr. {user.first_name}
           </h1>
           <p className="text-muted-foreground">
             Here's an overview of your telehealth practice.
@@ -133,101 +139,7 @@ function DoctorDashboardPage() {
             </Button>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-start gap-4">
-            <div className="bg-primary/10 p-3 rounded-md dark:bg-primary/20">
-              <Video className="h-6 w-6 text-primary" />
-            </div>
-            <div className="flex-1">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                <div>
-                  <h3 className="font-semibold">John Doe</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Follow-up consultation for heart condition
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="flex items-center gap-1">
-                    <Calendar className="h-3 w-3" /> Today
-                  </Badge>
-                  <Badge variant="outline" className="flex items-center gap-1">
-                    <Clock className="h-3 w-3" /> 10:00 AM
-                  </Badge>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row md:items-center justify-between mt-4">
-                <div className="flex items-center gap-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage
-                      src="/placeholder.svg?height=32&width=32"
-                      alt="Patient"
-                    />
-                    <AvatarFallback>JD</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="text-xs text-muted-foreground">
-                      Patient since: Jan 2023
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-2 mt-2 md:mt-0">
-                  <Button variant="outline" size="sm">
-                    <MessageSquare className="mr-2 h-4 w-4" /> Message
-                  </Button>
-                  <Button size="sm">
-                    <Video className="mr-2 h-4 w-4" /> Call
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <div className="bg-primary/10 p-3 rounded-md dark:bg-primary/20">
-              <MessageSquare className="h-6 w-6 text-primary" />
-            </div>
-            <div className="flex-1">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                <div>
-                  <h3 className="font-semibold">Maria Garcia</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Initial consultation for chest pain
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="flex items-center gap-1">
-                    <Calendar className="h-3 w-3" /> Today
-                  </Badge>
-                  <Badge variant="outline" className="flex items-center gap-1">
-                    <Clock className="h-3 w-3" /> 11:30 AM
-                  </Badge>
-                </div>
-              </div>
-              <div className="flex flex-col md:flex-row md:items-center justify-between mt-4">
-                <div className="flex items-center gap-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage
-                      src="/placeholder.svg?height=32&width=32"
-                      alt="Patient"
-                    />
-                    <AvatarFallback>MG</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="text-xs text-muted-foreground">New patient</p>
-                  </div>
-                </div>
-                <div className="flex gap-2 mt-2 md:mt-0">
-                  <Button variant="outline" size="sm">
-                    History
-                  </Button>
-                  <Button size="sm">
-                    <MessageSquare className="mr-2 h-4 w-4" /> Start Chat
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
+        <ConsultationRequest />
       </Card>
 
       {/* Recent activity and earnings */}
@@ -427,7 +339,7 @@ function DoctorDashboardPage() {
             </div>
           </div>
         </CardContent>
-      </Card>
+      </Card></>)}
     </div>
   )
 }

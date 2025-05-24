@@ -1,14 +1,23 @@
 import { Hono } from 'hono'
-import { router as authRouter } from './features/auth'
-import { router as pharmacyRouter } from './features/pharmacy'
+import { authRouter } from './features/auth'
+import { pharmacyRouter } from './features/pharmacy'
+import { consultationRouter } from './features/consultation'
+import { doctorRouter } from './features/doctor'
+import { patientRouter } from './features/patient'
 import { compress } from 'hono/compress'
 import { cors } from 'hono/cors'
 import { logger as honoLogger } from 'hono/logger'
 import { Logger } from './features/logger'
 import { StatusCodes } from './features/http'
 
-const apiRoutes = new Hono().route('/auth', authRouter).route('/pharmacy', pharmacyRouter)
+const apiRoutes = new Hono()
+  .route('/auth', authRouter)
+  .route('/pharmacy', pharmacyRouter)
+  .route('/consultation', consultationRouter)
+  .route('/doctors', doctorRouter)
+  .route('/patients', patientRouter)
 
+  
 export const logger = Logger.getSubLogger({ name: 'ServerLogger' })
 
 export const app = new Hono()
