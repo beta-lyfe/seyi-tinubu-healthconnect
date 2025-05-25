@@ -39,6 +39,8 @@ import {
 import { $api } from '../../../../../../lib/backend'
 import { useAuth } from '../../../../../../hooks/auth'
 import { toast } from 'sonner'
+import JoinCallModal from '../../../../-components/join-call-modal'
+import { JoinButton } from '../../../../_dashboard/dashboard/schedule'
 
 export const Route = createFileRoute(
   '/_app/_doctor/doctor/dashboard/appointments/'
@@ -47,9 +49,24 @@ export const Route = createFileRoute(
 })
 
 
-export function ConsultationRequest(){
+export function ConsultationRequest({call,number}:{call?:boolean,number?:number}) {
   const token=useAuth(true).data.data.token.access_token
-  const query=$api.useQuery('get','/api/consultation/request',{
+    const user=useAuth(true).data.data.user
+  const query=call ?  $api.useQuery('get','/api/consultation',{
+    headers:{
+      Authorization:`Bearer ${token}`
+    },
+    params:{
+    query:!number ? {
+        profile:"true"
+      } : {
+        profile:'true',
+        page:1,
+        per_page:3
+      }
+
+    }
+  }) : $api.useQuery('get','/api/consultation/request',{
     headers:{
       Authorization:`Bearer ${token}`
     },
@@ -60,7 +77,7 @@ export function ConsultationRequest(){
     }
   })
 
-  const consultationRequest=query.data?.data.data
+  const consultationRequest=query.data?.data as any
   const {mutate}=$api.useMutation('post','/api/consultation/request/{id}/accept',{
     onSuccess:response=>{
       if(response.code==='CONSULTATION_REQUEST_ACCEPTED_SUCCESSFULLY'){
@@ -86,7 +103,7 @@ export function ConsultationRequest(){
   return(
     <>
   
-    {query.status==='success' && consultationRequest && consultationRequest.map(request=><Card>
+    {query.status==='success' && consultationRequest && consultationRequest.map((consultation:any)=><Card>
       <CardContent className="p-4">
         <div className="flex items-start gap-4">
           <div className="bg-primary/10 p-3 rounded-md dark:bg-primary/20">
@@ -95,7 +112,7 @@ export function ConsultationRequest(){
           <div className="flex-1">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
               <div>
-                <h3 className="font-semibold">{request.patient_profile!.first_name} {request.patient_profile!.last_name}</h3>
+                <h3 className="font-semibold">{consultation.patient_profile!.first_name} {consultation.patient_profile!.last_name}</h3>
                 <p className="text-sm text-muted-foreground">
                   Follow-up consultation for heart condition
                 </p>
@@ -111,7 +128,7 @@ export function ConsultationRequest(){
                   variant="outline"
                   className="flex items-center gap-1"
                 >
-                  <Clock className="h-3 w-3" /> {request.start_time}
+                  <Clock className="h-3 w-3" /> {consultation.start_time}
                 </Badge>
               </div>
             </div>
@@ -122,7 +139,7 @@ export function ConsultationRequest(){
                     src="/placeholder.svg?height=32&width=32"
                     alt="Patient"
                   />
-                  <AvatarFallback>{request.patient_profile!.first_name[0]}{request.patient_profile!.last_name[0]}</AvatarFallback>
+                  <AvatarFallback>{consultation.patient_profile!.first_name[0]}{consultation.patient_profile!.last_name[0]}</AvatarFallback>
                 </Avatar>
                 <div>
                   <p className="text-xs text-muted-foreground">
@@ -134,7 +151,7 @@ export function ConsultationRequest(){
                 </div>
               </div>
               <div className="flex gap-2 mt-2 md:mt-0">
-                {request.status==='pending'?
+                {consultation.status==='pending'?
                   <>
                   <Button variant="outline" className='bg-transparent' size="sm"
                   onClick={()=>{
@@ -144,14 +161,14 @@ export function ConsultationRequest(){
                       },
                       params:{
                         path:{
-                          id:request.id
+                          id:consultation.id
                         }
                       }
                       
                     })
                   }}
                   >
-                      <Check className="mr-2 h-4 w-4 fill-primary" />
+                      <Check className="mr-2 h-4 w-4 text-primary" />
                       Approve
                   </Button>
                   <Button size="sm" onClick={()=>{
@@ -161,7 +178,7 @@ export function ConsultationRequest(){
                       },
                       params:{
                         path:{
-                          id:request.id
+                          id:consultation.id
                         }
                       }
                     } )
@@ -171,17 +188,11 @@ export function ConsultationRequest(){
                   </>
                 :
                 <>
-                <Button variant="outline" size="sm" asChild>
-                  <Link
-                    to="/doctor/dashboard/patients/$id"
-                    params={{ id: request.patient_profile!.id }}
-                  >
-                    <FileText className="mr-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button size="sm">
-                  <Video className="mr-2 h-4 w-4" /> Call
-                </Button>
+
+                {call &&  <JoinButton token={consultation.token} roomname={consultation.room_name}
+              patientName={`Dr ${consultation.patient_profile.first_name} ${consultation.patient_profile.last_name}`}
+              doctorName={`${user.data.first_name} ${user.data.last_name}`}
+              /> }
                 </>
               }
               </div>
@@ -293,7 +304,7 @@ export default function DoctorAppointmentsPage() {
         </TabsList>
 
         <TabsContent value="upcoming" className="space-y-4">
-          <ConsultationRequest />
+          <ConsultationRequest call/>
         </TabsContent>
 
         <TabsContent value="pending" className="space-y-4">

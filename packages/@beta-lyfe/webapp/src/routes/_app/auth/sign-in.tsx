@@ -87,8 +87,17 @@ export default function SignInPage() {
             Authorization: `Bearer ${res.data.access_token}`
           }
         })
-
-   
+        if(result.error?.code==='UNAUTHORIZED_ERROR' || 
+          result.error?.code==='UNEXPECTED_ERROR'
+        ){
+          router.navigate({
+            to:'/auth/set-profile/doctor',
+            search:{
+              token:res.data.access_token
+            }
+          })
+          return
+        }
 
         if (result.data){
           doctorProfile=result.data.data
@@ -140,7 +149,7 @@ export default function SignInPage() {
       })
     },
     onError: (err) => {
-      toast.error(err.code)
+      err.code ? toast.error(err.code) : toast.error('Network error. Please try again.')
 
       // if (err.code === 'Email is not verified') {
       //   mutateVerify.mutate({

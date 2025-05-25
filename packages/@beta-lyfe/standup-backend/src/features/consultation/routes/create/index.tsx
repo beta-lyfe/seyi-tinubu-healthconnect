@@ -67,8 +67,8 @@ export default new Hono().post(
     }
 
     const current_date=new Date()
-
-    Mailer.send({
+    try{
+      await Mailer.send({
       email:<ConsultationApprovalEmail 
       consultationId={consultationRequest.value.id}
       doctorName={`${doctorProfile.value.first_name}`}
@@ -77,6 +77,11 @@ export default new Hono().post(
       recipients:[doctorProfile.value.email],
       subject:`New Consultation request from ${patient_profile.first_name}`
     })
+    }
+    catch (error) {
+      logger.error('Error generating Jitsi token:', error)
+    }
+    
 
     response={
       code:'CONSULTATION_REQUEST_CREATED_SUCCESSFULLY',

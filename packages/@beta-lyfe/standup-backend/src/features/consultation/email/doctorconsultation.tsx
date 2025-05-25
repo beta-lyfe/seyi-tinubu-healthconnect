@@ -24,7 +24,7 @@ export default function DoctorConsultationEmail ({
   token
 }: Props) {
 
-  const consultationLink=`${config.frontend.webappUrl}/testcall/roomname=${roomname}&token=${token}`
+  const consultationLink=`${config.frontend.webappUrl}/testcall?roomname=${roomname}&token=${token}`
 
   return(
   <Html>

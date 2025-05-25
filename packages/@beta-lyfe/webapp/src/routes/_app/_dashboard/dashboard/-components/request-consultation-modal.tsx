@@ -520,19 +520,16 @@ export function ConsultationRequestModal({ open, onOpenChange, doctorId, doctorD
                         control={form.control}
                         name="isUrgent"
                         render={({ field }) => (
-                          <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                          <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 hidden">
                             <FormControl>
                               <input
                                 type="checkbox"
                                 checked={field.value}
                                 onChange={field.onChange}
-                                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary hidden"
                               />
                             </FormControl>
-                            <div className="space-y-1 leading-none">
-                              <FormLabel>This is an urgent matter</FormLabel>
-                              <FormDescription>Mark as urgent if you need immediate attention</FormDescription>
-                            </div>
+                            
                           </FormItem>
                         )}
                       />

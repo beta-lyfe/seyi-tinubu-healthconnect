@@ -4,6 +4,7 @@ import { Storage } from '../../../storage'
 import Repository from '../../repository'
 import { Result } from 'true-myth'
 import type { Schema } from './schema'
+import { number } from 'zod'
 
 export type Payload = {
   body: Schema
@@ -17,12 +18,11 @@ export default async (
 ): Promise<Result<DoctorProfile, Error>> => {
   const creationResult = await Repository.createProfile({
     ...payload.body,
-    first_name: payload.user.data.first_name,
-    last_name: payload.user.data.last_name,
-    email: payload.user.data.email,
-    phone_number: payload.user.data.phone_number,
-    user_id: payload.user.data.id
-  })
+   patients_treated: 0,
+   number_of_reviews: 0,
+   rating: 0,
+   user_id:payload.user.data.id
+  } as any)
 
   return creationResult.mapErr(() => 'FAILED_TO_CREATE_PROFILE')
 }

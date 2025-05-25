@@ -55,7 +55,7 @@ export default new Hono().post(
     
         const current_date=new Date()
     
-        Mailer.send({
+       await Mailer.send({
           email:<ConsultationRejectedEmail
           doctorName={user.profiles.doctor!.first_name}
           patientName={patientProfile.value.first_name}

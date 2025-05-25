@@ -86,11 +86,13 @@ export default new Hono().post(
         console.log("patient",patient_token)
         const current_date=new Date()
         const roomname=`bl_${consultation.value.id}`
+
+        try{
     
-        Mailer.send({
+       await Mailer.send({
           email:<DoctorConsultationEmail
-          doctorName="Dr. Chidera M."
-          patientName="Yuret Asai"
+        doctorName={`Dr. ${user.profiles.doctor!.first_name} ${user.profiles.doctor!.last_name}`}
+          patientName={`${patientProfile.value.first_name} ${patientProfile.value.last_name}`}
           date="April 25, 2025"
           time="3:00 PM"
           type="General Checkup"
@@ -98,16 +100,16 @@ export default new Hono().post(
           roomname={roomname}
           token={doctor_token}
         />,
-          recipients:[user.profiles.doctor!.email],
+          recipients:[user.data.email],
           subject:"New Consultation Scheduled"
         })
     
-        Mailer.send({
+       await Mailer.send({
           email:<PatientConsultationEmail
           doctorName={`${user.profiles.doctor!.first_name} ${user.profiles.doctor!.last_name}`}
           patientName={`${patientProfile.value.first_name} ${patientProfile.value.last_name}`}
           date={current_date.toISOString()}
-          time={`${current_date.getHours} pm`}
+          time={`${current_date.getHours()} pm`}
           type="General Checkup"
           mode="Video"
           roomname={roomname}
@@ -116,6 +118,10 @@ export default new Hono().post(
           recipients:[patientProfile.value.email],
           subject:"New Consultation Scheduled"
         })
+      }
+      catch (error) {
+        console.error('Error sending consultation emails:', error)
+      }
 
         response={
           code :'CONSULTATION_REQUEST_ACCEPTED_SUCCESSFULLY'

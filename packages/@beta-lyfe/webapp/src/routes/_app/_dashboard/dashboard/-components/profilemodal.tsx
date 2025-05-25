@@ -80,7 +80,7 @@ export function AdditionalInfoModal({ open, onOpenChange }: AdditionalInfoModalP
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="w-dvw max-h-[90vh] bg-white overflow-auto">
         <DialogHeader>
           <DialogTitle>We need more information</DialogTitle>
           <DialogDescription>
@@ -105,7 +105,10 @@ export function AdditionalInfoModal({ open, onOpenChange }: AdditionalInfoModalP
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 w-full max-h-[70vh] overflow-auto"
+          >
             <AnimatePresence mode="wait">
               {currentStep === 1 && (
                 <motion.div

@@ -59,7 +59,8 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
 
   const resetPasswordLink = `${config.frontend.webappUrl}/auth/forgot-password/${token.token}`
 
-  Mailer.send({
+  try{
+    await Mailer.send({
     recipients: [user.email],
     subject: 'Reset Account password',
     email: (
@@ -71,6 +72,11 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
       />
     )
   })
+  }
+  catch (err) {
+    console.error('Failed to send password reset email:', err) 
+  }
+
 
   return Result.ok(null)
 }
