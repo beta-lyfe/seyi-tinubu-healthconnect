@@ -28,6 +28,10 @@ scalar Token extends string;
 @example("123456")
 scalar Otp extends string;
 
+model ImageFile extends File {
+  contentType: "image/jpeg" | "image/png" | "image/webp";
+}
+
 model Address {
   @example("Federal Univeristy Teaching Hospital, Owerri")
   landmark: string;
@@ -57,9 +61,10 @@ scalar Password extends string;
 scalar Email extends string;
 
 model Media {
-  public_id: Id;
+  @example("h93suhw7mzyujf9tbugy")
+  public_id: string;
 
-  @example("https://google.com")
+  @example("https://res.cloudinary.com/dyirc2dvg/image/upload/v1747581547/foodhut/h93suhw7mzyujf9tbugy.jpg")
   url: string;
 }
 
@@ -1067,23 +1072,31 @@ namespace Api {
   @tag("Pharmacy")
   @route("/pharmacy")
   namespace Pharmacy {
+    model PharmacyStore {
+      @example("HealthPlus Pharma")
+      name: string;
+
+      description: string;
+      phone_number: PhoneNumber;
+      email: Email;
+      address: Address;
+
+      @doc("Time formatted in 24-hour format")
+      @example("08:00")
+      opening_time: Time;
+
+      @doc("Time formatted in 24-hour format")
+      @example("20:00")
+      closing_time: Time;
+
+      cover_image: Media;
+    }
+
     @route("/")
     namespace Create {
       namespace Request {
         model Body {
-          @example("HealthPlus Pharma")
-          name: string;
-
-          @doc("Time formatted in 24-hour format")
-          @example("08:00")
-          opening_time: Time;
-
-          @doc("Time formatted in 24-hour format")
-          @example("20:00")
-          closing_time: Time;
-
-          description: string;
-          address: Address;
+          ...PharmacyStore;
         }
       }
 
@@ -1103,29 +1116,86 @@ namespace Api {
       op createPharmacy(@body body: Request.Body): Response.Response;
     }
 
-    @route("/")
-    namespace Get {
-      namespace Request {
-        model Path {
-          @path
-          id: string;
-        }
-      }
-
-      namespace Response {
-        model Success {
-          @statusCode _code: 201;
-          code: "PHARMACY_CREATED";
+    @route("/{id}")
+    namespace ById {
+      namespace Get {
+        namespace Request {
+          model Path {
+            @path
+            id: string;
+          }
         }
 
-        alias Error = UnexpectedError;
+        namespace Response {
+          model Success {
+            code: "PHARMACY_RETRIEVED";
+            data: PharmacyStore;
+          }
 
-        alias Response = Success | Error;
+          alias Error = UnexpectedError;
+
+          alias Response = Success | Error;
+        }
+
+        @get
+        @doc("Fetch a pharmacy by ID")
+        op getPharmacyById(@path id: Request.Path): Response.Response;
       }
 
-      @post
-      @doc("Create a pharmacy")
-      op getPharmacyById(@path id: Request.Path): Response.Response;
+      namespace Update {
+        namespace Request {
+          model Path {
+            @path
+            id: string;
+          }
+
+          model Body {
+            ...OptionalProperties<PharmacyStore>;
+          }
+        }
+
+        namespace Response {
+          model Success {
+            code: "PHARMACY_UPDATED";
+            data: PharmacyStore;
+          }
+
+          alias Error = UnexpectedError;
+
+          alias Response = Success | Error;
+        }
+
+        @patch
+        @doc("Update a pharmacy by ID")
+        op updatePharmacyById(
+          @path id: Request.Path,
+          @body body: Request.Body,
+        ): Response.Response;
+      }
+
+      namespace Delete {
+        namespace Request {
+          model Path {
+            @path
+            id: string;
+          }
+        }
+
+        namespace Response {
+          model Success {
+            code: "PHARMACY_DELETED";
+            data: PharmacyStore;
+          }
+
+          alias Error = UnexpectedError;
+
+          alias Response = Success | Error;
+        }
+
+        @delete
+        @doc("Delete a pharmacy by ID")
+        op deletePharmacyById(@path id: Request.Path): Response.Response;
+      }
     }
   }
 
@@ -1152,4 +1222,3 @@ namespace Api {
     }
   }
 }
-
