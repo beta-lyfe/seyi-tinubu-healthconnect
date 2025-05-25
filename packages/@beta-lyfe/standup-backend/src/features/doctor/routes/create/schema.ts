@@ -1,8 +1,7 @@
-import { z } from 'zod'
+import type { z } from 'zod'
 import { schemas } from '@beta-lyfe/api/zod'
-import { Storage } from '../../../storage'
 
-const schema = schemas.Api_Doctor_Create_request_Body.omit({
+const schema = schemas.Api_Doctor_Create_Request_Body.omit({
   certifications: true,
   experiences: true,
   working_hours: true,

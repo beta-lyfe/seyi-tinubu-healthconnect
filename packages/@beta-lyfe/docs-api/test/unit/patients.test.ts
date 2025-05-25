@@ -66,7 +66,7 @@ suite('Patients test', async () => {
     expect(res.error).to.be.undefined
 
     const validationResult =
-      ozc.schemas.Api_Patient_List_response_Success.safeParse(res.data)
+      ozc.schemas.Api_Patient_List_Response_Success.safeParse(res.data)
 
     expect(validationResult.success).to.equal(
       true,
@@ -129,7 +129,7 @@ suite('Patients test', async () => {
     expect(res.error).to.be.undefined
 
     const validationResult =
-      ozc.schemas.Api_Patient_Profie_Update_response_Success.safeParse(res.data)
+      ozc.schemas.Api_Patient_Profie_Update_Response_Success.safeParse(res.data)
 
     expect(validationResult.success).to.equal(
       true,

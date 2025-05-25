@@ -80,13 +80,8 @@ export default new Hono().get(
         total: count
       }) as any
     }
-    return c.json(
-      Pagination.paginate(publicItems, {
-        ...options,
-        total: count
-      }),
-      StatusCodes.OK
-    )
+
+    return c.json(response, StatusCodes.OK)
   }
 )
 
