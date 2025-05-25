@@ -95,7 +95,8 @@ export default function SignUpPage() {
       }),
     onError: (err) => {
       setIsSubmitting(false)
-      toast.error(err.code)
+      err.code ? toast.error(err.code) : toast.error('Network error. Please try again.')
+
     }
   })
 

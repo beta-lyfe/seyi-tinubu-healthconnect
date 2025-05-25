@@ -34,8 +34,15 @@ export const Route = createFileRoute('/_app/_doctor/doctor/dashboard/')({
   component: DoctorDashboardPage
 })
 
+
+
 function DoctorDashboardPage() {
   const user = useAuth(true).data.data.user.data
+
+
+  function GetAllDoctorAppointment(){
+    
+  }
 
   return (
     <div className="space-y-6 overflow-x-clip">
@@ -159,25 +166,7 @@ function DoctorDashboardPage() {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center gap-3">
-              <Avatar>
-                <AvatarImage
-                  src="/placeholder.svg?height=40&width=40"
-                  alt="Patient"
-                />
-                <AvatarFallback>RB</AvatarFallback>
-              </Avatar>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between">
-                  <p className="font-medium truncate">Robert Brown</p>
-                  <p className="text-xs text-muted-foreground">2h ago</p>
-                </div>
-                <p className="text-sm text-muted-foreground truncate">
-                  You prescribed Lisinopril 10mg for hypertension
-                </p>
-              </div>
-            </div>
-
+         
             <div className="flex items-center gap-3">
               <Avatar>
                 <AvatarImage
