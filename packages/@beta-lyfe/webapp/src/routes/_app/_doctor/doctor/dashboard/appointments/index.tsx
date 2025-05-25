@@ -127,7 +127,7 @@ export function ConsultationRequest({
 
   const isSuccessful =
     queryConsultation.status === 'success' &&
-    queryConsultationRequest === 'success'
+    queryConsultationRequest.status === 'success'
 
   return (
     <>
