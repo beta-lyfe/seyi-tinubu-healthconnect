@@ -17,5 +17,5 @@ export default {
   upload: UploadConfig,
   server: ServerConfig,
   storage: StorageConfig,
-  jitsi:JitsiConfig
+  jitsi: JitsiConfig
 }

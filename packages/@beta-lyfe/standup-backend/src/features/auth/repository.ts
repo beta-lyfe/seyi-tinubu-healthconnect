@@ -83,7 +83,7 @@ namespace Repository {
 
   export type CreateVerificationTokenPayload = Omit<
     Token,
-    'id'  | 'created_at' | 'updated_at'
+    'id' | 'created_at' | 'updated_at'
   >
 
   export const createVerificationToken = async (

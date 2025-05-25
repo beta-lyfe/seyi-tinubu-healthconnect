@@ -28,7 +28,6 @@ export default new Hono().get('/', middleware, async (c) => {
     code: 'FETCH_PATIENT_PROFILES_SUCCESSFUL',
     data: Pagination.paginate(items, { ...options, total: count })
   }
-    
-  return c.json(response)
 
+  return c.json(response)
 })

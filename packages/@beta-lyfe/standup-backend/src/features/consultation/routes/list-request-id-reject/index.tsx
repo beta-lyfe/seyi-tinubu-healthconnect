@@ -10,10 +10,8 @@ import { PatientRepository } from '../../../patient'
 import ConsultationRejectedEmail from '../../email/doctorrejectemail'
 import type { schema } from '@beta-lyfe/api'
 
-
 export type Response =
   schema.paths['/api/consultation/request/{id}/reject']['post']['responses'][keyof schema.paths['/api/auth/sign-in']['post']['responses']]['content']['application/json']
-
 
 export default new Hono().post(
   '/request/:id/reject',
@@ -22,10 +20,14 @@ export default new Hono().post(
   async (c) => {
     const { id } = c.req.param()
     const user = c.get('user')
-    let response:Response
+    let response: Response
 
     const rejectedConsultationRequest =
-      await Repository.UpdateStatusConsultationRequest(user.profiles.doctor!.id, id,'rejected')
+      await Repository.UpdateStatusConsultationRequest(
+        user.profiles.doctor!.id,
+        id,
+        'rejected'
+      )
     if (rejectedConsultationRequest.isErr) {
       return c.json(
         { message: 'Error accepting consultation request' },
@@ -33,39 +35,32 @@ export default new Hono().post(
       )
     }
 
-
-
-    const { start_time, end_time, patient_id, doctor_id, message } =rejectedConsultationRequest.value
+    const { start_time, end_time, patient_id, doctor_id, message } =
+      rejectedConsultationRequest.value
     const patientProfile = await PatientRepository.findById(patient_id)
 
-    if (
-      patientProfile.isErr ||
-      patientProfile.value === null
-    ) {
-
-        response={
-            code:'UNEXPECTED_ERROR'
-        }
-      return c.json(
-        response,
-        StatusCodes.INTERNAL_SERVER_ERROR
-      )
+    if (patientProfile.isErr || patientProfile.value === null) {
+      response = {
+        code: 'UNEXPECTED_ERROR'
+      }
+      return c.json(response, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    
-    
-        const current_date=new Date()
-    
-       await Mailer.send({
-          email:<ConsultationRejectedEmail
+
+    const current_date = new Date()
+
+    await Mailer.send({
+      email: (
+        <ConsultationRejectedEmail
           doctorName={user.profiles.doctor!.first_name}
           patientName={patientProfile.value.first_name}
-        />,
-          recipients:[patientProfile.value.email],
-          subject:"New Consultation Scheduled"
-        })
-    response={
-        code:'CONSULTATION_REQUEST_REJECTED_SUCCESSFULLY'
+        />
+      ),
+      recipients: [patientProfile.value.email],
+      subject: 'New Consultation Scheduled'
+    })
+    response = {
+      code: 'CONSULTATION_REQUEST_REJECTED_SUCCESSFULLY'
     }
-    return c.json(response,StatusCodes.ACCEPTED)
+    return c.json(response, StatusCodes.ACCEPTED)
   }
 )

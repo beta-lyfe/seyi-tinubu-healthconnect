@@ -43,18 +43,14 @@ export default async (
   if (authenticationMethodCreationResult.isErr)
     return Result.err('UNEXPECTED_ERROR')
 
-  try{
-  await Mailer.send(
-    {
-      email:<GreetingEmail user={user}/> ,
-      recipients:[user.email],
-      subject:"Welcome "
-    }
-  )
-}
-  catch (err) {
+  try {
+    await Mailer.send({
+      email: <GreetingEmail user={user} />,
+      recipients: [user.email],
+      subject: 'Welcome '
+    })
+  } catch (err) {
     console.error('Failed to send welcome email:', err)
-   
   }
   return Result.ok(user)
 }

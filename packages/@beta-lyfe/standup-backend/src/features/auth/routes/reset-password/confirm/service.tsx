@@ -15,7 +15,7 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
 
   const token = findTokenResult.value
 
-  console.log(token,findTokenResult)
+  console.log(token, findTokenResult)
 
   if (!token) return Result.err('INVALID_OR_EXPIRED_TOKEN')
 

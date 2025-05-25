@@ -7,17 +7,19 @@ export namespace Schema {
 
   export type DoctorProfile = z.infer<typeof doctorProfile>
 
-  const patientProfile = schemas.Api_Patient_PatientProfile 
+  const patientProfile = schemas.Api_Patient_PatientProfile
 
   export type PatientProfile = z.infer<typeof patientProfile>
 
   const user = z.object({
-    data: schemas.Api_Authentication_Profile_response_Success.shape.data,
-    profiles: z.object({
-      doctor: doctorProfile,
-      patient: patientProfile
-    }).partial()
-})
+    data: schemas.Api_Authentication_Profile_Response_Success.shape.data,
+    profiles: z
+      .object({
+        doctor: doctorProfile,
+        patient: patientProfile
+      })
+      .partial()
+  })
 
   export type User = z.infer<typeof user>
 
@@ -32,14 +34,16 @@ export namespace Schema {
     status: z.literal('unauthenticated')
   })
 
-  export type UnauthenticatedAuthState = z.infer<typeof unauthenticatedAuthState>
+  export type UnauthenticatedAuthState = z.infer<
+    typeof unauthenticatedAuthState
+  >
 
   const authenticatingAuthState = z.object({
     status: z.literal('authenticating')
   })
 
   export type AuthenticatingAuthState = z.infer<typeof authenticatingAuthState>
-  
+
   const authenticatedAuthState = z.object({
     status: z.literal('authenticated'),
     data: z.object({
@@ -60,11 +64,11 @@ export namespace Schema {
 }
 
 type UpdateFn = (state: Schema.AuthState) => void
-export type Auth = { update: UpdateFn, data: Schema.AuthState }
+export type Auth = { update: UpdateFn; data: Schema.AuthState }
 
 export const auth = proxy<Auth>({
   data: {
-    status: 'unauthenticated',
+    status: 'unauthenticated'
   },
   update: (state) => {
     auth.data = state
@@ -74,23 +78,24 @@ export const auth = proxy<Auth>({
 
 const KEY = 'auth'
 
-function initiateState ()  {
+function initiateState() {
   let persistedState = localStorage.getItem(KEY)
-  if(!persistedState?.startsWith("{")){
-    persistedState='{}'
+  if (!persistedState?.startsWith('{')) {
+    persistedState = '{}'
   }
 
-  const parsingResult = Schema.authState.safeParse(JSON.parse(persistedState ?? '{}'))
+  const parsingResult = Schema.authState.safeParse(
+    JSON.parse(persistedState ?? '{}')
+  )
 
   let authState: Schema.AuthState
-  console.log("sucess")
+  console.log('sucess')
 
   if (!parsingResult.success) {
     authState = {
       status: 'unauthenticated'
     }
-  }
-  else {
+  } else {
     authState = parsingResult.data
   }
 
@@ -99,22 +104,25 @@ function initiateState ()  {
 
 initiateState()
 
-function persistState ()  {
+function persistState() {
   localStorage.setItem(KEY, JSON.stringify(auth.data))
 }
 
-export function useAuth(): { update: UpdateFn, data: Schema.AuthState };
-export function useAuth(authenticated: true): { update: UpdateFn, data: Schema.AuthenticatedAuthState };
-
-export function useAuth (authenticated?: true) {
-  const _auth = useSnapshot(auth, { sync: true })
-  if (authenticated) {
-  if (_auth.data.status === 'authenticated') {
-    return _auth
-  }
-
-  throw new Error('Not authenticated')
+export function useAuth(): { update: UpdateFn; data: Schema.AuthState }
+export function useAuth(authenticated: true): {
+  update: UpdateFn
+  data: Schema.AuthenticatedAuthState
 }
 
-return _auth
+export function useAuth(authenticated?: true) {
+  const _auth = useSnapshot(auth, { sync: true })
+  if (authenticated) {
+    if (_auth.data.status === 'authenticated') {
+      return _auth
+    }
+
+    throw new Error('Not authenticated')
+  }
+
+  return _auth
 }

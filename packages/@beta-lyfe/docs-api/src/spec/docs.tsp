@@ -19,11 +19,31 @@ scalar PhoneNumber extends string;
 @example("2021-09-01T12:00:00Z")
 scalar DateTime extends string;
 
+@example("08:00")
+scalar Time extends string;
+
 @example("745731af4484f323968969eda289aeee")
 scalar Token extends string;
 
 @example("123456")
 scalar Otp extends string;
+
+model Address {
+  @example("Federal Univeristy Teaching Hospital, Owerri")
+  landmark: string;
+
+  @example("105 Hospital Road")
+  street: string;
+
+  @example("5.4836, 7.0336")
+  coordinates: string | null;
+
+  @example("Owerri")
+  city: string;
+
+  @example("Imo")
+  state: string;
+}
 
 enum Role {
   patient,
@@ -113,7 +133,7 @@ namespace Api {
       last_name: string;
 
       email: Email;
-      role:Role;
+      role: Role;
       phone_number: PhoneNumber;
       is_verified: boolean;
       created_at: DateTime;
@@ -127,7 +147,7 @@ namespace Api {
         password: Password;
       }
 
-      namespace response {
+      namespace Response {
         model AuthCredentials {
           code: "AUTH_CREDENTIALS";
           data: {
@@ -144,7 +164,7 @@ namespace Api {
 
       @post
       @doc("Sign in user")
-      op signIn(@body body: Body): response.Response;
+      op signIn(@body body: Body): Response.Response;
     }
 
     @route("/sign-up")
@@ -164,7 +184,7 @@ namespace Api {
         is_doctor: boolean;
       }
 
-      namespace response {
+      namespace Response {
         model SignupSuccessful {
           code: "SIGNUP_SUCCESSFUL";
         }
@@ -184,7 +204,7 @@ namespace Api {
 
       @post
       @doc("Sign up new user")
-      op signUp(@body body: Body): response.Response;
+      op signUp(@body body: Body): Response.Response;
     }
 
     @route("/reset-password")
@@ -194,7 +214,7 @@ namespace Api {
           email: Email;
         }
 
-        namespace response {
+        namespace Response {
           model Success {
             code: "CHECK_EMAIL_FOR_RESET_LINK";
           }
@@ -215,7 +235,7 @@ namespace Api {
 
         @post
         @doc("Initiates the password reset process.")
-        op initializePasswordReset(@body body: Body): response.Response;
+        op initializePasswordReset(@body body: Body): Response.Response;
       }
 
       @route("/{token}")
@@ -224,7 +244,7 @@ namespace Api {
           password: Password;
         }
 
-        namespace response {
+        namespace Response {
           model PasswordResetSuccessful {
             code: "PASSWORD_RESET_SUCCESSFUL";
           }
@@ -246,7 +266,7 @@ namespace Api {
         op confirmPasswordReset(
           @path token: string,
           @body body: Body,
-        ): response.Response;
+        ): Response.Response;
       }
     }
 
@@ -256,7 +276,7 @@ namespace Api {
         email: Email;
       }
 
-      namespace response {
+      namespace Response {
         model Success {
           code: "VERIFICATION_MAIL_SENT";
           data: {
@@ -286,7 +306,7 @@ namespace Api {
 
       @post
       @doc("Send verification email")
-      op sendVerificationEmail(@body body: Body): response.Response;
+      op sendVerificationEmail(@body body: Body): Response.Response;
     }
 
     @route("/verify-email")
@@ -296,7 +316,7 @@ namespace Api {
         otp: Otp;
       }
 
-      namespace response {
+      namespace Response {
         model VerificationSuccessful {
           code: "VERIFICATION_SUCCESSFUL";
         }
@@ -314,12 +334,12 @@ namespace Api {
 
       @post
       @doc("Verify email address")
-      op verifyEmail(@body body: Body): response.Response;
+      op verifyEmail(@body body: Body): Response.Response;
     }
 
     @route("/profile")
     namespace Profile {
-      namespace response {
+      namespace Response {
         model Success {
           code: "FETCHED_PROFILE";
           data: User;
@@ -332,7 +352,7 @@ namespace Api {
 
       @useAuth(BearerAuth)
       @doc("Fetch details of currently signed in user")
-      op fetchUserDetails(): response.Response;
+      op fetchUserDetails(): Response.Response;
     }
   }
 
@@ -359,13 +379,13 @@ namespace Api {
     }
 
     namespace Create {
-      namespace request {
+      namespace Request {
         model Body {
           date_of_birth: DateOfBirth;
         }
       }
 
-      namespace response {
+      namespace Response {
         model Success {
           @statusCode _code: 201;
           code: "PATIENT_PROFILE_CREATED";
@@ -377,12 +397,12 @@ namespace Api {
 
       @post
       @doc("Create patient profile")
-      op createPatientProfile(@body body: request.Body): response.Response;
+      op createPatientProfile(@body body: Request.Body): Response.Response;
     }
 
     @route("/")
     namespace List {
-      namespace response {
+      namespace Response {
         model Success {
           code: "FETCH_PATIENT_PROFILES_SUCCESSFUL";
           data: Pagination.Paginated<PatientProfile>;
@@ -397,12 +417,12 @@ namespace Api {
       op fetchManyPatientProfiles(
         @query page?: int64,
         @query per_page?: int64,
-      ): response.Response;
+      ): Response.Response;
     }
 
     @route("/{id}")
     namespace Get {
-      namespace response {
+      namespace Response {
         model Success {
           code: "FETCH_PATIENT_PROFILE_SUCCESSFUL";
           data: PatientProfile;
@@ -420,13 +440,13 @@ namespace Api {
 
       @get
       @doc("Fetch patient by ID")
-      op fetchPatientProfileById(@path id: string): response.Response;
+      op fetchPatientProfileById(@path id: string): Response.Response;
     }
 
     @route("/profile")
     namespace Profie {
       namespace Get {
-        namespace response {
+        namespace Response {
           model Success {
             code: "FETCH_PATIENT_PROFILE_SUCCESSFUL";
             data: PatientProfile;
@@ -444,7 +464,7 @@ namespace Api {
 
         @get
         @doc("Fetch patient profile")
-        op fetchPatientProfile(): response.Response;
+        op fetchPatientProfile(): Response.Response;
       }
 
       namespace Update {
@@ -452,7 +472,7 @@ namespace Api {
           ...OptionalProperties<PatientProfile>;
         }
 
-        namespace response {
+        namespace Response {
           model Success {
             code: "PATIENT_PROFILE_UPDATED";
           }
@@ -463,7 +483,7 @@ namespace Api {
 
         @patch
         @doc("Update patient profile")
-        op updatePatientProfile(@body body: Body): response.Response;
+        op updatePatientProfile(@body body: Body): Response.Response;
       }
     }
   }
@@ -517,23 +537,6 @@ namespace Api {
       end_time: string;
     }
 
-    model Location {
-      @example("Federal Univeristy Teaching Hospital, Owerri")
-      landmark: string;
-
-      @example("105 Hospital Road")
-      street: string;
-
-      @example("5.4836, 7.0336")
-      coordinates: string | null;
-
-      @example("Owerri")
-      city: string;
-
-      @example("Imo")
-      state: string;
-    }
-
     model SuccessMessage {
       @example("Successful")
       message: string;
@@ -577,13 +580,13 @@ namespace Api {
       certifications: Certification[] | null;
       experiences: Experience[] | null;
       working_hours: WorkingHour[] | null;
-      location: Location | null;
+      location: Address | null;
       created_at: DateTime;
       updated_at: DateTime | null;
     }
 
     namespace Create {
-      namespace request {
+      namespace Request {
         model Body {
           other_names: string | null;
           date_of_birth: DateOfBirth;
@@ -612,11 +615,11 @@ namespace Api {
           certifications: Certification[] | null;
           experiences: Experience[] | null;
           working_hours: WorkingHour[] | null;
-          location: Location | null;
+          location: Address | null;
         }
       }
 
-      namespace response {
+      namespace Response {
         model Success {
           @statusCode _code: 201;
           code: "DOCTOR_PROFILE_CREATED";
@@ -628,11 +631,11 @@ namespace Api {
 
       @post
       @doc("Create doctor profile")
-      op createDoctorProfile(@body body: request.Body): response.Response;
+      op createDoctorProfile(@body body: Request.Body): Response.Response;
     }
 
     namespace List {
-      namespace response {
+      namespace Response {
         model Success {
           code: "FETCH_DOCTOR_PROFILES_SUCCESSFUL";
           data: Pagination.Paginated<DoctorProfile>;
@@ -647,13 +650,13 @@ namespace Api {
       op fetchManyDoctorProfiles(
         @query page?: int64,
         @query per_page?: int64,
-      ): response.Response;
+      ): Response.Response;
     }
 
     @route("/profile")
     namespace Profile {
       namespace Get {
-        namespace response {
+        namespace Response {
           model Success {
             code: "FETCH_DOCTOR_PROFILE_SUCCESSFUL";
             data: DoctorProfile;
@@ -666,7 +669,7 @@ namespace Api {
         @get
         @useAuth(BearerAuth)
         @doc("Fetch doctor profile")
-        op fetchDoctorProfile(): response.Response;
+        op fetchDoctorProfile(): Response.Response;
       }
 
       namespace Update {
@@ -674,7 +677,7 @@ namespace Api {
           ...OptionalProperties<DoctorProfile>;
         }
 
-        namespace response {
+        namespace Response {
           model Success {
             code: "DOCTOR_PROFILE_UPDATED";
           }
@@ -686,12 +689,12 @@ namespace Api {
         @useAuth(BearerAuth)
         @put
         @doc("Update doctor profile")
-        op updateDoctorProfile(@body body: Body): response.Response;
+        op updateDoctorProfile(@body body: Body): Response.Response;
       }
     }
 
     namespace Get {
-      namespace response {
+      namespace Response {
         model Success {
           code: "FETCH_DOCTOR_PROFILE_SUCCESSFUL";
           data: DoctorProfile;
@@ -710,7 +713,7 @@ namespace Api {
       @route("/{id}")
       @get
       @doc("Fetch doctor profile by ID")
-      op fetchDoctorProfileById(@path id: string): response.Response;
+      op fetchDoctorProfileById(@path id: string): Response.Response;
     }
   }
 
@@ -752,7 +755,7 @@ namespace Api {
     }
 
     namespace List {
-      namespace response {
+      namespace Response {
         model Success {
           code: "FETCH_CONSULTATIONS_SUCCESSFUL";
           data: Pagination.Paginated<Consultation>;
@@ -767,7 +770,7 @@ namespace Api {
       op fetchManyConsultations(
         @query page?: int64,
         @query per_page?: int64,
-      ): response.Response;
+      ): Response.Response;
     }
 
     @route("/{id}")
@@ -778,7 +781,7 @@ namespace Api {
         code: "CONSULTATION_NOT_FOUND";
       }
 
-      namespace response {
+      namespace Response {
         alias Success = Consultation;
         alias Error = NotFoundError | Api.UnauthorizedError | Api.UnexpectedError;
         alias Response = Success | Error;
@@ -786,7 +789,7 @@ namespace Api {
 
       @get
       @doc("Fetch consultation by ID")
-      op fetchConsultationById(@path id: string): response.Response;
+      op fetchConsultationById(@path id: string): Response.Response;
     }
 
     @route("/request")
@@ -808,6 +811,7 @@ namespace Api {
 
         @example("I am feeling unwell")
         message: string;
+
         doctor_profile?: Api.Doctor.DoctorProfile;
         patient_profile?: Api.Patient.PatientProfile;
         start_time: DateTime;
@@ -837,7 +841,7 @@ namespace Api {
 
       namespace Request {
         namespace Create {
-          namespace response {
+          namespace Response {
             model Success {
               @statusCode _code: 201;
               code: "CONSULTATION_REQUEST_CREATED_SUCCESSFULLY";
@@ -851,11 +855,11 @@ namespace Api {
           @doc("Request consultation")
           op requestConsultation(
             @body body: ConsultationRequestPayload,
-          ): response.Response;
+          ): Response.Response;
         }
 
         namespace List {
-          namespace response {
+          namespace Response {
             model Success {
               code: "FETCH_CONSULTATION_REQUESTS_SUCCESSFUL";
               data: Pagination.Paginated<ConsultationRequest>;
@@ -871,12 +875,12 @@ namespace Api {
             @query page?: int64,
             @query per_page?: int64,
             @query profile?: string,
-          ): response.Response;
+          ): Response.Response;
         }
 
         @route("/{id}")
         namespace Get {
-          namespace response {
+          namespace Response {
             alias Success = ConsultationRequest;
             alias Error = Api.Consultation.Request.NotFoundError | Api.UnauthorizedError | Api.UnexpectedError;
             alias Response = Success | Error;
@@ -884,15 +888,15 @@ namespace Api {
 
           @get
           @doc("Fetch consultation request by ID")
-          op fetchConsultationRequestById(@path id: string): response.Response;
+          op fetchConsultationRequestById(@path id: string): Response.Response;
         }
 
         @route("/{id}/reject")
         namespace Reject {
-          namespace response {
+          namespace Response {
             model AlreadyAcceptedError {
               @statusCode _code: 406;
-              code: "CONSULTATION_REQUEST_ALREADY_ACCEPTED_ERROR" ;
+              code: "CONSULTATION_REQUEST_ALREADY_ACCEPTED_ERROR";
             }
 
             @error
@@ -917,16 +921,15 @@ namespace Api {
 
           @post
           @doc("Reject consultation request")
-          op rejectConsultationRequest(@path id: string): response.Response;
+          op rejectConsultationRequest(@path id: string): Response.Response;
         }
-
 
         @route("/{id}/accept")
         namespace Accept {
-          namespace response {
+          namespace Response {
             model AlreadyAcceptedError {
               @statusCode _code: 406;
-               code: "CONSULTATION_REQUEST_ALREADY_ACCEPTED_ERROR";
+              code: "CONSULTATION_REQUEST_ALREADY_ACCEPTED_ERROR";
             }
 
             @error
@@ -951,12 +954,9 @@ namespace Api {
 
           @post
           @doc("Accept consultation request")
-          op acceptConsultationRequest(@path id: string): response.Response;
+          op acceptConsultationRequest(@path id: string): Response.Response;
         }
       }
-
-
-      
     }
   }
 
@@ -988,7 +988,7 @@ namespace Api {
     }
 
     namespace Get {
-      namespace response {
+      namespace Response {
         model Success {
           code: "FETCH_WALLET_SUCCESSFUL";
           data: Wallet;
@@ -997,7 +997,7 @@ namespace Api {
         alias Response = Success | Error;
       }
 
-      op fetchWallet(): response.Response;
+      op fetchWallet(): Response.Response;
     }
 
     namespace Topup {
@@ -1005,7 +1005,7 @@ namespace Api {
         amount: float64;
       }
 
-      namespace response {
+      namespace Response {
         model Success {
           @example("https://checkout.paystack.com/5mz7yvom8rzo498")
           url: string;
@@ -1014,12 +1014,12 @@ namespace Api {
         alias Response = Success | Error;
       }
 
-      op topup(@body body: Body): response.Response;
+      op topup(@body body: Body): Response.Response;
     }
 
     @route("/transactions")
     namespace Transactions {
-      namespace response {
+      namespace Response {
         model Success {
           code: "FETCH_TRANSACTIONS_SUCCESSFUL";
           data: Pagination.Paginated<Api.Wallet.Transaction>;
@@ -1033,7 +1033,7 @@ namespace Api {
         op fetchWalletTransactions(
           @query page?: int64,
           @query per_page?: int64,
-        ): response.Response;
+        ): Response.Response;
       }
     }
   }
@@ -1045,7 +1045,7 @@ namespace Api {
       email: Email;
     }
 
-    namespace response {
+    namespace Response {
       @error
       model AlreadyJoinedError {
         @statusCode _code: 406;
@@ -1061,7 +1061,72 @@ namespace Api {
       alias Response = Success | Error;
     }
 
-    op join(@body body: Body): response.Response;
+    op join(@body body: Body): Response.Response;
+  }
+
+  @tag("Pharmacy")
+  @route("/pharmacy")
+  namespace Pharmacy {
+    @route("/")
+    namespace Create {
+      namespace Request {
+        model Body {
+          @example("HealthPlus Pharma")
+          name: string;
+
+          @doc("Time formatted in 24-hour format")
+          @example("08:00")
+          opening_time: Time;
+
+          @doc("Time formatted in 24-hour format")
+          @example("20:00")
+          closing_time: Time;
+
+          description: string;
+          address: Address;
+        }
+      }
+
+      namespace Response {
+        model Success {
+          @statusCode _code: 201;
+          code: "PHARMACY_CREATED";
+        }
+
+        alias Error = UnexpectedError;
+
+        alias Response = Success | Error;
+      }
+
+      @post
+      @doc("Create a pharmacy")
+      op createPharmacy(@body body: Request.Body): Response.Response;
+    }
+
+    @route("/")
+    namespace Get {
+      namespace Request {
+        model Path {
+          @path
+          id: string;
+        }
+      }
+
+      namespace Response {
+        model Success {
+          @statusCode _code: 201;
+          code: "PHARMACY_CREATED";
+        }
+
+        alias Error = UnexpectedError;
+
+        alias Response = Success | Error;
+      }
+
+      @post
+      @doc("Create a pharmacy")
+      op getPharmacyById(@path id: Request.Path): Response.Response;
+    }
   }
 
   @tag("Dev")
@@ -1069,7 +1134,7 @@ namespace Api {
   namespace Dev {
     @route("/user")
     namespace CreateUser {
-      namespace response {
+      namespace Response {
         model UserCreatedMessage {
           @example("User created successfully")
           message: string;
@@ -1083,7 +1148,8 @@ namespace Api {
 
       @post
       @doc("Create a user")
-      op create(@body body: Api.Authentication.SignUp.Body): response.Response;
+      op create(@body body: Api.Authentication.SignUp.Body): Response.Response;
     }
   }
 }
+

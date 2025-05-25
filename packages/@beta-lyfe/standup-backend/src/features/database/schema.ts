@@ -210,7 +210,7 @@ export const patientProfiles = pgTable('patient_profiles', {
   other_names: varchar('other_names'),
   email: varchar('email').notNull(),
   phone_number: numeric('phone_number').notNull(),
-  date_of_birth: date('date_of_birth',{mode:'string'}).notNull(),
+  date_of_birth: date('date_of_birth', { mode: 'string' }).notNull(),
   profile_picture: jsonb('profile_picture').$type<Media>(),
   user_id: varchar('user_id')
     .notNull()
@@ -256,7 +256,8 @@ export const doctorProfiles = pgTable('doctor_profiles', {
   working_hours: jsonb('working_hours').$type<WorkingHour[]>(),
   location: jsonb('location').$type<Location>(),
   user_id: varchar('user_id')
-    .notNull().unique()
+    .notNull()
+    .unique()
     .references(() => users.id),
   created_at: timestamp('created_at', { withTimezone: true, mode: 'string' })
     .defaultNow()
@@ -305,7 +306,7 @@ export const tokens = pgTable('tokens', {
     .defaultNow()
     .notNull(),
   updated_at: timestamp('updated_at', { withTimezone: true })
-} )
+})
 
 export type Token = typeof tokens.$inferSelect
 

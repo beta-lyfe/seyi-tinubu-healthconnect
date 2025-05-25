@@ -19,7 +19,7 @@ const Api_Authentication_User = z
     updated_at: DateTime.nullable(),
   })
   .passthrough();
-const Api_Authentication_Profile_response_Success = z
+const Api_Authentication_Profile_Response_Success = z
   .object({ code: z.literal("FETCHED_PROFILE"), data: Api_Authentication_User })
   .passthrough();
 const Api_UnauthorizedError = z
@@ -34,10 +34,10 @@ const Api_UnexpectedError = z
 const Api_Authentication_PasswordReset_Initialize_Body = z
   .object({ email: Email })
   .passthrough();
-const Api_Authentication_PasswordReset_Initialize_response_Success = z
+const Api_Authentication_PasswordReset_Initialize_Response_Success = z
   .object({ code: z.literal("CHECK_EMAIL_FOR_RESET_LINK") })
   .passthrough();
-const Api_Authentication_PasswordReset_Initialize_response_PasswordResetMailAlreadySentError =
+const Api_Authentication_PasswordReset_Initialize_Response_PasswordResetMailAlreadySentError =
   z
     .object({
       code: z.literal("PASSWORD_RESET_MAIL_ALREADY_SENT_ERROR"),
@@ -51,34 +51,34 @@ const Password = z.string();
 const Api_Authentication_PasswordReset_Confirm_Body = z
   .object({ password: Password })
   .passthrough();
-const Api_Authentication_PasswordReset_Confirm_response_PasswordResetSuccessful =
+const Api_Authentication_PasswordReset_Confirm_Response_PasswordResetSuccessful =
   z.object({ code: z.literal("PASSWORD_RESET_SUCCESSFUL") }).passthrough();
-const Api_Authentication_PasswordReset_Confirm_response_InvalidOrExpiredTokenError =
+const Api_Authentication_PasswordReset_Confirm_Response_InvalidOrExpiredTokenError =
   z.object({ code: z.literal("INVALID_OR_EXPIRED_TOKEN_ERROR") }).passthrough();
 const Api_Authentication_SendVerificationEmail_Body = z
   .object({ email: Email })
   .passthrough();
-const Api_Authentication_SendVerificationEmail_response_Success = z
+const Api_Authentication_SendVerificationEmail_Response_Success = z
   .object({
     code: z.literal("VERIFICATION_MAIL_SENT"),
     data: z.object({ expires_at: DateTime }).passthrough(),
   })
   .passthrough();
-const Api_Authentication_SendVerificationEmail_response_VerificationMailAlreadySentError =
+const Api_Authentication_SendVerificationEmail_Response_VerificationMailAlreadySentError =
   z
     .object({
       code: z.literal("VERIFICATION_MAIL_ALREADY_SENT_ERROR"),
       data: z.object({ expires_at: DateTime }).passthrough(),
     })
     .passthrough();
-const Api_Authentication_SendVerificationEmail_response_UserNotFoundError = z
+const Api_Authentication_SendVerificationEmail_Response_UserNotFoundError = z
   .object({ code: z.literal("USER_NOT_FOUND_ERROR") })
   .passthrough();
 const Api_Authentication_SignIn_Body = z
   .object({ email: Email, password: Password })
   .passthrough();
 const Token = z.string();
-const Api_Authentication_SignIn_response_AuthCredentials = z
+const Api_Authentication_SignIn_Response_AuthCredentials = z
   .object({
     code: z.literal("AUTH_CREDENTIALS"),
     data: z.object({ access_token: Token, refresh_token: Token }).passthrough(),
@@ -94,20 +94,20 @@ const Api_Authentication_SignUp_Body = z
     is_doctor: z.boolean(),
   })
   .passthrough();
-const Api_Authentication_SignUp_response_SignupSuccessful = z
+const Api_Authentication_SignUp_Response_SignupSuccessful = z
   .object({ code: z.literal("SIGNUP_SUCCESSFUL") })
   .passthrough();
-const Api_Authentication_SignUp_response_EmailAlreadyInUseError = z
+const Api_Authentication_SignUp_Response_EmailAlreadyInUseError = z
   .object({ code: z.literal("EMAIL_ALREADY_IN_USE_ERROR") })
   .passthrough();
 const Otp = z.string();
 const Api_Authentication_VerifyEmail_Body = z
   .object({ email: Email, otp: Otp })
   .passthrough();
-const Api_Authentication_VerifyEmail_response_VerificationSuccessful = z
+const Api_Authentication_VerifyEmail_Response_VerificationSuccessful = z
   .object({ code: z.literal("VERIFICATION_SUCCESSFUL") })
   .passthrough();
-const Api_Authentication_VerifyEmail_response_InvalidOrExpiredOtpError = z
+const Api_Authentication_VerifyEmail_Response_InvalidOrExpiredOtpError = z
   .object({ code: z.literal("INVALID_OR_EXPIRED_OTP_ERROR") })
   .passthrough();
 const Api_Consultation_AccessToken = z
@@ -134,7 +134,7 @@ const Api_Pagination_Meta = z
     total: z.number().int(),
   })
   .passthrough();
-const Api_Consultation_List_response_Success = z
+const Api_Consultation_List_Response_Success = z
   .object({
     code: z.literal("FETCH_CONSULTATIONS_SUCCESSFUL"),
     data: z
@@ -153,7 +153,7 @@ const Api_Consultation_Request_ConsultationRequestPayload = z
     message: z.string(),
   })
   .passthrough();
-const Api_Consultation_Request_Request_Create_response_Success = z
+const Api_Consultation_Request_Request_Create_Response_Success = z
   .object({ code: z.literal("CONSULTATION_REQUEST_CREATED_SUCCESSFULLY") })
   .passthrough();
 const DateOfBirth = z.string();
@@ -185,7 +185,7 @@ const Api_Doctor_WorkingHour = z
     end_time: z.string(),
   })
   .passthrough();
-const Api_Doctor_Location = z
+const Address = z
   .object({
     landmark: z.string(),
     street: z.string(),
@@ -216,7 +216,7 @@ const Api_Doctor_DoctorProfile = z
     certifications: z.array(Api_Doctor_Certification).nullable(),
     experiences: z.array(Api_Doctor_Experience).nullable(),
     working_hours: z.array(Api_Doctor_WorkingHour).nullable(),
-    location: Api_Doctor_Location.nullable(),
+    location: Address.nullable(),
     created_at: DateTime,
     updated_at: DateTime.nullable(),
   })
@@ -250,7 +250,7 @@ const Api_Consultation_Request_ConsultationRequest = z
     updated_at: DateTime,
   })
   .passthrough();
-const Api_Consultation_Request_Request_List_response_Success = z
+const Api_Consultation_Request_Request_List_Response_Success = z
   .object({
     code: z.literal("FETCH_CONSULTATION_REQUESTS_SUCCESSFUL"),
     data: z
@@ -264,31 +264,31 @@ const Api_Consultation_Request_Request_List_response_Success = z
 const Api_Consultation_Request_NotFoundError = z
   .object({ code: z.literal("CONSULTATION_REQUEST_NOT_FOUND") })
   .passthrough();
-const Api_Consultation_Request_Request_Accept_response_Success = z
+const Api_Consultation_Request_Request_Accept_Response_Success = z
   .object({ code: z.literal("CONSULTATION_REQUEST_ACCEPTED_SUCCESSFULLY") })
   .passthrough();
-const Api_Consultation_Request_Request_Accept_response_AlreadyDeclinedError = z
+const Api_Consultation_Request_Request_Accept_Response_AlreadyDeclinedError = z
   .object({ code: z.literal("CONSULTATION_REQUEST_ALREADY_DECLINED_ERROR") })
   .passthrough();
-const Api_Consultation_Request_Request_Accept_response_AlreadyAcceptedError = z
+const Api_Consultation_Request_Request_Accept_Response_AlreadyAcceptedError = z
   .object({ code: z.literal("CONSULTATION_REQUEST_ALREADY_ACCEPTED_ERROR") })
   .passthrough();
-const Api_Consultation_Request_Request_Reject_response_Success = z
+const Api_Consultation_Request_Request_Reject_Response_Success = z
   .object({ code: z.literal("CONSULTATION_REQUEST_REJECTED_SUCCESSFULLY") })
   .passthrough();
-const Api_Consultation_Request_Request_Reject_response_AlreadyDeclinedError = z
+const Api_Consultation_Request_Request_Reject_Response_AlreadyDeclinedError = z
   .object({ code: z.literal("CONSULTATION_REQUEST_ALREADY_DECLINED_ERROR") })
   .passthrough();
-const Api_Consultation_Request_Request_Reject_response_AlreadyAcceptedError = z
+const Api_Consultation_Request_Request_Reject_Response_AlreadyAcceptedError = z
   .object({ code: z.literal("CONSULTATION_REQUEST_ALREADY_ACCEPTED_ERROR") })
   .passthrough();
 const Api_Consultation_Get_NotFoundError = z
   .object({ code: z.literal("CONSULTATION_NOT_FOUND") })
   .passthrough();
-const Api_Dev_CreateUser_response_UserCreatedMessage = z
+const Api_Dev_CreateUser_Response_UserCreatedMessage = z
   .object({ message: z.string() })
   .passthrough();
-const Api_Doctor_Create_request_Body = z
+const Api_Doctor_Create_Request_Body = z
   .object({
     other_names: z.string().nullable(),
     date_of_birth: DateOfBirth,
@@ -305,13 +305,13 @@ const Api_Doctor_Create_request_Body = z
     certifications: z.array(Api_Doctor_Certification).nullable(),
     experiences: z.array(Api_Doctor_Experience).nullable(),
     working_hours: z.array(Api_Doctor_WorkingHour).nullable(),
-    location: Api_Doctor_Location.nullable(),
+    location: Address.nullable(),
   })
   .passthrough();
-const Api_Doctor_Create_response_Success = z
+const Api_Doctor_Create_Response_Success = z
   .object({ code: z.literal("DOCTOR_PROFILE_CREATED") })
   .passthrough();
-const Api_Doctor_List_response_Success = z
+const Api_Doctor_List_Response_Success = z
   .object({
     code: z.literal("FETCH_DOCTOR_PROFILES_SUCCESSFUL"),
     data: z
@@ -322,7 +322,7 @@ const Api_Doctor_List_response_Success = z
       .passthrough(),
   })
   .passthrough();
-const Api_Doctor_Profile_Get_response_Success = z
+const Api_Doctor_Profile_Get_Response_Success = z
   .object({
     code: z.literal("FETCH_DOCTOR_PROFILE_SUCCESSFUL"),
     data: Api_Doctor_DoctorProfile,
@@ -350,31 +350,31 @@ const Api_Doctor_Profile_Update_Body = z
     certifications: z.array(Api_Doctor_Certification).nullable(),
     experiences: z.array(Api_Doctor_Experience).nullable(),
     working_hours: z.array(Api_Doctor_WorkingHour).nullable(),
-    location: Api_Doctor_Location.nullable(),
+    location: Address.nullable(),
     created_at: DateTime,
     updated_at: DateTime.nullable(),
   })
   .partial()
   .passthrough();
-const Api_Doctor_Profile_Update_response_Success = z
+const Api_Doctor_Profile_Update_Response_Success = z
   .object({ code: z.literal("DOCTOR_PROFILE_UPDATED") })
   .passthrough();
-const Api_Doctor_Get_response_Success = z
+const Api_Doctor_Get_Response_Success = z
   .object({
     code: z.literal("FETCH_DOCTOR_PROFILE_SUCCESSFUL"),
     data: Api_Doctor_DoctorProfile,
   })
   .passthrough();
-const Api_Doctor_Get_response_ProfileNotFoundError = z
+const Api_Doctor_Get_Response_ProfileNotFoundError = z
   .object({ code: z.literal("DOCTOR_PROFILE_NOT_FOUND_ERROR") })
   .passthrough();
-const Api_Patient_Create_request_Body = z
+const Api_Patient_Create_Request_Body = z
   .object({ date_of_birth: DateOfBirth })
   .passthrough();
-const Api_Patient_Create_response_Success = z
+const Api_Patient_Create_Response_Success = z
   .object({ code: z.literal("PATIENT_PROFILE_CREATED") })
   .passthrough();
-const Api_Patient_List_response_Success = z
+const Api_Patient_List_Response_Success = z
   .object({
     code: z.literal("FETCH_PATIENT_PROFILES_SUCCESSFUL"),
     data: z
@@ -385,13 +385,13 @@ const Api_Patient_List_response_Success = z
       .passthrough(),
   })
   .passthrough();
-const Api_Patient_Profie_Get_response_Success = z
+const Api_Patient_Profie_Get_Response_Success = z
   .object({
     code: z.literal("FETCH_PATIENT_PROFILE_SUCCESSFUL"),
     data: Api_Patient_PatientProfile,
   })
   .passthrough();
-const Api_Patient_Profie_Get_response_ProfileNotFoundError = z
+const Api_Patient_Profie_Get_Response_ProfileNotFoundError = z
   .object({ code: z.literal("PATIENT_PROFILE_NOT_FOUND_ERROR") })
   .passthrough();
 const MediaUpdate = z
@@ -413,36 +413,52 @@ const Api_Patient_Profie_Update_Body = z
   })
   .partial()
   .passthrough();
-const Api_Patient_Profie_Update_response_Success = z
+const Api_Patient_Profie_Update_Response_Success = z
   .object({ code: z.literal("PATIENT_PROFILE_UPDATED") })
   .passthrough();
-const Api_Patient_Get_response_Success = z
+const Api_Patient_Get_Response_Success = z
   .object({
     code: z.literal("FETCH_PATIENT_PROFILE_SUCCESSFUL"),
     data: Api_Patient_PatientProfile,
   })
   .passthrough();
-const Api_Patient_Get_response_ProfileNotFoundError = z
+const Api_Patient_Get_Response_ProfileNotFoundError = z
   .object({ code: z.literal("PATIENT_PROFILE_NOT_FOUND_ERROR") })
   .passthrough();
+const Time = z.string();
+const Api_Pharmacy_Create_Request_Body = z
+  .object({
+    name: z.string(),
+    opening_time: Time,
+    closing_time: Time,
+    description: z.string(),
+    address: Address,
+  })
+  .passthrough();
+const Api_Pharmacy_Create_Response_Success = z
+  .object({ code: z.literal("PHARMACY_CREATED") })
+  .passthrough();
+const Api_Pharmacy_Get_Response_Success = z
+  .object({ code: z.literal("PHARMACY_CREATED") })
+  .passthrough();
 const Api_Waitlist_Body = z.object({ email: Email }).passthrough();
-const Api_Waitlist_response_Success = z
+const Api_Waitlist_Response_Success = z
   .object({ code: z.literal("WAITLIST_JOINED_SUCCESSFULLY") })
   .passthrough();
-const Api_Waitlist_response_AlreadyJoinedError = z
+const Api_Waitlist_Response_AlreadyJoinedError = z
   .object({ code: z.literal("WAITLIST_ALREADY_JOINED_ERROR") })
   .passthrough();
 const Api_Wallet_Wallet = z
   .object({ id: Id, balance: z.number() })
   .passthrough();
-const Api_Wallet_Get_response_Success = z
+const Api_Wallet_Get_Response_Success = z
   .object({
     code: z.literal("FETCH_WALLET_SUCCESSFUL"),
     data: Api_Wallet_Wallet,
   })
   .passthrough();
 const Api_Wallet_Topup_Body = z.object({ amount: z.number() }).passthrough();
-const Api_Wallet_Topup_response_Success = z
+const Api_Wallet_Topup_Response_Success = z
   .object({ url: z.string() })
   .passthrough();
 const Api_Wallet_Transaction = z
@@ -455,7 +471,7 @@ const Api_Wallet_Transaction = z
     created_at: DateTime,
   })
   .passthrough();
-const Api_Wallet_Transactions_response_Success = z
+const Api_Wallet_Transactions_Response_Success = z
   .object({
     code: z.literal("FETCH_TRANSACTIONS_SUCCESSFUL"),
     data: z
@@ -480,6 +496,7 @@ const Api_Doctor_SuccessMessage = z
 const Api_NoTokenProvidedError = z
   .object({ code: z.literal("UNAUTHORIZED_ERROR") })
   .passthrough();
+const Api_Pharmacy_Get_Request_Path = z.object({}).partial().passthrough();
 const Paginated = z
   .object({
     count: z.number().int(),
@@ -495,88 +512,93 @@ export const schemas = {
   PhoneNumber,
   DateTime,
   Api_Authentication_User,
-  Api_Authentication_Profile_response_Success,
+  Api_Authentication_Profile_Response_Success,
   Api_UnauthorizedError,
   Api_UserNotVerifiedError,
   Api_UnexpectedError,
   Api_Authentication_PasswordReset_Initialize_Body,
-  Api_Authentication_PasswordReset_Initialize_response_Success,
-  Api_Authentication_PasswordReset_Initialize_response_PasswordResetMailAlreadySentError,
+  Api_Authentication_PasswordReset_Initialize_Response_Success,
+  Api_Authentication_PasswordReset_Initialize_Response_PasswordResetMailAlreadySentError,
   Api_BadRequestError,
   Password,
   Api_Authentication_PasswordReset_Confirm_Body,
-  Api_Authentication_PasswordReset_Confirm_response_PasswordResetSuccessful,
-  Api_Authentication_PasswordReset_Confirm_response_InvalidOrExpiredTokenError,
+  Api_Authentication_PasswordReset_Confirm_Response_PasswordResetSuccessful,
+  Api_Authentication_PasswordReset_Confirm_Response_InvalidOrExpiredTokenError,
   Api_Authentication_SendVerificationEmail_Body,
-  Api_Authentication_SendVerificationEmail_response_Success,
-  Api_Authentication_SendVerificationEmail_response_VerificationMailAlreadySentError,
-  Api_Authentication_SendVerificationEmail_response_UserNotFoundError,
+  Api_Authentication_SendVerificationEmail_Response_Success,
+  Api_Authentication_SendVerificationEmail_Response_VerificationMailAlreadySentError,
+  Api_Authentication_SendVerificationEmail_Response_UserNotFoundError,
   Api_Authentication_SignIn_Body,
   Token,
-  Api_Authentication_SignIn_response_AuthCredentials,
+  Api_Authentication_SignIn_Response_AuthCredentials,
   Api_Authentication_SignUp_Body,
-  Api_Authentication_SignUp_response_SignupSuccessful,
-  Api_Authentication_SignUp_response_EmailAlreadyInUseError,
+  Api_Authentication_SignUp_Response_SignupSuccessful,
+  Api_Authentication_SignUp_Response_EmailAlreadyInUseError,
   Otp,
   Api_Authentication_VerifyEmail_Body,
-  Api_Authentication_VerifyEmail_response_VerificationSuccessful,
-  Api_Authentication_VerifyEmail_response_InvalidOrExpiredOtpError,
+  Api_Authentication_VerifyEmail_Response_VerificationSuccessful,
+  Api_Authentication_VerifyEmail_Response_InvalidOrExpiredOtpError,
   Api_Consultation_AccessToken,
   Api_Consultation_Consultation,
   Api_Pagination_Meta,
-  Api_Consultation_List_response_Success,
+  Api_Consultation_List_Response_Success,
   Api_Consultation_Request_ConsultationRequestPayload,
-  Api_Consultation_Request_Request_Create_response_Success,
+  Api_Consultation_Request_Request_Create_Response_Success,
   DateOfBirth,
   Media,
   Api_Doctor_Specialization,
   Api_Doctor_Certification,
   Api_Doctor_Experience,
   Api_Doctor_WorkingHour,
-  Api_Doctor_Location,
+  Address,
   Api_Doctor_DoctorProfile,
   Api_Patient_PatientProfile,
   Api_Consultation_Request_ConsultationRequest,
-  Api_Consultation_Request_Request_List_response_Success,
+  Api_Consultation_Request_Request_List_Response_Success,
   Api_Consultation_Request_NotFoundError,
-  Api_Consultation_Request_Request_Accept_response_Success,
-  Api_Consultation_Request_Request_Accept_response_AlreadyDeclinedError,
-  Api_Consultation_Request_Request_Accept_response_AlreadyAcceptedError,
-  Api_Consultation_Request_Request_Reject_response_Success,
-  Api_Consultation_Request_Request_Reject_response_AlreadyDeclinedError,
-  Api_Consultation_Request_Request_Reject_response_AlreadyAcceptedError,
+  Api_Consultation_Request_Request_Accept_Response_Success,
+  Api_Consultation_Request_Request_Accept_Response_AlreadyDeclinedError,
+  Api_Consultation_Request_Request_Accept_Response_AlreadyAcceptedError,
+  Api_Consultation_Request_Request_Reject_Response_Success,
+  Api_Consultation_Request_Request_Reject_Response_AlreadyDeclinedError,
+  Api_Consultation_Request_Request_Reject_Response_AlreadyAcceptedError,
   Api_Consultation_Get_NotFoundError,
-  Api_Dev_CreateUser_response_UserCreatedMessage,
-  Api_Doctor_Create_request_Body,
-  Api_Doctor_Create_response_Success,
-  Api_Doctor_List_response_Success,
-  Api_Doctor_Profile_Get_response_Success,
+  Api_Dev_CreateUser_Response_UserCreatedMessage,
+  Api_Doctor_Create_Request_Body,
+  Api_Doctor_Create_Response_Success,
+  Api_Doctor_List_Response_Success,
+  Api_Doctor_Profile_Get_Response_Success,
   Api_Doctor_Profile_Update_Body,
-  Api_Doctor_Profile_Update_response_Success,
-  Api_Doctor_Get_response_Success,
-  Api_Doctor_Get_response_ProfileNotFoundError,
-  Api_Patient_Create_request_Body,
-  Api_Patient_Create_response_Success,
-  Api_Patient_List_response_Success,
-  Api_Patient_Profie_Get_response_Success,
-  Api_Patient_Profie_Get_response_ProfileNotFoundError,
+  Api_Doctor_Profile_Update_Response_Success,
+  Api_Doctor_Get_Response_Success,
+  Api_Doctor_Get_Response_ProfileNotFoundError,
+  Api_Patient_Create_Request_Body,
+  Api_Patient_Create_Response_Success,
+  Api_Patient_List_Response_Success,
+  Api_Patient_Profie_Get_Response_Success,
+  Api_Patient_Profie_Get_Response_ProfileNotFoundError,
   MediaUpdate,
   Api_Patient_Profie_Update_Body,
-  Api_Patient_Profie_Update_response_Success,
-  Api_Patient_Get_response_Success,
-  Api_Patient_Get_response_ProfileNotFoundError,
+  Api_Patient_Profie_Update_Response_Success,
+  Api_Patient_Get_Response_Success,
+  Api_Patient_Get_Response_ProfileNotFoundError,
+  Time,
+  Api_Pharmacy_Create_Request_Body,
+  Api_Pharmacy_Create_Response_Success,
+  Api_Pharmacy_Get_Response_Success,
   Api_Waitlist_Body,
-  Api_Waitlist_response_Success,
-  Api_Waitlist_response_AlreadyJoinedError,
+  Api_Waitlist_Response_Success,
+  Api_Waitlist_Response_AlreadyJoinedError,
   Api_Wallet_Wallet,
-  Api_Wallet_Get_response_Success,
+  Api_Wallet_Get_Response_Success,
   Api_Wallet_Topup_Body,
-  Api_Wallet_Topup_response_Success,
+  Api_Wallet_Topup_Response_Success,
   Api_Wallet_Transaction,
-  Api_Wallet_Transactions_response_Success,
+  Api_Wallet_Transactions_Response_Success,
   Api_Consultation_Request_PaginatedConsultationRequest,
   Api_Doctor_SuccessMessage,
   Api_NoTokenProvidedError,
+  Api_Pharmacy_Get_Request_Path,
   Paginated,
 };
 
@@ -586,7 +608,7 @@ const endpoints = makeApi([
     path: "/api/auth/profile",
     description: `Fetch details of currently signed in user`,
     requestFormat: "json",
-    response: Api_Authentication_Profile_response_Success,
+    response: Api_Authentication_Profile_Response_Success,
     errors: [
       {
         status: 401,
@@ -612,13 +634,13 @@ const endpoints = makeApi([
         schema: Api_Authentication_PasswordReset_Initialize_Body,
       },
     ],
-    response: Api_Authentication_PasswordReset_Initialize_response_Success,
+    response: Api_Authentication_PasswordReset_Initialize_Response_Success,
     errors: [
       {
         status: 400,
         description: `The server could not understand the request due to invalid syntax.`,
         schema: z.union([
-          Api_Authentication_PasswordReset_Initialize_response_PasswordResetMailAlreadySentError,
+          Api_Authentication_PasswordReset_Initialize_Response_PasswordResetMailAlreadySentError,
           Api_BadRequestError,
         ]),
       },
@@ -647,13 +669,13 @@ const endpoints = makeApi([
       },
     ],
     response:
-      Api_Authentication_PasswordReset_Confirm_response_PasswordResetSuccessful,
+      Api_Authentication_PasswordReset_Confirm_Response_PasswordResetSuccessful,
     errors: [
       {
         status: 400,
         description: `The server could not understand the request due to invalid syntax.`,
         schema: z.union([
-          Api_Authentication_PasswordReset_Confirm_response_InvalidOrExpiredTokenError,
+          Api_Authentication_PasswordReset_Confirm_Response_InvalidOrExpiredTokenError,
           Api_BadRequestError,
         ]),
       },
@@ -676,19 +698,19 @@ const endpoints = makeApi([
         schema: Api_Authentication_SendVerificationEmail_Body,
       },
     ],
-    response: Api_Authentication_SendVerificationEmail_response_Success,
+    response: Api_Authentication_SendVerificationEmail_Response_Success,
     errors: [
       {
         status: 400,
         description: `The server could not understand the request due to invalid syntax.`,
         schema:
-          Api_Authentication_SendVerificationEmail_response_VerificationMailAlreadySentError,
+          Api_Authentication_SendVerificationEmail_Response_VerificationMailAlreadySentError,
       },
       {
         status: 404,
         description: `The server cannot find the requested resource.`,
         schema:
-          Api_Authentication_SendVerificationEmail_response_UserNotFoundError,
+          Api_Authentication_SendVerificationEmail_Response_UserNotFoundError,
       },
       {
         status: 500,
@@ -709,7 +731,7 @@ const endpoints = makeApi([
         schema: Api_Authentication_SignIn_Body,
       },
     ],
-    response: Api_Authentication_SignIn_response_AuthCredentials,
+    response: Api_Authentication_SignIn_Response_AuthCredentials,
     errors: [
       {
         status: 401,
@@ -735,7 +757,7 @@ const endpoints = makeApi([
         schema: Api_Authentication_SignUp_Body,
       },
     ],
-    response: Api_Authentication_SignUp_response_SignupSuccessful,
+    response: Api_Authentication_SignUp_Response_SignupSuccessful,
     errors: [
       {
         status: 400,
@@ -745,7 +767,7 @@ const endpoints = makeApi([
       {
         status: 409,
         description: `The request conflicts with the current state of the server.`,
-        schema: Api_Authentication_SignUp_response_EmailAlreadyInUseError,
+        schema: Api_Authentication_SignUp_Response_EmailAlreadyInUseError,
       },
       {
         status: 500,
@@ -766,13 +788,13 @@ const endpoints = makeApi([
         schema: Api_Authentication_VerifyEmail_Body,
       },
     ],
-    response: Api_Authentication_VerifyEmail_response_VerificationSuccessful,
+    response: Api_Authentication_VerifyEmail_Response_VerificationSuccessful,
     errors: [
       {
         status: 400,
         description: `The server could not understand the request due to invalid syntax.`,
         schema: z.union([
-          Api_Authentication_VerifyEmail_response_InvalidOrExpiredOtpError,
+          Api_Authentication_VerifyEmail_Response_InvalidOrExpiredOtpError,
           Api_BadRequestError,
         ]),
       },
@@ -800,7 +822,7 @@ const endpoints = makeApi([
         schema: z.number().int().optional(),
       },
     ],
-    response: Api_Consultation_List_response_Success,
+    response: Api_Consultation_List_Response_Success,
     errors: [
       {
         status: 401,
@@ -857,7 +879,7 @@ const endpoints = makeApi([
         schema: Api_Consultation_Request_ConsultationRequestPayload,
       },
     ],
-    response: Api_Consultation_Request_Request_Create_response_Success,
+    response: Api_Consultation_Request_Request_Create_Response_Success,
     errors: [
       {
         status: 400,
@@ -898,7 +920,7 @@ const endpoints = makeApi([
         schema: z.string().optional(),
       },
     ],
-    response: Api_Consultation_Request_Request_List_response_Success,
+    response: Api_Consultation_Request_Request_List_Response_Success,
     errors: [
       {
         status: 401,
@@ -955,7 +977,7 @@ const endpoints = makeApi([
         schema: z.string(),
       },
     ],
-    response: Api_Consultation_Request_Request_Accept_response_Success,
+    response: Api_Consultation_Request_Request_Accept_Response_Success,
     errors: [
       {
         status: 401,
@@ -971,8 +993,8 @@ const endpoints = makeApi([
         status: 406,
         description: `Client error`,
         schema: z.union([
-          Api_Consultation_Request_Request_Accept_response_AlreadyDeclinedError,
-          Api_Consultation_Request_Request_Accept_response_AlreadyAcceptedError,
+          Api_Consultation_Request_Request_Accept_Response_AlreadyDeclinedError,
+          Api_Consultation_Request_Request_Accept_Response_AlreadyAcceptedError,
         ]),
       },
       {
@@ -994,7 +1016,7 @@ const endpoints = makeApi([
         schema: z.string(),
       },
     ],
-    response: Api_Consultation_Request_Request_Reject_response_Success,
+    response: Api_Consultation_Request_Request_Reject_Response_Success,
     errors: [
       {
         status: 401,
@@ -1010,8 +1032,8 @@ const endpoints = makeApi([
         status: 406,
         description: `Client error`,
         schema: z.union([
-          Api_Consultation_Request_Request_Reject_response_AlreadyDeclinedError,
-          Api_Consultation_Request_Request_Reject_response_AlreadyAcceptedError,
+          Api_Consultation_Request_Request_Reject_Response_AlreadyDeclinedError,
+          Api_Consultation_Request_Request_Reject_Response_AlreadyAcceptedError,
         ]),
       },
       {
@@ -1051,10 +1073,10 @@ const endpoints = makeApi([
       {
         name: "body",
         type: "Body",
-        schema: Api_Doctor_Create_request_Body,
+        schema: Api_Doctor_Create_Request_Body,
       },
     ],
-    response: Api_Doctor_Create_response_Success,
+    response: Api_Doctor_Create_Response_Success,
     errors: [
       {
         status: 400,
@@ -1090,7 +1112,7 @@ const endpoints = makeApi([
         schema: z.number().int().optional(),
       },
     ],
-    response: Api_Doctor_List_response_Success,
+    response: Api_Doctor_List_Response_Success,
     errors: [
       {
         status: 401,
@@ -1116,7 +1138,7 @@ const endpoints = makeApi([
         schema: z.string(),
       },
     ],
-    response: Api_Doctor_Get_response_Success,
+    response: Api_Doctor_Get_Response_Success,
     errors: [
       {
         status: 401,
@@ -1126,7 +1148,7 @@ const endpoints = makeApi([
       {
         status: 404,
         description: `The server cannot find the requested resource.`,
-        schema: Api_Doctor_Get_response_ProfileNotFoundError,
+        schema: Api_Doctor_Get_Response_ProfileNotFoundError,
       },
       {
         status: 500,
@@ -1140,7 +1162,7 @@ const endpoints = makeApi([
     path: "/api/doctors/profile",
     description: `Fetch doctor profile`,
     requestFormat: "json",
-    response: Api_Doctor_Profile_Get_response_Success,
+    response: Api_Doctor_Profile_Get_Response_Success,
     errors: [
       {
         status: 401,
@@ -1166,7 +1188,7 @@ const endpoints = makeApi([
         schema: Api_Doctor_Profile_Update_Body,
       },
     ],
-    response: Api_Doctor_Profile_Update_response_Success,
+    response: Api_Doctor_Profile_Update_Response_Success,
     errors: [
       {
         status: 401,
@@ -1189,10 +1211,10 @@ const endpoints = makeApi([
       {
         name: "body",
         type: "Body",
-        schema: Api_Patient_Create_request_Body,
+        schema: Api_Patient_Create_Request_Body,
       },
     ],
-    response: Api_Patient_Create_response_Success,
+    response: Api_Patient_Create_Response_Success,
     errors: [
       {
         status: 400,
@@ -1228,7 +1250,7 @@ const endpoints = makeApi([
         schema: z.number().int().optional(),
       },
     ],
-    response: Api_Patient_List_response_Success,
+    response: Api_Patient_List_Response_Success,
     errors: [
       {
         status: 401,
@@ -1254,7 +1276,7 @@ const endpoints = makeApi([
         schema: z.string(),
       },
     ],
-    response: Api_Patient_Get_response_Success,
+    response: Api_Patient_Get_Response_Success,
     errors: [
       {
         status: 401,
@@ -1264,7 +1286,7 @@ const endpoints = makeApi([
       {
         status: 404,
         description: `The server cannot find the requested resource.`,
-        schema: Api_Patient_Get_response_ProfileNotFoundError,
+        schema: Api_Patient_Get_Response_ProfileNotFoundError,
       },
       {
         status: 500,
@@ -1278,7 +1300,7 @@ const endpoints = makeApi([
     path: "/api/patients/profile",
     description: `Fetch patient profile`,
     requestFormat: "json",
-    response: Api_Patient_Profie_Get_response_Success,
+    response: Api_Patient_Profie_Get_Response_Success,
     errors: [
       {
         status: 401,
@@ -1288,7 +1310,7 @@ const endpoints = makeApi([
       {
         status: 404,
         description: `The server cannot find the requested resource.`,
-        schema: Api_Patient_Profie_Get_response_ProfileNotFoundError,
+        schema: Api_Patient_Profie_Get_Response_ProfileNotFoundError,
       },
       {
         status: 500,
@@ -1309,13 +1331,55 @@ const endpoints = makeApi([
         schema: Api_Patient_Profie_Update_Body,
       },
     ],
-    response: Api_Patient_Profie_Update_response_Success,
+    response: Api_Patient_Profie_Update_Response_Success,
     errors: [
       {
         status: 401,
         description: `Access is unauthorized.`,
         schema: Api_UnauthorizedError,
       },
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "post",
+    path: "/api/pharmacy/",
+    description: `Create a pharmacy`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "body",
+        type: "Body",
+        schema: Api_Pharmacy_Create_Request_Body,
+      },
+    ],
+    response: Api_Pharmacy_Create_Response_Success,
+    errors: [
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "post",
+    path: "/api/pharmacy/:id",
+    description: `Create a pharmacy`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "id",
+        type: "Path",
+        schema: z.string(),
+      },
+    ],
+    response: Api_Pharmacy_Get_Response_Success,
+    errors: [
       {
         status: 500,
         description: `Server error`,
@@ -1334,12 +1398,12 @@ const endpoints = makeApi([
         schema: Api_Waitlist_Body,
       },
     ],
-    response: Api_Waitlist_response_Success,
+    response: Api_Waitlist_Response_Success,
     errors: [
       {
         status: 406,
         description: `Client error`,
-        schema: Api_Waitlist_response_AlreadyJoinedError,
+        schema: Api_Waitlist_Response_AlreadyJoinedError,
       },
       {
         status: 500,
@@ -1352,7 +1416,7 @@ const endpoints = makeApi([
     method: "get",
     path: "/api/wallet",
     requestFormat: "json",
-    response: Api_Wallet_Get_response_Success,
+    response: Api_Wallet_Get_Response_Success,
     errors: [
       {
         status: 401,
@@ -1412,7 +1476,7 @@ const endpoints = makeApi([
         schema: z.number().int().optional(),
       },
     ],
-    response: Api_Wallet_Transactions_response_Success,
+    response: Api_Wallet_Transactions_Response_Success,
     errors: [
       {
         status: 401,

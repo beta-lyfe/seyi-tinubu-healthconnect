@@ -50,7 +50,7 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
     user_id: user.id,
     token: ulid(),
     expires_at: addMinutes(Date.now(), 30).toISOString(),
-    purpose:'password_reset'
+    purpose: 'password_reset'
   })
 
   if (result.isErr) return Result.err({ code: 'UNEXPECTED_ERROR' })
@@ -59,24 +59,22 @@ export default async (payload: Payload): Promise<Result<null, Error>> => {
 
   const resetPasswordLink = `${config.frontend.webappUrl}/auth/forgot-password/${token.token}`
 
-  try{
+  try {
     await Mailer.send({
-    recipients: [user.email],
-    subject: 'Reset Account password',
-    email: (
-      <PasswordResetEmail
-        user={user}
-        token={token.token}
-        resetPasswordLink={resetPasswordLink}
-        websiteLink={config.frontend.websiteUrl}
-      />
-    )
-  })
+      recipients: [user.email],
+      subject: 'Reset Account password',
+      email: (
+        <PasswordResetEmail
+          user={user}
+          token={token.token}
+          resetPasswordLink={resetPasswordLink}
+          websiteLink={config.frontend.websiteUrl}
+        />
+      )
+    })
+  } catch (err) {
+    console.error('Failed to send password reset email:', err)
   }
-  catch (err) {
-    console.error('Failed to send password reset email:', err) 
-  }
-
 
   return Result.ok(null)
 }

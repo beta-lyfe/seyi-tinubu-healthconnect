@@ -26,18 +26,17 @@ export default async (
   //   profile_picture: profilePictureUpdate
   // })
 
-  const updateResult=await Repository.createProfile({
-    user_id:user.data.id,
-    date_of_birth:payload.date_of_birth!,
-    email:user.data.email,
-    first_name:user.data.first_name,
-    last_name:user.data.last_name,
-    other_names:null,
-    phone_number:user.data.phone_number,
-    profile_picture:null,
+  const updateResult = await Repository.createProfile({
+    user_id: user.data.id,
+    date_of_birth: payload.date_of_birth!,
+    email: user.data.email,
+    first_name: user.data.first_name,
+    last_name: user.data.last_name,
+    other_names: null,
+    phone_number: user.data.phone_number,
+    profile_picture: null
   })
 
-  
   if (updateResult.isErr) return Result.err('FAILED_TO_UPDATE_PROFILE')
 
   return Result.ok(null)

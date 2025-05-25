@@ -20,8 +20,9 @@ namespace DoctorMiddleware {
     const response = {
       code: 'ONLY_DOCTORS_ALLOWED'
     }
-    if (!(user.data.role==='doctor')) return c.json(response, StatusCodes.UNAUTHORIZED)
-      c.set('doctorProfile',user.profiles.doctor!)
+    if (!(user.data.role === 'doctor'))
+      return c.json(response, StatusCodes.UNAUTHORIZED)
+    c.set('doctorProfile', user.profiles.doctor!)
     await next()
   }
 }

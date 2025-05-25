@@ -1,16 +1,16 @@
-import React from 'react';
-import { config } from '../../config';
+import React from 'react'
+import { config } from '../../config'
 
 type PatientEmailProps = {
-  patientName: string;
-  doctorName: string;
-  date: string;
-  time: string;
-  type: string;
-  mode: string;
-  roomname:string;
-  token: string;
-};
+  patientName: string
+  doctorName: string
+  date: string
+  time: string
+  type: string
+  mode: string
+  roomname: string
+  token: string
+}
 
 export const PatientConsultationEmail: React.FC<PatientEmailProps> = ({
   patientName,
@@ -22,7 +22,7 @@ export const PatientConsultationEmail: React.FC<PatientEmailProps> = ({
   token,
   roomname
 }) => {
-  const consultationLink=`${config.frontend.webappUrl}/testcall?roomname=${roomname}&token=${token}`
+  const consultationLink = `${config.frontend.webappUrl}/testcall?roomname=${roomname}&token=${token}`
 
   return (
     <div style={styles.container}>
@@ -35,7 +35,9 @@ export const PatientConsultationEmail: React.FC<PatientEmailProps> = ({
         <h2>Your Consultation is Confirmed</h2>
       </div>
       <p>Hi {patientName},</p>
-      <p>Your consultation with Dr. {doctorName} has been successfully scheduled.</p>
+      <p>
+        Your consultation with Dr. {doctorName} has been successfully scheduled.
+      </p>
       <div style={styles.details}>
         <strong>Date:</strong> {date} <br />
         <strong>Time:</strong> {time} <br />
@@ -51,8 +53,8 @@ export const PatientConsultationEmail: React.FC<PatientEmailProps> = ({
         The Beta-Lyfe Team
       </p>
     </div>
-  );
-};
+  )
+}
 
 const styles = {
   container: {
@@ -63,17 +65,17 @@ const styles = {
     borderRadius: '10px',
     fontFamily: 'Arial, sans-serif',
     boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-    color: '#333',
+    color: '#333'
   },
   header: {
     textAlign: 'center' as const,
-    marginBottom: '20px',
+    marginBottom: '20px'
   },
   logo: {
-    height: '50px',
+    height: '50px'
   },
   details: {
-    marginTop: '20px',
+    marginTop: '20px'
   },
   button: {
     display: 'inline-block',
@@ -82,6 +84,6 @@ const styles = {
     color: '#fff',
     textDecoration: 'none',
     borderRadius: '5px',
-    marginTop: '20px',
-  },
-};
+    marginTop: '20px'
+  }
+}

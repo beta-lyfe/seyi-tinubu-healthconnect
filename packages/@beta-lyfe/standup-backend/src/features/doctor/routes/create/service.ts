@@ -18,10 +18,10 @@ export default async (
 ): Promise<Result<DoctorProfile, Error>> => {
   const creationResult = await Repository.createProfile({
     ...payload.body,
-   patients_treated: 0,
-   number_of_reviews: 0,
-   rating: 0,
-   user_id:payload.user.data.id
+    patients_treated: 0,
+    number_of_reviews: 0,
+    rating: 0,
+    user_id: payload.user.data.id
   } as any)
 
   return creationResult.mapErr(() => 'FAILED_TO_CREATE_PROFILE')

@@ -5,7 +5,7 @@ import getRouter from './get'
 import createRouter from './create'
 
 export default new Hono()
-  .route('/',createRouter)
+  .route('/', createRouter)
   .route('/', listRouter)
   .route('/', profileRouter)
   .route('/', getRouter)

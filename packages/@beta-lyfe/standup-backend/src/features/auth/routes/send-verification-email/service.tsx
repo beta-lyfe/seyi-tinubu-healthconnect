@@ -60,17 +60,15 @@ export default async (payload: Payload): Promise<Result<Token, Error>> => {
   if (result.isErr) return Result.err({ code: 'UNEXPECTED_ERROR' })
 
   const token = result.value
-  try{
-      await Mailer.send({
-    recipients: [user.email],
-    subject: 'Verify Account',
-    email: <VerificationEmail user={user} token={token} />
-  })
-  }
-  catch (err) {
+  try {
+    await Mailer.send({
+      recipients: [user.email],
+      subject: 'Verify Account',
+      email: <VerificationEmail user={user} token={token} />
+    })
+  } catch (err) {
     console.error('Failed to send verification email:', err)
   }
-
 
   return Result.ok(token)
 }
