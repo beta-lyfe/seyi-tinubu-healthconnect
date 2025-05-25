@@ -92,7 +92,7 @@ export function ConsultationRequest({
   )
 
   const consultationRequest = call
-    ? (queryConsultation.data?.data ?? [])
+    ? (queryConsultation.data?.data.data ?? [])
     : (queryConsultationRequest.data?.data.data ?? [])
 
   const { mutate } = $api.useMutation(
