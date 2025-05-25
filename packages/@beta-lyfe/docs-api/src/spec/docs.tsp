@@ -1102,6 +1102,42 @@ namespace Api {
       @doc("Create a pharmacy")
       op create(@body body: Request.Body): Response.Response;
     }
+
+    @route("/")
+    namespace Get {
+      namespace Request {
+        model Body {
+          @example("HealthPlus Pharma")
+          name: string;
+
+          @doc("Time formatted in 24-hour format")
+          @example("08:00")
+          opening_time: Time;
+
+          @doc("Time formatted in 24-hour format")
+          @example("20:00")
+          closing_time: Time;
+
+          description: string;
+          address: Address;
+        }
+      }
+
+      namespace Response {
+        model Success {
+          @statusCode _code: 201;
+          code: "PHARMACY_CREATED";
+        }
+
+        alias Error = UnexpectedError;
+
+        alias Response = Success | Error;
+      }
+
+      @post
+      @doc("Create a pharmacy")
+      op create(@body body: Request.Body): Response.Response;
+    }
   }
 
   @tag("Dev")
@@ -1127,3 +1163,4 @@ namespace Api {
     }
   }
 }
+
