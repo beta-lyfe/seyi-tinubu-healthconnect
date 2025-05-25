@@ -41,7 +41,7 @@ export default function SignInPage() {
   const auth = useAuth()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const [showProfileModal,setShowProfileModal]=useState(false)
+  const [showProfileModal, setShowProfileModal] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,7 +51,6 @@ export default function SignInPage() {
     }
   })
 
-  
   const { mutate } = $api.useMutation('post', '/api/auth/sign-in', {
     onSuccess: async (res) => {
       // router.navigate({
@@ -59,27 +58,27 @@ export default function SignInPage() {
       // })
       // TODO: probably fetch user profile here and store in auth along with access and refresh tokens
 
-      
-      const userProfile = await client.GET("/api/auth/profile", {
+      const userProfile = await client.GET('/api/auth/profile', {
         headers: {
           Authorization: `Bearer ${res.data.access_token}`
         }
       })
 
       if (userProfile.error) {
-        if(userProfile.error.code==='USER_NOT_VERIFIED'){
+        if (userProfile.error.code === 'USER_NOT_VERIFIED') {
           router.navigate({
-            to:'/auth/verify', search:{
+            to: '/auth/verify',
+            search: {
               email: form.getValues('email')
-           }
+            }
           })
         }
-        toast.error("Failed to fetch profile!")
+        toast.error('Failed to fetch profile!')
         return
       }
 
-      let doctorProfile: Schema.DoctorProfile| undefined=undefined
-      let patientProfile:Schema.PatientProfile | undefined = undefined
+      let doctorProfile: Schema.DoctorProfile | undefined = undefined
+      let patientProfile: Schema.PatientProfile | undefined = undefined
 
       if (userProfile.data.data.role === 'doctor') {
         const result = await client.GET('/api/doctors/profile', {
@@ -87,20 +86,21 @@ export default function SignInPage() {
             Authorization: `Bearer ${res.data.access_token}`
           }
         })
-        if(result.error?.code==='UNAUTHORIZED_ERROR' || 
-          result.error?.code==='UNEXPECTED_ERROR'
-        ){
+        if (
+          result.error?.code === 'UNAUTHORIZED_ERROR' ||
+          result.error?.code === 'UNEXPECTED_ERROR'
+        ) {
           router.navigate({
-            to:'/auth/set-profile/doctor',
-            search:{
-              token:res.data.access_token
+            to: '/auth/set-profile/doctor',
+            search: {
+              token: res.data.access_token
             }
           })
           return
         }
 
-        if (result.data){
-          doctorProfile=result.data.data
+        if (result.data) {
+          doctorProfile = result.data.data
         }
       }
 
@@ -111,26 +111,27 @@ export default function SignInPage() {
           }
         })
 
-
-        if(result.error?.code==='PATIENT_PROFILE_NOT_FOUND_ERROR' || result.error?.code==='UNAUTHORIZED_ERROR' || 
-          result.error?.code==='UNEXPECTED_ERROR'
-        ){
+        if (
+          result.error?.code === 'PATIENT_PROFILE_NOT_FOUND_ERROR' ||
+          result.error?.code === 'UNAUTHORIZED_ERROR' ||
+          result.error?.code === 'UNEXPECTED_ERROR'
+        ) {
           router.navigate({
-            to:'/auth/set-profile',
-            search:{
-              token:res.data.access_token
+            to: '/auth/set-profile',
+            search: {
+              token: res.data.access_token
             }
           })
           return
         }
 
-        if (result.data){
-          patientProfile=result.data.data
+        if (result.data) {
+          patientProfile = result.data.data
         }
       }
 
       auth.update({
-        status:'authenticated',
+        status: 'authenticated',
         data: {
           token: {
             access_token: res.data.access_token,
@@ -138,10 +139,9 @@ export default function SignInPage() {
           },
           user: {
             data: userProfile.data.data,
-            profiles: {doctor: doctorProfile, patient: patientProfile}
+            profiles: { doctor: doctorProfile, patient: patientProfile }
           }
         }
-
       })
 
       router.navigate({
@@ -149,7 +149,9 @@ export default function SignInPage() {
       })
     },
     onError: (err) => {
-      err.code ? toast.error(err.code) : toast.error('Network error. Please try again.')
+      err.code
+        ? toast.error(err.code)
+        : toast.error('Network error. Please try again.')
 
       // if (err.code === 'Email is not verified') {
       //   mutateVerify.mutate({
@@ -162,7 +164,6 @@ export default function SignInPage() {
       setIsSubmitting(false)
     }
   })
-
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
@@ -296,7 +297,10 @@ export default function SignInPage() {
           </CardFooter>
         </Card>
       </div>
-      <AdditionalInfoModal open={showProfileModal} onOpenChange={setShowProfileModal}/>
+      <AdditionalInfoModal
+        open={showProfileModal}
+        onOpenChange={setShowProfileModal}
+      />
     </div>
   )
 }
