@@ -1100,26 +1100,15 @@ namespace Api {
 
       @post
       @doc("Create a pharmacy")
-      op create(@body body: Request.Body): Response.Response;
+      op createPharmacy(@body body: Request.Body): Response.Response;
     }
 
     @route("/")
     namespace Get {
       namespace Request {
-        model Body {
-          @example("HealthPlus Pharma")
-          name: string;
-
-          @doc("Time formatted in 24-hour format")
-          @example("08:00")
-          opening_time: Time;
-
-          @doc("Time formatted in 24-hour format")
-          @example("20:00")
-          closing_time: Time;
-
-          description: string;
-          address: Address;
+        model Path {
+          @path
+          id: string;
         }
       }
 
@@ -1136,7 +1125,7 @@ namespace Api {
 
       @post
       @doc("Create a pharmacy")
-      op create(@body body: Request.Body): Response.Response;
+      op getPharmacyById(@path id: Request.Path): Response.Response;
     }
   }
 
