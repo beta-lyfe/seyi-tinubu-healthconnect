@@ -21,8 +21,9 @@ export namespace PatientMiddleware {
     const response = {
       code: 'ONLY_PATIENT_ALLOWED'
     }
-    if (!(user.data.role==='patient')) return c.json(response, StatusCodes.UNAUTHORIZED)
-     c.set('patientProfile',user.profiles.patient!)
+    if (!(user.data.role === 'patient'))
+      return c.json(response, StatusCodes.UNAUTHORIZED)
+    c.set('patientProfile', user.profiles.patient!)
     await next()
   }
 }

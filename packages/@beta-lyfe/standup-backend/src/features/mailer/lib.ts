@@ -11,7 +11,7 @@ export namespace Mailer {
   const logger = Logger.getSubLogger({ name: 'mailer' })
 
   const transporter = nodemailer.createTransport({
-   url:config.mail.url
+    url: config.mail.url
   })
 
   export type Payload = {

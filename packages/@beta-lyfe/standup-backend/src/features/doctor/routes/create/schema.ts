@@ -8,8 +8,8 @@ const schema = schemas.Api_Doctor_Create_request_Body.omit({
   working_hours: true,
   profile_picture: true,
   rating: true,
-  patients_treated:true,
-  number_of_reviews:true,
+  patients_treated: true,
+  number_of_reviews: true
 })
 
 export type Schema = z.infer<typeof schema>

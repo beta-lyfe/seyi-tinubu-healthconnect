@@ -21,7 +21,7 @@ export default new Hono().patch(
     console.log(payload)
 
     const result = await service(user, payload)
-    console.log("an error occurred")
+    console.log('an error occurred')
 
     if (result.isErr) {
       response = {

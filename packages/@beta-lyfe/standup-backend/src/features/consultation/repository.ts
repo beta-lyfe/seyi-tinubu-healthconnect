@@ -260,11 +260,12 @@ namespace ConsultationRepository {
         .from(consultationRequests)
         .where(
           and(
-            eq(consultationRequests.id,consultationRequestId),
-          or(
-            eq(consultationRequests.doctor_id, userId),
-            eq(consultationRequests.patient_id, userId)
-          ))
+            eq(consultationRequests.id, consultationRequestId),
+            or(
+              eq(consultationRequests.doctor_id, userId),
+              eq(consultationRequests.patient_id, userId)
+            )
+          )
         )
         .limit(1)
 
@@ -278,13 +279,18 @@ namespace ConsultationRepository {
   export const UpdateStatusConsultationRequest = async (
     userId: string,
     consultationRequestId: string,
-    status:ConsultationRequest['status']
+    status: ConsultationRequest['status']
   ): Promise<Result<ConsultationRequest, Error>> => {
     try {
       const items = await db
         .update(consultationRequests)
-        .set({ status:  status })
-        .where(and(eq(consultationRequests.id, consultationRequestId),eq(consultationRequests.doctor_id,userId)))
+        .set({ status: status })
+        .where(
+          and(
+            eq(consultationRequests.id, consultationRequestId),
+            eq(consultationRequests.doctor_id, userId)
+          )
+        )
         .returning()
 
       return Result.ok(items[0])

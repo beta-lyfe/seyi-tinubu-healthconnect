@@ -17,7 +17,6 @@ const apiRoutes = new Hono()
   .route('/doctors', doctorRouter)
   .route('/patients', patientRouter)
 
-  
 export const logger = Logger.getSubLogger({ name: 'ServerLogger' })
 
 export const app = new Hono()

@@ -14,11 +14,10 @@ export default new Hono().get(
   AuthMiddleware.middleware,
   middleware,
   async (c) => {
-    const {id} = c.req.param()
+    const { id } = c.req.param()
     let response: Response
 
-
-    const result = await service({id})
+    const result = await service({ id })
 
     if (result.isErr) {
       response = {
@@ -29,7 +28,7 @@ export default new Hono().get(
 
     const profile = result.value
 
-    console.log("Here")
+    console.log('Here')
 
     if (!profile) {
       response = {
