@@ -124,7 +124,7 @@ export function GetAllApprovedAppointments({ number }: { number?: number }) {
     }
   })
 
-  const data = query.data?.data as any
+  const data = query.data?.data.data as any
   const consultations = data
 
   if (consultations?.length === 0) {
