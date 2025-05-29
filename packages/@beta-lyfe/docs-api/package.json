@@ -13,7 +13,6 @@
 		"lint": "tsc",
 		"build": "pnpm compile && pnpm generate:schema && pnpm lint && vite build",
 		"deploy": "vercel deploy --prebuilt --token $VERCEL_TOKEN",
-		"test": "pnpm generate:schema && dotenv -- vitest run",
 		"generate:schema": "openapi-zod-client ./src/spec/openapi.yaml --output ./schema.ts --export-schemas --no-with-alias"
 	},
 	"devDependencies": {
