@@ -92,7 +92,9 @@ jobs:
 
       - name: Build stack
         working-directory: packages
-        run: pnpm build
+        run: |
+          pnpm lint
+          pnpm build
 
       - name: Move api docs to output folder
         working-directory: packages/@beta-lyfe/docs-api
