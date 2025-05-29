@@ -55,7 +55,7 @@ export const workingHour = z.object({
 
 export type WorkingHour = z.infer<typeof workingHour>
 
-export const location = z.object({
+export const address = z.object({
   landmark: z.string(),
   street: z.string(),
   coordinates: z.string().nullable(),
@@ -63,7 +63,7 @@ export const location = z.object({
   state: z.string()
 })
 
-export type Location = z.infer<typeof location>
+export type Address = z.infer<typeof address>
 
 export const authenticationMethodMeta = z.discriminatedUnion('provider', [
   z.object({
@@ -82,23 +82,21 @@ export const pharmacyStores = pgTable('pharmacy_stores', {
     .$default(() => ulid()),
   name: text('name').notNull(),
   description: text('description'),
-  owner_id: varchar('owner_id').notNull(),
   phone_number: varchar('phone_number').notNull(),
   email: varchar('email').notNull(),
-  address: text('address').notNull(),
-  city: varchar('city').notNull(),
-  state: varchar('state').notNull(),
+  address: jsonb('address').$type<Address>().notNull(),
   opening_time: varchar('opening_time').notNull(),
   closing_time: varchar('closing_time').notNull(),
   cover_image: jsonb('cover_image').$type<Media>().notNull(),
   rating: numeric('rating').notNull(),
   reviews: integer('reviews').notNull(),
   is_active: boolean('is_active').notNull(),
-  is_deleted: boolean('is_deleted').notNull().default(false),
+  owner_id: varchar('owner_id').notNull(),
   created_at: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),
-  updated_at: timestamp('updated_at', { withTimezone: true })
+  updated_at: timestamp('updated_at', { withTimezone: true }),
+  deleted_at: timestamp('deleted_at', { withTimezone: true })
 })
 
 export type PharmacyStore = typeof pharmacyStores.$inferSelect
@@ -128,11 +126,11 @@ export const pharmacyStoreItems = pgTable('pharmacy_store_items', {
   expiry_date: timestamp('expiry_date'),
   requires_prescription: boolean('requires_prescription').notNull(),
   is_featured: boolean('is_featured').notNull(),
-  is_deleted: boolean('is_deleted').notNull().default(false),
   created_at: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),
-  updated_at: timestamp('updated_at', { withTimezone: true })
+  updated_at: timestamp('updated_at', { withTimezone: true }),
+  deleted_at: timestamp('deleted_at', { withTimezone: true })
 })
 
 export type PharmacyStoreItem = typeof pharmacyStoreItems.$inferSelect
@@ -253,7 +251,7 @@ export const doctorProfiles = pgTable('doctor_profiles', {
   certifications: jsonb('certifications').$type<Certification[]>(),
   experiences: jsonb('experiences').$type<Experience[]>(),
   working_hours: jsonb('working_hours').$type<WorkingHour[]>(),
-  location: jsonb('location').$type<Location>(),
+  location: jsonb('location').$type<Address>(),
   user_id: varchar('user_id')
     .notNull()
     .unique()

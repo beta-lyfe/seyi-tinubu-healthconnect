@@ -79,6 +79,10 @@ model Paginated {
   previous: string | null;
 }
 
+model WithoutTimestamp<T> {
+  ...OmitProperties<T, "created_at" | "updated_at" | "deleted_at">;
+}
+
 @route("/api")
 @doc("API")
 namespace Api {
@@ -1090,20 +1094,35 @@ namespace Api {
       closing_time: Time;
 
       cover_image: Media;
+
+      @example(4.3)
+      rating: numeric;
+
+      @example(1000)
+      reviews: integer;
+
+      is_active: boolean;
+      owner_id: Id;
+      created_at: DateTime;
+      updated_at: DateTime;
+      deleted_at: DateTime | null;
     }
 
     @route("/")
     namespace Create {
       namespace Request {
         model Body {
-          ...PharmacyStore;
+          ...OmitProperties<
+            WithoutTimestamp<PharmacyStore>,
+            "rating" | "reviews" | "is_active" | "owner_id"
+          >;
         }
       }
 
       namespace Response {
         model Success {
           @statusCode _code: 201;
-          code: "PHARMACY_CREATED";
+          code: "PHARMACY_STORE_CREATED";
         }
 
         alias Error = UnexpectedError;
@@ -1112,8 +1131,8 @@ namespace Api {
       }
 
       @post
-      @doc("Create a pharmacy")
-      op createPharmacy(@body body: Request.Body): Response.Response;
+      @doc("Create a pharmacy store")
+      op createPharmacyStore(@body body: Request.Body): Response.Response;
     }
 
     @route("/{id}")
@@ -1128,7 +1147,7 @@ namespace Api {
 
         namespace Response {
           model Success {
-            code: "PHARMACY_RETRIEVED";
+            code: "PHARMACY_STORE_RETRIEVED";
             data: PharmacyStore;
           }
 
@@ -1138,8 +1157,8 @@ namespace Api {
         }
 
         @get
-        @doc("Fetch a pharmacy by ID")
-        op getPharmacyById(@path id: Request.Path): Response.Response;
+        @doc("Fetch a pharmacy store by ID")
+        op getPharmacyStoreById(@path id: Request.Path): Response.Response;
       }
 
       namespace Update {
@@ -1156,7 +1175,7 @@ namespace Api {
 
         namespace Response {
           model Success {
-            code: "PHARMACY_UPDATED";
+            code: "PHARMACY_STORE_UPDATED";
             data: PharmacyStore;
           }
 
@@ -1166,8 +1185,8 @@ namespace Api {
         }
 
         @patch
-        @doc("Update a pharmacy by ID")
-        op updatePharmacyById(
+        @doc("Update a pharmacy store by ID")
+        op updatePharmacyStoreById(
           @path id: Request.Path,
           @body body: Request.Body,
         ): Response.Response;
@@ -1183,7 +1202,7 @@ namespace Api {
 
         namespace Response {
           model Success {
-            code: "PHARMACY_DELETED";
+            code: "PHARMACY_STORE_DELETED";
             data: PharmacyStore;
           }
 
@@ -1193,8 +1212,65 @@ namespace Api {
         }
 
         @delete
-        @doc("Delete a pharmacy by ID")
-        op deletePharmacyById(@path id: Request.Path): Response.Response;
+        @doc("Delete a pharmacy store by ID")
+        op deletePharmacyStoreById(@path id: Request.Path): Response.Response;
+      }
+    }
+
+    @route("/items")
+    namespace Item {
+      model PharmacyStoreItem {
+        @example("Paracetamol")
+        name: string;
+
+        description: string;
+        usage: string;
+        side_effects: string;
+        warnings: string;
+        images: Media[];
+        pharmacy_store_id: Id;
+        type: "otc" | "prescription";
+        quantity_in_stock: integer;
+        categories: string[];
+        brands: string[];
+        price: numeric;
+        selling_price: numeric;
+        batch_number: string;
+        manufacturer: string;
+        is_available: boolean;
+        expiry_date: unixTimestamp32;
+        requires_prescription: boolean;
+        is_featured: boolean;
+        created_at: DateTime;
+        updated_at: DateTime;
+        deleted_at: DateTime;
+      }
+
+      @route("/")
+      namespace Create {
+        namespace Request {
+          model Body {
+            ...OmitProperties<
+              WithoutTimestamp<PharmacyStoreItem>,
+              "is_featured" | "pharmacy_store_id" | "is_available"
+            >;
+          }
+        }
+
+        namespace Response {
+          model Success {
+            @statusCode _code: 201;
+            code: "PHARMACY_STORE_ITEM_CREATED";
+          }
+
+          alias Error = UnexpectedError;
+
+          alias Response = Success | Error;
+        }
+
+        @post
+        @doc("Create a pharmacy store item")
+        op createPharmacyStoreItem(@body body: Request.Body): Response.Response;
       }
     }
   }
