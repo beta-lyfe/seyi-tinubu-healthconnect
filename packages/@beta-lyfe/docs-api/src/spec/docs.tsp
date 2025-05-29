@@ -25,8 +25,15 @@ scalar Time extends string;
 @example("745731af4484f323968969eda289aeee")
 scalar Token extends string;
 
+@example("https://checkout.paystack.com/5mz7yvom8rzo498")
+scalar PaymentUrl extends string;
+
 @example("123456")
 scalar Otp extends string;
+
+model ImageFile extends File {
+  contentType: "image/jpeg" | "image/png" | "image/webp";
+}
 
 model Address {
   @example("Federal Univeristy Teaching Hospital, Owerri")
@@ -57,9 +64,10 @@ scalar Password extends string;
 scalar Email extends string;
 
 model Media {
-  public_id: Id;
+  @example("h93suhw7mzyujf9tbugy")
+  public_id: string;
 
-  @example("https://google.com")
+  @example("https://res.cloudinary.com/dyirc2dvg/image/upload/v1747581547/foodhut/h93suhw7mzyujf9tbugy.jpg")
   url: string;
 }
 
@@ -72,6 +80,10 @@ model Paginated {
 
   @example("http://localhost:8000/api/consultation/request/?page=1")
   previous: string | null;
+}
+
+model WithoutTimestamp<T> {
+  ...OmitProperties<T, "created_at" | "updated_at" | "deleted_at">;
 }
 
 @route("/api")
@@ -94,6 +106,11 @@ namespace Api {
   model UnexpectedError {
     @statusCode _code: 500;
     code: "UNEXPECTED_ERROR";
+  }
+
+  model NotFoundError<T> {
+    @statusCode _code: 404;
+    code: "${T}_NOT_FOUND_ERROR";
   }
 
   @error
@@ -960,6 +977,648 @@ namespace Api {
     }
   }
 
+  @tag("Waitlist")
+  @route("/waitlist")
+  namespace Waitlist {
+    model Body {
+      email: Email;
+    }
+
+    namespace Response {
+      @error
+      model AlreadyJoinedError {
+        @statusCode _code: 406;
+        code: "WAITLIST_ALREADY_JOINED_ERROR";
+      }
+
+      model Success {
+        code: "WAITLIST_JOINED_SUCCESSFULLY";
+      }
+
+      alias Error = AlreadyJoinedError | Api.UnexpectedError;
+
+      alias Response = Success | Error;
+    }
+
+    op join(@body body: Body): Response.Response;
+  }
+
+  @tag("Pharmacy")
+  @route("/pharmacy")
+  namespace Pharmacy {
+    model PharmacyStore {
+      @example("HealthPlus Pharma")
+      name: string;
+
+      description: string;
+      phone_number: PhoneNumber;
+      email: Email;
+      address: Address;
+
+      @doc("Time formatted in 24-hour format")
+      @example("08:00")
+      opening_time: Time;
+
+      @doc("Time formatted in 24-hour format")
+      @example("20:00")
+      closing_time: Time;
+
+      cover_image: Media;
+
+      @example(4.3)
+      rating: numeric;
+
+      @example(1000)
+      reviews: integer;
+
+      is_active: boolean;
+      owner_id: Id;
+      created_at: DateTime;
+      updated_at: DateTime;
+      deleted_at: DateTime | null;
+    }
+
+    @route("/")
+    namespace Create {
+      namespace Request {
+        model Body {
+          ...OmitProperties<
+            WithoutTimestamp<PharmacyStore>,
+            "rating" | "reviews" | "is_active" | "owner_id"
+          >;
+        }
+      }
+
+      namespace Response {
+        model Success {
+          @statusCode _code: 201;
+          code: "PHARMACY_STORE_CREATED";
+        }
+
+        alias Error = UnexpectedError;
+
+        alias Response = Success | Error;
+      }
+
+      @post
+      @doc("Create a pharmacy store")
+      op createPharmacyStore(@body body: Request.Body): Response.Response;
+    }
+
+    @route("/{id}")
+    namespace ById {
+      namespace Get {
+        namespace Request {
+          model Path {
+            @path
+            id: string;
+          }
+        }
+
+        namespace Response {
+          model Success {
+            code: "PHARMACY_STORE_RETRIEVED";
+            data: PharmacyStore;
+          }
+
+          alias Error = UnexpectedError;
+
+          alias Response = Success | Error;
+        }
+
+        @get
+        @doc("Fetch a pharmacy store by ID")
+        op getPharmacyStoreById(@path id: Request.Path): Response.Response;
+      }
+
+      namespace Update {
+        namespace Request {
+          model Path {
+            @path
+            id: string;
+          }
+
+          model Body {
+            ...OptionalProperties<PharmacyStore>;
+          }
+        }
+
+        namespace Response {
+          model Success {
+            code: "PHARMACY_STORE_UPDATED";
+            data: PharmacyStore;
+          }
+
+          alias Error = UnexpectedError;
+
+          alias Response = Success | Error;
+        }
+
+        @patch
+        @doc("Update a pharmacy store by ID")
+        op updatePharmacyStoreById(
+          @path id: Request.Path,
+          @body body: Request.Body,
+        ): Response.Response;
+      }
+
+      namespace Delete {
+        namespace Request {
+          model Path {
+            @path
+            id: string;
+          }
+        }
+
+        namespace Response {
+          model Success {
+            code: "PHARMACY_STORE_DELETED";
+            data: PharmacyStore;
+          }
+
+          alias Error = UnexpectedError;
+
+          alias Response = Success | Error;
+        }
+
+        @delete
+        @doc("Delete a pharmacy store by ID")
+        op deletePharmacyStoreById(@path id: Request.Path): Response.Response;
+      }
+    }
+
+    @route("/items")
+    namespace Item {
+      @example("Pain reliever")
+      scalar Category extends string;
+
+      @example("Panadol")
+      scalar Brand extends string;
+
+      model PharmacyStoreItem {
+        id: Id;
+
+        @example("Paracetamol")
+        name: string;
+
+        @example("Pain reliever and fever reducer")
+        description: string;
+
+        @example("Take one tablet every 6 hours")
+        usage: string;
+
+        @example("Nausea, dizziness")
+        side_effects: string;
+
+        @example("Store in a cool, dry place")
+        warnings: string;
+
+        images: Media[];
+        pharmacy_store_id: Id;
+        type: "OTC" | "PRESCRIPTION";
+
+        @example(100)
+        quantity_in_stock: integer;
+
+        categories: Category[];
+        brands: Brand[];
+
+        @example(1000.00)
+        price: numeric;
+
+        @example(1200.00)
+        selling_price: numeric;
+
+        @example("1234567890123")
+        batch_number: string;
+
+        @example("Emzor Pharmaceuticals")
+        manufacturer: string;
+
+        @example(true)
+        is_available: boolean;
+
+        expiry_date: unixTimestamp32;
+
+        @example(true)
+        requires_prescription: boolean;
+
+        @example(true)
+        is_featured: boolean;
+
+        created_at: DateTime;
+        updated_at: DateTime;
+        deleted_at: DateTime;
+      }
+
+      namespace Create {
+        namespace Request {
+          model Body {
+            ...OmitProperties<
+              WithoutTimestamp<PharmacyStoreItem>,
+              "is_featured" | "pharmacy_store_id" | "is_available"
+            >;
+          }
+        }
+
+        namespace Response {
+          model Success {
+            @statusCode _code: 201;
+            code: "PHARMACY_STORE_ITEM_CREATED";
+          }
+
+          alias Error = UnexpectedError;
+
+          alias Response = Success | Error;
+        }
+
+        @post
+        @doc("Create a pharmacy store item")
+        op createPharmacyStoreItem(@body body: Request.Body): Response.Response;
+      }
+
+      namespace List {
+        namespace Request {
+          model Query {
+            @query
+            page?: int64;
+
+            @query
+            per_page?: int64;
+
+            @query
+            pharmacy_store_id?: string;
+          }
+        }
+
+        namespace Response {
+          model Success {
+            code: "PHARMACY_STORE_ITEMS_RETRIEVED";
+            data: Pagination.Paginated<PharmacyStoreItem>;
+          }
+
+          alias Error = UnexpectedError;
+
+          alias Response = Success | Error;
+        }
+
+        @get
+        @doc("Fetch many pharmacy store items")
+        op fetchPharmacyStoreItems(
+          @query query: Request.Query,
+        ): Response.Response;
+      }
+
+      @route("/{id}")
+      namespace ById {
+        namespace Get {
+          namespace Request {
+            model Path {
+              @path
+              id: string;
+            }
+          }
+
+          namespace Response {
+            model Success {
+              code: "PHARMACY_STORE_ITEM_RETRIEVED";
+              data: PharmacyStoreItem;
+            }
+
+            alias Error = NotFoundError<"PHARMACY_STORE_ITEM"> | UnexpectedError;
+
+            alias Response = Success | Error;
+          }
+
+          @get
+          @doc("Fetch a pharmacy store item by ID")
+          op getPharmacyStoreItemById(
+            @path id: Request.Path,
+          ): Response.Response;
+        }
+
+        namespace Update {
+          namespace Request {
+            model Path {
+              @path
+              id: string;
+            }
+
+            model Body {
+              ...OptionalProperties<WithoutTimestamp<OmitProperties<
+                PharmacyStoreItem,
+                "id"
+              >>>;
+            }
+          }
+
+          namespace Response {
+            model Success {
+              code: "PHARMACY_STORE_ITEM_UPDATED";
+              data: PharmacyStoreItem;
+            }
+
+            alias Error = UnauthorizedError | NotFoundError<"PHARMACY_STORE_ITEM"> | UnexpectedError;
+
+            alias Response = Success | Error;
+          }
+
+          @patch
+          @doc("Update a pharmacy store item by ID")
+          op updatePharmacyStoreItemById(
+            @path id: Request.Path,
+            @body body: Request.Body,
+          ): Response.Response;
+        }
+
+        namespace Delete {
+          namespace Request {
+            model Path {
+              @path
+              id: string;
+            }
+          }
+
+          namespace Response {
+            model Success {
+              code: "PHARMACY_STORE_ITEM_DELETED";
+              data: PharmacyStoreItem;
+            }
+
+            alias Error = UnauthorizedError | NotFoundError<"PHARMACY_STORE_ITEM"> | UnexpectedError;
+
+            alias Response = Success | Error;
+          }
+
+          @delete
+          @doc("Delete a pharmacy store item by ID")
+          op deletePharmacyStoreItemById(
+            @path id: Request.Path,
+          ): Response.Response;
+        }
+      }
+    }
+
+    @route("/carts")
+    namespace Cart {
+      model CartItem {
+        id: Id;
+        pharmacy_store_item_id: Id;
+        owner_id: Id;
+        quantity: integer;
+
+        @example(1000.00)
+        price: numeric;
+
+        created_at: DateTime;
+        updated_at: DateTime | null;
+      }
+
+      namespace Set {
+        namespace Request {
+          model Body {
+            pharmacy_store_item_id: Id;
+            quantity: integer;
+          }
+        }
+
+        namespace Response {
+          model Success {
+            @statusCode _code: 201;
+            code: "PHARMACY_STORE_ITEM_SET_IN_CART";
+          }
+
+          alias Error = UnauthorizedError | NotFoundError<"PHARMACY_STORE_ITEM"> | UnexpectedError;
+
+          alias Response = Success | Error;
+        }
+
+        @put
+        @doc("Item set to cart")
+        op setItemInCart(@body body: Request.Body): Response.Response;
+      }
+
+      namespace Checkout {
+        namespace Request {
+          model Body {
+            pharmacy_store_id: Id;
+            address: Address;
+          }
+        }
+      }
+    }
+
+    @route("/orders")
+    namespace Order {
+      alias Status =
+        | "AWAITING_PAYMENT"
+        | "AWAITING_ACKNOWLEDGEMENT"
+        | "PROCESSING"
+        | "IN_TRANSIT"
+        | "DELIVERED"
+        | "CANCELLED";
+
+      model Order {
+        id: Id;
+        pharmacy_store_id: Id;
+        owner_id: Id;
+        total_amount: numeric;
+        items: {
+          order_id: Id;
+          pharmacy_store_item_id: Id;
+          quantity: integer;
+          price: numeric;
+        };
+        address: Address;
+        status: Status;
+        created_at: DateTime;
+        updated_at: DateTime | null;
+      }
+
+      namespace List {
+        namespace Response {
+          model Success {
+            code: "PHARMACY_STORE_ORDERS_RETRIEVED";
+            data: Pagination.Paginated<Order>;
+          }
+
+          alias Error = UnauthorizedError | UnexpectedError;
+
+          alias Response = Success | Error;
+        }
+
+        @get
+        @doc("Fetch many pharmacy store orders")
+        op fetchPharmacyStoreOrders(
+          @query page?: int64,
+          @query per_page?: int64,
+        ): Response.Response;
+      }
+
+      @route("/{id}")
+      namespace ById {
+        namespace Get {
+          namespace Request {
+            model Path {
+              @path
+              id: string;
+            }
+          }
+
+          namespace Response {
+            model Success {
+              code: "PHARMACY_STORE_ORDER_RETRIEVED";
+              data: Order;
+            }
+
+            alias Error = NotFoundError<"PHARMACY_STORE_ORDER"> | UnauthorizedError | UnexpectedError;
+
+            alias Response = Success | Error;
+          }
+
+          @get
+          @doc("Fetch a pharmacy store order by ID")
+          op getPharmacyStoreOrderById(
+            @path id: Request.Path,
+          ): Response.Response;
+        }
+
+        @route("/pay")
+        namespace Pay {
+          namespace Response {
+            namespace Error {
+              model PaymentAlreadyMadeError {
+                @statusCode _code: 400;
+                code: "PHARMACY_STORE_ORDER_PAYMENT_ALREADY_MADE_ERROR";
+              }
+            }
+
+            @route("/online")
+            namespace Online {
+              namespace Request {
+                model Path {
+                  @path
+                  id: string;
+                }
+              }
+
+              namespace Response {
+                namespace Success {
+                  model Success {
+                    code: "PHARMACY_STORE_ORDER_INVOICE_GENERATION_SUCCESSFUL";
+                    data: {
+                      url: PaymentUrl;
+                    };
+                  }
+                }
+
+                namespace Error {
+                  alias Error =
+                    | Api.Pharmacy.Order.ById.Pay.Response.Error.PaymentAlreadyMadeError
+                    | NotFoundError<"PHARMACY_STORE_ORDER">
+                    | UnauthorizedError
+                    | UnexpectedError;
+                }
+
+                alias Response = Success.Success | Error.Error;
+              }
+
+              @post
+              @doc("Pay for a pharmacy store order online")
+              op payForPharmacyStoreOrderOnline(
+                @path id: Request.Path,
+              ): Response.Response;
+            }
+
+            @route("/wallet")
+            namespace Wallet {
+              namespace Request {
+                model Path {
+                  @path
+                  id: string;
+                }
+              }
+
+              namespace Response {
+                namespace Success {
+                  model Success {
+                    code: "PHARMACY_STORE_ORDER_PAYMENT_SUCCESSFUL";
+                  }
+                }
+
+                namespace Error {
+                  model InsufficientBalanceError {
+                    @statusCode _code: 400;
+                    code: "INSUFFICIENT_BALANCE_ERROR";
+                  }
+
+                  alias Error =
+                    | InsufficientBalanceError
+                    | Api.Pharmacy.Order.ById.Pay.Response.Error.PaymentAlreadyMadeError
+                    | NotFoundError<"PHARMACY_STORE_ORDER">
+                    | UnauthorizedError
+                    | UnexpectedError;
+                }
+
+                alias Response = Success.Success | Error.Error;
+              }
+
+              @post
+              @doc("Pay for a pharmacy store order with wallet")
+              op payForPharmacyStoreOrderWithWallet(
+                @path id: Request.Path,
+              ): Response.Response;
+            }
+          }
+
+          namespace UpdateStatus {
+            namespace Request {
+              model Path {
+                @path
+                id: string;
+              }
+
+              model Body {
+                status: Status;
+              }
+            }
+
+            namespace Response {
+              namespace Success {
+                model Success {
+                  code: "PHARMACY_STORE_ORDER_STATUS_UPDATED";
+                  data: Order;
+                }
+              }
+
+              namespace Error {
+                model InvalidStatusTransition {
+                  @statusCode _code: 400;
+                  code: "INVALID_STATUS_TRANSITION_ERROR";
+                }
+
+                alias Error =
+                  | InvalidStatusTransition
+                  | NotFoundError<"PHARMACY_STORE_ORDER">
+                  | UnauthorizedError
+                  | UnexpectedError;
+              }
+
+              alias Response = Success.Success | Error.Error;
+            }
+
+            @patch
+            @doc("Update a pharmacy store order status by ID")
+            op updatePharmacyStoreOrderStatusById(
+              @path id: Request.Path,
+              @body body: Request.Body,
+            ): Response.Response;
+          }
+        }
+      }
+    }
+  }
+
   @tag("Wallet")
   @route("/wallet")
   @useAuth(BearerAuth)
@@ -1007,8 +1666,7 @@ namespace Api {
 
       namespace Response {
         model Success {
-          @example("https://checkout.paystack.com/5mz7yvom8rzo498")
-          url: string;
+          url: PaymentUrl;
         }
         alias Error = BadRequestError | UnauthorizedError | UnexpectedError;
         alias Response = Success | Error;
@@ -1035,120 +1693,6 @@ namespace Api {
           @query per_page?: int64,
         ): Response.Response;
       }
-    }
-  }
-
-  @tag("Waitlist")
-  @route("/waitlist")
-  namespace Waitlist {
-    model Body {
-      email: Email;
-    }
-
-    namespace Response {
-      @error
-      model AlreadyJoinedError {
-        @statusCode _code: 406;
-        code: "WAITLIST_ALREADY_JOINED_ERROR";
-      }
-
-      model Success {
-        code: "WAITLIST_JOINED_SUCCESSFULLY";
-      }
-
-      alias Error = AlreadyJoinedError | Api.UnexpectedError;
-
-      alias Response = Success | Error;
-    }
-
-    op join(@body body: Body): Response.Response;
-  }
-
-  @tag("Pharmacy")
-  @route("/pharmacy")
-  namespace Pharmacy {
-    @route("/")
-    namespace Create {
-      namespace Request {
-        model Body {
-          @example("HealthPlus Pharma")
-          name: string;
-
-          @doc("Time formatted in 24-hour format")
-          @example("08:00")
-          opening_time: Time;
-
-          @doc("Time formatted in 24-hour format")
-          @example("20:00")
-          closing_time: Time;
-
-          description: string;
-          address: Address;
-        }
-      }
-
-      namespace Response {
-        model Success {
-          @statusCode _code: 201;
-          code: "PHARMACY_CREATED";
-        }
-
-        alias Error = UnexpectedError;
-
-        alias Response = Success | Error;
-      }
-
-      @post
-      @doc("Create a pharmacy")
-      op createPharmacy(@body body: Request.Body): Response.Response;
-    }
-
-    @route("/")
-    namespace Get {
-      namespace Request {
-        model Path {
-          @path
-          id: string;
-        }
-      }
-
-      namespace Response {
-        model Success {
-          @statusCode _code: 201;
-          code: "PHARMACY_CREATED";
-        }
-
-        alias Error = UnexpectedError;
-
-        alias Response = Success | Error;
-      }
-
-      @post
-      @doc("Create a pharmacy")
-      op getPharmacyById(@path id: Request.Path): Response.Response;
-    }
-  }
-
-  @tag("Dev")
-  @route("/dev")
-  namespace Dev {
-    @route("/user")
-    namespace CreateUser {
-      namespace Response {
-        model UserCreatedMessage {
-          @example("User created successfully")
-          message: string;
-        }
-
-        alias Success = UserCreatedMessage;
-        alias Error = UnexpectedError;
-
-        alias Response = Success | Error;
-      }
-
-      @post
-      @doc("Create a user")
-      op create(@body body: Api.Authentication.SignUp.Body): Response.Response;
     }
   }
 }

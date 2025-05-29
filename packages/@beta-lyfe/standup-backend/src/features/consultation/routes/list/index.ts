@@ -43,28 +43,28 @@ export default new Hono().get(
         publicItems.map(async (consulation) =>
           user.data.role === 'patient'
             ? Object.assign(consulation, {
-              doctor_profile: await Promise.resolve(
-                (async () => {
-                  const doctor = await DoctorRepository.findById(
-                    consulation.doctor_id
-                  )
-                  return doctor.isOk ? doctor.value : null
-                })()
-              )
-            })
+                doctor_profile: await Promise.resolve(
+                  (async () => {
+                    const doctor = await DoctorRepository.findById(
+                      consulation.doctor_id
+                    )
+                    return doctor.isOk ? doctor.value : null
+                  })()
+                )
+              })
             : Object.assign(consulation, {
-              patient_profile: await Promise.resolve(
-                (async () => {
-                  const patient = await PatientRepository.findById(
-                    consulation.patient_id
-                  )
-                  if (patient.isOk) {
-                    return patient.value
-                  }
-                  return null
-                })()
-              )
-            })
+                patient_profile: await Promise.resolve(
+                  (async () => {
+                    const patient = await PatientRepository.findById(
+                      consulation.patient_id
+                    )
+                    if (patient.isOk) {
+                      return patient.value
+                    }
+                    return null
+                  })()
+                )
+              })
         )
       )
     }

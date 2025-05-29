@@ -157,7 +157,9 @@ const Api_Consultation_Request_Request_Create_Response_Success = z
   .object({ code: z.literal("CONSULTATION_REQUEST_CREATED_SUCCESSFULLY") })
   .passthrough();
 const DateOfBirth = z.string();
-const Media = z.object({ public_id: Id, url: z.string() }).passthrough();
+const Media = z
+  .object({ public_id: z.string(), url: z.string() })
+  .passthrough();
 const Api_Doctor_Specialization = z.string();
 const Api_Doctor_Certification = z
   .object({ name: z.string(), institution: z.string(), date: z.string() })
@@ -285,9 +287,6 @@ const Api_Consultation_Request_Request_Reject_Response_AlreadyAcceptedError = z
 const Api_Consultation_Get_NotFoundError = z
   .object({ code: z.literal("CONSULTATION_NOT_FOUND") })
   .passthrough();
-const Api_Dev_CreateUser_Response_UserCreatedMessage = z
-  .object({ message: z.string() })
-  .passthrough();
 const Api_Doctor_Create_Request_Body = z
   .object({
     other_names: z.string().nullable(),
@@ -395,7 +394,7 @@ const Api_Patient_Profie_Get_Response_ProfileNotFoundError = z
   .object({ code: z.literal("PATIENT_PROFILE_NOT_FOUND_ERROR") })
   .passthrough();
 const MediaUpdate = z
-  .object({ public_id: Id, url: z.string() })
+  .object({ public_id: z.string(), url: z.string() })
   .partial()
   .passthrough();
 const Api_Patient_Profie_Update_Body = z
@@ -429,17 +428,280 @@ const Time = z.string();
 const Api_Pharmacy_Create_Request_Body = z
   .object({
     name: z.string(),
+    description: z.string(),
+    phone_number: PhoneNumber,
+    email: Email,
+    address: Address,
     opening_time: Time,
     closing_time: Time,
-    description: z.string(),
-    address: Address,
+    cover_image: Media,
   })
   .passthrough();
 const Api_Pharmacy_Create_Response_Success = z
-  .object({ code: z.literal("PHARMACY_CREATED") })
+  .object({ code: z.literal("PHARMACY_STORE_CREATED") })
   .passthrough();
-const Api_Pharmacy_Get_Response_Success = z
-  .object({ code: z.literal("PHARMACY_CREATED") })
+const Api_Pharmacy_Cart_Set_Request_Body = z
+  .object({ pharmacy_store_item_id: Id, quantity: z.number().int() })
+  .passthrough();
+const Api_Pharmacy_Cart_Set_Response_Success = z
+  .object({ code: z.literal("PHARMACY_STORE_ITEM_SET_IN_CART") })
+  .passthrough();
+const Api_Pharmacy_Item_Category = z.string();
+const Api_Pharmacy_Item_Brand = z.string();
+const Api_Pharmacy_Item_Create_Request_Body = z
+  .object({
+    id: Id,
+    name: z.string(),
+    description: z.string(),
+    usage: z.string(),
+    side_effects: z.string(),
+    warnings: z.string(),
+    images: z.array(Media),
+    type: z.enum(["OTC", "PRESCRIPTION"]),
+    quantity_in_stock: z.number().int(),
+    categories: z.array(Api_Pharmacy_Item_Category),
+    brands: z.array(Api_Pharmacy_Item_Brand),
+    price: z.number(),
+    selling_price: z.number(),
+    batch_number: z.string(),
+    manufacturer: z.string(),
+    expiry_date: z.number().int(),
+    requires_prescription: z.boolean(),
+  })
+  .passthrough();
+const Api_Pharmacy_Item_Create_Response_Success = z
+  .object({ code: z.literal("PHARMACY_STORE_ITEM_CREATED") })
+  .passthrough();
+const Api_Pharmacy_Item_PharmacyStoreItem = z
+  .object({
+    id: Id,
+    name: z.string(),
+    description: z.string(),
+    usage: z.string(),
+    side_effects: z.string(),
+    warnings: z.string(),
+    images: z.array(Media),
+    pharmacy_store_id: Id,
+    type: z.enum(["OTC", "PRESCRIPTION"]),
+    quantity_in_stock: z.number().int(),
+    categories: z.array(Api_Pharmacy_Item_Category),
+    brands: z.array(Api_Pharmacy_Item_Brand),
+    price: z.number(),
+    selling_price: z.number(),
+    batch_number: z.string(),
+    manufacturer: z.string(),
+    is_available: z.boolean(),
+    expiry_date: z.number().int(),
+    requires_prescription: z.boolean(),
+    is_featured: z.boolean(),
+    created_at: DateTime,
+    updated_at: DateTime,
+    deleted_at: DateTime,
+  })
+  .passthrough();
+const Api_Pharmacy_Item_List_Response_Success = z
+  .object({
+    code: z.literal("PHARMACY_STORE_ITEMS_RETRIEVED"),
+    data: z
+      .object({
+        data: z.array(Api_Pharmacy_Item_PharmacyStoreItem),
+        meta: Api_Pagination_Meta,
+      })
+      .passthrough(),
+  })
+  .passthrough();
+const Api_Pharmacy_Item_ById_Get_Response_Success = z
+  .object({
+    code: z.literal("PHARMACY_STORE_ITEM_RETRIEVED"),
+    data: Api_Pharmacy_Item_PharmacyStoreItem,
+  })
+  .passthrough();
+const Api_Pharmacy_Item_ById_Update_Request_Body = z
+  .object({
+    name: z.string(),
+    description: z.string(),
+    usage: z.string(),
+    side_effects: z.string(),
+    warnings: z.string(),
+    images: z.array(Media),
+    pharmacy_store_id: Id,
+    type: z.enum(["OTC", "PRESCRIPTION"]),
+    quantity_in_stock: z.number().int(),
+    categories: z.array(Api_Pharmacy_Item_Category),
+    brands: z.array(Api_Pharmacy_Item_Brand),
+    price: z.number(),
+    selling_price: z.number(),
+    batch_number: z.string(),
+    manufacturer: z.string(),
+    is_available: z.boolean(),
+    expiry_date: z.number().int(),
+    requires_prescription: z.boolean(),
+    is_featured: z.boolean(),
+  })
+  .partial()
+  .passthrough();
+const Api_Pharmacy_Item_ById_Update_Response_Success = z
+  .object({
+    code: z.literal("PHARMACY_STORE_ITEM_UPDATED"),
+    data: Api_Pharmacy_Item_PharmacyStoreItem,
+  })
+  .passthrough();
+const Api_Pharmacy_Item_ById_Delete_Response_Success = z
+  .object({
+    code: z.literal("PHARMACY_STORE_ITEM_DELETED"),
+    data: Api_Pharmacy_Item_PharmacyStoreItem,
+  })
+  .passthrough();
+const Api_Pharmacy_Order_Order = z
+  .object({
+    id: Id,
+    pharmacy_store_id: Id,
+    owner_id: Id,
+    total_amount: z.number(),
+    items: z
+      .object({
+        order_id: Id,
+        pharmacy_store_item_id: Id,
+        quantity: z.number().int(),
+        price: z.number(),
+      })
+      .passthrough(),
+    address: Address,
+    status: z.enum([
+      "AWAITING_PAYMENT",
+      "AWAITING_ACKNOWLEDGEMENT",
+      "PROCESSING",
+      "IN_TRANSIT",
+      "DELIVERED",
+      "CANCELLED",
+    ]),
+    created_at: DateTime,
+    updated_at: DateTime.nullable(),
+  })
+  .passthrough();
+const Api_Pharmacy_Order_List_Response_Success = z
+  .object({
+    code: z.literal("PHARMACY_STORE_ORDERS_RETRIEVED"),
+    data: z
+      .object({
+        data: z.array(Api_Pharmacy_Order_Order),
+        meta: Api_Pagination_Meta,
+      })
+      .passthrough(),
+  })
+  .passthrough();
+const Api_Pharmacy_Order_ById_Get_Response_Success = z
+  .object({
+    code: z.literal("PHARMACY_STORE_ORDER_RETRIEVED"),
+    data: Api_Pharmacy_Order_Order,
+  })
+  .passthrough();
+const Api_Pharmacy_Order_ById_Pay_UpdateStatus_Request_Body = z
+  .object({
+    status: z.enum([
+      "AWAITING_PAYMENT",
+      "AWAITING_ACKNOWLEDGEMENT",
+      "PROCESSING",
+      "IN_TRANSIT",
+      "DELIVERED",
+      "CANCELLED",
+    ]),
+  })
+  .partial()
+  .passthrough();
+const Api_Pharmacy_Order_ById_Pay_UpdateStatus_Response_Success_Success = z
+  .object({
+    code: z.literal("PHARMACY_STORE_ORDER_STATUS_UPDATED"),
+    data: Api_Pharmacy_Order_Order,
+  })
+  .passthrough();
+const Api_Pharmacy_Order_ById_Pay_UpdateStatus_Response_Error_InvalidStatusTransition =
+  z
+    .object({ code: z.literal("INVALID_STATUS_TRANSITION_ERROR") })
+    .passthrough();
+const PaymentUrl = z.string();
+const Api_Pharmacy_Order_ById_Pay_Response_Online_Response_Success_Success = z
+  .object({
+    code: z.literal("PHARMACY_STORE_ORDER_INVOICE_GENERATION_SUCCESSFUL"),
+    data: z.object({ url: PaymentUrl }).passthrough(),
+  })
+  .passthrough();
+const Api_Pharmacy_Order_ById_Pay_Response_Error_PaymentAlreadyMadeError = z
+  .object({
+    code: z.literal("PHARMACY_STORE_ORDER_PAYMENT_ALREADY_MADE_ERROR"),
+  })
+  .passthrough();
+const Api_Pharmacy_Order_ById_Pay_Response_Wallet_Response_Success_Success = z
+  .object({ code: z.literal("PHARMACY_STORE_ORDER_PAYMENT_SUCCESSFUL") })
+  .passthrough();
+const Api_Pharmacy_Order_ById_Pay_Response_Wallet_Response_Error_InsufficientBalanceError =
+  z.object({ code: z.literal("INSUFFICIENT_BALANCE_ERROR") }).passthrough();
+const Api_Pharmacy_PharmacyStore = z
+  .object({
+    name: z.string(),
+    description: z.string(),
+    phone_number: PhoneNumber,
+    email: Email,
+    address: Address,
+    opening_time: Time,
+    closing_time: Time,
+    cover_image: Media,
+    rating: z.number(),
+    reviews: z.number().int(),
+    is_active: z.boolean(),
+    owner_id: Id,
+    created_at: DateTime,
+    updated_at: DateTime,
+    deleted_at: DateTime.nullable(),
+  })
+  .passthrough();
+const Api_Pharmacy_ById_Get_Response_Success = z
+  .object({
+    code: z.literal("PHARMACY_STORE_RETRIEVED"),
+    data: Api_Pharmacy_PharmacyStore,
+  })
+  .passthrough();
+const AddressUpdate = z
+  .object({
+    landmark: z.string(),
+    street: z.string(),
+    coordinates: z.string().nullable(),
+    city: z.string(),
+    state: z.string(),
+  })
+  .partial()
+  .passthrough();
+const Api_Pharmacy_ById_Update_Request_Body = z
+  .object({
+    name: z.string(),
+    description: z.string(),
+    phone_number: PhoneNumber,
+    email: Email,
+    address: AddressUpdate,
+    opening_time: Time,
+    closing_time: Time,
+    cover_image: MediaUpdate,
+    rating: z.number(),
+    reviews: z.number().int(),
+    is_active: z.boolean(),
+    owner_id: Id,
+    created_at: DateTime,
+    updated_at: DateTime,
+    deleted_at: DateTime.nullable(),
+  })
+  .partial()
+  .passthrough();
+const Api_Pharmacy_ById_Update_Response_Success = z
+  .object({
+    code: z.literal("PHARMACY_STORE_UPDATED"),
+    data: Api_Pharmacy_PharmacyStore,
+  })
+  .passthrough();
+const Api_Pharmacy_ById_Delete_Response_Success = z
+  .object({
+    code: z.literal("PHARMACY_STORE_DELETED"),
+    data: Api_Pharmacy_PharmacyStore,
+  })
   .passthrough();
 const Api_Waitlist_Body = z.object({ email: Email }).passthrough();
 const Api_Waitlist_Response_Success = z
@@ -459,7 +721,7 @@ const Api_Wallet_Get_Response_Success = z
   .passthrough();
 const Api_Wallet_Topup_Body = z.object({ amount: z.number() }).passthrough();
 const Api_Wallet_Topup_Response_Success = z
-  .object({ url: z.string() })
+  .object({ url: PaymentUrl })
   .passthrough();
 const Api_Wallet_Transaction = z
   .object({
@@ -496,7 +758,61 @@ const Api_Doctor_SuccessMessage = z
 const Api_NoTokenProvidedError = z
   .object({ code: z.literal("UNAUTHORIZED_ERROR") })
   .passthrough();
-const Api_Pharmacy_Get_Request_Path = z.object({}).partial().passthrough();
+const Api_Pharmacy_ById_Delete_Request_Path = z
+  .object({})
+  .partial()
+  .passthrough();
+const Api_Pharmacy_ById_Get_Request_Path = z.object({}).partial().passthrough();
+const Api_Pharmacy_ById_Update_Request_Path = z
+  .object({})
+  .partial()
+  .passthrough();
+const Api_Pharmacy_Cart_CartItem = z
+  .object({
+    id: Id,
+    pharmacy_store_item_id: Id,
+    owner_id: Id,
+    quantity: z.number().int(),
+    price: z.number(),
+    created_at: DateTime,
+    updated_at: DateTime.nullable(),
+  })
+  .passthrough();
+const Api_Pharmacy_Cart_Checkout_Request_Body = z
+  .object({ pharmacy_store_id: Id, address: Address })
+  .passthrough();
+const Api_Pharmacy_Item_ById_Delete_Request_Path = z
+  .object({})
+  .partial()
+  .passthrough();
+const Api_Pharmacy_Item_ById_Get_Request_Path = z
+  .object({})
+  .partial()
+  .passthrough();
+const Api_Pharmacy_Item_ById_Update_Request_Path = z
+  .object({})
+  .partial()
+  .passthrough();
+const Api_Pharmacy_Item_List_Request_Query = z
+  .object({})
+  .partial()
+  .passthrough();
+const Api_Pharmacy_Order_ById_Get_Request_Path = z
+  .object({})
+  .partial()
+  .passthrough();
+const Api_Pharmacy_Order_ById_Pay_Response_Online_Request_Path = z
+  .object({})
+  .partial()
+  .passthrough();
+const Api_Pharmacy_Order_ById_Pay_Response_Wallet_Request_Path = z
+  .object({})
+  .partial()
+  .passthrough();
+const Api_Pharmacy_Order_ById_Pay_UpdateStatus_Request_Path = z
+  .object({})
+  .partial()
+  .passthrough();
 const Paginated = z
   .object({
     count: z.number().int(),
@@ -563,7 +879,6 @@ export const schemas = {
   Api_Consultation_Request_Request_Reject_Response_AlreadyDeclinedError,
   Api_Consultation_Request_Request_Reject_Response_AlreadyAcceptedError,
   Api_Consultation_Get_NotFoundError,
-  Api_Dev_CreateUser_Response_UserCreatedMessage,
   Api_Doctor_Create_Request_Body,
   Api_Doctor_Create_Response_Success,
   Api_Doctor_List_Response_Success,
@@ -585,7 +900,35 @@ export const schemas = {
   Time,
   Api_Pharmacy_Create_Request_Body,
   Api_Pharmacy_Create_Response_Success,
-  Api_Pharmacy_Get_Response_Success,
+  Api_Pharmacy_Cart_Set_Request_Body,
+  Api_Pharmacy_Cart_Set_Response_Success,
+  Api_Pharmacy_Item_Category,
+  Api_Pharmacy_Item_Brand,
+  Api_Pharmacy_Item_Create_Request_Body,
+  Api_Pharmacy_Item_Create_Response_Success,
+  Api_Pharmacy_Item_PharmacyStoreItem,
+  Api_Pharmacy_Item_List_Response_Success,
+  Api_Pharmacy_Item_ById_Get_Response_Success,
+  Api_Pharmacy_Item_ById_Update_Request_Body,
+  Api_Pharmacy_Item_ById_Update_Response_Success,
+  Api_Pharmacy_Item_ById_Delete_Response_Success,
+  Api_Pharmacy_Order_Order,
+  Api_Pharmacy_Order_List_Response_Success,
+  Api_Pharmacy_Order_ById_Get_Response_Success,
+  Api_Pharmacy_Order_ById_Pay_UpdateStatus_Request_Body,
+  Api_Pharmacy_Order_ById_Pay_UpdateStatus_Response_Success_Success,
+  Api_Pharmacy_Order_ById_Pay_UpdateStatus_Response_Error_InvalidStatusTransition,
+  PaymentUrl,
+  Api_Pharmacy_Order_ById_Pay_Response_Online_Response_Success_Success,
+  Api_Pharmacy_Order_ById_Pay_Response_Error_PaymentAlreadyMadeError,
+  Api_Pharmacy_Order_ById_Pay_Response_Wallet_Response_Success_Success,
+  Api_Pharmacy_Order_ById_Pay_Response_Wallet_Response_Error_InsufficientBalanceError,
+  Api_Pharmacy_PharmacyStore,
+  Api_Pharmacy_ById_Get_Response_Success,
+  AddressUpdate,
+  Api_Pharmacy_ById_Update_Request_Body,
+  Api_Pharmacy_ById_Update_Response_Success,
+  Api_Pharmacy_ById_Delete_Response_Success,
   Api_Waitlist_Body,
   Api_Waitlist_Response_Success,
   Api_Waitlist_Response_AlreadyJoinedError,
@@ -598,7 +941,19 @@ export const schemas = {
   Api_Consultation_Request_PaginatedConsultationRequest,
   Api_Doctor_SuccessMessage,
   Api_NoTokenProvidedError,
-  Api_Pharmacy_Get_Request_Path,
+  Api_Pharmacy_ById_Delete_Request_Path,
+  Api_Pharmacy_ById_Get_Request_Path,
+  Api_Pharmacy_ById_Update_Request_Path,
+  Api_Pharmacy_Cart_CartItem,
+  Api_Pharmacy_Cart_Checkout_Request_Body,
+  Api_Pharmacy_Item_ById_Delete_Request_Path,
+  Api_Pharmacy_Item_ById_Get_Request_Path,
+  Api_Pharmacy_Item_ById_Update_Request_Path,
+  Api_Pharmacy_Item_List_Request_Query,
+  Api_Pharmacy_Order_ById_Get_Request_Path,
+  Api_Pharmacy_Order_ById_Pay_Response_Online_Request_Path,
+  Api_Pharmacy_Order_ById_Pay_Response_Wallet_Request_Path,
+  Api_Pharmacy_Order_ById_Pay_UpdateStatus_Request_Path,
   Paginated,
 };
 
@@ -1045,27 +1400,6 @@ const endpoints = makeApi([
   },
   {
     method: "post",
-    path: "/api/dev/user",
-    description: `Create a user`,
-    requestFormat: "json",
-    parameters: [
-      {
-        name: "body",
-        type: "Body",
-        schema: Api_Authentication_SignUp_Body,
-      },
-    ],
-    response: z.object({ message: z.string() }).passthrough(),
-    errors: [
-      {
-        status: 500,
-        description: `Server error`,
-        schema: Api_UnexpectedError,
-      },
-    ],
-  },
-  {
-    method: "post",
     path: "/api/doctors",
     description: `Create doctor profile`,
     requestFormat: "json",
@@ -1348,7 +1682,7 @@ const endpoints = makeApi([
   {
     method: "post",
     path: "/api/pharmacy/",
-    description: `Create a pharmacy`,
+    description: `Create a pharmacy store`,
     requestFormat: "json",
     parameters: [
       {
@@ -1367,9 +1701,9 @@ const endpoints = makeApi([
     ],
   },
   {
-    method: "post",
+    method: "get",
     path: "/api/pharmacy/:id",
-    description: `Create a pharmacy`,
+    description: `Fetch a pharmacy store by ID`,
     requestFormat: "json",
     parameters: [
       {
@@ -1378,8 +1712,434 @@ const endpoints = makeApi([
         schema: z.string(),
       },
     ],
-    response: Api_Pharmacy_Get_Response_Success,
+    response: Api_Pharmacy_ById_Get_Response_Success,
     errors: [
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "patch",
+    path: "/api/pharmacy/:id",
+    description: `Update a pharmacy store by ID`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "body",
+        type: "Body",
+        schema: Api_Pharmacy_ById_Update_Request_Body,
+      },
+      {
+        name: "id",
+        type: "Path",
+        schema: z.string(),
+      },
+    ],
+    response: Api_Pharmacy_ById_Update_Response_Success,
+    errors: [
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "delete",
+    path: "/api/pharmacy/:id",
+    description: `Delete a pharmacy store by ID`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "id",
+        type: "Path",
+        schema: z.string(),
+      },
+    ],
+    response: Api_Pharmacy_ById_Delete_Response_Success,
+    errors: [
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "put",
+    path: "/api/pharmacy/carts",
+    description: `Item set to cart`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "body",
+        type: "Body",
+        schema: Api_Pharmacy_Cart_Set_Request_Body,
+      },
+    ],
+    response: Api_Pharmacy_Cart_Set_Response_Success,
+    errors: [
+      {
+        status: 401,
+        description: `Access is unauthorized.`,
+        schema: Api_UnauthorizedError,
+      },
+      {
+        status: 404,
+        description: `The server cannot find the requested resource.`,
+        schema: z
+          .object({ code: z.literal("PHARMACY_STORE_ITEM_NOT_FOUND_ERROR") })
+          .passthrough(),
+      },
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "post",
+    path: "/api/pharmacy/items",
+    description: `Create a pharmacy store item`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "body",
+        type: "Body",
+        schema: Api_Pharmacy_Item_Create_Request_Body,
+      },
+    ],
+    response: Api_Pharmacy_Item_Create_Response_Success,
+    errors: [
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "get",
+    path: "/api/pharmacy/items",
+    description: `Fetch many pharmacy store items`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "page",
+        type: "Query",
+        schema: z.number().int().optional(),
+      },
+      {
+        name: "per_page",
+        type: "Query",
+        schema: z.number().int().optional(),
+      },
+      {
+        name: "pharmacy_store_id",
+        type: "Query",
+        schema: z.string().optional(),
+      },
+      {
+        name: "query",
+        type: "Query",
+        schema: z.object({}).partial().passthrough(),
+      },
+    ],
+    response: Api_Pharmacy_Item_List_Response_Success,
+    errors: [
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "get",
+    path: "/api/pharmacy/items/:id",
+    description: `Fetch a pharmacy store item by ID`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "id",
+        type: "Path",
+        schema: z.string(),
+      },
+    ],
+    response: Api_Pharmacy_Item_ById_Get_Response_Success,
+    errors: [
+      {
+        status: 404,
+        description: `The server cannot find the requested resource.`,
+        schema: z
+          .object({ code: z.literal("PHARMACY_STORE_ITEM_NOT_FOUND_ERROR") })
+          .passthrough(),
+      },
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "patch",
+    path: "/api/pharmacy/items/:id",
+    description: `Update a pharmacy store item by ID`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "body",
+        type: "Body",
+        schema: Api_Pharmacy_Item_ById_Update_Request_Body,
+      },
+      {
+        name: "id",
+        type: "Path",
+        schema: z.string(),
+      },
+    ],
+    response: Api_Pharmacy_Item_ById_Update_Response_Success,
+    errors: [
+      {
+        status: 401,
+        description: `Access is unauthorized.`,
+        schema: Api_UnauthorizedError,
+      },
+      {
+        status: 404,
+        description: `The server cannot find the requested resource.`,
+        schema: z
+          .object({ code: z.literal("PHARMACY_STORE_ITEM_NOT_FOUND_ERROR") })
+          .passthrough(),
+      },
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "delete",
+    path: "/api/pharmacy/items/:id",
+    description: `Delete a pharmacy store item by ID`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "id",
+        type: "Path",
+        schema: z.string(),
+      },
+    ],
+    response: Api_Pharmacy_Item_ById_Delete_Response_Success,
+    errors: [
+      {
+        status: 401,
+        description: `Access is unauthorized.`,
+        schema: Api_UnauthorizedError,
+      },
+      {
+        status: 404,
+        description: `The server cannot find the requested resource.`,
+        schema: z
+          .object({ code: z.literal("PHARMACY_STORE_ITEM_NOT_FOUND_ERROR") })
+          .passthrough(),
+      },
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "get",
+    path: "/api/pharmacy/orders",
+    description: `Fetch many pharmacy store orders`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "page",
+        type: "Query",
+        schema: z.number().int().optional(),
+      },
+      {
+        name: "per_page",
+        type: "Query",
+        schema: z.number().int().optional(),
+      },
+    ],
+    response: Api_Pharmacy_Order_List_Response_Success,
+    errors: [
+      {
+        status: 401,
+        description: `Access is unauthorized.`,
+        schema: Api_UnauthorizedError,
+      },
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "get",
+    path: "/api/pharmacy/orders/:id",
+    description: `Fetch a pharmacy store order by ID`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "id",
+        type: "Path",
+        schema: z.string(),
+      },
+    ],
+    response: Api_Pharmacy_Order_ById_Get_Response_Success,
+    errors: [
+      {
+        status: 401,
+        description: `Access is unauthorized.`,
+        schema: Api_UnauthorizedError,
+      },
+      {
+        status: 404,
+        description: `The server cannot find the requested resource.`,
+        schema: z
+          .object({ code: z.literal("PHARMACY_STORE_ORDER_NOT_FOUND_ERROR") })
+          .passthrough(),
+      },
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "patch",
+    path: "/api/pharmacy/orders/:id/pay",
+    description: `Update a pharmacy store order status by ID`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "body",
+        type: "Body",
+        schema: Api_Pharmacy_Order_ById_Pay_UpdateStatus_Request_Body,
+      },
+      {
+        name: "id",
+        type: "Path",
+        schema: z.string(),
+      },
+    ],
+    response: Api_Pharmacy_Order_ById_Pay_UpdateStatus_Response_Success_Success,
+    errors: [
+      {
+        status: 400,
+        description: `The server could not understand the request due to invalid syntax.`,
+        schema:
+          Api_Pharmacy_Order_ById_Pay_UpdateStatus_Response_Error_InvalidStatusTransition,
+      },
+      {
+        status: 401,
+        description: `Access is unauthorized.`,
+        schema: Api_UnauthorizedError,
+      },
+      {
+        status: 404,
+        description: `The server cannot find the requested resource.`,
+        schema: z
+          .object({ code: z.literal("PHARMACY_STORE_ORDER_NOT_FOUND_ERROR") })
+          .passthrough(),
+      },
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "post",
+    path: "/api/pharmacy/orders/:id/pay/online",
+    description: `Pay for a pharmacy store order online`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "id",
+        type: "Path",
+        schema: z.string(),
+      },
+    ],
+    response:
+      Api_Pharmacy_Order_ById_Pay_Response_Online_Response_Success_Success,
+    errors: [
+      {
+        status: 400,
+        description: `The server could not understand the request due to invalid syntax.`,
+        schema:
+          Api_Pharmacy_Order_ById_Pay_Response_Error_PaymentAlreadyMadeError,
+      },
+      {
+        status: 401,
+        description: `Access is unauthorized.`,
+        schema: Api_UnauthorizedError,
+      },
+      {
+        status: 404,
+        description: `The server cannot find the requested resource.`,
+        schema: z
+          .object({ code: z.literal("PHARMACY_STORE_ORDER_NOT_FOUND_ERROR") })
+          .passthrough(),
+      },
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "post",
+    path: "/api/pharmacy/orders/:id/pay/wallet",
+    description: `Pay for a pharmacy store order with wallet`,
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "id",
+        type: "Path",
+        schema: z.string(),
+      },
+    ],
+    response:
+      Api_Pharmacy_Order_ById_Pay_Response_Wallet_Response_Success_Success,
+    errors: [
+      {
+        status: 400,
+        description: `The server could not understand the request due to invalid syntax.`,
+        schema: z.union([
+          Api_Pharmacy_Order_ById_Pay_Response_Wallet_Response_Error_InsufficientBalanceError,
+          Api_Pharmacy_Order_ById_Pay_Response_Error_PaymentAlreadyMadeError,
+        ]),
+      },
+      {
+        status: 401,
+        description: `Access is unauthorized.`,
+        schema: Api_UnauthorizedError,
+      },
+      {
+        status: 404,
+        description: `The server cannot find the requested resource.`,
+        schema: z
+          .object({ code: z.literal("PHARMACY_STORE_ORDER_NOT_FOUND_ERROR") })
+          .passthrough(),
+      },
       {
         status: 500,
         description: `Server error`,
@@ -1441,7 +2201,7 @@ const endpoints = makeApi([
         schema: z.object({ amount: z.number() }).passthrough(),
       },
     ],
-    response: z.object({ url: z.string() }).passthrough(),
+    response: Api_Wallet_Topup_Response_Success,
     errors: [
       {
         status: 400,
