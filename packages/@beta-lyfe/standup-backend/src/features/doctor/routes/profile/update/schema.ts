@@ -1,11 +1,12 @@
 import type { z } from 'zod'
 import { schemas } from '@beta-lyfe/api/zod'
 import { Storage } from '../../../../storage'
+import { schema as dbSchema } from '../../../../database'
 
 const schema = schemas.Api_Doctor_Profile_Update_Body.omit({
-  profile_picture: true
+  location: true
 }).extend({
-  profile_picture: Storage.schema.file.optional()
+  location: dbSchema.address
 })
 
 export type Schema = z.infer<typeof schema>

@@ -191,7 +191,7 @@ const Address = z
   .object({
     landmark: z.string(),
     street: z.string(),
-    coordinates: z.string().nullable(),
+    coordinates: z.string().nullish(),
     city: z.string(),
     state: z.string(),
   })

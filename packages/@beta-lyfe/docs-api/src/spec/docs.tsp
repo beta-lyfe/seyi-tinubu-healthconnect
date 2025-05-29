@@ -43,7 +43,7 @@ model Address {
   street: string;
 
   @example("5.4836, 7.0336")
-  coordinates: string | null;
+  coordinates?: string | null;
 
   @example("Owerri")
   city: string;
