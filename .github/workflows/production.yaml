@@ -72,7 +72,7 @@ jobs:
           cat .env | grep -v '^#' | sed -E 's/^(.*)?="(.*)"/\1=\2/' >> "$GITHUB_ENV"
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --prod false
 
       - name: Build internal docs
         working-directory: docs/docs
