@@ -22,9 +22,6 @@ export const env = createEnv({
     JITSI_APP_ID: z.string(),
     JITSI_PRIVATE_KEY: z.string(),
     JITSI_KID_ID: z.string(),
-    CLOUD_NAME:z.string(),
-    CLOUD_API_KEY:z.string(),
-    CLOUD_API_SECRET:z.string(),
   },
   /**
    * Makes sure you explicitly access **all** environment variables
@@ -48,8 +45,5 @@ export const env = createEnv({
     JITSI_APP_ID: process.env.JITSI_APP_ID,
     JITSI_PRIVATE_KEY: process.env.JITSI_PRIVATE_KEY,
     JITSI_KID_ID: process.env.JITSI_KID_ID,
-    CLOUD_NAME:process.env.CLOUD_NAME,
-    CLOUD_API_KEY: process.env.CLOUD_API_KEY,
-    CLOUD_API_SECRET : process.env.CLOUD_API_SECRET
   }
 })
