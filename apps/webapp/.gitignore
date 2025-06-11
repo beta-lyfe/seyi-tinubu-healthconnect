@@ -10,6 +10,7 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
+src/routeTree.gen.ts
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -51,7 +52,7 @@ web_modules/
 
 # TypeScript cache
 *.tsbuildinfo
-
+android/
 # Optional npm cache directory
 .npm
 
@@ -142,21 +143,5 @@ dist
 .svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/node
-# Created by https://www.toptal.com/developers/gitignore/api/direnv
-# Edit at https://www.toptal.com/developers/gitignore?templates=direnv
-
-### direnv ###
-.direnv
-
-# End of https://www.toptal.com/developers/gitignore/api/direnv
-.env.*
-.request-cache/
-
-
-
-.nx/cache
-.nx/workspace-data
-.cursor/rules/nx-rules.mdc
-.github/instructions/nx.instructions.md
-vite.config.*.timestamp*
-vitest.config.*.timestamp*
+.vite
+.vercel

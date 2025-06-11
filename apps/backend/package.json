@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@beta-lyfe/backend",
+  "type": "module",
+  "scripts": {
+    "start": "tsx ./scripts/prod.ts",
+    "dev": "tsx watch ./scripts/dev.ts",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "deploy": "vercel deploy --prebuilt --token $VERCEL_TOKEN",
+    "lint": "tsc",
+    "build": "pnpm lint && tsx ./scripts/build.ts",
+    "test": "bun test --bail --timeout 20000 ./src/**/**/*test.ts"
+  },
+  "exports": {
+    "./app": "./src/app.ts",
+    "./config": "./src/features/config/index.ts"
+  },
+  "dependencies": {
+    "@beta-lyfe/api": "workspace:^",
+    "@beta-lyfe/backend": "workspace:^",
+    "@beta-lyfe/media-server": "workspace:^",
+    "@hono/zod-validator": "^0.4.2",
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.6.1",
+    "date-fns": "^3.6.0",
+    "drizzle-orm": "^0.40.1",
+    "drizzle-zod": "^0.7.0",
+    "jose": "^6.0.10",
+    "jsx-email": "^2.7.1",
+    "nodemailer": "^6.10.0",
+    "pg": "^8.14.1",
+    "react": "^18.2.0",
+    "tslog": "^4.9.3"
+  },
+  "devDependencies": {
+    "@effect/cli": "^0.59.1",
+    "@effect/platform": "^0.80.1",
+    "@effect/platform-node": "^0.76.4",
+    "@types/node": "^20.17.14",
+    "@types/nodemailer": "^6.4.17",
+    "@types/pg": "^8.11.11",
+    "@types/react": "^18.2.0",
+    "drizzle-kit": "^0.30.5",
+    "effect": "^3.13.11"
+  },
+  "packageManager": "pnpm@9.15.3"
+}

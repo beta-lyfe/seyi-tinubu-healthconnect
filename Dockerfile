@@ -17,7 +17,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Go into the specific backend package
-WORKDIR /app/packages/@beta-lyfe/standup-backend
+WORKDIR /app/apps/backend
 
 # Build the backend
 RUN pnpm build
@@ -35,7 +35,7 @@ WORKDIR /app
 COPY --from=builder /app .
 
 # Set the working directory to your backend package
-WORKDIR /app/packages/@beta-lyfe/standup-backend
+WORKDIR /app/apps/backend
 
 # Set environment variable (optional)
 ENV NODE_ENV=production
