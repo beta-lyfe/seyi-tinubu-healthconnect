@@ -1,3 +1,0 @@
-options:
-  "@typespec/openapi3":
-    emitter-output-dir: "{cwd}/src/spec"

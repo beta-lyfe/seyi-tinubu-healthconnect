@@ -35,18 +35,10 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@v27
 
-      - name: Install dependencies
-        working-directory: packages
-        run: pnpm install
-
-      - name: Setup assets
-        working-directory: packages
-        run: |
-          pnpm compile
-          pnpm typegen
+      - name: Install vercel
+        run: pnpm add -g vercel
 
       - name: Load .env file
-        working-directory: packages
         run: |
           DOCS_ENV_FILE="$(mktemp)"
           WEBAPP_ENV_FILE="$(mktemp)"
@@ -65,10 +57,10 @@ jobs:
           pnpm vercel env pull "$WEBAPP_ENV_FILE" --yes --environment "$VERCEL_ENVIRONMENT" --token "$VERCEL_TOKEN"
 
           export VERCEL_PROJECT_ID=${{ secrets.VERCEL_WEBSITE_PROJECT_ID }}
-          pnpm vercel env pull "$WEBSITE_ENV_FILE" --yes --environment "$VERCEL_ENVIRONMENT"  --token "$VERCEL_TOKEN"
+          pnpm vercel env pull "$WEBSITE_ENV_FILE" --yes --environment "$VERCEL_ENVIRONMENT" --token "$VERCEL_TOKEN"
 
           export VERCEL_PROJECT_ID=${{ secrets.VERCEL_BACKEND_PROJECT_ID }}
-          pnpm vercel env pull "$BACKEND_ENV_FILE" --yes --environment "$VERCEL_ENVIRONMENT"  --token "$VERCEL_TOKEN"
+          pnpm vercel env pull "$BACKEND_ENV_FILE" --yes --environment "$VERCEL_ENVIRONMENT" --token "$VERCEL_TOKEN"
 
           cat "$DOCS_ENV_FILE" >> .env
           cat "$WEBAPP_ENV_FILE" >> .env
@@ -78,6 +70,9 @@ jobs:
           echo VERCEL_ENVIRONMENT="$VERCEL_ENVIRONMENT" >> .env
 
           cat .env | grep -v '^#' | sed -E 's/^(.*)?="(.*)"/\1=\2/' >> "$GITHUB_ENV"
+
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Build internal docs
         working-directory: docs/docs
@@ -91,16 +86,13 @@ jobs:
         run: nix flake check
 
       - name: Build stack
-        working-directory: packages
-        run: |
-          pnpm lint
-          pnpm build
+        run: pnpm build
 
       - name: Move api docs to output folder
-        working-directory: packages/@beta-lyfe/docs-api
+        working-directory: ./apps/docs-api
         run: |
-          mkdir -p ../../../__site/docs/api
-          cp -r dist/* ../../../__site/docs/api
+          mkdir -p ../../__site/docs/api
+          cp -r dist/* ../../__site/docs/api
 
       - name: Deploy docs
         working-directory: __site
@@ -114,22 +106,19 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_DOCS_PROJECT_ID }}
 
       - name: Deploy website
-        working-directory: packages
-        run: pnpm --filter @beta-lyfe/website run deploy --target "$VERCEL_ENVIRONMENT" 
+        run: pnpm --filter @beta-lyfe/website run deploy --target "$VERCEL_ENVIRONMENT"
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_WEBSITE_PROJECT_ID }}
 
       - name: Deploy webapp
-        working-directory: packages
         run: pnpm --filter @beta-lyfe/webapp run deploy --target "$VERCEL_ENVIRONMENT"
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_WEBAPP_PROJECT_ID }}
 
       - name: Deploy backend
-        working-directory: packages
-        run: pnpm --filter @beta-lyfe/standup-backend run deploy --target "$VERCEL_ENVIRONMENT"
+        run: pnpm --filter @beta-lyfe/backend run deploy --target "$VERCEL_ENVIRONMENT"
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_BACKEND_PROJECT_ID }}
