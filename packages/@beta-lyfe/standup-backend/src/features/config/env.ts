@@ -22,9 +22,12 @@ export const env = createEnv({
     JITSI_APP_ID: z.string(),
     JITSI_PRIVATE_KEY: z.string(),
     JITSI_KID_ID: z.string(),
+<<<<<<< Updated upstream
     CLOUDINARY_CLOUD_NAME:z.string(),
     CLOUDINARY_API_KEY:z.string(),
     CLOUDINARY_API_SECRET:z.string(),
+=======
+>>>>>>> Stashed changes
   },
   /**
    * Makes sure you explicitly access **all** environment variables
@@ -48,8 +51,11 @@ export const env = createEnv({
     JITSI_APP_ID: process.env.JITSI_APP_ID,
     JITSI_PRIVATE_KEY: process.env.JITSI_PRIVATE_KEY,
     JITSI_KID_ID: process.env.JITSI_KID_ID,
+<<<<<<< Updated upstream
     CLOUDINARY_CLOUD_NAME:process.env.CLOUDINARY_CLOUD_NAME,
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
     CLOUDINARY_API_SECRET : process.env.CLOUDINARY_API_SECRET,
+=======
+>>>>>>> Stashed changes
   }
 })
