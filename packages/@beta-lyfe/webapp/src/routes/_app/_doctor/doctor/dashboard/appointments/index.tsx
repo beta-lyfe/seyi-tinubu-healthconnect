@@ -257,7 +257,7 @@ export default function DoctorAppointmentsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Appointments</h1>
+          <h1 className="text-xl md:text-2xl font-bold tracking-tight">Appointments</h1>
           <p className="text-muted-foreground">
             Manage your consultations and patient appointments
           </p>
@@ -270,7 +270,7 @@ export default function DoctorAppointmentsPage() {
           >
             <Filter className="h-4 w-4" /> Filters
           </Button>
-          <Button size="sm">Set Availability</Button>
+          <Button size="sm" className='text-white'>Set Availability</Button>
         </div>
       </div>
 
@@ -288,6 +288,7 @@ export default function DoctorAppointmentsPage() {
                 <SelectValue placeholder="Appointment Type" />
               </SelectTrigger>
               <SelectContent>
+                
                 <SelectItem value="all">All Types</SelectItem>
                 <SelectItem value="video">Video Consultation</SelectItem>
                 <SelectItem value="chat">Chat Consultation</SelectItem>
@@ -338,7 +339,8 @@ export default function DoctorAppointmentsPage() {
 
       {/* Appointments tabs */}
       <Tabs defaultValue="upcoming">
-        <TabsList className="mb-4 w-full">
+        <TabsList className="mb-4 w-full overflow-auto">
+         
           <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
           <TabsTrigger value="pending">Pending</TabsTrigger>
           <TabsTrigger value="completed">Completed</TabsTrigger>

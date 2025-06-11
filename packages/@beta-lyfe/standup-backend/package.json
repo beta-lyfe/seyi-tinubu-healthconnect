@@ -21,6 +21,7 @@
 		"@beta-lyfe/standup-backend": "workspace:^",
 		"@hono/zod-validator": "^0.4.2",
 		"bcryptjs": "^3.0.2",
+		"cloudinary": "^2.6.1",
 		"date-fns": "^3.3.1",
 		"drizzle-orm": "^0.40.1",
 		"drizzle-zod": "^0.7.0",

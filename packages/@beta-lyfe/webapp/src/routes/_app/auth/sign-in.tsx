@@ -150,7 +150,9 @@ export default function SignInPage() {
     },
     onError: (err) => {
       err.code
-        ? toast.error(err.code)
+        ? toast.error(
+          err.code==='UNAUTHORIZED_ERROR' ? 'Invalid Credentials' : 'An unexpected error occured'
+        )
         : toast.error('Network error. Please try again.')
 
       // if (err.code === 'Email is not verified') {

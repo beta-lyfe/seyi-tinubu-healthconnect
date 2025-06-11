@@ -185,6 +185,7 @@ namespace Repository {
     return Result.ok(null)
   }
 
+
   export const verifyUserById = async (
     userId: string
   ): Promise<Result<null, Error>> => {

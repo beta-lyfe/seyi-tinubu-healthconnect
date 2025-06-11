@@ -21,7 +21,10 @@ export const env = createEnv({
     FRONTEND_WEBAPP_URL: z.string().url(),
     JITSI_APP_ID: z.string(),
     JITSI_PRIVATE_KEY: z.string(),
-    JITSI_KID_ID: z.string()
+    JITSI_KID_ID: z.string(),
+    CLOUDINARY_CLOUD_NAME:z.string(),
+    CLOUDINARY_API_KEY:z.string(),
+    CLOUDINARY_API_SECRET:z.string(),
   },
   /**
    * Makes sure you explicitly access **all** environment variables
@@ -44,6 +47,9 @@ export const env = createEnv({
     FRONTEND_WEBAPP_URL: process.env.FRONTEND_WEBAPP_URL,
     JITSI_APP_ID: process.env.JITSI_APP_ID,
     JITSI_PRIVATE_KEY: process.env.JITSI_PRIVATE_KEY,
-    JITSI_KID_ID: process.env.JITSI_KID_ID
+    JITSI_KID_ID: process.env.JITSI_KID_ID,
+    CLOUDINARY_CLOUD_NAME:process.env.CLOUDINARY_CLOUD_NAME,
+    CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+    CLOUDINARY_API_SECRET : process.env.CLOUDINARY_API_SECRET,
   }
 })

@@ -42,10 +42,10 @@ export default function WalletPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">
+          <h1 className="text-xl md:text-2xl font-bold tracking-tight">
             Wallet & Transactions
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-sm md:text-lg">
             Manage your payments and view transaction history
           </p>
         </div>
@@ -53,8 +53,8 @@ export default function WalletPage() {
           <Button variant="outline">
             <Download className="mr-2 h-4 w-4" /> Export History
           </Button>
-          <Button>
-            <PlusCircle className="mr-2 h-4 w-4" /> Add Funds
+          <Button className='text-white'>
+            <PlusCircle className="mr-2 h-4 w-4 text-white" /> Add Funds
           </Button>
         </div>
       </div>
@@ -63,7 +63,7 @@ export default function WalletPage() {
       <div className="grid gap-4 md:grid-cols-3">
         <Card className="md:col-span-2">
           <CardHeader className="pb-3">
-            <CardTitle>Wallet Balance</CardTitle>
+            <CardTitle className='text-md md:text-lg'>Wallet Balance</CardTitle>
             <CardDescription>
               Your current Beta-Lyfe wallet balance
             </CardDescription>
@@ -78,7 +78,7 @@ export default function WalletPage() {
                   <p className="text-sm text-muted-foreground">
                     Available Balance
                   </p>
-                  <p className="text-3xl font-bold">₦245.50</p>
+                  <p className="text-lg md:text-xl font-bold ">₦245.50</p>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -95,7 +95,7 @@ export default function WalletPage() {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle>Payment Methods</CardTitle>
+            <CardTitle className='text-md md:text-lg'>Payment Methods</CardTitle>
             <CardDescription>Manage your payment options</CardDescription>
           </CardHeader>
           <CardContent>
@@ -119,12 +119,13 @@ export default function WalletPage() {
       {/* Transactions */}
       <Card>
         <CardHeader>
-          <CardTitle>Transaction History</CardTitle>
+          <CardTitle className='text-md font-bold md:text-xl'>Transaction History</CardTitle>
           <CardDescription>View all your past transactions</CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="all">
-            <TabsList className="mb-4">
+          <Tabs defaultValue="all" >
+            <TabsList className="mb-4 w-[100%] overflow-scroll">
+              <TabsTrigger value="none">None</TabsTrigger>
               <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="consultations">Consultations</TabsTrigger>
               <TabsTrigger value="medications">Medications</TabsTrigger>
@@ -139,7 +140,7 @@ export default function WalletPage() {
                 <div className="flex-1">
                   <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
-                      <p className="font-medium">
+                      <p className="text-sm">
                         Consultation with Dr. Sarah Johnson
                       </p>
                       <p className="text-sm text-muted-foreground">
@@ -166,7 +167,7 @@ export default function WalletPage() {
                 <div className="flex-1">
                   <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
-                      <p className="font-medium">Prescription Medication</p>
+                      <p className="text-sm">Prescription Medication</p>
                       <p className="text-sm text-muted-foreground">
                         Lisinopril (30-day supply)
                       </p>
@@ -191,7 +192,7 @@ export default function WalletPage() {
                 <div className="flex-1">
                   <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
-                      <p className="font-medium">Lab Test</p>
+                      <p className="text-md">Lab Test</p>
                       <p className="text-sm text-muted-foreground">
                         Complete Blood Count
                       </p>
@@ -272,7 +273,7 @@ export default function WalletPage() {
                 <div className="flex-1">
                   <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
-                      <p className="font-medium">Prescription Medication</p>
+                      <p className="text-md">Prescription Medication</p>
                       <p className="text-sm text-muted-foreground">
                         Lisinopril (30-day supply)
                       </p>
@@ -299,7 +300,7 @@ export default function WalletPage() {
                 <div className="flex-1">
                   <div className="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
-                      <p className="font-medium">Lab Test</p>
+                      <p className="text-sm">Lab Test</p>
                       <p className="text-sm text-muted-foreground">
                         Complete Blood Count
                       </p>

@@ -132,7 +132,7 @@ function DoctorDashboardPage() {
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-xl md:text-2xl">
+              <CardTitle className="text-lg md:text-xl">
                 Upcoming Appointments
               </CardTitle>
               <CardDescription>
@@ -155,7 +155,7 @@ function DoctorDashboardPage() {
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle>Recent Activity</CardTitle>
+                <CardTitle className='text-lg'>Recent Activity</CardTitle>
                 <CardDescription>Your latest interactions</CardDescription>
               </div>
               <Button variant="ghost" size="sm" asChild>
@@ -211,7 +211,7 @@ function DoctorDashboardPage() {
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle>Earnings Overview</CardTitle>
+                <CardTitle className='text-xl'>Earnings Overview</CardTitle >
                 <CardDescription>Your financial summary</CardDescription>
               </div>
               <Button variant="ghost" size="sm" asChild>
@@ -225,7 +225,7 @@ function DoctorDashboardPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">This Week</p>
-                <p className="text-2xl font-bold">₦2,840.00</p>
+                <p className="text-lg md:text-xl font-bold">₦2,840.00</p>
               </div>
               <Badge className="flex items-center gap-1 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
                 <ArrowUpRight className="h-3 w-3" /> +8.2%
@@ -255,7 +255,7 @@ function DoctorDashboardPage() {
               <div className="flex justify-between items-center">
                 <div>
                   <p className="text-sm text-muted-foreground">Next Payout</p>
-                  <p className="font-medium">₦2,840.00 on May 15, 2023</p>
+                  <p className="font-medium">May 15, 2023</p>
                 </div>
                 <Button variant="outline" size="sm">
                   Request Early
@@ -269,7 +269,7 @@ function DoctorDashboardPage() {
       {/* Performance metrics */}
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle>Performance Metrics</CardTitle>
+          <CardTitle className='text-lg'>Performance Metrics</CardTitle>
           <CardDescription>
             Your practice statistics for the last 30 days
           </CardDescription>

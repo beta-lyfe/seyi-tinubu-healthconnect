@@ -35,6 +35,7 @@ import { Card, CardContent } from '@beta-lyfe/ui/components/shad/ui/card'
 import { cn } from '@beta-lyfe/ui/components/shad/lib/utils'
 import { $api } from '../../../lib/backend'
 import { toast } from 'sonner'
+import { Toaster } from '@beta-lyfe/ui/components/shad/ui/sonner'
 
 export const Route = createFileRoute('/_app/auth/sign-up')({
   component: SignUpPage
@@ -95,7 +96,9 @@ export default function SignUpPage() {
       }),
     onError: (err) => {
       setIsSubmitting(false)
-      err.code ? toast.error(err.code) : toast.error('Network error. Please try again.')
+      err.code ? toast.error(
+        err.code.replace("_"," ").toLowerCase()
+      ) : toast.error('Network error. Please try again.')
 
     }
   })
@@ -270,6 +273,8 @@ function Step1Form({
     updateData(values)
     onNext()
   }
+
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
 
   return (
     <Form {...form}>
@@ -517,12 +522,47 @@ function Step5Form({
     }
   })
 
+  const [passwordStrengthState,setPasswordstrength] = useState({
+    length: false,
+    uppercase: false,
+    number: false
+  })
+
+  const passwordStrongness = (password: string) => {
+    const passwordStrengthStates = {
+      length: false,
+      uppercase: false,
+      number: false
+    }
+
+    if (password.length >= 8) {
+      passwordStrengthStates.length = true
+    }
+    if (/[A-Z]/.test(password)) {
+      passwordStrengthStates.uppercase = true
+    }
+    if (/\d/.test(password)) {
+      passwordStrengthStates.number = true
+    }
+    return passwordStrengthStates
+  }
+
+  function checkStrength(password:string){
+    const passwordStrength=passwordStrongness(password)
+    setPasswordstrength(passwordStrength)
+  }
+
   function handleSubmit(values: z.infer<typeof step5Schema>) {
+    if (!passwordStrengthState.length || !passwordStrengthState.uppercase || !passwordStrengthState.number) {
+      toast.error('Password must be at least 8 characters long, contain at least one uppercase letter and one number.')
+      return
+    }
     updateData(values)
     onSubmit(form.getValues('password'))
   }
 
   const [showPassword,setShowPassword]=useState(false)
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
 
   return (
     <Form {...form}>
@@ -549,7 +589,20 @@ function Step5Form({
                   </div>
                   
                  
-                  <Input type={showPassword ? "text":"password" } placeholder="••••••••" {...field} />
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  {...form.register('password', {
+                    pattern: {
+                      value: passwordRegex,
+                      message: 'Password must contain at least one uppercase letter and one number.'
+                    },
+                    onChange: (e) => {
+                      checkStrength(e.target.value)
+                      form.setValue('password', e.target.value)
+                    }
+                  })}
+                />
                 </div>
               </FormControl>
             
@@ -561,7 +614,7 @@ function Step5Form({
           control={form.control}
           name="confirmPassword"
           render={({ field }) => (
-            <FormItem>
+            <FormItem>  
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
                 <Input type={showPassword ? "text":"password" } placeholder="••••••••" {...field} />
@@ -573,16 +626,16 @@ function Step5Form({
         <div className="mt-2 space-y-2">
           <p className="text-sm font-medium">Password requirements:</p>
           <ul className="text-sm text-muted-foreground space-y-1">
-            <li className="flex items-center">
-              <CheckCircle2 className="h-4 w-4 mr-2 text-green-500" />
+            <li className={cn("flex items-center", passwordStrengthState.length ? 'text-green-500' : 'text-red-500')} >
+              <CheckCircle2 className="h-4 w-4 mr-2" />
               At least 8 characters long
             </li>
-            <li className="flex items-center">
-              <CheckCircle2 className="h-4 w-4 mr-2 text-green-500" />
+            <li className={cn("flex items-center", passwordStrengthState.uppercase ? 'text-green-500' : 'text-red-500')}>
+              <CheckCircle2 className="h-4 w-4 mr-2" />
               Contains at least one uppercase letter
             </li>
-            <li className="flex items-center">
-              <CheckCircle2 className="h-4 w-4 mr-2 text-green-500" />
+            <li className={cn("flex items-center",  passwordStrengthState.number ? 'text-green-500' : 'text-red-500')}>
+              <CheckCircle2 className="h-4 w-4 mr-2" />
               Contains at least one number
             </li>
           </ul>

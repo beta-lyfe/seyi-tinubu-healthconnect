@@ -33,6 +33,8 @@ import { Upload } from 'lucide-react'
 import { Link, createFileRoute, useRouter } from '@tanstack/react-router'
 import { useAuth } from '../../../../../hooks/auth'
 import { toast } from 'sonner'
+import { $api, client } from '../../../../../lib/backend'
+import { ChangeEvent, useRef } from 'react'
 
 export const Route = createFileRoute('/_app/_dashboard/dashboard/profile/')({
   component: ProfilePage
@@ -40,10 +42,11 @@ export const Route = createFileRoute('/_app/_dashboard/dashboard/profile/')({
 
 function ProfilePage() {
   const user=useAuth(true).data.data.user
-  const profile=user.profiles.patient
+  let profile=user.profiles.patient
   const update=useAuth().update
+  const token=useAuth(true).data.data.token
   const router=useRouter()
-
+  
     const logout=async ()=>{
     update({status:'unauthenticated'})
     toast.success("Logged user out")  
@@ -51,8 +54,88 @@ function ProfilePage() {
       to:'/auth/sign-in'
     })
   }
+
+  async function refetchProfile(){
+  
+        const result = await client.GET('/api/patients/profile', {
+            headers: {
+              Authorization: `Bearer ${token.access_token}`
+            }
+          })
+  
+          if (
+            result.error?.code === 'PATIENT_PROFILE_NOT_FOUND_ERROR' ||
+            result.error?.code === 'UNAUTHORIZED_ERROR' ||
+            result.error?.code === 'UNEXPECTED_ERROR'
+          ) {
+            router.navigate({
+              to: '/auth/set-profile',
+              search: {
+                token: token.access_token
+              }
+            })
+            return
+          }
+  
+          if (result.data) {
+            profile = result.data.data
+          }
+        
+  
+        update({
+          status: 'authenticated',
+          data: {
+            token: {
+              access_token: token.access_token,
+              refresh_token: token.refresh_token
+            },
+            user: {
+              data: user.data,
+              profiles: {  patient: profile }
+            }
+          }
+        })
+    }
+  
   
 
+  const {mutate}=$api.useMutation('post','/api/patients/profile/upload/profile-image',{
+    onSuccess:()=>{
+      toast.message("Profile image set successfully")
+      refetchProfile()
+    },
+    onError:()=>{
+      toast.error("Could not upload profile picture")
+    }
+  })
+  
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0]
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
+    if (!file) return
+
+    // Optionally, validate file type/size here
+    if (!['image/jpeg', 'image/png'].includes(file.type)) {
+      toast.error('Please select a JPEG or PNG image.')
+      return
+    }
+
+    const formdata=new FormData()
+    formdata.append('file',file)
+
+    mutate({
+      body:formdata
+      ,
+      headers:{
+        'Authorization':`Bearer ${token.access_token}`
+      }
+    })
+    toast.success(`Selected file: ${file.name}`)
+    }
   return (
     <>
       <div className="space-y-6">
@@ -66,7 +149,7 @@ function ProfilePage() {
               Manage your personal information and preferences
             </p>
           </div>
-          <Button>Save Changes</Button>
+          <Button className='text-white'>Save Changes</Button>
         </div>
 
         {/* Profile tabs */}
@@ -81,17 +164,26 @@ function ProfilePage() {
           <TabsContent value="personal" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Profile Information</CardTitle>
+                <CardTitle className='text-lg'>Profile Information</CardTitle>
                 <CardDescription>Update your personal details</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex flex-col md:flex-row gap-6 items-start">
                   <div className="flex flex-col items-center gap-2">
                     <Avatar className="h-24 w-24">
-                      <AvatarImage src="/placeholder-user.jpg" alt="User" />
-                      <AvatarFallback>JD</AvatarFallback>
+                      <AvatarImage src={profile?.profile_picture?.url} alt="User" />
+                      <AvatarFallback>{profile?.first_name[0]}{profile?.last_name[0]}</AvatarFallback>
                     </Avatar>
-                    <Button variant="outline" size="sm">
+                    <input
+                      type="file"
+                      hidden
+                      ref={fileInputRef}
+                      accept="image/png, image/jpeg"
+                      onChange={handleFileChange}
+                    />
+                    <Button variant="outline" size="sm" onClick={()=>
+                      fileInputRef.current?.click()
+                    } >
                       <Upload className="mr-2 h-4 w-4" /> Change Photo
                     </Button>
                   </div>
@@ -154,7 +246,7 @@ function ProfilePage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Contact Information</CardTitle>
+                <CardTitle className='text-lg'>Contact Information</CardTitle>
                 <CardDescription>
                   Update your address and contact details
                 </CardDescription>
@@ -206,8 +298,8 @@ function ProfilePage() {
 
           <TabsContent value="medical" className="space-y-6">
             <Card>
-              <CardHeader>
-                <CardTitle>Medical History</CardTitle>
+              <CardHeader className='text-lg'>
+                <CardTitle className='text-lg'>Medical History</CardTitle>
                 <CardDescription>
                   Provide information about your medical history
                 </CardDescription>
@@ -264,7 +356,7 @@ function ProfilePage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Lifestyle Information</CardTitle>
+                <CardTitle className='text-lg'>Lifestyle Information</CardTitle>
                 <CardDescription>
                   Information about your lifestyle habits
                 </CardDescription>
@@ -335,7 +427,7 @@ function ProfilePage() {
           <TabsContent value="security" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Password</CardTitle>
+                <CardTitle className='text-lg'>Password</CardTitle>
                 <CardDescription>Change your password</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -360,7 +452,7 @@ function ProfilePage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Two-Factor Authentication</CardTitle>
+                <CardTitle className='text-md'>Two-Factor Authentication</CardTitle>
                 <CardDescription>
                   Add an extra layer of security to your account
                 </CardDescription>
@@ -391,7 +483,7 @@ function ProfilePage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Privacy Settings</CardTitle>
+                <CardTitle className='text-md'>Privacy Settings</CardTitle>
                 <CardDescription>
                   Control how your information is used
                 </CardDescription>
@@ -438,7 +530,7 @@ function ProfilePage() {
           <TabsContent value="notifications" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Notification Preferences</CardTitle>
+                <CardTitle className='text-md'>Notification Preferences</CardTitle>
                 <CardDescription>
                   Control how you receive notifications
                 </CardDescription>
@@ -503,7 +595,7 @@ function ProfilePage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Notification Channels</CardTitle>
+                <CardTitle className='text-md'>Notification Channels</CardTitle>
                 <CardDescription>
                   Choose how you want to receive notifications
                 </CardDescription>
@@ -555,3 +647,7 @@ function ProfilePage() {
     </>
   )
 }
+function arrayBufferToBase64(file: File): string | PromiseLike<string> {
+  throw new Error('Function not implemented.')
+}
+

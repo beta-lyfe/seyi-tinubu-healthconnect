@@ -9,7 +9,7 @@
 		".": "./src/lib.ts"
 	},
 	"scripts": {
-		"dev": "tsx --watch server.ts",
+		"dev": "dotenv tsx --watch server.ts",
 		"lint": "tsc"
 	},
 	"keywords": [],

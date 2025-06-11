@@ -773,8 +773,10 @@ export default function MedicationsPage() {
                     <Card className="h-full overflow-hidden transition-all hover:border-primary">
                       <div className="aspect-square relative bg-muted/20">
                         <img
-                          src={medication.img || '/placeholder.svg'}
+                          src={"/images/drug.png"}
                           alt={medication.name}
+
+                      
                           className="object-cover p-4"
                         />
                         {medication.type === 'prescription' && (

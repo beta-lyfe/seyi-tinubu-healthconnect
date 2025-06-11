@@ -415,6 +415,12 @@ const Api_Patient_Profie_Update_Body = z
 const Api_Patient_Profie_Update_Response_Success = z
   .object({ code: z.literal("PATIENT_PROFILE_UPDATED") })
   .passthrough();
+const Api_Patient_Upload_Response_Success = z
+  .object({
+    code: z.literal("PROFILE_IMAGE_UPLOAD_SUCCESSFUL"),
+    data: z.object({ url: z.string() }).passthrough(),
+  })
+  .passthrough();
 const Api_Patient_Get_Response_Success = z
   .object({
     code: z.literal("FETCH_PATIENT_PROFILE_SUCCESSFUL"),
@@ -895,6 +901,7 @@ export const schemas = {
   MediaUpdate,
   Api_Patient_Profie_Update_Body,
   Api_Patient_Profie_Update_Response_Success,
+  Api_Patient_Upload_Response_Success,
   Api_Patient_Get_Response_Success,
   Api_Patient_Get_Response_ProfileNotFoundError,
   Time,
@@ -1666,6 +1673,31 @@ const endpoints = makeApi([
       },
     ],
     response: Api_Patient_Profie_Update_Response_Success,
+    errors: [
+      {
+        status: 401,
+        description: `Access is unauthorized.`,
+        schema: Api_UnauthorizedError,
+      },
+      {
+        status: 500,
+        description: `Server error`,
+        schema: Api_UnexpectedError,
+      },
+    ],
+  },
+  {
+    method: "post",
+    path: "/api/patients/profile/upload/profile-image",
+    requestFormat: "json",
+    parameters: [
+      {
+        name: "body",
+        type: "Body",
+        schema: z.unknown(),
+      },
+    ],
+    response: Api_Patient_Upload_Response_Success,
     errors: [
       {
         status: 401,

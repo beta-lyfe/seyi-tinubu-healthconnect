@@ -437,6 +437,25 @@ namespace Api {
       ): Response.Response;
     }
 
+    @route("/profile/upload/profile-image")
+    namespace Upload {
+
+
+      namespace Response {
+        model Success {
+          code: "PROFILE_IMAGE_UPLOAD_SUCCESSFUL";
+          data: {
+            url: string;
+          };
+        }
+
+        alias Error = Api.UnauthorizedError | Api.UnexpectedError;
+        alias Response = Success | Error;
+      }
+
+      op updatePatientProfileImage(@body form: unknown): Response.Response;
+    }
+
     @route("/{id}")
     namespace Get {
       namespace Response {
@@ -1696,4 +1715,3 @@ namespace Api {
     }
   }
 }
-

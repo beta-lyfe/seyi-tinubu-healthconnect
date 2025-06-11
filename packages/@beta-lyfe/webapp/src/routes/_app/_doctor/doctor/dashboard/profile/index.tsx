@@ -227,7 +227,7 @@ export default function DoctorProfilePage() {
             <div className="flex-1 space-y-4 mt-4 md:mt-0">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                 <div>
-                  <h1 className="text-2xl font-bold">{doctorData.name}</h1>
+                  <h1 className="text-lg md:text-2xl font-bold">{doctorData.name}</h1>
                   <p className="text-primary font-medium">
                     {doctorData.specialty}
                   </p>
@@ -253,7 +253,7 @@ export default function DoctorProfilePage() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-4">
                 <div className="flex items-start gap-2">
                   <MapPin className="h-4 w-4 text-muted-foreground mt-1" />
                   <p className="text-sm">{doctorData.location}</p>
@@ -304,9 +304,9 @@ export default function DoctorProfilePage() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                <Button className="flex-1" asChild>
+                <Button className="flex-1 text-white"  asChild>
                   <a href="#!">
-                    <Edit className="mr-2 h-4 w-4" /> Edit Profile
+                    <Edit className="mr-2 h-4 w-4 text-white" /> Edit Profile
                   </a>
                 </Button>
                 <Button variant="outline" className="flex-1" asChild>
@@ -333,14 +333,14 @@ export default function DoctorProfilePage() {
         <TabsContent value="appointments" className="space-y-4">
           <Card>
             <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Upcoming Appointments</CardTitle>
+              <div className="flex items-center justify-between flex-col">
+                <div className='flex flex-col gap-2 pb-4'>
+                  <CardTitle className='text-lg'>Upcoming Appointments</CardTitle>
                   <CardDescription>
                     Your scheduled consultations for today and tomorrow
                   </CardDescription>
                 </div>
-                <Button asChild>
+                <Button asChild className='text-white'>
                   <Link to="/doctor/dashboard/appointments">
                     View All Appointments
                   </Link>
@@ -447,7 +447,7 @@ export default function DoctorProfilePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Card>
               <CardHeader>
-                <CardTitle>Pending Actions</CardTitle>
+                <CardTitle className='text-lg md:text-xl'>Pending Actions</CardTitle>
                 <CardDescription>
                   Items that require your attention
                 </CardDescription>
@@ -502,7 +502,7 @@ export default function DoctorProfilePage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Recent Patients</CardTitle>
+                <CardTitle className='text-lg md:text-xl'>Recent Patients</CardTitle>
                 <CardDescription>
                   Patients you've recently consulted with
                 </CardDescription>

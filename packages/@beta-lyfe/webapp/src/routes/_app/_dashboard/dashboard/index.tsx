@@ -47,7 +47,7 @@ export default function DashboardPage() {
           <h1 className="text-xl md:text-2xl font-bold tracking-tight">
             Welcome back, {user.data.first_name} 
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Here's an overview of your telehealth services.
           </p>
         </div>

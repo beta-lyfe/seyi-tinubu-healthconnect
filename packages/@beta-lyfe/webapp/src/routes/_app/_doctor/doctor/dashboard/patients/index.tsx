@@ -43,7 +43,7 @@ export default function DoctorPatientsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Patients</h1>
+          <h1 className="text-xl md:text-2xl font-bold tracking-tight">Patients</h1>
           <p className="text-muted-foreground">
             Manage your patient records and medical histories
           </p>
@@ -56,7 +56,7 @@ export default function DoctorPatientsPage() {
           >
             <Filter className="h-4 w-4" /> Filters
           </Button>
-          <Button size="sm">Export Data</Button>
+          <Button size="sm" className='text-white'>Export Data</Button>
         </div>
       </div>
 

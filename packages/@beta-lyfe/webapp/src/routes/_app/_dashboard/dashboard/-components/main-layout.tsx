@@ -78,7 +78,8 @@ export  function MainLayout({ children }: MainLayoutProps) {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-30 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      {/* <header className="sticky top-0 z-30 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"> */}
+       <header className="sticky top-0 z-30 w-full border-b bg-white">
         <div className="container flex h-14 items-center">
           <div className="mr-4 flex items-center gap-3">
             <img
@@ -263,7 +264,8 @@ export  function MainLayout({ children }: MainLayoutProps) {
 
       {/* Mobile bottom navigation */}
       {isMobile && (
-        <div className="sticky bottom-0 z-30 w-full border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        // <div className="sticky bottom-0 z-30 w-full border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+         <div className="sticky bottom-0 z-30 w-full border-t bg-white">
           <div className="grid grid-cols-5 h-16">
             {navigation.map((item) => (
               <Link

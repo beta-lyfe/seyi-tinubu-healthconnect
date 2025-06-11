@@ -66,7 +66,7 @@ export default function DoctorWalletPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Wallet</h1>
+          <h1 className="text-xl font-bold tracking-tight">Wallet</h1>
           <p className="text-muted-foreground">
             Manage your earnings and payouts
           </p>
@@ -91,7 +91,7 @@ export default function DoctorWalletPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">₦3,240.50</div>
+            <div className="text-xl font-bold">₦3,240.50</div>
             <div className="mt-1 flex items-center text-xs text-muted-foreground">
               <Badge variant="outline" className="mr-1">
                 Pending: ₦750.00
@@ -116,7 +116,7 @@ export default function DoctorWalletPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">₦1,840.00</div>
+            <div className="text-xl font-bold">₦1,840.00</div>
             <div className="mt-1 flex items-center text-xs text-green-500">
               <ArrowUp className="mr-1 h-3 w-3" />
               <span>12.5% from last month</span>
@@ -141,7 +141,7 @@ export default function DoctorWalletPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">₦1,250.00</div>
+            <div className="text-xl font-bold">₦1,250.00</div>
             <div className="mt-1 flex items-center text-xs text-muted-foreground">
               <Calendar className="mr-1 h-3 w-3" />
               <span>Scheduled for May 15, 2025</span>
@@ -160,7 +160,7 @@ export default function DoctorWalletPage() {
       </div>
 
       <Tabs defaultValue="transactions" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 md:w-auto">
+        <TabsList className="grid w-full grid-cols-3 md:w-auto overflow-auto">
           <TabsTrigger value="transactions">Transactions</TabsTrigger>
           <TabsTrigger value="payouts">Payouts</TabsTrigger>
           <TabsTrigger value="payment-methods">Payment Methods</TabsTrigger>
@@ -212,7 +212,7 @@ export default function DoctorWalletPage() {
         <TabsContent value="transactions" className="mt-4">
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle>Transaction History</CardTitle>
+              <CardTitle className='text-lg md:text-xl'>Transaction History</CardTitle>
               <CardDescription>
                 View all your earnings and payouts
               </CardDescription>
@@ -329,7 +329,7 @@ export default function DoctorWalletPage() {
         <TabsContent value="payouts" className="mt-4">
           <Card>
             <CardHeader>
-              <CardTitle>Payout History</CardTitle>
+              <CardTitle className='text-lg md:text-xl'>Payout History</CardTitle>
               <CardDescription>
                 View your past and upcoming payouts
               </CardDescription>
@@ -411,7 +411,7 @@ export default function DoctorWalletPage() {
         <TabsContent value="payment-methods" className="mt-4">
           <Card>
             <CardHeader>
-              <CardTitle>Payment Methods</CardTitle>
+              <CardTitle className='text-lg md:text-xl'>Payment Methods</CardTitle>
               <CardDescription>
                 Manage your payout methods and preferences
               </CardDescription>
@@ -501,7 +501,7 @@ export default function DoctorWalletPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Earnings Analytics</CardTitle>
+          <CardTitle className='text-lg md:text-xl'>Earnings Analytics</CardTitle>
           <CardDescription>
             View your earnings trends and performance
           </CardDescription>
@@ -579,7 +579,7 @@ export default function DoctorWalletPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Tax Information</CardTitle>
+          <CardTitle className='text-lg md:text-xl'>Tax Information</CardTitle>
           <CardDescription>
             Manage your tax documents and information
           </CardDescription>

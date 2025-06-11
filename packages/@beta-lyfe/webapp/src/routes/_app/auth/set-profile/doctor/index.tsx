@@ -422,7 +422,7 @@ export default function DoctorProfileSetup() {
               </div>
             )}
             <div className="text-center">
-              <h2 className="text-2xl font-bold">Personal Information</h2>
+              <h2 className="text-lg md:text-xl font-bold">Personal Information</h2>
               <p className="text-muted-foreground">Let's start with your basic details</p>
             </div>
 
@@ -530,7 +530,7 @@ export default function DoctorProfileSetup() {
               </div>
             )}
             <div className="text-center">
-              <h2 className="text-2xl font-bold">Professional Information</h2>
+              <h2 className="text-lg md:text-xl font-bold">Professional Information</h2>
               <p className="text-muted-foreground">Tell us about your medical expertise</p>
             </div>
 
@@ -561,7 +561,7 @@ export default function DoctorProfileSetup() {
                 type="number"
                 min="0"
                 value={formData.years_of_experience}
-                onChange={(e) => updateFormData("years_of_experience", Number.parseInt(e.target.value) || 0)}
+                onChange={(e) => updateFormData("years_of_experience", Number.parseInt(e.target.value))}
                 placeholder="Enter years of experience"
                 className={errors.years_of_experience ? "border-destructive" : ""}
               />
@@ -597,7 +597,7 @@ export default function DoctorProfileSetup() {
               </div>
             )}
             <div className="text-center">
-              <h2 className="text-2xl font-bold">Consultation Fees</h2>
+              <h2 className="text-lg md:text-xl font-bold">Consultation Fees</h2>
               <p className="text-muted-foreground">Set your consultation charges</p>
             </div>
 
@@ -605,7 +605,7 @@ export default function DoctorProfileSetup() {
               <div className="space-y-2">
                 <Label htmlFor="video_consultation_charge">Video Consultation *</Label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">₦</span>
                   <Input
                     id="video_consultation_charge"
                     value={formData.video_consultation_charge}
@@ -619,7 +619,7 @@ export default function DoctorProfileSetup() {
               <div className="space-y-2">
                 <Label htmlFor="clinic_consultation_charge">Clinic Consultation *</Label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">₦</span>
                   <Input
                     id="clinic_consultation_charge"
                     value={formData.clinic_consultation_charge}
@@ -633,7 +633,7 @@ export default function DoctorProfileSetup() {
               <div className="space-y-2">
                 <Label htmlFor="home_consultation_charge">Home Consultation</Label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">$</span>
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">₦</span>
                   <Input
                     id="home_consultation_charge"
                     value={formData.home_consultation_charge}
@@ -671,14 +671,14 @@ export default function DoctorProfileSetup() {
               </div>
             )}
             <div className="text-center">
-              <h2 className="text-2xl font-bold">Experience & Certifications</h2>
+              <h2 className="md:text-xl font-bold">Experience & Certifications</h2>
               <p className="text-muted-foreground">Add your professional background</p>
             </div>
 
             {/* Certifications */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium">Certifications</h3>
+                <h3 className="text-sm md:text-lg font-medium">Certifications</h3>
                 <Button variant="outline" size="sm" onClick={addCertification}>
                   <Plus className="h-4 w-4 mr-2" /> Add Certification
                 </Button>
@@ -734,7 +734,7 @@ export default function DoctorProfileSetup() {
             {/* Experiences */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium">Work Experience</h3>
+                <h3 className="text-sm md:text-lg ">Work Experience</h3>
                 <Button variant="outline" size="sm" onClick={addExperience}>
                   <Plus className="h-4 w-4 mr-2" /> Add Experience
                 </Button>
@@ -813,14 +813,14 @@ export default function DoctorProfileSetup() {
               </div>
             )}
             <div className="text-center">
-              <h2 className="text-2xl font-bold">Working Hours & Location</h2>
+              <h2 className="text-lg md:text-2xl font-bold">Schedule & Location</h2>
               <p className="text-muted-foreground">Set your availability and practice location</p>
             </div>
 
             {/* Working Hours */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium">Working Hours</h3>
+                <h3 className="text-md md:text-lg">Work Hours</h3>
                 <Button variant="outline" size="sm" onClick={addWorkingHour}>
                   <Plus className="h-4 w-4 mr-2" /> Add Working Day
                 </Button>
@@ -988,7 +988,7 @@ export default function DoctorProfileSetup() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-3xl font-bold">Complete Your Profile</h1>
+              <h1 className="text-lg md:text-xl font-bold">Complete Your Profile</h1>
               <p className="text-muted-foreground">
                 Step {currentStep} of {totalSteps}: Fill in your professional details
               </p>
@@ -1003,13 +1003,13 @@ export default function DoctorProfileSetup() {
         {/* Step Indicators */}
         <div className="flex items-center justify-between mb-8">
           {[
-            { step: 1, title: "Personal Info", icon: User },
+            { step: 1, title: "Personal", icon: User },
             { step: 2, title: "Professional", icon: Briefcase },
-            { step: 3, title: "Consultation Fees", icon: DollarSign },
+            { step: 3, title: "Fees", icon: DollarSign },
             { step: 4, title: "Experience", icon: GraduationCap },
-            { step: 5, title: "Schedule & Location", icon: MapPin },
+            { step: 5, title: "Schedule", icon: MapPin },
           ].map(({ step, title, icon: Icon }) => (
-            <div key={step} className="flex flex-col items-center">
+            <div key={step} className="flex flex-col justify-between items-center">
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center border-2 ${
                   step <= currentStep

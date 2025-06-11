@@ -72,10 +72,10 @@ importers:
     dependencies:
       '@scalar/api-reference':
         specifier: ^1.25.21
-        version: 1.28.5(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)))(typescript@5.6.3)
+        version: 1.28.5(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))(typescript@5.6.3)
       '@scalar/api-reference-react':
         specifier: ^0.3.97
-        version: 0.3.166(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)))(typescript@5.6.3)
+        version: 0.3.166(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))(typescript@5.6.3)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -97,7 +97,7 @@ importers:
         version: 0.9.2(typescript@5.6.3)(zod@3.24.2)
       '@types/node':
         specifier: ^22.7.2
-        version: 22.13.10
+        version: 22.13.13
       '@types/react':
         specifier: ^18.3.9
         version: 18.3.18
@@ -121,7 +121,7 @@ importers:
         version: 0.60.0(@typespec/compiler@0.60.1)(@typespec/http@0.60.0(@typespec/compiler@0.60.1))
       '@vitejs/plugin-react-swc':
         specifier: ^3.7.0
-        version: 3.8.0(@swc/helpers@0.5.15)(vite@5.4.14(@types/node@22.13.10)(terser@5.39.0))
+        version: 3.8.0(@swc/helpers@0.5.15)(vite@5.4.14(@types/node@22.13.13)(terser@5.39.0))
       '@zodios/core':
         specifier: ^10.9.6
         version: 10.9.6(axios@1.8.3)(zod@3.24.2)
@@ -157,10 +157,10 @@ importers:
         version: 0.10.1(openapi-types@12.1.3)(react@18.3.1)(xstate@5.19.2)
       vite:
         specifier: ^5.4.8
-        version: 5.4.14(@types/node@22.13.10)(terser@5.39.0)
+        version: 5.4.14(@types/node@22.13.13)(terser@5.39.0)
       vitest:
         specifier: ^3.0.5
-        version: 3.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.13.10)(terser@5.39.0)
+        version: 3.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.13.13)(terser@5.39.0)
       zod:
         specifier: ^3.23.8
         version: 3.24.2
@@ -195,6 +195,9 @@ importers:
       bcryptjs:
         specifier: ^3.0.2
         version: 3.0.2
+      cloudinary:
+        specifier: ^2.6.1
+        version: 2.6.1
       date-fns:
         specifier: ^3.3.1
         version: 3.6.0
@@ -255,7 +258,7 @@ importers:
     dependencies:
       '@beta-lyfe/ui':
         specifier: 'file:'
-        version: file:@beta-lyfe/ui(@testing-library/dom@9.3.4)(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(rollup@4.31.0)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))(typescript@5.6.3)
+        version: 'link:'
       '@headlessui/react':
         specifier: ^2.1.2
         version: 2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -318,7 +321,7 @@ importers:
         version: 1.2.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-slot':
         specifier: ^1.1.2
-        version: 1.1.2(@types/react@18.3.18)(react@18.3.1)
+        version: 1.2.0(@types/react@18.3.18)(react@18.3.1)
       '@radix-ui/react-switch':
         specifier: ^1.1.3
         version: 1.1.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -511,7 +514,7 @@ importers:
         version: 1.1.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-slot':
         specifier: ^1.1.0
-        version: 1.1.2(@types/react@18.3.18)(react@18.3.1)
+        version: 1.2.0(@types/react@18.3.18)(react@18.3.1)
       '@radix-ui/react-switch':
         specifier: ^1.0.3
         version: 1.1.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -719,10 +722,10 @@ importers:
         version: 1.114.22(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/router-plugin':
         specifier: ^1.47.0
-        version: 1.114.22(@tanstack/react-router@1.114.22(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@6.2.2(@types/node@22.13.10)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 1.114.22(@tanstack/react-router@1.114.22(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@6.2.2(@types/node@22.13.13)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
       flowbite-react:
         specifier: ^0.10.1
-        version: 0.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.31.0)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)))
+        version: 0.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.31.0)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))
       lucide-react:
         specifier: ^0.315.0
         version: 0.315.0(react@18.3.1)
@@ -750,7 +753,7 @@ importers:
         version: 0.9.2(typescript@5.6.3)(zod@3.24.2)
       '@types/node':
         specifier: ^22.10.7
-        version: 22.13.10
+        version: 22.13.13
       '@types/react':
         specifier: ^18.3.18
         version: 18.3.18
@@ -759,7 +762,7 @@ importers:
         version: 18.3.5(@types/react@18.3.18)
       '@vitejs/plugin-react-swc':
         specifier: ^3.5.0
-        version: 3.8.0(@swc/helpers@0.5.15)(vite@6.2.2(@types/node@22.13.10)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
+        version: 3.8.0(@swc/helpers@0.5.15)(vite@6.2.2(@types/node@22.13.13)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.21(postcss@8.5.3)
@@ -774,10 +777,10 @@ importers:
         version: 8.5.3
       tailwindcss:
         specifier: ^3.4.17
-        version: 3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3))
+        version: 3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3))
       vite:
         specifier: ^6.0.5
-        version: 6.2.2(@types/node@22.13.10)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+        version: 6.2.2(@types/node@22.13.13)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
 
 packages:
 
@@ -1389,9 +1392,6 @@ packages:
   '@babel/types@7.27.0':
     resolution: {integrity: sha512-H45s8fVLYjbhFH62dIJ3WtmJ6RSPt/3DRO0ZcT2SUiYiQyz3BLVb9ADEnLl91m74aQPS3AzzeajZHYOalWe3bg==}
     engines: {node: '>=6.9.0'}
-
-  '@beta-lyfe/ui@file:@beta-lyfe/ui':
-    resolution: {directory: '@beta-lyfe/ui', type: directory}
 
   '@capacitor/android@7.2.0':
     resolution: {integrity: sha512-zdhEy3jZPG5Toe/pGzKtDgIiBGywjaoEuQWnGVjBYPlSAEUtAhpZ2At7V0SCb26yluAuzrAUV0Ue+LQeEtHwFQ==}
@@ -4402,9 +4402,6 @@ packages:
   '@types/node@20.17.24':
     resolution: {integrity: sha512-d7fGCyB96w9BnWQrOsJtpyiSaBcAYYr75bnK6ZRjDbql2cGLj/3GsL5OYmLPNq76l7Gf2q4Rv9J2o6h5CrD9sA==}
 
-  '@types/node@22.13.10':
-    resolution: {integrity: sha512-I6LPUvlRH+O6VRUqYOcMudhaIdUVWfsjnZavnsraHvpBwaEyMN29ry+0UVJhImYL16xsscu0aske3yA+uPOWfw==}
-
   '@types/node@22.13.13':
     resolution: {integrity: sha512-ClsL5nMwKaBRwPcCvH8E7+nU4GxHVx1axNvMZTFHMEfNI7oahimt26P5zjVCRrjiIWj6YFXfE1v3dEp94wLcGQ==}
 
@@ -5291,6 +5288,10 @@ packages:
   clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
+
+  cloudinary@2.6.1:
+    resolution: {integrity: sha512-Dt7o3p4VzxYoTi+EqWkVQmGy6WiXIyMcG5Gbr9kPR/EQ+jZa+3FFzlDKfDx1uDsaB1aTR1gYeO6wZqrgLFaByQ==}
+    engines: {node: '>=9'}
 
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
@@ -8193,6 +8194,7 @@ packages:
 
   path-match@1.2.4:
     resolution: {integrity: sha512-UWlehEdqu36jmh4h5CWJ7tARp1OEVKGHKm6+dg9qMq5RKUTV5WJrGgaZ3dN2m7WFAXDbjlHzvJvL/IUpy84Ktw==}
+    deprecated: This package is archived and no longer maintained. For support, visit https://github.com/expressjs/express/discussions
 
   path-parse@1.0.7:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
@@ -11234,77 +11236,6 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
-  '@beta-lyfe/ui@file:@beta-lyfe/ui(@testing-library/dom@9.3.4)(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(rollup@4.31.0)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))(typescript@5.6.3)':
-    dependencies:
-      '@headlessui/react': 2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@hookform/resolvers': 3.10.0(react-hook-form@7.54.2(react@18.3.1))
-      '@huddle01/react': 2.3.6(@testing-library/dom@9.3.4)(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))
-      '@huddle01/server-sdk': 2.5.7
-      '@radix-ui/react-accordion': 1.2.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-avatar': 1.1.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-checkbox': 1.1.4(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-collapsible': 1.1.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-context-menu': 2.2.6(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-dialog': 1.1.6(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-dropdown-menu': 2.1.6(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-icons': 1.3.2(react@18.3.1)
-      '@radix-ui/react-label': 2.1.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-popover': 1.1.6(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-progress': 1.1.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-radio-group': 1.2.4(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-scroll-area': 1.2.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-select': 2.1.6(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-separator': 1.1.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-slider': 1.2.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-slot': 1.2.0(@types/react@18.3.18)(react@18.3.1)
-      '@radix-ui/react-switch': 1.1.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-tabs': 1.1.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-tooltip': 1.1.8(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@tanstack/react-query': 5.68.0(react@18.3.1)
-      '@tanstack/react-router': 1.114.22(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      class-variance-authority: 0.7.1
-      clsx: 2.1.1
-      date-fns: 3.6.0
-      embla-carousel-react: 8.5.2(react@18.3.1)
-      flowbite-react: 0.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.31.0)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))
-      framer-motion: 11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      input-otp: 1.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      jotai: 2.12.2(@types/react@18.3.18)(react@18.3.1)
-      lodash: 4.17.21
-      lucide-react: 0.315.0(react@18.3.1)
-      motion: 10.18.0
-      react: 18.3.1
-      react-day-picker: 8.10.1(date-fns@3.6.0)(react@18.3.1)
-      react-dom: 18.3.1(react@18.3.1)
-      react-hook-form: 7.54.2(react@18.3.1)
-      react-resizable-panels: 1.0.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react-social-icons: 6.22.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      recharts: 2.15.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      shadcn: 2.4.0-canary.9(typescript@5.6.3)
-      sonner: 1.7.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      swiper: 11.2.5
-      tailwind-merge: 2.6.0
-      tailwind-scrollbar: 3.1.0(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))
-      tailwindcss-animate: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))
-      twin.macro: 3.4.1(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))
-      ulidx: 2.4.1
-      valtio: 1.13.2(@types/react@18.3.18)(react@18.3.1)
-      vaul: 1.1.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      zustand: 4.5.6(@types/react@18.3.18)(react@18.3.1)
-    transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
-      - '@testing-library/dom'
-      - '@types/react'
-      - '@types/react-dom'
-      - debug
-      - encoding
-      - immer
-      - react-test-renderer
-      - rollup
-      - supports-color
-      - tailwindcss
-      - typescript
-
   '@capacitor/android@7.2.0(@capacitor/core@7.2.0)':
     dependencies:
       '@capacitor/core': 7.2.0
@@ -12025,9 +11956,9 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@headlessui/tailwindcss@0.2.2(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)))':
+  '@headlessui/tailwindcss@0.2.2(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))':
     dependencies:
-      tailwindcss: 3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3))
+      tailwindcss: 3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3))
 
   '@headlessui/vue@1.7.23(vue@3.5.13(typescript@5.6.3))':
     dependencies:
@@ -13650,9 +13581,9 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.31.0':
     optional: true
 
-  '@scalar/api-client@2.2.19(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)))(typescript@5.6.3)':
+  '@scalar/api-client@2.2.19(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))(typescript@5.6.3)':
     dependencies:
-      '@headlessui/tailwindcss': 0.2.2(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)))
+      '@headlessui/tailwindcss': 0.2.2(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))
       '@headlessui/vue': 1.7.23(vue@3.5.13(typescript@5.6.3))
       '@scalar/components': 0.13.9(typescript@5.6.3)
       '@scalar/draggable': 0.1.7(typescript@5.6.3)
@@ -13701,9 +13632,9 @@ snapshots:
       - typescript
       - universal-cookie
 
-  '@scalar/api-client@2.3.5(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)))(typescript@5.6.3)':
+  '@scalar/api-client@2.3.5(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))(typescript@5.6.3)':
     dependencies:
-      '@headlessui/tailwindcss': 0.2.2(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)))
+      '@headlessui/tailwindcss': 0.2.2(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))
       '@headlessui/vue': 1.7.23(vue@3.5.13(typescript@5.6.3))
       '@scalar/components': 0.13.37(typescript@5.6.3)
       '@scalar/draggable': 0.1.11(typescript@5.6.3)
@@ -13752,9 +13683,9 @@ snapshots:
       - typescript
       - universal-cookie
 
-  '@scalar/api-reference-react@0.3.166(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)))(typescript@5.6.3)':
+  '@scalar/api-reference-react@0.3.166(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(react@18.3.1)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))(typescript@5.6.3)':
     dependencies:
-      '@scalar/api-reference': 1.25.90(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)))(typescript@5.6.3)
+      '@scalar/api-reference': 1.25.90(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))(typescript@5.6.3)
       react: 18.3.1
     transitivePeerDependencies:
       - '@hyperjump/browser'
@@ -13773,11 +13704,11 @@ snapshots:
       - typescript
       - universal-cookie
 
-  '@scalar/api-reference@1.25.90(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)))(typescript@5.6.3)':
+  '@scalar/api-reference@1.25.90(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))(typescript@5.6.3)':
     dependencies:
       '@floating-ui/vue': 1.1.6(vue@3.5.13(typescript@5.6.3))
       '@headlessui/vue': 1.7.23(vue@3.5.13(typescript@5.6.3))
-      '@scalar/api-client': 2.2.19(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)))(typescript@5.6.3)
+      '@scalar/api-client': 2.2.19(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))(typescript@5.6.3)
       '@scalar/code-highlight': 0.0.19
       '@scalar/components': 0.13.9(typescript@5.6.3)
       '@scalar/oas-utils': 0.2.91(@hyperjump/browser@1.2.0)
@@ -13811,11 +13742,11 @@ snapshots:
       - typescript
       - universal-cookie
 
-  '@scalar/api-reference@1.28.5(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)))(typescript@5.6.3)':
+  '@scalar/api-reference@1.28.5(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))(typescript@5.6.3)':
     dependencies:
       '@floating-ui/vue': 1.1.6(vue@3.5.13(typescript@5.6.3))
       '@headlessui/vue': 1.7.23(vue@3.5.13(typescript@5.6.3))
-      '@scalar/api-client': 2.3.5(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)))(typescript@5.6.3)
+      '@scalar/api-client': 2.3.5(@hyperjump/browser@1.2.0)(axios@1.8.3)(change-case@5.4.4)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)))(typescript@5.6.3)
       '@scalar/code-highlight': 0.0.25
       '@scalar/components': 0.13.37(typescript@5.6.3)
       '@scalar/oas-utils': 0.2.120(@hyperjump/browser@1.2.0)
@@ -14432,7 +14363,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@tanstack/router-plugin@1.114.22(@tanstack/react-router@1.114.22(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@6.2.2(@types/node@22.13.10)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
+  '@tanstack/router-plugin@1.114.22(@tanstack/react-router@1.114.22(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@6.2.2(@types/node@22.13.13)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
     dependencies:
       '@babel/core': 7.26.10
       '@babel/plugin-syntax-jsx': 7.25.9(@babel/core@7.26.10)
@@ -14453,7 +14384,7 @@ snapshots:
       zod: 3.24.2
     optionalDependencies:
       '@tanstack/react-router': 1.114.22(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      vite: 6.2.2(@types/node@22.13.10)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vite: 6.2.2(@types/node@22.13.13)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -14669,10 +14600,6 @@ snapshots:
   '@types/node@20.17.24':
     dependencies:
       undici-types: 6.19.8
-
-  '@types/node@22.13.10':
-    dependencies:
-      undici-types: 6.20.0
 
   '@types/node@22.13.13':
     dependencies:
@@ -15001,17 +14928,17 @@ snapshots:
     transitivePeerDependencies:
       - '@swc/helpers'
 
-  '@vitejs/plugin-react-swc@3.8.0(@swc/helpers@0.5.15)(vite@5.4.14(@types/node@22.13.10)(terser@5.39.0))':
+  '@vitejs/plugin-react-swc@3.8.0(@swc/helpers@0.5.15)(vite@5.4.14(@types/node@22.13.13)(terser@5.39.0))':
     dependencies:
       '@swc/core': 1.11.9(@swc/helpers@0.5.15)
-      vite: 5.4.14(@types/node@22.13.10)(terser@5.39.0)
+      vite: 5.4.14(@types/node@22.13.13)(terser@5.39.0)
     transitivePeerDependencies:
       - '@swc/helpers'
 
-  '@vitejs/plugin-react-swc@3.8.0(@swc/helpers@0.5.15)(vite@6.2.2(@types/node@22.13.10)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
+  '@vitejs/plugin-react-swc@3.8.0(@swc/helpers@0.5.15)(vite@6.2.2(@types/node@22.13.13)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))':
     dependencies:
       '@swc/core': 1.11.9(@swc/helpers@0.5.15)
-      vite: 6.2.2(@types/node@22.13.10)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
+      vite: 6.2.2(@types/node@22.13.13)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0)
     transitivePeerDependencies:
       - '@swc/helpers'
 
@@ -15033,13 +14960,13 @@ snapshots:
       chai: 5.2.0
       tinyrainbow: 2.0.0
 
-  '@vitest/mocker@3.0.8(vite@5.4.14(@types/node@22.13.10)(terser@5.39.0))':
+  '@vitest/mocker@3.0.8(vite@5.4.14(@types/node@22.13.13)(terser@5.39.0))':
     dependencies:
       '@vitest/spy': 3.0.8
       estree-walker: 3.0.3
       magic-string: 0.30.17
     optionalDependencies:
-      vite: 5.4.14(@types/node@22.13.10)(terser@5.39.0)
+      vite: 5.4.14(@types/node@22.13.13)(terser@5.39.0)
 
   '@vitest/pretty-format@3.0.8':
     dependencies:
@@ -15740,6 +15667,11 @@ snapshots:
       wrap-ansi: 7.0.0
 
   clone@1.0.4: {}
+
+  cloudinary@2.6.1:
+    dependencies:
+      lodash: 4.17.21
+      q: 1.5.1
 
   clsx@2.1.1: {}
 
@@ -16954,21 +16886,6 @@ snapshots:
       react-icons: 5.2.1(react@18.3.1)
       tailwind-merge: 2.4.0
       tailwindcss: 3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@20.17.24)(typescript@5.6.3))
-    transitivePeerDependencies:
-      - rollup
-
-  flowbite-react@0.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.31.0)(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3))):
-    dependencies:
-      '@floating-ui/core': 1.6.6
-      '@floating-ui/react': 0.26.21(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      classnames: 2.5.1
-      debounce: 2.1.0
-      flowbite: 2.5.1(rollup@4.31.0)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-icons: 5.2.1(react@18.3.1)
-      tailwind-merge: 2.4.0
-      tailwindcss: 3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3))
     transitivePeerDependencies:
       - rollup
 
@@ -19275,14 +19192,6 @@ snapshots:
       postcss: 8.5.3
       ts-node: 10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@20.17.24)(typescript@5.6.3)
 
-  postcss-load-config@4.0.2(postcss@8.5.3)(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)):
-    dependencies:
-      lilconfig: 3.1.3
-      yaml: 2.7.0
-    optionalDependencies:
-      postcss: 8.5.3
-      ts-node: 10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)
-
   postcss-load-config@4.0.2(postcss@8.5.3)(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)):
     dependencies:
       lilconfig: 3.1.3
@@ -20605,33 +20514,6 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
-  tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3)):
-    dependencies:
-      '@alloc/quick-lru': 5.2.0
-      arg: 5.0.2
-      chokidar: 3.6.0
-      didyoumean: 1.2.2
-      dlv: 1.1.3
-      fast-glob: 3.3.3
-      glob-parent: 6.0.2
-      is-glob: 4.0.3
-      jiti: 1.21.7
-      lilconfig: 3.1.3
-      micromatch: 4.0.8
-      normalize-path: 3.0.0
-      object-hash: 3.0.0
-      picocolors: 1.1.1
-      postcss: 8.5.3
-      postcss-import: 15.1.0(postcss@8.5.3)
-      postcss-js: 4.0.1(postcss@8.5.3)
-      postcss-load-config: 4.0.2(postcss@8.5.3)(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3))
-      postcss-nested: 6.2.0(postcss@8.5.3)
-      postcss-selector-parser: 6.1.2
-      resolve: 1.22.10
-      sucrase: 3.35.0
-    transitivePeerDependencies:
-      - ts-node
-
   tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
@@ -20901,27 +20783,6 @@ snapshots:
       yn: 3.1.1
     optionalDependencies:
       '@swc/core': 1.11.9(@swc/helpers@0.5.15)
-
-  ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.6.3):
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.11
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.4
-      '@types/node': 22.13.10
-      acorn: 8.14.0
-      acorn-walk: 8.3.4
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 5.6.3
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
-    optionalDependencies:
-      '@swc/core': 1.11.9(@swc/helpers@0.5.15)
-    optional: true
 
   ts-node@10.9.1(@swc/core@1.11.9(@swc/helpers@0.5.15))(@types/node@22.13.13)(typescript@5.6.3):
     dependencies:
@@ -21339,13 +21200,13 @@ snapshots:
       d3-time: 3.1.0
       d3-timer: 3.0.1
 
-  vite-node@3.0.8(@types/node@22.13.10)(terser@5.39.0):
+  vite-node@3.0.8(@types/node@22.13.13)(terser@5.39.0):
     dependencies:
       cac: 6.7.14
       debug: 4.4.0
       es-module-lexer: 1.6.0
       pathe: 2.0.3
-      vite: 5.4.14(@types/node@22.13.10)(terser@5.39.0)
+      vite: 5.4.14(@types/node@22.13.13)(terser@5.39.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -21397,33 +21258,33 @@ snapshots:
       fsevents: 2.3.3
       terser: 5.39.0
 
-  vite@5.4.14(@types/node@22.13.10)(terser@5.39.0):
+  vite@5.4.14(@types/node@22.13.13)(terser@5.39.0):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.5.3
       rollup: 4.31.0
     optionalDependencies:
-      '@types/node': 22.13.10
+      '@types/node': 22.13.13
       fsevents: 2.3.3
       terser: 5.39.0
 
-  vite@6.2.2(@types/node@22.13.10)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0):
+  vite@6.2.2(@types/node@22.13.13)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0):
     dependencies:
       esbuild: 0.25.1
       postcss: 8.5.3
       rollup: 4.31.0
     optionalDependencies:
-      '@types/node': 22.13.10
+      '@types/node': 22.13.13
       fsevents: 2.3.3
       jiti: 1.21.7
       terser: 5.39.0
       tsx: 4.19.3
       yaml: 2.7.0
 
-  vitest@3.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.13.10)(terser@5.39.0):
+  vitest@3.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.13.13)(terser@5.39.0):
     dependencies:
       '@vitest/expect': 3.0.8
-      '@vitest/mocker': 3.0.8(vite@5.4.14(@types/node@22.13.10)(terser@5.39.0))
+      '@vitest/mocker': 3.0.8(vite@5.4.14(@types/node@22.13.13)(terser@5.39.0))
       '@vitest/pretty-format': 3.0.8
       '@vitest/runner': 3.0.8
       '@vitest/snapshot': 3.0.8
@@ -21439,13 +21300,13 @@ snapshots:
       tinyexec: 0.3.2
       tinypool: 1.0.2
       tinyrainbow: 2.0.0
-      vite: 5.4.14(@types/node@22.13.10)(terser@5.39.0)
-      vite-node: 3.0.8(@types/node@22.13.10)(terser@5.39.0)
+      vite: 5.4.14(@types/node@22.13.13)(terser@5.39.0)
+      vite-node: 3.0.8(@types/node@22.13.13)(terser@5.39.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@edge-runtime/vm': 3.2.0
       '@types/debug': 4.1.12
-      '@types/node': 22.13.10
+      '@types/node': 22.13.13
     transitivePeerDependencies:
       - less
       - lightningcss

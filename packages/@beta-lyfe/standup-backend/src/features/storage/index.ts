@@ -8,6 +8,6 @@ export namespace Storage {
   )
 
   export const schema = {
-    file: z.instanceof(File)
+   file: z.instanceof(File)
   }
 }

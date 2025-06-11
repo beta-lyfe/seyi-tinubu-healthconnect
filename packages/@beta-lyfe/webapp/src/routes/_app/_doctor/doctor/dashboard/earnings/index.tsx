@@ -47,7 +47,7 @@ export default function DoctorEarningsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">
+          <h1 className="text-xl md:text-2xl font-bold tracking-tight">
             Earnings & Transactions
           </h1>
           <p className="text-muted-foreground">
@@ -62,7 +62,7 @@ export default function DoctorEarningsPage() {
           >
             <Filter className="h-4 w-4" /> Filters
           </Button>
-          <Button size="sm">
+          <Button size="sm" className='text-white'>
             <Download className="mr-2 h-4 w-4" /> Export
           </Button>
         </div>
@@ -72,7 +72,7 @@ export default function DoctorEarningsPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="md:col-span-2">
           <CardHeader className="pb-3">
-            <CardTitle>Earnings Overview</CardTitle>
+            <CardTitle className='text-lg'>Earnings Overview</CardTitle>
             <CardDescription>
               Your earnings summary for the selected period
             </CardDescription>
@@ -103,7 +103,7 @@ export default function DoctorEarningsPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
               <div>
                 <p className="text-sm text-muted-foreground">Total Earnings</p>
-                <p className="text-3xl font-bold">₦12,450.00</p>
+                <p className="text-lg md:text-2xl font-bold py-2">₦12,450.00</p>
               </div>
               <Badge className="flex items-center gap-1 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
                 <ArrowUpRight className="h-3 w-3" /> +15.2% from last month
@@ -167,7 +167,7 @@ export default function DoctorEarningsPage() {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle>Payout Information</CardTitle>
+            <CardTitle className='text-lg'>Payout Information</CardTitle>
             <CardDescription>Your payment details and schedule</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -210,7 +210,7 @@ export default function DoctorEarningsPage() {
       {/* Transactions */}
       <Card>
         <CardHeader>
-          <CardTitle>Transaction History</CardTitle>
+          <CardTitle className='text-xl'>Transaction History</CardTitle>
           <CardDescription>View all your past transactions</CardDescription>
         </CardHeader>
         <CardContent>

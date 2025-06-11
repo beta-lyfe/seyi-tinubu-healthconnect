@@ -44,6 +44,19 @@ namespace Repository {
     }
   }
 
+
+  export const saveProfileImage = async (
+    payload: PatientProfile['profile_picture']
+  ): Promise<Result<PatientProfile['profile_picture'], Error>> => {
+    try {
+      const profile_image = await db.update(patientProfiles).set({'profile_picture':payload})
+      return Result.ok(payload)
+    } catch (error) {
+      console.error('Error creating patient profile:', error)
+      return Result.err('UNEXPECTED_ERROR')
+    }
+  }
+
   /**
    * Get a patient by ID.
    */
