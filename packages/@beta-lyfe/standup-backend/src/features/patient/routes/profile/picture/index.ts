@@ -1,9 +1,9 @@
 import { Hono } from "hono";
 import {encodeBase64} from 'hono/utils/encode'
-import { AuthMiddleware } from "../../../../auth";
-import { v2 as cloudinary } from "cloudinary";
+import { AuthMiddleware } from "../../../../auth"
 import service from "./service";
 import type { paths } from "@beta-lyfe/api/types";
+import {Storage} from '../../../../storage'
 
 
  export type Response =
@@ -15,15 +15,14 @@ export default new Hono().post('/upload/profile-image',AuthMiddleware.middleware
     let response:Response
     const body = await c.req.parseBody();
     const  file  = body['file'] as File
-    const arrayBuffer = await file.arrayBuffer();
-    const base64 = encodeBase64(arrayBuffer);
-    const dataUri = `data:${file.type};base64,${base64}`;
-    const { public_id, url } = await cloudinary.uploader.upload(dataUri, {
-      folder: 'betalyfe',
-      resource_type: 'image',
-      public_id: file.name + '-' + Date.now(),
-      unique_filename: true
-    });
+    const storageResult=await Storage.service.upload(file)
+    if(storageResult.isErr){
+      response={code : 'UNEXPECTED_ERROR'}
+      return c.json(response)
+    }
+
+    const {public_id,url}=storageResult.value
+
     const result=await service({
         public_id,url
     })
