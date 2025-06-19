@@ -1,10 +1,12 @@
 {
-	"$schema": "https://openapi.vercel.sh/vercel.json",
 	"version": 3,
-	"rewrites": [
+	"routes": [
 		{
-			"source": "/:path*",
-			"destination": "/:path*"
+			"handle": "rewrite"
+		},
+		{
+			"src": "/(.*)",
+			"dest": "/"
 		}
 	]
 }
