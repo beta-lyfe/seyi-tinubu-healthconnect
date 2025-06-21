@@ -4,8 +4,27 @@ import { writeFile } from 'node:fs/promises'
 import { generateZodClientFromOpenAPI } from 'openapi-zod-client'
 import SwaggerParser from '@apidevtools/swagger-parser'
 import type { oas30 } from 'openapi3-ts'
+import ts from 'typescript'
 
-const _types = astToString(await openapiTS(openapiSchema))
+const BLOB = ts.factory.createTypeReferenceNode(
+  ts.factory.createIdentifier('Blob')
+)
+const NULL = ts.factory.createLiteralTypeNode(ts.factory.createNull()) // `null`
+
+const _types = astToString(
+  await openapiTS(openapiSchema, {
+    transform(schemaObject) {
+      if (schemaObject.format === 'binary') {
+        return {
+          schema: schemaObject.nullable
+            ? ts.factory.createUnionTypeNode([BLOB, NULL])
+            : BLOB,
+          questionToken: false
+        }
+      }
+    }
+  })
+)
 
 await writeFile('./src/api/types.ts', _types)
 

@@ -1,10 +1,8 @@
-import "@typespec/rest";
+import "@typespec/http";
 
-using TypeSpec.Http;
+using Http;
 
-@service({
-  title: "BetaLyfe API Documentation",
-})
+@service(#{ title: "BetaLyfe API Documentation" })
 namespace ApiDocs;
 
 @example("f47ac10b-58cc-4372-a567-0e02b2c3d479")
