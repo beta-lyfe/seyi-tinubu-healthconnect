@@ -8,9 +8,8 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 import { Toaster } from '@beta-lyfe/ui/components/shad/ui/sonner'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { HuddleClient, HuddleProvider } from '@huddle01/react'
 import { env } from '../env'
-import { useEffect, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import LoadingScreen from './_app/-components/loading-component'
 import NotFound from './_app/_dashboard/dashboard/-components/notfound'
 import { App } from '@capacitor/app'
@@ -43,7 +42,6 @@ export default function Provider({ children }: { children: ReactNode }) {
 
 function Devtools() {
   if (env.VITE_NODE_ENV !== 'development') return null
-  return null
 
   return (
     <>

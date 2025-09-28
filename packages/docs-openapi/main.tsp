@@ -513,7 +513,7 @@ namespace Api {
           alias Response = Success | Error;
         }
 
-        @patch
+        @patch(#{ implicitOptionality: false })
         @doc("Update patient profile")
         op updatePatientProfile(@body body: Body): Response.Response;
       }
@@ -1129,7 +1129,7 @@ namespace Api {
           alias Response = Success | Error;
         }
 
-        @patch
+        @patch(#{ implicitOptionality: false })
         @doc("Update a pharmacy store by ID")
         op updatePharmacyStoreById(
           @path id: Request.Path,
@@ -1338,7 +1338,7 @@ namespace Api {
             alias Response = Success | Error;
           }
 
-          @patch
+          @patch(#{ implicitOptionality: false })
           @doc("Update a pharmacy store item by ID")
           op updatePharmacyStoreItemById(
             @path id: Request.Path,
@@ -1622,7 +1622,7 @@ namespace Api {
               alias Response = Success.Success | Error.Error;
             }
 
-            @patch
+            @patch(#{ implicitOptionality: false })
             @doc("Update a pharmacy store order status by ID")
             op updatePharmacyStoreOrderStatusById(
               @path id: Request.Path,

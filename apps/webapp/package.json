@@ -26,8 +26,6 @@
     "@capacitor/splash-screen": "^7.0.1",
     "@headlessui/react": "^2.1.2",
     "@hookform/resolvers": "^3.9.1",
-    "@huddle01/react": "^2.3.6",
-    "@huddle01/server-sdk": "^2.5.2",
     "@jitsi/react-sdk": "^1.4.4",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-context-menu": "^2.1.5",
