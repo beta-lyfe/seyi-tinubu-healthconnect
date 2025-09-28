@@ -1,0 +1,14 @@
+{
+	"appId": "org.betalyfe.app",
+	"appName": "betalyfe",
+	"webDir": "dist",
+	"plugins": {
+		"SplashScreen": {
+			"backgroundColor": "#2a9b7d",
+			"showSpinner": false,
+			"androidSpinnerStyle": "small",
+			"splashFullScreen": true,
+			"splashImmersive": true
+		}
+	}
+}

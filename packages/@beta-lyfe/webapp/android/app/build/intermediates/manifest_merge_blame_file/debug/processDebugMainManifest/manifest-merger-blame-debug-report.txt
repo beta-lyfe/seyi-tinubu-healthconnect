@@ -1,0 +1,174 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="org.betalyfe.app"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="23"
+9        android:targetSdkVersion="35" />
+10
+11    <!-- Permissions -->
+12
+13    <uses-permission android:name="android.permission.INTERNET" />
+13-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:34:5-67
+13-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:34:22-64
+14    <uses-permission android:name="android.permission.CAMERA" />
+14-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:35:5-65
+14-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:35:22-62
+15    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+15-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:36:5-71
+15-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:36:22-68
+16
+17    <uses-feature
+17-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:37:5-84
+18        android:name="android.hardware.camera"
+18-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:37:19-57
+19        android:required="true" />
+19-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:37:58-81
+20    <uses-feature
+20-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:38:5-88
+21        android:name="android.hardware.microphone"
+21-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:38:19-61
+22        android:required="true" />
+22-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:38:62-85
+23
+24    <permission
+24-->[androidx.core:core:1.15.0] /home/fortune/.gradle/caches/8.9/transforms/04134b9dd1534d5aa0d53233d154c51b/transformed/core-1.15.0/AndroidManifest.xml:22:5-24:47
+25        android:name="org.betalyfe.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+25-->[androidx.core:core:1.15.0] /home/fortune/.gradle/caches/8.9/transforms/04134b9dd1534d5aa0d53233d154c51b/transformed/core-1.15.0/AndroidManifest.xml:23:9-81
+26        android:protectionLevel="signature" />
+26-->[androidx.core:core:1.15.0] /home/fortune/.gradle/caches/8.9/transforms/04134b9dd1534d5aa0d53233d154c51b/transformed/core-1.15.0/AndroidManifest.xml:24:9-44
+27
+28    <uses-permission android:name="org.betalyfe.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+28-->[androidx.core:core:1.15.0] /home/fortune/.gradle/caches/8.9/transforms/04134b9dd1534d5aa0d53233d154c51b/transformed/core-1.15.0/AndroidManifest.xml:26:5-97
+28-->[androidx.core:core:1.15.0] /home/fortune/.gradle/caches/8.9/transforms/04134b9dd1534d5aa0d53233d154c51b/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
+29
+30    <application
+30-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:3:5-30:19
+31        android:allowBackup="true"
+31-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:4:9-35
+32        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+32-->[androidx.core:core:1.15.0] /home/fortune/.gradle/caches/8.9/transforms/04134b9dd1534d5aa0d53233d154c51b/transformed/core-1.15.0/AndroidManifest.xml:28:18-86
+33        android:debuggable="true"
+34        android:extractNativeLibs="false"
+35        android:icon="@mipmap/ic_launcher"
+35-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:5:9-43
+36        android:label="@string/app_name"
+36-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:6:9-41
+37        android:roundIcon="@mipmap/ic_launcher_round"
+37-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:7:9-54
+38        android:supportsRtl="true"
+38-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:8:9-35
+39        android:theme="@style/AppTheme" >
+39-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:9:9-40
+40        <activity
+40-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:10:9-21:20
+41            android:name="org.betalyfe.app.MainActivity"
+41-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:12:13-41
+42            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation"
+42-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:11:13-140
+43            android:exported="true"
+43-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:16:13-36
+44            android:label="@string/title_activity_main"
+44-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:13:13-56
+45            android:launchMode="singleTask"
+45-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:15:13-44
+46            android:theme="@style/AppTheme.NoActionBarLaunch" >
+46-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:14:13-62
+47            <intent-filter>
+47-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:17:13-20:29
+48                <action android:name="android.intent.action.MAIN" />
+48-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:18:17-69
+48-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:18:25-66
+49
+50                <category android:name="android.intent.category.LAUNCHER" />
+50-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:19:17-77
+50-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:19:27-74
+51            </intent-filter>
+52        </activity>
+53
+54        <provider
+55            android:name="androidx.core.content.FileProvider"
+55-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:24:13-62
+56            android:authorities="org.betalyfe.app.fileprovider"
+56-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:25:13-64
+57            android:exported="false"
+57-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:26:13-37
+58            android:grantUriPermissions="true" >
+58-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:27:13-47
+59            <meta-data
+59-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:28:13-112
+60                android:name="android.support.FILE_PROVIDER_PATHS"
+60-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:28:24-74
+61                android:resource="@xml/file_paths" />
+61-->/home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/src/main/AndroidManifest.xml:28:75-109
+62        </provider>
+63        <provider
+63-->[androidx.emoji2:emoji2:1.3.0] /home/fortune/.gradle/caches/8.9/transforms/daec585c1edcd4b49969a6a58c4ef137/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+64            android:name="androidx.startup.InitializationProvider"
+64-->[androidx.emoji2:emoji2:1.3.0] /home/fortune/.gradle/caches/8.9/transforms/daec585c1edcd4b49969a6a58c4ef137/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+65            android:authorities="org.betalyfe.app.androidx-startup"
+65-->[androidx.emoji2:emoji2:1.3.0] /home/fortune/.gradle/caches/8.9/transforms/daec585c1edcd4b49969a6a58c4ef137/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+66            android:exported="false" >
+66-->[androidx.emoji2:emoji2:1.3.0] /home/fortune/.gradle/caches/8.9/transforms/daec585c1edcd4b49969a6a58c4ef137/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+67            <meta-data
+67-->[androidx.emoji2:emoji2:1.3.0] /home/fortune/.gradle/caches/8.9/transforms/daec585c1edcd4b49969a6a58c4ef137/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+68                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+68-->[androidx.emoji2:emoji2:1.3.0] /home/fortune/.gradle/caches/8.9/transforms/daec585c1edcd4b49969a6a58c4ef137/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+69                android:value="androidx.startup" />
+69-->[androidx.emoji2:emoji2:1.3.0] /home/fortune/.gradle/caches/8.9/transforms/daec585c1edcd4b49969a6a58c4ef137/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+70            <meta-data
+70-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/fortune/.gradle/caches/8.9/transforms/95b52f9d8887a8d48d292f6ae7b64994/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:29:13-31:52
+71                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+71-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/fortune/.gradle/caches/8.9/transforms/95b52f9d8887a8d48d292f6ae7b64994/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:30:17-78
+72                android:value="androidx.startup" />
+72-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/fortune/.gradle/caches/8.9/transforms/95b52f9d8887a8d48d292f6ae7b64994/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:31:17-49
+73            <meta-data
+73-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+74                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+74-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+75                android:value="androidx.startup" />
+75-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+76        </provider>
+77
+78        <receiver
+78-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+79            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+79-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+80            android:directBootAware="false"
+80-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+81            android:enabled="true"
+81-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+82            android:exported="true"
+82-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+83            android:permission="android.permission.DUMP" >
+83-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+84            <intent-filter>
+84-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+85                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+85-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+85-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+86            </intent-filter>
+87            <intent-filter>
+87-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+88                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+88-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+88-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+89            </intent-filter>
+90            <intent-filter>
+90-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+91                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+91-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+91-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+92            </intent-filter>
+93            <intent-filter>
+93-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+94                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+94-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+94-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/fortune/.gradle/caches/8.9/transforms/44da915504b4c4b1b85145a05baffed3/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+95            </intent-filter>
+96        </receiver>
+97    </application>
+98
+99</manifest>

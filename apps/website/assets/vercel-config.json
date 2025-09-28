@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"routes": [
+		{
+			"handle": "rewrite"
+		},
+		{
+			"src": "/(.*)",
+			"dest": "/"
+		}
+	]
+}

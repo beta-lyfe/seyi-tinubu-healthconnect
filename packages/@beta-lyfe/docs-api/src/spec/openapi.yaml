@@ -1,0 +1,3810 @@
+openapi: 3.0.0
+info:
+  title: API Documentation
+  version: 0.0.0
+tags:
+  - name: Auth
+  - name: Patient
+  - name: Doctor
+  - name: Consultation
+  - name: Waitlist
+  - name: Pharmacy
+  - name: Wallet
+paths:
+  /api/auth/profile:
+    get:
+      operationId: Profile_fetchUserDetails
+      description: Fetch details of currently signed in user
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Authentication.Profile.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/Api.UnauthorizedError'
+                  - $ref: '#/components/schemas/Api.UserNotVerifiedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Auth
+      security:
+        - BearerAuth: []
+  /api/auth/reset-password:
+    post:
+      operationId: Initialize_initializePasswordReset
+      description: Initiates the password reset process.
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Authentication.PasswordReset.Initialize.Response.Success'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/Api.Authentication.PasswordReset.Initialize.Response.PasswordResetMailAlreadySentError'
+                  - $ref: '#/components/schemas/Api.BadRequestError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Authentication.PasswordReset.Initialize.Body'
+  /api/auth/reset-password/{token}:
+    post:
+      operationId: Confirm_confirmPasswordReset
+      description: Confirms password reset request and updates the password.
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Authentication.PasswordReset.Confirm.Response.PasswordResetSuccessful'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/Api.Authentication.PasswordReset.Confirm.Response.InvalidOrExpiredTokenError'
+                  - $ref: '#/components/schemas/Api.BadRequestError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Authentication.PasswordReset.Confirm.Body'
+  /api/auth/send-verification-email:
+    post:
+      operationId: SendVerificationEmail_sendVerificationEmail
+      description: Send verification email
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Authentication.SendVerificationEmail.Response.Success'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Authentication.SendVerificationEmail.Response.VerificationMailAlreadySentError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Authentication.SendVerificationEmail.Response.UserNotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Authentication.SendVerificationEmail.Body'
+  /api/auth/sign-in:
+    post:
+      operationId: SignIn_signIn
+      description: Sign in user
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Authentication.SignIn.Response.AuthCredentials'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Authentication.SignIn.Body'
+  /api/auth/sign-up:
+    post:
+      operationId: SignUp_signUp
+      description: Sign up new user
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Authentication.SignUp.Response.SignupSuccessful'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.BadRequestError'
+        '409':
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Authentication.SignUp.Response.EmailAlreadyInUseError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Authentication.SignUp.Body'
+  /api/auth/verify-email:
+    post:
+      operationId: VerifyEmail_verifyEmail
+      description: Verify email address
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Authentication.VerifyEmail.Response.VerificationSuccessful'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/Api.Authentication.VerifyEmail.Response.InvalidOrExpiredOtpError'
+                  - $ref: '#/components/schemas/Api.BadRequestError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Authentication.VerifyEmail.Body'
+  /api/consultation:
+    get:
+      operationId: List_fetchManyConsultations
+      description: Fetch many consultations
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+        - name: per_page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.List.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Consultation
+      security:
+        - BearerAuth: []
+  /api/consultation/request:
+    post:
+      operationId: Create_requestConsultation
+      description: Request consultation
+      parameters: []
+      responses:
+        '201':
+          description: The request has succeeded and a new resource has been created as a result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.Request.Request.Create.Response.Success'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.BadRequestError'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Consultation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Consultation.Request.ConsultationRequestPayload'
+      security:
+        - BearerAuth: []
+    get:
+      operationId: List_fetchManyConsultationRequests
+      description: Fetch many consultation requests
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+        - name: per_page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+        - name: profile
+          in: query
+          required: false
+          schema:
+            type: string
+          explode: false
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.Request.Request.List.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Consultation
+      security:
+        - BearerAuth: []
+  /api/consultation/request/{id}:
+    get:
+      operationId: Get_fetchConsultationRequestById
+      description: Fetch consultation request by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.Request.ConsultationRequest'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.Request.NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Consultation
+      security:
+        - BearerAuth: []
+  /api/consultation/request/{id}/accept:
+    post:
+      operationId: Accept_acceptConsultationRequest
+      description: Accept consultation request
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.Request.Request.Accept.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.Request.NotFoundError'
+        '406':
+          description: Client error
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/Api.Consultation.Request.Request.Accept.Response.AlreadyDeclinedError'
+                  - $ref: '#/components/schemas/Api.Consultation.Request.Request.Accept.Response.AlreadyAcceptedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Consultation
+      security:
+        - BearerAuth: []
+  /api/consultation/request/{id}/reject:
+    post:
+      operationId: Reject_rejectConsultationRequest
+      description: Reject consultation request
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.Request.Request.Reject.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.Request.NotFoundError'
+        '406':
+          description: Client error
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/Api.Consultation.Request.Request.Reject.Response.AlreadyDeclinedError'
+                  - $ref: '#/components/schemas/Api.Consultation.Request.Request.Reject.Response.AlreadyAcceptedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Consultation
+      security:
+        - BearerAuth: []
+  /api/consultation/{id}:
+    get:
+      operationId: Get_fetchConsultationById
+      description: Fetch consultation by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.Consultation'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Consultation.Get.NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Consultation
+      security:
+        - BearerAuth: []
+  /api/doctors:
+    post:
+      operationId: Create_createDoctorProfile
+      description: Create doctor profile
+      parameters: []
+      responses:
+        '201':
+          description: The request has succeeded and a new resource has been created as a result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Doctor.Create.Response.Success'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.BadRequestError'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Doctor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Doctor.Create.Request.Body'
+      security:
+        - BearerAuth: []
+    get:
+      operationId: List_fetchManyDoctorProfiles
+      description: Fetch many doctor profiles
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+        - name: per_page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Doctor.List.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Doctor
+      security:
+        - BearerAuth: []
+  /api/doctors/profile:
+    get:
+      operationId: Get_fetchDoctorProfile
+      description: Fetch doctor profile
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Doctor.Profile.Get.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Doctor
+      security:
+        - BearerAuth: []
+    put:
+      operationId: Update_updateDoctorProfile
+      description: Update doctor profile
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Doctor.Profile.Update.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Doctor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Doctor.Profile.Update.Body'
+      security:
+        - BearerAuth: []
+  /api/doctors/{id}:
+    get:
+      operationId: Get_fetchDoctorProfileById
+      description: Fetch doctor profile by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Doctor.Get.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Doctor.Get.Response.ProfileNotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Doctor
+      security:
+        - BearerAuth: []
+  /api/patients:
+    post:
+      operationId: Create_createPatientProfile
+      description: Create patient profile
+      parameters: []
+      responses:
+        '201':
+          description: The request has succeeded and a new resource has been created as a result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Patient.Create.Response.Success'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.BadRequestError'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Patient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Patient.Create.Request.Body'
+      security:
+        - BearerAuth: []
+  /api/patients/:
+    get:
+      operationId: List_fetchManyPatientProfiles
+      description: Fetch many patient profiles
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+        - name: per_page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Patient.List.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Patient
+      security:
+        - BearerAuth: []
+  /api/patients/profile:
+    get:
+      operationId: Get_fetchPatientProfile
+      description: Fetch patient profile
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Patient.Profie.Get.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Patient.Profie.Get.Response.ProfileNotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Patient
+      security:
+        - BearerAuth: []
+    patch:
+      operationId: Update_updatePatientProfile
+      description: Update patient profile
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Patient.Profie.Update.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Patient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Patient.Profie.Update.Body'
+      security:
+        - BearerAuth: []
+  /api/patients/profile/upload/profile-image:
+    post:
+      operationId: Upload_updatePatientProfileImage
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Patient.Upload.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Patient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {}
+      security:
+        - BearerAuth: []
+  /api/patients/{id}:
+    get:
+      operationId: Get_fetchPatientProfileById
+      description: Fetch patient by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Patient.Get.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Patient.Get.Response.ProfileNotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Patient
+      security:
+        - BearerAuth: []
+  /api/pharmacy/:
+    post:
+      operationId: Create_createPharmacyStore
+      description: Create a pharmacy store
+      parameters: []
+      responses:
+        '201':
+          description: The request has succeeded and a new resource has been created as a result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.Create.Response.Success'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Pharmacy.Create.Request.Body'
+  /api/pharmacy/carts:
+    put:
+      operationId: Set_setItemInCart
+      description: Item set to cart
+      parameters: []
+      responses:
+        '201':
+          description: The request has succeeded and a new resource has been created as a result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.Cart.Set.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - code
+                properties:
+                  code:
+                    type: string
+                    enum:
+                      - PHARMACY_STORE_ITEM_NOT_FOUND_ERROR
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Pharmacy.Cart.Set.Request.Body'
+  /api/pharmacy/items:
+    post:
+      operationId: Create_createPharmacyStoreItem
+      description: Create a pharmacy store item
+      parameters: []
+      responses:
+        '201':
+          description: The request has succeeded and a new resource has been created as a result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.Item.Create.Response.Success'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Pharmacy.Item.Create.Request.Body'
+    get:
+      operationId: List_fetchPharmacyStoreItems
+      description: Fetch many pharmacy store items
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+        - name: per_page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+        - name: pharmacy_store_id
+          in: query
+          required: false
+          schema:
+            type: string
+          explode: false
+        - name: query
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Api.Pharmacy.Item.List.Request.Query'
+          explode: false
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.Item.List.Response.Success'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+  /api/pharmacy/items/{id}:
+    get:
+      operationId: Get_getPharmacyStoreItemById
+      description: Fetch a pharmacy store item by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.Item.ById.Get.Response.Success'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - code
+                properties:
+                  code:
+                    type: string
+                    enum:
+                      - PHARMACY_STORE_ITEM_NOT_FOUND_ERROR
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+    patch:
+      operationId: Update_updatePharmacyStoreItemById
+      description: Update a pharmacy store item by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.Item.ById.Update.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - code
+                properties:
+                  code:
+                    type: string
+                    enum:
+                      - PHARMACY_STORE_ITEM_NOT_FOUND_ERROR
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Pharmacy.Item.ById.Update.Request.Body'
+    delete:
+      operationId: Delete_deletePharmacyStoreItemById
+      description: Delete a pharmacy store item by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.Item.ById.Delete.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - code
+                properties:
+                  code:
+                    type: string
+                    enum:
+                      - PHARMACY_STORE_ITEM_NOT_FOUND_ERROR
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+  /api/pharmacy/orders:
+    get:
+      operationId: List_fetchPharmacyStoreOrders
+      description: Fetch many pharmacy store orders
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+        - name: per_page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.Order.List.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+  /api/pharmacy/orders/{id}:
+    get:
+      operationId: Get_getPharmacyStoreOrderById
+      description: Fetch a pharmacy store order by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.Order.ById.Get.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - code
+                properties:
+                  code:
+                    type: string
+                    enum:
+                      - PHARMACY_STORE_ORDER_NOT_FOUND_ERROR
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+  /api/pharmacy/orders/{id}/pay:
+    patch:
+      operationId: UpdateStatus_updatePharmacyStoreOrderStatusById
+      description: Update a pharmacy store order status by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.Order.ById.Pay.UpdateStatus.Response.Success.Success'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.Order.ById.Pay.UpdateStatus.Response.Error.InvalidStatusTransition'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - code
+                properties:
+                  code:
+                    type: string
+                    enum:
+                      - PHARMACY_STORE_ORDER_NOT_FOUND_ERROR
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Pharmacy.Order.ById.Pay.UpdateStatus.Request.Body'
+  /api/pharmacy/orders/{id}/pay/online:
+    post:
+      operationId: Online_payForPharmacyStoreOrderOnline
+      description: Pay for a pharmacy store order online
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.Order.ById.Pay.Response.Online.Response.Success.Success'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.Order.ById.Pay.Response.Error.PaymentAlreadyMadeError'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - code
+                properties:
+                  code:
+                    type: string
+                    enum:
+                      - PHARMACY_STORE_ORDER_NOT_FOUND_ERROR
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+  /api/pharmacy/orders/{id}/pay/wallet:
+    post:
+      operationId: Wallet_payForPharmacyStoreOrderWithWallet
+      description: Pay for a pharmacy store order with wallet
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.Order.ById.Pay.Response.Wallet.Response.Success.Success'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/Api.Pharmacy.Order.ById.Pay.Response.Wallet.Response.Error.InsufficientBalanceError'
+                  - $ref: '#/components/schemas/Api.Pharmacy.Order.ById.Pay.Response.Error.PaymentAlreadyMadeError'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - code
+                properties:
+                  code:
+                    type: string
+                    enum:
+                      - PHARMACY_STORE_ORDER_NOT_FOUND_ERROR
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+  /api/pharmacy/{id}:
+    get:
+      operationId: Get_getPharmacyStoreById
+      description: Fetch a pharmacy store by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.ById.Get.Response.Success'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+    patch:
+      operationId: Update_updatePharmacyStoreById
+      description: Update a pharmacy store by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.ById.Update.Response.Success'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Pharmacy.ById.Update.Request.Body'
+    delete:
+      operationId: Delete_deletePharmacyStoreById
+      description: Delete a pharmacy store by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Pharmacy.ById.Delete.Response.Success'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Pharmacy
+  /api/waitlist:
+    post:
+      operationId: Waitlist_join
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Waitlist.Response.Success'
+        '406':
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Waitlist.Response.AlreadyJoinedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Waitlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Waitlist.Body'
+  /api/wallet:
+    get:
+      operationId: Get_fetchWallet
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Wallet.Get.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Wallet
+      security:
+        - BearerAuth: []
+    post:
+      operationId: Topup_topup
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Wallet.Topup.Response.Success'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.BadRequestError'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Wallet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api.Wallet.Topup.Body'
+      security:
+        - BearerAuth: []
+  /api/wallet/transactions:
+    get:
+      operationId: List_fetchWalletTransactions
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+        - name: per_page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.Wallet.Transactions.Response.Success'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnauthorizedError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api.UnexpectedError'
+      tags:
+        - Wallet
+      security:
+        - BearerAuth: []
+components:
+  schemas:
+    Address:
+      type: object
+      required:
+        - landmark
+        - street
+        - city
+        - state
+      properties:
+        landmark:
+          type: string
+          example: Federal Univeristy Teaching Hospital, Owerri
+        street:
+          type: string
+          example: 105 Hospital Road
+        coordinates:
+          type: string
+          nullable: true
+          example: 5.4836, 7.0336
+        city:
+          type: string
+          example: Owerri
+        state:
+          type: string
+          example: Imo
+    AddressUpdate:
+      type: object
+      properties:
+        landmark:
+          type: string
+          example: Federal Univeristy Teaching Hospital, Owerri
+        street:
+          type: string
+          example: 105 Hospital Road
+        coordinates:
+          type: string
+          nullable: true
+          example: 5.4836, 7.0336
+        city:
+          type: string
+          example: Owerri
+        state:
+          type: string
+          example: Imo
+    Api.Authentication.PasswordReset.Confirm.Body:
+      type: object
+      required:
+        - password
+      properties:
+        password:
+          $ref: '#/components/schemas/Password'
+    Api.Authentication.PasswordReset.Confirm.Response.InvalidOrExpiredTokenError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - INVALID_OR_EXPIRED_TOKEN_ERROR
+    Api.Authentication.PasswordReset.Confirm.Response.PasswordResetSuccessful:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - PASSWORD_RESET_SUCCESSFUL
+    Api.Authentication.PasswordReset.Initialize.Body:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          $ref: '#/components/schemas/Email'
+    Api.Authentication.PasswordReset.Initialize.Response.PasswordResetMailAlreadySentError:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - PASSWORD_RESET_MAIL_ALREADY_SENT_ERROR
+        data:
+          type: object
+          properties:
+            expires_at:
+              $ref: '#/components/schemas/DateTime'
+          required:
+            - expires_at
+    Api.Authentication.PasswordReset.Initialize.Response.Success:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - CHECK_EMAIL_FOR_RESET_LINK
+    Api.Authentication.Profile.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - FETCHED_PROFILE
+        data:
+          $ref: '#/components/schemas/Api.Authentication.User'
+    Api.Authentication.SendVerificationEmail.Body:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          $ref: '#/components/schemas/Email'
+    Api.Authentication.SendVerificationEmail.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - VERIFICATION_MAIL_SENT
+        data:
+          type: object
+          properties:
+            expires_at:
+              $ref: '#/components/schemas/DateTime'
+          required:
+            - expires_at
+    Api.Authentication.SendVerificationEmail.Response.UserNotFoundError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - USER_NOT_FOUND_ERROR
+    Api.Authentication.SendVerificationEmail.Response.VerificationMailAlreadySentError:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - VERIFICATION_MAIL_ALREADY_SENT_ERROR
+        data:
+          type: object
+          properties:
+            expires_at:
+              $ref: '#/components/schemas/DateTime'
+          required:
+            - expires_at
+    Api.Authentication.SignIn.Body:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          $ref: '#/components/schemas/Email'
+        password:
+          $ref: '#/components/schemas/Password'
+    Api.Authentication.SignIn.Response.AuthCredentials:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - AUTH_CREDENTIALS
+        data:
+          type: object
+          properties:
+            access_token:
+              $ref: '#/components/schemas/Token'
+            refresh_token:
+              $ref: '#/components/schemas/Token'
+          required:
+            - access_token
+            - refresh_token
+    Api.Authentication.SignUp.Body:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - email
+        - password
+        - phone_number
+        - is_doctor
+      properties:
+        first_name:
+          type: string
+          example: Mary
+        last_name:
+          type: string
+          example: Slessor
+        email:
+          $ref: '#/components/schemas/Email'
+        password:
+          $ref: '#/components/schemas/Password'
+        phone_number:
+          $ref: '#/components/schemas/PhoneNumber'
+        is_doctor:
+          type: boolean
+          example: true
+    Api.Authentication.SignUp.Response.EmailAlreadyInUseError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - EMAIL_ALREADY_IN_USE_ERROR
+    Api.Authentication.SignUp.Response.SignupSuccessful:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - SIGNUP_SUCCESSFUL
+    Api.Authentication.User:
+      type: object
+      required:
+        - id
+        - first_name
+        - last_name
+        - email
+        - role
+        - phone_number
+        - is_verified
+        - created_at
+        - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        first_name:
+          type: string
+          example: Mary
+        last_name:
+          type: string
+          example: Slessor
+        email:
+          $ref: '#/components/schemas/Email'
+        role:
+          $ref: '#/components/schemas/Role'
+        phone_number:
+          $ref: '#/components/schemas/PhoneNumber'
+        is_verified:
+          type: boolean
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        updated_at:
+          oneOf:
+            - $ref: '#/components/schemas/DateTime'
+          nullable: true
+    Api.Authentication.VerifyEmail.Body:
+      type: object
+      required:
+        - email
+        - otp
+      properties:
+        email:
+          $ref: '#/components/schemas/Email'
+        otp:
+          $ref: '#/components/schemas/Otp'
+    Api.Authentication.VerifyEmail.Response.InvalidOrExpiredOtpError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - INVALID_OR_EXPIRED_OTP_ERROR
+    Api.Authentication.VerifyEmail.Response.VerificationSuccessful:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - VERIFICATION_SUCCESSFUL
+    Api.BadRequestError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - EXPECTED_DATA_NOT_RECEIVED_ERROR
+    Api.Consultation.AccessToken:
+      type: object
+      required:
+        - token
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik1hcnkgU2xlc3NvciIsImlhdCI6MTUxNjIzOTAyMn0.UFI1B6pCOrqlpaFHV58dqqTLYCCC8hukJAVY8Wb1Z9o
+    Api.Consultation.Consultation:
+      type: object
+      required:
+        - id
+        - doctor
+        - patient
+        - room_name
+        - doctor_token
+        - patient_token
+        - start_time
+        - end_time
+        - created_at
+        - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        doctor:
+          $ref: '#/components/schemas/Id'
+        patient:
+          $ref: '#/components/schemas/Id'
+        room_name:
+          type: string
+          nullable: true
+        doctor_token:
+          $ref: '#/components/schemas/Api.Consultation.AccessToken'
+        patient_token:
+          $ref: '#/components/schemas/Api.Consultation.AccessToken'
+        start_time:
+          $ref: '#/components/schemas/DateTime'
+        end_time:
+          $ref: '#/components/schemas/DateTime'
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        updated_at:
+          oneOf:
+            - $ref: '#/components/schemas/DateTime'
+          nullable: true
+    Api.Consultation.Get.NotFoundError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - CONSULTATION_NOT_FOUND
+    Api.Consultation.List.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - FETCH_CONSULTATIONS_SUCCESSFUL
+        data:
+          type: object
+          required:
+            - data
+            - meta
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Api.Consultation.Consultation'
+            meta:
+              $ref: '#/components/schemas/Api.Pagination.Meta'
+    Api.Consultation.Request.ConsultationRequest:
+      type: object
+      required:
+        - id
+        - doctor
+        - patient
+        - status
+        - message
+        - start_time
+        - end_time
+        - created_at
+        - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        doctor:
+          $ref: '#/components/schemas/Id'
+        patient:
+          $ref: '#/components/schemas/Id'
+        status:
+          type: string
+          enum:
+            - pending
+            - accepted
+            - rejected
+        message:
+          type: string
+          example: I am feeling unwell
+        doctor_profile:
+          $ref: '#/components/schemas/Api.Doctor.DoctorProfile'
+        patient_profile:
+          $ref: '#/components/schemas/Api.Patient.PatientProfile'
+        start_time:
+          $ref: '#/components/schemas/DateTime'
+        end_time:
+          $ref: '#/components/schemas/DateTime'
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        updated_at:
+          $ref: '#/components/schemas/DateTime'
+    Api.Consultation.Request.ConsultationRequestPayload:
+      type: object
+      required:
+        - doctor
+        - start_time
+        - end_time
+        - message
+      properties:
+        doctor:
+          $ref: '#/components/schemas/Id'
+        start_time:
+          $ref: '#/components/schemas/DateTime'
+        end_time:
+          $ref: '#/components/schemas/DateTime'
+        message:
+          type: string
+          example: I am feeling unwell
+    Api.Consultation.Request.NotFoundError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - CONSULTATION_REQUEST_NOT_FOUND
+    Api.Consultation.Request.PaginatedConsultationRequest:
+      type: object
+      required:
+        - results
+        - count
+        - next
+        - previous
+      properties:
+        results:
+          $ref: '#/components/schemas/Api.Consultation.Request.ConsultationRequest'
+        count:
+          type: integer
+          format: int64
+          example: 18
+        next:
+          type: string
+          nullable: true
+          example: http://localhost:8000/api/doctors/?page=3
+        previous:
+          type: string
+          nullable: true
+          example: http://localhost:8000/api/doctors/?page=2
+    Api.Consultation.Request.Request.Accept.Response.AlreadyAcceptedError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - CONSULTATION_REQUEST_ALREADY_ACCEPTED_ERROR
+    Api.Consultation.Request.Request.Accept.Response.AlreadyDeclinedError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - CONSULTATION_REQUEST_ALREADY_DECLINED_ERROR
+    Api.Consultation.Request.Request.Accept.Response.Success:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - CONSULTATION_REQUEST_ACCEPTED_SUCCESSFULLY
+    Api.Consultation.Request.Request.Create.Response.Success:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - CONSULTATION_REQUEST_CREATED_SUCCESSFULLY
+    Api.Consultation.Request.Request.List.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - FETCH_CONSULTATION_REQUESTS_SUCCESSFUL
+        data:
+          type: object
+          required:
+            - data
+            - meta
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Api.Consultation.Request.ConsultationRequest'
+            meta:
+              $ref: '#/components/schemas/Api.Pagination.Meta'
+    Api.Consultation.Request.Request.Reject.Response.AlreadyAcceptedError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - CONSULTATION_REQUEST_ALREADY_ACCEPTED_ERROR
+    Api.Consultation.Request.Request.Reject.Response.AlreadyDeclinedError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - CONSULTATION_REQUEST_ALREADY_DECLINED_ERROR
+    Api.Consultation.Request.Request.Reject.Response.Success:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - CONSULTATION_REQUEST_REJECTED_SUCCESSFULLY
+    Api.Doctor.Certification:
+      type: object
+      required:
+        - name
+        - institution
+        - date
+      properties:
+        name:
+          type: string
+          example: MBBS
+        institution:
+          type: string
+          example: University of Lagos
+        date:
+          type: string
+          example: January 2000
+    Api.Doctor.Create.Request.Body:
+      type: object
+      required:
+        - other_names
+        - date_of_birth
+        - profile_picture
+        - specialization
+        - patients_treated
+        - years_of_experience
+        - number_of_reviews
+        - rating
+        - description
+        - home_consultation_charge
+        - video_consultation_charge
+        - clinic_consultation_charge
+        - certifications
+        - experiences
+        - working_hours
+        - location
+      properties:
+        other_names:
+          type: string
+          nullable: true
+        date_of_birth:
+          $ref: '#/components/schemas/DateOfBirth'
+        profile_picture:
+          $ref: '#/components/schemas/Media'
+        specialization:
+          oneOf:
+            - $ref: '#/components/schemas/Api.Doctor.Specialization'
+          nullable: true
+        patients_treated:
+          type: integer
+          format: int64
+          example: 43
+        years_of_experience:
+          type: integer
+          format: int64
+          example: 5
+        number_of_reviews:
+          type: integer
+          format: int64
+        rating:
+          type: string
+        description:
+          type: string
+        home_consultation_charge:
+          type: string
+          example: '500.00'
+        video_consultation_charge:
+          type: string
+          example: '100.00'
+        clinic_consultation_charge:
+          type: string
+          example: '300.00'
+        certifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Doctor.Certification'
+          nullable: true
+        experiences:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Doctor.Experience'
+          nullable: true
+        working_hours:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Doctor.WorkingHour'
+          nullable: true
+        location:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Address'
+          nullable: true
+    Api.Doctor.Create.Response.Success:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - DOCTOR_PROFILE_CREATED
+    Api.Doctor.DoctorProfile:
+      type: object
+      required:
+        - id
+        - first_name
+        - last_name
+        - other_names
+        - email
+        - phone_number
+        - date_of_birth
+        - profile_picture
+        - specialization
+        - patients_treated
+        - years_of_experience
+        - number_of_reviews
+        - rating
+        - description
+        - home_consultation_charge
+        - video_consultation_charge
+        - clinic_consultation_charge
+        - certifications
+        - experiences
+        - working_hours
+        - location
+        - created_at
+        - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: Doe
+        other_names:
+          type: string
+          nullable: true
+        email:
+          $ref: '#/components/schemas/Email'
+        phone_number:
+          $ref: '#/components/schemas/PhoneNumber'
+        date_of_birth:
+          $ref: '#/components/schemas/DateOfBirth'
+        profile_picture:
+          $ref: '#/components/schemas/Media'
+        specialization:
+          oneOf:
+            - $ref: '#/components/schemas/Api.Doctor.Specialization'
+          nullable: true
+        patients_treated:
+          type: integer
+          format: int64
+          example: 43
+        years_of_experience:
+          type: integer
+          format: int64
+          example: 5
+        number_of_reviews:
+          type: integer
+          format: int64
+        rating:
+          type: string
+        description:
+          type: string
+        home_consultation_charge:
+          type: string
+          example: '500.00'
+        video_consultation_charge:
+          type: string
+          example: '100.00'
+        clinic_consultation_charge:
+          type: string
+          example: '300.00'
+        certifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Doctor.Certification'
+          nullable: true
+        experiences:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Doctor.Experience'
+          nullable: true
+        working_hours:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Doctor.WorkingHour'
+          nullable: true
+        location:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Address'
+          nullable: true
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        updated_at:
+          oneOf:
+            - $ref: '#/components/schemas/DateTime'
+          nullable: true
+    Api.Doctor.Experience:
+      type: object
+      required:
+        - title
+        - institution
+        - start_date
+        - end_date
+      properties:
+        title:
+          type: string
+          example: General Practitioner
+        institution:
+          type: string
+          example: University of Lagos
+        start_date:
+          type: string
+          example: January 2020
+        end_date:
+          type: string
+          nullable: true
+          example: January 2021
+    Api.Doctor.Get.Response.ProfileNotFoundError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - DOCTOR_PROFILE_NOT_FOUND_ERROR
+    Api.Doctor.Get.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - FETCH_DOCTOR_PROFILE_SUCCESSFUL
+        data:
+          $ref: '#/components/schemas/Api.Doctor.DoctorProfile'
+    Api.Doctor.List.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - FETCH_DOCTOR_PROFILES_SUCCESSFUL
+        data:
+          type: object
+          required:
+            - data
+            - meta
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Api.Doctor.DoctorProfile'
+            meta:
+              $ref: '#/components/schemas/Api.Pagination.Meta'
+    Api.Doctor.Profile.Get.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - FETCH_DOCTOR_PROFILE_SUCCESSFUL
+        data:
+          $ref: '#/components/schemas/Api.Doctor.DoctorProfile'
+    Api.Doctor.Profile.Update.Body:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: Doe
+        other_names:
+          type: string
+          nullable: true
+        email:
+          $ref: '#/components/schemas/Email'
+        phone_number:
+          $ref: '#/components/schemas/PhoneNumber'
+        date_of_birth:
+          $ref: '#/components/schemas/DateOfBirth'
+        profile_picture:
+          $ref: '#/components/schemas/Media'
+        specialization:
+          oneOf:
+            - $ref: '#/components/schemas/Api.Doctor.Specialization'
+          nullable: true
+        patients_treated:
+          type: integer
+          format: int64
+          example: 43
+        years_of_experience:
+          type: integer
+          format: int64
+          example: 5
+        number_of_reviews:
+          type: integer
+          format: int64
+        rating:
+          type: string
+        description:
+          type: string
+        home_consultation_charge:
+          type: string
+          example: '500.00'
+        video_consultation_charge:
+          type: string
+          example: '100.00'
+        clinic_consultation_charge:
+          type: string
+          example: '300.00'
+        certifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Doctor.Certification'
+          nullable: true
+        experiences:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Doctor.Experience'
+          nullable: true
+        working_hours:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Doctor.WorkingHour'
+          nullable: true
+        location:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Address'
+          nullable: true
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        updated_at:
+          oneOf:
+            - $ref: '#/components/schemas/DateTime'
+          nullable: true
+    Api.Doctor.Profile.Update.Response.Success:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - DOCTOR_PROFILE_UPDATED
+    Api.Doctor.Specialization:
+      type: string
+      example: General Practitioner
+    Api.Doctor.SuccessMessage:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          example: Successful
+    Api.Doctor.WorkingHour:
+      type: object
+      required:
+        - day
+        - start_time
+        - end_time
+      properties:
+        day:
+          type: string
+          enum:
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            - sunday
+        start_time:
+          type: string
+          example: 08:00
+        end_time:
+          type: string
+          example: 17:00
+    Api.NoTokenProvidedError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - UNAUTHORIZED_ERROR
+    Api.Pagination.Meta:
+      type: object
+      required:
+        - page
+        - per_page
+        - total
+      properties:
+        page:
+          type: integer
+          format: int64
+        per_page:
+          type: integer
+          format: int64
+        total:
+          type: integer
+          format: int64
+    Api.Patient.Create.Request.Body:
+      type: object
+      required:
+        - date_of_birth
+      properties:
+        date_of_birth:
+          $ref: '#/components/schemas/DateOfBirth'
+    Api.Patient.Create.Response.Success:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - PATIENT_PROFILE_CREATED
+    Api.Patient.Get.Response.ProfileNotFoundError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - PATIENT_PROFILE_NOT_FOUND_ERROR
+    Api.Patient.Get.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - FETCH_PATIENT_PROFILE_SUCCESSFUL
+        data:
+          $ref: '#/components/schemas/Api.Patient.PatientProfile'
+    Api.Patient.List.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - FETCH_PATIENT_PROFILES_SUCCESSFUL
+        data:
+          type: object
+          required:
+            - data
+            - meta
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Api.Patient.PatientProfile'
+            meta:
+              $ref: '#/components/schemas/Api.Pagination.Meta'
+    Api.Patient.PatientProfile:
+      type: object
+      required:
+        - id
+        - first_name
+        - last_name
+        - other_names
+        - email
+        - phone_number
+        - date_of_birth
+        - profile_picture
+        - created_at
+        - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        first_name:
+          type: string
+          example: Mary
+        last_name:
+          type: string
+          example: Slessor
+        other_names:
+          type: string
+          nullable: true
+        email:
+          $ref: '#/components/schemas/Email'
+        phone_number:
+          $ref: '#/components/schemas/PhoneNumber'
+        date_of_birth:
+          oneOf:
+            - $ref: '#/components/schemas/DateOfBirth'
+          nullable: true
+        profile_picture:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Media'
+          nullable: true
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        updated_at:
+          oneOf:
+            - $ref: '#/components/schemas/DateTime'
+          nullable: true
+    Api.Patient.Profie.Get.Response.ProfileNotFoundError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - PATIENT_PROFILE_NOT_FOUND_ERROR
+    Api.Patient.Profie.Get.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - FETCH_PATIENT_PROFILE_SUCCESSFUL
+        data:
+          $ref: '#/components/schemas/Api.Patient.PatientProfile'
+    Api.Patient.Profie.Update.Body:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        first_name:
+          type: string
+          example: Mary
+        last_name:
+          type: string
+          example: Slessor
+        other_names:
+          type: string
+          nullable: true
+        email:
+          $ref: '#/components/schemas/Email'
+        phone_number:
+          $ref: '#/components/schemas/PhoneNumber'
+        date_of_birth:
+          oneOf:
+            - $ref: '#/components/schemas/DateOfBirth'
+          nullable: true
+        profile_picture:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/MediaUpdate'
+          nullable: true
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        updated_at:
+          oneOf:
+            - $ref: '#/components/schemas/DateTime'
+          nullable: true
+    Api.Patient.Profie.Update.Response.Success:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - PATIENT_PROFILE_UPDATED
+    Api.Patient.Upload.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - PROFILE_IMAGE_UPLOAD_SUCCESSFUL
+        data:
+          type: object
+          properties:
+            url:
+              type: string
+          required:
+            - url
+    Api.Pharmacy.ById.Delete.Request.Path:
+      type: object
+    Api.Pharmacy.ById.Delete.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_DELETED
+        data:
+          $ref: '#/components/schemas/Api.Pharmacy.PharmacyStore'
+    Api.Pharmacy.ById.Get.Request.Path:
+      type: object
+    Api.Pharmacy.ById.Get.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_RETRIEVED
+        data:
+          $ref: '#/components/schemas/Api.Pharmacy.PharmacyStore'
+    Api.Pharmacy.ById.Update.Request.Body:
+      type: object
+      properties:
+        name:
+          type: string
+          example: HealthPlus Pharma
+        description:
+          type: string
+        phone_number:
+          $ref: '#/components/schemas/PhoneNumber'
+        email:
+          $ref: '#/components/schemas/Email'
+        address:
+          $ref: '#/components/schemas/AddressUpdate'
+        opening_time:
+          allOf:
+            - $ref: '#/components/schemas/Time'
+          example: 08:00
+          description: Time formatted in 24-hour format
+        closing_time:
+          allOf:
+            - $ref: '#/components/schemas/Time'
+          example: 20:00
+          description: Time formatted in 24-hour format
+        cover_image:
+          $ref: '#/components/schemas/MediaUpdate'
+        rating:
+          type: number
+          example: 4.3
+        reviews:
+          type: integer
+          example: 1000
+        is_active:
+          type: boolean
+        owner_id:
+          $ref: '#/components/schemas/Id'
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        updated_at:
+          $ref: '#/components/schemas/DateTime'
+        deleted_at:
+          oneOf:
+            - $ref: '#/components/schemas/DateTime'
+          nullable: true
+    Api.Pharmacy.ById.Update.Request.Path:
+      type: object
+    Api.Pharmacy.ById.Update.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_UPDATED
+        data:
+          $ref: '#/components/schemas/Api.Pharmacy.PharmacyStore'
+    Api.Pharmacy.Cart.CartItem:
+      type: object
+      required:
+        - id
+        - pharmacy_store_item_id
+        - owner_id
+        - quantity
+        - price
+        - created_at
+        - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        pharmacy_store_item_id:
+          $ref: '#/components/schemas/Id'
+        owner_id:
+          $ref: '#/components/schemas/Id'
+        quantity:
+          type: integer
+        price:
+          type: number
+          example: 1000
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        updated_at:
+          oneOf:
+            - $ref: '#/components/schemas/DateTime'
+          nullable: true
+    Api.Pharmacy.Cart.Checkout.Request.Body:
+      type: object
+      required:
+        - pharmacy_store_id
+        - address
+      properties:
+        pharmacy_store_id:
+          $ref: '#/components/schemas/Id'
+        address:
+          $ref: '#/components/schemas/Address'
+    Api.Pharmacy.Cart.Set.Request.Body:
+      type: object
+      required:
+        - pharmacy_store_item_id
+        - quantity
+      properties:
+        pharmacy_store_item_id:
+          $ref: '#/components/schemas/Id'
+        quantity:
+          type: integer
+    Api.Pharmacy.Cart.Set.Response.Success:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_ITEM_SET_IN_CART
+    Api.Pharmacy.Create.Request.Body:
+      type: object
+      required:
+        - name
+        - description
+        - phone_number
+        - email
+        - address
+        - opening_time
+        - closing_time
+        - cover_image
+      properties:
+        name:
+          type: string
+          example: HealthPlus Pharma
+        description:
+          type: string
+        phone_number:
+          $ref: '#/components/schemas/PhoneNumber'
+        email:
+          $ref: '#/components/schemas/Email'
+        address:
+          $ref: '#/components/schemas/Address'
+        opening_time:
+          allOf:
+            - $ref: '#/components/schemas/Time'
+          example: 08:00
+          description: Time formatted in 24-hour format
+        closing_time:
+          allOf:
+            - $ref: '#/components/schemas/Time'
+          example: 20:00
+          description: Time formatted in 24-hour format
+        cover_image:
+          $ref: '#/components/schemas/Media'
+    Api.Pharmacy.Create.Response.Success:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_CREATED
+    Api.Pharmacy.Item.Brand:
+      type: string
+      example: Panadol
+    Api.Pharmacy.Item.ById.Delete.Request.Path:
+      type: object
+    Api.Pharmacy.Item.ById.Delete.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_ITEM_DELETED
+        data:
+          $ref: '#/components/schemas/Api.Pharmacy.Item.PharmacyStoreItem'
+    Api.Pharmacy.Item.ById.Get.Request.Path:
+      type: object
+    Api.Pharmacy.Item.ById.Get.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_ITEM_RETRIEVED
+        data:
+          $ref: '#/components/schemas/Api.Pharmacy.Item.PharmacyStoreItem'
+    Api.Pharmacy.Item.ById.Update.Request.Body:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Paracetamol
+        description:
+          type: string
+          example: Pain reliever and fever reducer
+        usage:
+          type: string
+          example: Take one tablet every 6 hours
+        side_effects:
+          type: string
+          example: Nausea, dizziness
+        warnings:
+          type: string
+          example: Store in a cool, dry place
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/Media'
+        pharmacy_store_id:
+          $ref: '#/components/schemas/Id'
+        type:
+          type: string
+          enum:
+            - OTC
+            - PRESCRIPTION
+        quantity_in_stock:
+          type: integer
+          example: 100
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Pharmacy.Item.Category'
+        brands:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Pharmacy.Item.Brand'
+        price:
+          type: number
+          example: 1000
+        selling_price:
+          type: number
+          example: 1200
+        batch_number:
+          type: string
+          example: '1234567890123'
+        manufacturer:
+          type: string
+          example: Emzor Pharmaceuticals
+        is_available:
+          type: boolean
+          example: true
+        expiry_date:
+          type: integer
+          format: int32
+        requires_prescription:
+          type: boolean
+          example: true
+        is_featured:
+          type: boolean
+          example: true
+    Api.Pharmacy.Item.ById.Update.Request.Path:
+      type: object
+    Api.Pharmacy.Item.ById.Update.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_ITEM_UPDATED
+        data:
+          $ref: '#/components/schemas/Api.Pharmacy.Item.PharmacyStoreItem'
+    Api.Pharmacy.Item.Category:
+      type: string
+      example: Pain reliever
+    Api.Pharmacy.Item.Create.Request.Body:
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - usage
+        - side_effects
+        - warnings
+        - images
+        - type
+        - quantity_in_stock
+        - categories
+        - brands
+        - price
+        - selling_price
+        - batch_number
+        - manufacturer
+        - expiry_date
+        - requires_prescription
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        name:
+          type: string
+          example: Paracetamol
+        description:
+          type: string
+          example: Pain reliever and fever reducer
+        usage:
+          type: string
+          example: Take one tablet every 6 hours
+        side_effects:
+          type: string
+          example: Nausea, dizziness
+        warnings:
+          type: string
+          example: Store in a cool, dry place
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/Media'
+        type:
+          type: string
+          enum:
+            - OTC
+            - PRESCRIPTION
+        quantity_in_stock:
+          type: integer
+          example: 100
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Pharmacy.Item.Category'
+        brands:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Pharmacy.Item.Brand'
+        price:
+          type: number
+          example: 1000
+        selling_price:
+          type: number
+          example: 1200
+        batch_number:
+          type: string
+          example: '1234567890123'
+        manufacturer:
+          type: string
+          example: Emzor Pharmaceuticals
+        expiry_date:
+          type: integer
+          format: int32
+        requires_prescription:
+          type: boolean
+          example: true
+    Api.Pharmacy.Item.Create.Response.Success:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_ITEM_CREATED
+    Api.Pharmacy.Item.List.Request.Query:
+      type: object
+    Api.Pharmacy.Item.List.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_ITEMS_RETRIEVED
+        data:
+          type: object
+          required:
+            - data
+            - meta
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Api.Pharmacy.Item.PharmacyStoreItem'
+            meta:
+              $ref: '#/components/schemas/Api.Pagination.Meta'
+    Api.Pharmacy.Item.PharmacyStoreItem:
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - usage
+        - side_effects
+        - warnings
+        - images
+        - pharmacy_store_id
+        - type
+        - quantity_in_stock
+        - categories
+        - brands
+        - price
+        - selling_price
+        - batch_number
+        - manufacturer
+        - is_available
+        - expiry_date
+        - requires_prescription
+        - is_featured
+        - created_at
+        - updated_at
+        - deleted_at
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        name:
+          type: string
+          example: Paracetamol
+        description:
+          type: string
+          example: Pain reliever and fever reducer
+        usage:
+          type: string
+          example: Take one tablet every 6 hours
+        side_effects:
+          type: string
+          example: Nausea, dizziness
+        warnings:
+          type: string
+          example: Store in a cool, dry place
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/Media'
+        pharmacy_store_id:
+          $ref: '#/components/schemas/Id'
+        type:
+          type: string
+          enum:
+            - OTC
+            - PRESCRIPTION
+        quantity_in_stock:
+          type: integer
+          example: 100
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Pharmacy.Item.Category'
+        brands:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api.Pharmacy.Item.Brand'
+        price:
+          type: number
+          example: 1000
+        selling_price:
+          type: number
+          example: 1200
+        batch_number:
+          type: string
+          example: '1234567890123'
+        manufacturer:
+          type: string
+          example: Emzor Pharmaceuticals
+        is_available:
+          type: boolean
+          example: true
+        expiry_date:
+          type: integer
+          format: int32
+        requires_prescription:
+          type: boolean
+          example: true
+        is_featured:
+          type: boolean
+          example: true
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        updated_at:
+          $ref: '#/components/schemas/DateTime'
+        deleted_at:
+          $ref: '#/components/schemas/DateTime'
+    Api.Pharmacy.Order.ById.Get.Request.Path:
+      type: object
+    Api.Pharmacy.Order.ById.Get.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_ORDER_RETRIEVED
+        data:
+          $ref: '#/components/schemas/Api.Pharmacy.Order.Order'
+    Api.Pharmacy.Order.ById.Pay.Response.Error.PaymentAlreadyMadeError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_ORDER_PAYMENT_ALREADY_MADE_ERROR
+    Api.Pharmacy.Order.ById.Pay.Response.Online.Request.Path:
+      type: object
+    Api.Pharmacy.Order.ById.Pay.Response.Online.Response.Success.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_ORDER_INVOICE_GENERATION_SUCCESSFUL
+        data:
+          type: object
+          properties:
+            url:
+              $ref: '#/components/schemas/PaymentUrl'
+          required:
+            - url
+    Api.Pharmacy.Order.ById.Pay.Response.Wallet.Request.Path:
+      type: object
+    Api.Pharmacy.Order.ById.Pay.Response.Wallet.Response.Error.InsufficientBalanceError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - INSUFFICIENT_BALANCE_ERROR
+    Api.Pharmacy.Order.ById.Pay.Response.Wallet.Response.Success.Success:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_ORDER_PAYMENT_SUCCESSFUL
+    Api.Pharmacy.Order.ById.Pay.UpdateStatus.Request.Body:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - AWAITING_PAYMENT
+            - AWAITING_ACKNOWLEDGEMENT
+            - PROCESSING
+            - IN_TRANSIT
+            - DELIVERED
+            - CANCELLED
+    Api.Pharmacy.Order.ById.Pay.UpdateStatus.Request.Path:
+      type: object
+    Api.Pharmacy.Order.ById.Pay.UpdateStatus.Response.Error.InvalidStatusTransition:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - INVALID_STATUS_TRANSITION_ERROR
+    Api.Pharmacy.Order.ById.Pay.UpdateStatus.Response.Success.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_ORDER_STATUS_UPDATED
+        data:
+          $ref: '#/components/schemas/Api.Pharmacy.Order.Order'
+    Api.Pharmacy.Order.List.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - PHARMACY_STORE_ORDERS_RETRIEVED
+        data:
+          type: object
+          required:
+            - data
+            - meta
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Api.Pharmacy.Order.Order'
+            meta:
+              $ref: '#/components/schemas/Api.Pagination.Meta'
+    Api.Pharmacy.Order.Order:
+      type: object
+      required:
+        - id
+        - pharmacy_store_id
+        - owner_id
+        - total_amount
+        - items
+        - address
+        - status
+        - created_at
+        - updated_at
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        pharmacy_store_id:
+          $ref: '#/components/schemas/Id'
+        owner_id:
+          $ref: '#/components/schemas/Id'
+        total_amount:
+          type: number
+        items:
+          type: object
+          properties:
+            order_id:
+              $ref: '#/components/schemas/Id'
+            pharmacy_store_item_id:
+              $ref: '#/components/schemas/Id'
+            quantity:
+              type: integer
+            price:
+              type: number
+          required:
+            - order_id
+            - pharmacy_store_item_id
+            - quantity
+            - price
+        address:
+          $ref: '#/components/schemas/Address'
+        status:
+          type: string
+          enum:
+            - AWAITING_PAYMENT
+            - AWAITING_ACKNOWLEDGEMENT
+            - PROCESSING
+            - IN_TRANSIT
+            - DELIVERED
+            - CANCELLED
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        updated_at:
+          oneOf:
+            - $ref: '#/components/schemas/DateTime'
+          nullable: true
+    Api.Pharmacy.PharmacyStore:
+      type: object
+      required:
+        - name
+        - description
+        - phone_number
+        - email
+        - address
+        - opening_time
+        - closing_time
+        - cover_image
+        - rating
+        - reviews
+        - is_active
+        - owner_id
+        - created_at
+        - updated_at
+        - deleted_at
+      properties:
+        name:
+          type: string
+          example: HealthPlus Pharma
+        description:
+          type: string
+        phone_number:
+          $ref: '#/components/schemas/PhoneNumber'
+        email:
+          $ref: '#/components/schemas/Email'
+        address:
+          $ref: '#/components/schemas/Address'
+        opening_time:
+          allOf:
+            - $ref: '#/components/schemas/Time'
+          example: 08:00
+          description: Time formatted in 24-hour format
+        closing_time:
+          allOf:
+            - $ref: '#/components/schemas/Time'
+          example: 20:00
+          description: Time formatted in 24-hour format
+        cover_image:
+          $ref: '#/components/schemas/Media'
+        rating:
+          type: number
+          example: 4.3
+        reviews:
+          type: integer
+          example: 1000
+        is_active:
+          type: boolean
+        owner_id:
+          $ref: '#/components/schemas/Id'
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        updated_at:
+          $ref: '#/components/schemas/DateTime'
+        deleted_at:
+          oneOf:
+            - $ref: '#/components/schemas/DateTime'
+          nullable: true
+    Api.UnauthorizedError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - UNAUTHORIZED_ERROR
+    Api.UnexpectedError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - UNEXPECTED_ERROR
+    Api.UserNotVerifiedError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - USER_NOT_VERIFIED
+    Api.Waitlist.Body:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          $ref: '#/components/schemas/Email'
+    Api.Waitlist.Response.AlreadyJoinedError:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - WAITLIST_ALREADY_JOINED_ERROR
+    Api.Waitlist.Response.Success:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - WAITLIST_JOINED_SUCCESSFULLY
+    Api.Wallet.Get.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - FETCH_WALLET_SUCCESSFUL
+        data:
+          $ref: '#/components/schemas/Api.Wallet.Wallet'
+    Api.Wallet.Topup.Body:
+      type: object
+      required:
+        - amount
+      properties:
+        amount:
+          type: number
+          format: double
+    Api.Wallet.Topup.Response.Success:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          $ref: '#/components/schemas/PaymentUrl'
+    Api.Wallet.Transaction:
+      type: object
+      required:
+        - id
+        - type
+        - amount
+        - description
+        - note
+        - created_at
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        type:
+          type: string
+          enum:
+            - credit
+            - debit
+        amount:
+          type: number
+          format: double
+          example: 500
+        description:
+          type: string
+          example: Booked consultation
+        note:
+          type: string
+          example: Booked a consultation with Dr. Mark
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+    Api.Wallet.Transactions.Response.Success:
+      type: object
+      required:
+        - code
+        - data
+      properties:
+        code:
+          type: string
+          enum:
+            - FETCH_TRANSACTIONS_SUCCESSFUL
+        data:
+          type: object
+          required:
+            - data
+            - meta
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Api.Wallet.Transaction'
+            meta:
+              $ref: '#/components/schemas/Api.Pagination.Meta'
+    Api.Wallet.Wallet:
+      type: object
+      required:
+        - id
+        - balance
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        balance:
+          type: number
+          format: double
+          example: 5000
+    DateOfBirth:
+      type: string
+      example: 2000-01-01
+    DateTime:
+      type: string
+      example: 2021-09-01T12:00:00Z
+    Email:
+      type: string
+      example: mary.slessor@mail.com
+    Id:
+      type: string
+      example: f47ac10b-58cc-4372-a567-0e02b2c3d479
+    Media:
+      type: object
+      required:
+        - public_id
+        - url
+      properties:
+        public_id:
+          type: string
+          example: h93suhw7mzyujf9tbugy
+        url:
+          type: string
+          example: https://res.cloudinary.com/dyirc2dvg/image/upload/v1747581547/foodhut/h93suhw7mzyujf9tbugy.jpg
+    MediaUpdate:
+      type: object
+      properties:
+        public_id:
+          type: string
+          example: h93suhw7mzyujf9tbugy
+        url:
+          type: string
+          example: https://res.cloudinary.com/dyirc2dvg/image/upload/v1747581547/foodhut/h93suhw7mzyujf9tbugy.jpg
+    Otp:
+      type: string
+      example: '123456'
+    Paginated:
+      type: object
+      required:
+        - count
+        - next
+        - previous
+      properties:
+        count:
+          type: integer
+          format: int64
+          example: 100
+        next:
+          type: string
+          nullable: true
+          example: http://localhost:8000/api/consultation/request/?page=2
+        previous:
+          type: string
+          nullable: true
+          example: http://localhost:8000/api/consultation/request/?page=1
+    Password:
+      type: string
+      example: $3cureP@ssw0rd
+    PaymentUrl:
+      type: string
+      example: https://checkout.paystack.com/5mz7yvom8rzo498
+    PhoneNumber:
+      type: string
+      example: '+2348123456789'
+    Role:
+      type: string
+      enum:
+        - patient
+        - doctor
+    Time:
+      type: string
+      example: 08:00
+    Token:
+      type: string
+      example: 745731af4484f323968969eda289aeee
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

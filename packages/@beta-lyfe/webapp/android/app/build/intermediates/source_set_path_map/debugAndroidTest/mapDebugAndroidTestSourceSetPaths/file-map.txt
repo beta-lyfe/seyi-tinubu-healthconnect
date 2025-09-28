@@ -1,0 +1,6 @@
+org.betalyfe.app.test.app-core-1.6.1-0 /home/fortune/.gradle/caches/8.9/transforms/4068789379ca8face74a3128456b61af/transformed/core-1.6.1/res
+org.betalyfe.app.test.app-tracing-1.2.0-1 /home/fortune/.gradle/caches/8.9/transforms/b122be63e26827e1c8a76a68e407de41/transformed/tracing-1.2.0/res
+org.betalyfe.app.test.app-androidTest-2 /home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/build/generated/res/resValues/androidTest/debug
+org.betalyfe.app.test.app-mergeDebugAndroidTestResources-3 /home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merged.dir
+org.betalyfe.app.test.app-mergeDebugAndroidTestResources-4 /home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/stripped.dir
+org.betalyfe.app.test.app-debugAndroidTest-5 /home/fortune/Documents/projects/beta-lyfe/packages/@beta-lyfe/webapp/android/app/build/intermediates/merged_res/debugAndroidTest/mergeDebugAndroidTestResources
