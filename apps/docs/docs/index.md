@@ -1,11 +1,11 @@
---- 
+---
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
 hero:
-  name: "Igbo Voice Assistant"
-  text: "Documentation for the Igbo Voice Assistant"
-  tagline: Your personal voice assistant, in Igbo
+  name: "BetaLyfe"
+  text: "Documentation for BetaLyfe"
+  tagline: Your all-in-one app for a better life
   image:
     src: /images/logo.svg
     alt: Logo
@@ -17,4 +17,3 @@ hero:
       text: API Reference
       link: /api
 ---
-
