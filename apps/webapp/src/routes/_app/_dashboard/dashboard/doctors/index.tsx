@@ -60,6 +60,14 @@ function DoctorsPage() {
   useEffect(() => {
     mutate({})
   }, [])
+
+  const images = [
+    '../../../assets/doctor.png',
+    '../../../assets/doctor-2.jpg',
+    '../../../assets/doctor-3.jpg',
+    'https://www.shutterstock.com/image-photo/smiling-young-african-american-curly-600nw-2319779015.jpg',
+
+  ]
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -143,7 +151,7 @@ function DoctorsPage() {
         </TabsList>
 
         <TabsContent value="all" className="space-y-4">
-          {doctorsData.map((doctor) => (
+          {doctorsData.map((doctor, index) => (
             <Card
               key={doctor.id}
               className="overflow-hidden hover:shadow-md transition-shadow"
@@ -153,7 +161,7 @@ function DoctorsPage() {
                   <div className="md:w-1/4 p-4 flex flex-col items-center md:items-start">
                     <Avatar className="h-20 w-20 md:h-24 md:w-24 mb-2">
                       <AvatarImage
-                        src={doctor.profile_picture.url}
+                        src={doctor.profile_picture.url || images[index]}
                         alt={doctor.first_name}
                       />
                       <AvatarFallback>{doctor.first_name}</AvatarFallback>
