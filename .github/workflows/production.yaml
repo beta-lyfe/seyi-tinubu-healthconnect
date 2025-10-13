@@ -88,11 +88,11 @@ jobs:
       - name: Build stack
         run: pnpm build
 
-      - name: Move api docs to output folder
-        working-directory: ./apps/docs
-        run: |
-          mkdir -p ../../__site/docs/api
-          cp -r dist/* ../../__site/docs/api
+      # - name: Move api docs to output folder
+      #   working-directory: ./apps/docs
+      #   run: |
+      #     mkdir -p ../../__site/docs/api
+      #     cp -r dist/* ../../__site/docs/api
 
       - name: Deploy docs
         working-directory: __site
