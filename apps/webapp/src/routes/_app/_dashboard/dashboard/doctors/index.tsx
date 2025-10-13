@@ -158,7 +158,7 @@ function DoctorsPage() {
             >
               <CardContent className="p-0">
                 <div className="flex flex-col md:flex-row">
-                  <div className="md:w-1/4 p-4 flex flex-col items-center md:items-start">
+                  <div className=" p-4 flex flex-col items-center md:items-start">
                     <Avatar className="h-20 w-20 md:h-24 md:w-24 mb-2">
                       <AvatarImage
                         src={doctor.profile_picture.url || images[index]}
