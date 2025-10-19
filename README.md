@@ -8,15 +8,35 @@ You can [check out the documentation here](https://docs.betalyfe.com.ng/docs/ind
 
 ## Development
 
-### Installing Dependencies
+### Step 0: Video Walkthrough
+
+A video recording has been setup already. You can [check it out here](https://youtu.be/yg3Uk0Mihbc)
+
+### Step 1: Copy Environment Variables
+
+- Copy `.env.example` -> `.env`
+- Copy `.env.development.example` -> `.env.development`
+
+### Step 2: Install and Setup direnv
+
+- Head over to [direnv.net](https://direnv.net) and follow the [installation guide](https://direnv.net/docs/installation.html) and the [hook setup guide](https://direnv.net/docs/hook.html).
+- After following those guides, you should have the `direnv` CLI tool available on your machine.
+- Run `direnv allow` in the project root to load environment variables into your shell.
+
+
+### Step 3: Install Dependencies
 
 ```bash
+# Be sure to run this at the project root
 pnpm install
 ```
 
-### Running the local setup
+**NOTE**: It's `pnpm` **NOT** `npm`
+
+### Step 4: Running the local setup
 
 ```bash
+# Be sure to run this at the project root
 pnpm dev
 ```
 
