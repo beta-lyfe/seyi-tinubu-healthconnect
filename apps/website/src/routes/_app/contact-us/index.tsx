@@ -107,19 +107,19 @@ function ContactUsPage() {
                     <div className="flex items-center justify-center gap-2">
                       <span className="font-medium">Support:</span>
                       <a
-                        href="mailto:support@betalyfe.com"
+                        href="mailto:support@stconnect.com"
                         className="text-primary hover:underline"
                       >
-                        support@betalyfe.com
+                        support@stconnect.com
                       </a>
                     </div>
                     <div className="flex items-center justify-center gap-2">
                       <span className="font-medium">Partnerships:</span>
                       <a
-                        href="mailto:partners@betalyfe.com"
+                        href="mailto:partners@stconnect.com"
                         className="text-primary hover:underline"
                       >
-                        partners@betalyfe.com
+                        partners@stconnect.com
                       </a>
                     </div>
                   </div>
@@ -502,7 +502,7 @@ function ContactUsPage() {
                     Technical issues can be reported through the app by going to
                     Settings &gt; Help &amp; Support &gt; Report an Issue.
                     Alternatively, you can email our technical support team at
-                    support@betalyfe.com or call our technical support line at
+                    support@stconnect.com or call our technical support line at
                     +234 800 000 0001.
                   </AccordionContent>
                 </AccordionItem>
@@ -513,7 +513,7 @@ function ContactUsPage() {
                   <AccordionContent>
                     Yes, you can schedule an in-person meeting at any of our
                     offices. Please call our customer service line or email us
-                    at support@betalyfe.com with your preferred date, time, and
+                    at support@stconnect.com with your preferred date, time, and
                     location, and we'll arrange a meeting with the appropriate
                     team member.
                   </AccordionContent>
@@ -526,7 +526,7 @@ function ContactUsPage() {
                     We value your feedback! You can provide feedback through the
                     app by going to Settings &gt; Help &amp; Support &gt;
                     Provide Feedback. You can also use our contact form on this
-                    page, email us at feedback@betalyfe.com, or call our
+                    page, email us at feedback@stconnect.com, or call our
                     customer support line.
                   </AccordionContent>
                 </AccordionItem>
@@ -536,7 +536,7 @@ function ContactUsPage() {
                   </AccordionTrigger>
                   <AccordionContent>
                     For partnership inquiries, please email our partnerships
-                    team at partners@betalyfe.com with details about your
+                    team at partners@stconnect.com with details about your
                     organization and the nature of the partnership you're
                     interested in. Our team will get back to you within 2-3
                     business days.
@@ -586,7 +586,7 @@ function ContactUsPage() {
         <div className="container flex flex-col gap-8 px-4 py-10 md:px-6 lg:py-16">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-muted-foreground">
-              &copy; {new Date().getFullYear()} BetaLyfe. All rights reserved.
+              &copy; {new Date().getFullYear()} Seyi Tinubu Connect. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               <a

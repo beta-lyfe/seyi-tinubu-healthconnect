@@ -15,7 +15,7 @@ export default function TopNavBar() {
               src="/images/betalyfe-icon.svg"
               className="w-10 h-10 rounded-full"
             />
-            <span className="text-xl font-bold">BetaLyfe</span>
+            <span className="text-xl font-bold">STConnect</span>
           </Link>
         </div>
         <nav className="hidden md:flex gap-6">

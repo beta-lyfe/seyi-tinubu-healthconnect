@@ -44,7 +44,7 @@ function HowToUsePage() {
             <div className="flex flex-col items-center text-center space-y-4">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  How To Use BetaLyfe
+                  How To Use Seyi Tinubu Connect
                 </h1>
                 <p className="max-w-[700px] text-muted-foreground md:text-xl">
                   Your step-by-step guide to accessing quality healthcare
@@ -67,7 +67,7 @@ function HowToUsePage() {
                   Begin Your Healthcare Journey
                 </h2>
                 <p className="max-w-[700px] text-muted-foreground md:text-lg">
-                  Follow these simple steps to set up your BetaLyfe account and
+                  Follow these simple steps to set up your Seyi Tinubu Connect account and
                   start using our services
                 </p>
               </div>
@@ -86,7 +86,7 @@ function HowToUsePage() {
                         1
                       </span>
                       <span>
-                        Download the BetaLyfe app from Google Play or App Store
+                        Download the STConnect app from Google Play or App Store
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
@@ -401,7 +401,7 @@ function HowToUsePage() {
                     </h3>
                     <p className="text-muted-foreground">
                       Easily manage, renew, and fulfill your prescriptions
-                      through the BetaLyfe platform.
+                      through the Seyi Tinubu Connect platform.
                     </p>
 
                     <div className="space-y-4 mt-6">
@@ -553,7 +553,7 @@ function HowToUsePage() {
                   Watch & Learn
                 </h2>
                 <p className="max-w-[700px] text-muted-foreground md:text-lg">
-                  Visual guides to help you navigate the BetaLyfe platform with
+                  Visual guides to help you navigate the Seyi Tinubu Connect platform with
                   ease
                 </p>
               </div>
@@ -562,7 +562,7 @@ function HowToUsePage() {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {[
                 {
-                  title: 'Getting Started with BetaLyfe',
+                  title: 'Getting Started with Seyi Tinubu Connect',
                   duration: '3:45',
                   thumbnail:
                     '/placeholder.svg?height=200&width=350&text=Getting+Started'
@@ -639,7 +639,7 @@ function HowToUsePage() {
                   Frequently Asked Questions
                 </h2>
                 <p className="max-w-[700px] text-muted-foreground md:text-lg">
-                  Find answers to common questions about using the BetaLyfe
+                  Find answers to common questions about using the Seyi Tinubu Connect
                   platform
                 </p>
               </div>
@@ -652,7 +652,7 @@ function HowToUsePage() {
                     How do I create an account?
                   </AccordionTrigger>
                   <AccordionContent>
-                    Download the BetaLyfe app from Google Play or App Store, tap
+                    Download the STConnect app from Google Play or App Store, tap
                     "Sign Up," and follow the prompts to create your account.
                     You'll need to provide your email address or phone number,
                     create a password, and complete your profile with basic
@@ -675,7 +675,7 @@ function HowToUsePage() {
                     How do I pay for consultations and medications?
                   </AccordionTrigger>
                   <AccordionContent>
-                    BetaLyfe accepts various payment methods including
+                    Seyi Tinubu Connect accepts various payment methods including
                     credit/debit cards, bank transfers, and mobile money. You
                     can add your preferred payment method in the "Payment
                     Methods" section of your profile and select it during
@@ -700,7 +700,7 @@ function HowToUsePage() {
                     Can I get a prescription through a virtual consultation?
                   </AccordionTrigger>
                   <AccordionContent>
-                    Yes, doctors on BetaLyfe can issue prescriptions during
+                    Yes, doctors on Seyi Tinubu Connect can issue prescriptions during
                     virtual consultations when medically appropriate. The
                     prescription will be available in your account immediately
                     after the consultation, and you can order the prescribed
@@ -723,7 +723,7 @@ function HowToUsePage() {
                     Is my medical information secure?
                   </AccordionTrigger>
                   <AccordionContent>
-                    Yes, BetaLyfe takes your privacy seriously. All your medical
+                    Yes, Seyi Tinubu Connect takes your privacy seriously. All your medical
                     information is encrypted and stored securely in compliance
                     with healthcare privacy regulations. We never share your
                     information with third parties without your explicit
@@ -832,7 +832,7 @@ function HowToUsePage() {
                   Ready to experience better healthcare?
                 </h2>
                 <p className="max-w-[600px] md:text-xl">
-                  Download the BetaLyfe app today and join thousands of
+                  Download the STConnect app today and join thousands of
                   Nigerians who are already enjoying convenient access to
                   quality healthcare.
                 </p>
@@ -859,7 +859,7 @@ function HowToUsePage() {
         <div className="container flex flex-col gap-8 px-4 py-10 md:px-6 lg:py-16">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-muted-foreground">
-              &copy; {new Date().getFullYear()} BetaLyfe. All rights reserved.
+              &copy; {new Date().getFullYear()} Seyi Tinubu Connect. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               <a

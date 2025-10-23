@@ -388,7 +388,7 @@ function PharmacyPage() {
             <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_700px] items-center">
               <div className="space-y-4">
                 <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
-                  Why Choose BetaLyfe Pharmacy
+                  Why Choose Seyi Tinubu Connect Pharmacy
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
                   Quality Medications, Delivered Reliably
@@ -442,7 +442,7 @@ function PharmacyPage() {
               <div className="relative h-[500px] w-full overflow-hidden rounded-xl">
                 <img
                   src="/placeholder.svg?height=500&width=600&text=Pharmacy+Team"
-                  alt="BetaLyfe Pharmacy Team"
+                  alt="Seyi Tinubu Connect Pharmacy Team"
                   className="object-cover"
                 />
               </div>
@@ -459,7 +459,7 @@ function PharmacyPage() {
                   Ready to simplify your medication experience?
                 </h2>
                 <p className="max-w-[600px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Download the BetaLyfe app to order medications, consult with
+                  Download the STConnect app to order medications, consult with
                   doctors, and manage your health in one place.
                 </p>
               </div>
@@ -489,7 +489,7 @@ function PharmacyPage() {
                   src="/images/betalyfe-icon.svg"
                   className="w-10 h-10 rounded-full"
                 />
-                <span className="text-lg font-bold">BetaLyfe Pharmacy</span>
+                <span className="text-lg font-bold">STConnect Pharmacy</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Your trusted online pharmacy in Nigeria. Quality medications
@@ -633,7 +633,7 @@ function PharmacyPage() {
           </div>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-muted-foreground">
-              &copy; {new Date().getFullYear()} BetaLyfe. All rights reserved.
+              &copy; {new Date().getFullYear()} Seyi Tinubu Connect. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               <a

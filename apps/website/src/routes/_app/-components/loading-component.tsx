@@ -19,7 +19,7 @@ export default function LoadingScreen() {
 
         {/* Scaling Logo */}
         <div className="mt-14 flex items-center justify-center animate-scale">
-          <span className="text-2xl font-bold">BetaLyfe</span>
+          <span className="text-2xl font-bold">Seyi Tinubu Connect</span>
         </div>
 
         <p className="mt-4 text-muted-foreground">

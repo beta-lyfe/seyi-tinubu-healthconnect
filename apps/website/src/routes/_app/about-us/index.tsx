@@ -42,7 +42,7 @@ export default function AboutUsPage() {
                     Transforming Healthcare in Nigeria
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    BetaLyfe is on a mission to make quality healthcare
+                    Seyi Tinubu Connect is on a mission to make quality healthcare
                     accessible to all Nigerians through innovative technology
                     and a network of dedicated healthcare professionals.
                   </p>
@@ -58,10 +58,10 @@ export default function AboutUsPage() {
               </div>
               <div className="relative hidden lg:block">
                 <img
-                  src="/placeholder.svg?height=550&width=550&text=BetaLyfe+Team"
+                  src="/placeholder.svg?height=550&width=550&text=Seyi+Tinubu+Connect+Team"
                   width={550}
                   height={550}
-                  alt="BetaLyfe team members"
+                  alt="Seyi Tinubu Connect team members"
                   className="mx-auto aspect-video overflow-hidden rounded-xl object-cover"
                 />
               </div>
@@ -126,7 +126,7 @@ export default function AboutUsPage() {
                   Our Story
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
-                  The BetaLyfe Journey
+                  The Seyi Tinubu Connect Journey
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   From a small startup to Nigeria's leading telehealth platform
@@ -142,7 +142,7 @@ export default function AboutUsPage() {
                   </div>
                   <h3 className="text-xl font-bold">The Beginning</h3>
                   <p className="text-muted-foreground">
-                    BetaLyfe was founded by Dr. Adebayo Johnson and Ngozi Okafor
+                    Seyi Tinubu Connect was founded by Dr. Adebayo Johnson and Ngozi Okafor
                     in Lagos with a vision to revolutionize healthcare access in
                     Nigeria.
                   </p>
@@ -168,7 +168,7 @@ export default function AboutUsPage() {
                   </div>
                   <h3 className="text-xl font-bold">Nationwide Expansion</h3>
                   <p className="text-muted-foreground">
-                    BetaLyfe expanded to all 36 states in Nigeria, growing our
+                    Seyi Tinubu Connect expanded to all 36 states in Nigeria, growing our
                     network to over 1,000 healthcare providers across multiple
                     specialties.
                   </p>
@@ -186,7 +186,7 @@ export default function AboutUsPage() {
                   </h3>
                   <p className="text-muted-foreground">
                     Now with 2,500+ healthcare providers, 36+ specialties, and
-                    over 100,000 patients served, BetaLyfe is Nigeria's premier
+                    over 100,000 patients served, Seyi Tinubu Connect is Nigeria's premier
                     telehealth platform.
                   </p>
                 </CardContent>
@@ -207,7 +207,7 @@ export default function AboutUsPage() {
                   Meet Our Leadership
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  The visionaries and experts behind BetaLyfe
+                  The visionaries and experts behind Seyi Tinubu Connect
                 </p>
               </div>
             </div>
@@ -225,13 +225,13 @@ export default function AboutUsPage() {
                     {
                       name: 'Dr. Adebayo Johnson',
                       title: 'Co-Founder & CEO',
-                      bio: 'Dr. Johnson is a healthcare entrepreneur with over 15 years of experience in the Nigerian healthcare sector. Prior to founding BetaLyfe, he served as the Medical Director at Lagos General Hospital.',
+                      bio: 'Dr. Johnson is a healthcare entrepreneur with over 15 years of experience in the Nigerian healthcare sector. Prior to founding Seyi Tinubu Connect, he served as the Medical Director at Lagos General Hospital.',
                       img: '/placeholder.svg?height=300&width=300&text=Dr.+Johnson'
                     },
                     {
                       name: 'Ngozi Okafor',
                       title: 'Co-Founder & COO',
-                      bio: "With a background in healthcare management and an MBA from Lagos Business School, Ngozi oversees BetaLyfe's operations, ensuring seamless service delivery across all departments.",
+                      bio: "With a background in healthcare management and an MBA from Lagos Business School, Ngozi oversees Seyi Tinubu Connect's operations, ensuring seamless service delivery across all departments.",
                       img: '/placeholder.svg?height=300&width=300&text=Ngozi+Okafor'
                     },
                     {
@@ -360,7 +360,7 @@ export default function AboutUsPage() {
                   Core Principles That Guide Us
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  The fundamental values that shape everything we do at BetaLyfe
+                  The fundamental values that shape everything we do at Seyi Tinubu Connect
                 </p>
               </div>
             </div>
@@ -732,7 +732,7 @@ export default function AboutUsPage() {
         <div className="container flex flex-col gap-8 px-4 py-10 md:px-6 lg:py-16">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-muted-foreground">
-              &copy; {new Date().getFullYear()} BetaLyfe. All rights reserved.
+              &copy; {new Date().getFullYear()} Seyi Tinubu Connect. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               <a

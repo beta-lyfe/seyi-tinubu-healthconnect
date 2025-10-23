@@ -1,3 +1,4 @@
+
 import { createEnv } from '@t3-oss/env-core'
 import { z } from 'zod'
 
@@ -22,5 +23,5 @@ export const env = createEnv({
   },
   runtimeEnv: {
     VITE_BACKEND_URL: getEnv('VITE_BACKEND_URL')
-  }
+  },
 })

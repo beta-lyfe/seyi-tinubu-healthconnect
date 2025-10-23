@@ -111,7 +111,7 @@ function CareServicesPage() {
                   Primary Healthcare Services
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  BetaLyfe offers a complete healthcare ecosystem for Nigerians.
+                  Seyi Tinubu Connect offers a complete healthcare ecosystem for Nigerians.
                 </p>
               </div>
             </div>
@@ -609,7 +609,7 @@ function CareServicesPage() {
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
               <div className="space-y-4">
                 <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
-                  Why Choose BetaLyfe
+                  Why Choose Seyi Tinubu Connect
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
                   The Benefits of Our Healthcare Services
@@ -675,7 +675,7 @@ function CareServicesPage() {
               <div className="relative h-[500px] w-full overflow-hidden rounded-xl">
                 <img
                   src="/placeholder.svg?height=500&width=600&text=Healthcare+Benefits"
-                  alt="BetaLyfe Healthcare Benefits"
+                  alt="Seyi Tinubu Connect Healthcare Benefits"
                   className="object-cover"
                 />
               </div>
@@ -705,7 +705,7 @@ function CareServicesPage() {
               {[
                 {
                   quote:
-                    'BetaLyfe has transformed how I manage my diabetes. The regular consultations with my specialist and medication delivery service have made my life so much easier.',
+                    'Seyi Tinubu Connect has transformed how I manage my diabetes. The regular consultations with my specialist and medication delivery service have made my life so much easier.',
                   author: 'Oluwaseun Adeyemi',
                   location: 'Lagos',
                   rating: 5,
@@ -721,7 +721,7 @@ function CareServicesPage() {
                 },
                 {
                   quote:
-                    "I was skeptical about virtual consultations, but my experience with BetaLyfe's dermatologist was excellent. Clear diagnosis, effective treatment, and convenient follow-ups.",
+                    "I was skeptical about virtual consultations, but my experience with Seyi Tinubu Connect's dermatologist was excellent. Clear diagnosis, effective treatment, and convenient follow-ups.",
                   author: 'Chinedu Okonkwo',
                   location: 'Port Harcourt',
                   rating: 4,
@@ -805,10 +805,10 @@ function CareServicesPage() {
                 </AccordionItem>
                 <AccordionItem value="item-2">
                   <AccordionTrigger>
-                    What types of conditions can be treated through BetaLyfe?
+                    What types of conditions can be treated through Seyi Tinubu Connect?
                   </AccordionTrigger>
                   <AccordionContent>
-                    BetaLyfe can address a wide range of conditions, including
+                    Seyi Tinubu Connect can address a wide range of conditions, including
                     common illnesses (cold, flu, allergies), chronic disease
                     management (diabetes, hypertension), skin conditions, mental
                     health concerns, pediatric issues, and more. However,
@@ -832,10 +832,10 @@ function CareServicesPage() {
                 </AccordionItem>
                 <AccordionItem value="item-4">
                   <AccordionTrigger>
-                    Are the doctors on BetaLyfe licensed?
+                    Are the doctors on Seyi Tinubu Connect licensed?
                   </AccordionTrigger>
                   <AccordionContent>
-                    Yes, all healthcare providers on BetaLyfe are licensed and
+                    Yes, all healthcare providers on Seyi Tinubu Connect are licensed and
                     registered with the appropriate Nigerian medical boards and
                     councils. We verify credentials, experience, and standing
                     with regulatory bodies before onboarding any provider. You
@@ -858,10 +858,10 @@ function CareServicesPage() {
                 </AccordionItem>
                 <AccordionItem value="item-6">
                   <AccordionTrigger>
-                    Can I use health insurance with BetaLyfe?
+                    Can I use health insurance with Seyi Tinubu Connect?
                   </AccordionTrigger>
                   <AccordionContent>
-                    Yes, BetaLyfe works with several health insurance providers
+                    Yes, Seyi Tinubu Connect works with several health insurance providers
                     in Nigeria. During registration, you can add your insurance
                     information, and we'll verify your coverage. Depending on
                     your policy, consultations and medications may be partially
@@ -883,7 +883,7 @@ function CareServicesPage() {
                   Ready to experience better healthcare?
                 </h2>
                 <p className="max-w-[600px] md:text-xl">
-                  Join thousands of Nigerians who are already using BetaLyfe for
+                  Join thousands of Nigerians who are already using Seyi Tinubu Connect for
                   convenient, quality healthcare services.
                 </p>
               </div>
@@ -909,7 +909,7 @@ function CareServicesPage() {
         <div className="container flex flex-col gap-8 px-4 py-10 md:px-6 lg:py-16">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-muted-foreground">
-              &copy; {new Date().getFullYear()} BetaLyfe. All rights reserved.
+              &copy; {new Date().getFullYear()} Seyi Tinubu Connect. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               <a

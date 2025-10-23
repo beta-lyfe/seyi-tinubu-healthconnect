@@ -140,7 +140,7 @@ export default function LandingPage() {
                   Comprehensive Healthcare Solutions
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  BetaLyfe offers a complete healthcare ecosystem for Nigerians.
+                  Seyi Tinubu Connect offers a complete healthcare ecosystem for Nigerians.
                 </p>
               </div>
             </div>
@@ -228,7 +228,7 @@ export default function LandingPage() {
                   step: '01',
                   title: 'Download & Register',
                   description:
-                    'Download the BetaLyfe app from Google Play or App Store. Create your account in minutes.'
+                    'Download the STConnect app from Google Play or App Store. Create your account in minutes.'
                 },
                 {
                   step: '02',
@@ -367,7 +367,7 @@ export default function LandingPage() {
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Hear from Nigerians who have experienced better healthcare
-                  through BetaLyfe.
+                  through Seyi Tinubu Connect.
                 </p>
               </div>
             </div>
@@ -375,7 +375,7 @@ export default function LandingPage() {
               {[
                 {
                   quote:
-                    'BetaLyfe saved me hours of travel time. I consulted with a dermatologist from Lagos while I was in Abuja, and received my medication the next day.',
+                    'Seyi Tinubu Connect saved me hours of travel time. I consulted with a dermatologist from Lagos while I was in Abuja, and received my medication the next day.',
                   author: 'Chioma Eze',
                   location: 'Abuja',
                   rating: 5
@@ -389,7 +389,7 @@ export default function LandingPage() {
                 },
                 {
                   quote:
-                    'I was skeptical about telehealth, but BetaLyfe changed my mind. The quality of care is outstanding, and the pharmacy delivery service is prompt and reliable.',
+                    'I was skeptical about telehealth, but Seyi Tinubu Connect changed my mind. The quality of care is outstanding, and the pharmacy delivery service is prompt and reliable.',
                   author: 'Emmanuel Okonkwo',
                   location: 'Port Harcourt',
                   rating: 4
@@ -448,7 +448,7 @@ export default function LandingPage() {
                   Serving All 36 States and FCT
                 </h2>
                 <p className="text-muted-foreground md:text-xl/relaxed">
-                  BetaLyfe provides healthcare services and medication delivery
+                  Seyi Tinubu Connect provides healthcare services and medication delivery
                   across all of Nigeria. No matter where you are, quality
                   healthcare is just a tap away.
                 </p>
@@ -477,7 +477,7 @@ export default function LandingPage() {
               <div className="relative h-[400px] w-full overflow-hidden rounded-xl">
                 <img
                   src="/placeholder.svg?height=400&width=600&text=Nigeria+Map"
-                  alt="Map of Nigeria showing BetaLyfe coverage"
+                  alt="Map of Nigeria showing Seyi Tinubu Connect coverage"
                   className="object-cover"
                 />
               </div>
@@ -494,7 +494,7 @@ export default function LandingPage() {
                   Ready to transform your healthcare experience?
                 </h2>
                 <p className="max-w-[600px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Join thousands of Nigerians who are already using BetaLyfe for
+                  Join thousands of Nigerians who are already using Seyi Tinubu Connect for
                   better healthcare access.
                 </p>
               </div>
@@ -524,7 +524,7 @@ export default function LandingPage() {
                   src="/images/betalyfe-icon.svg"
                   className="h-10 w-10 rounded-full"
                 />
-                <span className="text-lg font-bold">BetaLyfe</span>
+                <span className="text-lg font-bold">STConnect</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Transforming healthcare in Nigeria through technology. Connect
@@ -634,7 +634,7 @@ export default function LandingPage() {
           </div>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-muted-foreground">
-              &copy; {new Date().getFullYear()} BetaLyfe. All rights reserved.
+              &copy; {new Date().getFullYear()} Seyi Tinubu Connect. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               <span className="sr-only">Twitter</span>
