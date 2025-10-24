@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
-  appId: 'org.betalyfe.app',
-  appName: 'betalyfe',
+  appId: 'org.stconnect.app',
+  appName: 'stconnect',
   webDir: 'dist',
   plugins: {
     SplashScreen: {

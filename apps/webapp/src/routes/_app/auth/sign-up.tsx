@@ -162,7 +162,7 @@ export default function SignUpPage() {
                 className="w-14 h-14 rounded-full"
               />
             </div>
-            <h1 className="text-xl font-bold ml-2">Beta-Lyfe</h1>
+            <h1 className="text-lg font-bold ml-2">ST connect</h1>
           </div>
           <Link to="/auth/sign-in">
             <Button variant="outline" size="sm">
@@ -341,7 +341,7 @@ function Step2Form({
   return (
     <div className="space-y-6">
       <p className="text-muted-foreground">
-        Please select your role in the Beta-Lyfe platform
+        Please select your role in the ST connect platform
       </p>
 
       <div className="grid grid-cols-2 gap-4">

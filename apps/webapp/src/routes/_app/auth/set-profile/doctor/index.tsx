@@ -978,7 +978,7 @@ export default function DoctorProfileSetup() {
             <div className="bg-primary/10 p-1 rounded-md">
               <Stethoscope className="h-6 w-6 text-primary" />
             </div>
-            <span className="font-bold text-xl">Beta-Lyfe MD</span>
+            <span className="font-bold text-lg">ST connect MD</span>
           </Link>
         </div>
       </div>

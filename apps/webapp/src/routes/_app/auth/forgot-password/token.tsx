@@ -51,7 +51,7 @@ export default function ResetPasswordPage() {
             <div className="bg-primary/10 p-2 rounded-full">
               <Stethoscope className="h-6 w-6 text-primary" />
             </div>
-            <h1 className="text-xl font-bold ml-2">Beta-Lyfe</h1>
+            <h1 className="text-lg font-bold ml-2">ST connect</h1>
           </div>
           <Link to="/auth/sign-in">
             <Button variant="ghost" size="sm">

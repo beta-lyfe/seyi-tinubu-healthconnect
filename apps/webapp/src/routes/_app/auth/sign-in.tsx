@@ -203,7 +203,7 @@ export default function SignInPage() {
               className="w-14 h-14 rounded-full"
             />
           </div>
-          <h1 className="text-2xl font-bold">Welcome back to Beta-Lyfe</h1>
+          <h1 className="text-xl font-bold">Welcome back to ST connect</h1>
           <p className="text-muted-foreground mt-1">Sign in to your account</p>
         </div>
 

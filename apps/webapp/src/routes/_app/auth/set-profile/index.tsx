@@ -116,7 +116,7 @@ export default function PatientDobPage() {
 
                   <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mt-4">
                     <p className="text-sm text-blue-700">
-                      This information is required to continue using Beta-Lyfe services.
+                      This information is required to continue using ST connect services.
                     </p>
                   </div>
                 </CardContent>

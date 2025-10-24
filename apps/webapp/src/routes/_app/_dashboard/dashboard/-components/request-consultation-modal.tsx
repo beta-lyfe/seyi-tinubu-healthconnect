@@ -598,7 +598,7 @@ export function ConsultationRequestModal({ open, onOpenChange, doctorId, doctorD
                                         <CreditCard className="h-5 w-5 text-primary" />
                                       </div>
                                       <div>
-                                        <p className="font-medium">Beta-Lyfe Wallet</p>
+                                        <p className="font-medium">ST connect Wallet</p>
                                         <p className="text-xs text-muted-foreground">Pay from your wallet balance</p>
                                       </div>
                                     </div>
@@ -754,7 +754,7 @@ export function ConsultationRequestModal({ open, onOpenChange, doctorId, doctorD
                               <span className="text-muted-foreground">Payment Method:</span>
                               <span className="font-medium capitalize">
                                 {paymentMethod === "wallet"
-                                  ? "Beta-Lyfe Wallet"
+                                  ? "ST connect Wallet"
                                   : paymentMethod === "card"
                                     ? "Credit/Debit Card"
                                     : "Insurance - " + form.getValues("insuranceProvider")}
@@ -788,7 +788,7 @@ export function ConsultationRequestModal({ open, onOpenChange, doctorId, doctorD
                         <div className="flex gap-2">
                           <AlertCircle className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
                           <p className="text-sm text-blue-700">
-                            By confirming this booking, you agree to Beta-Lyfe's terms of service and cancellation
+                            By confirming this booking, you agree to ST connect's terms of service and cancellation
                             policy.
                           </p>
                         </div>

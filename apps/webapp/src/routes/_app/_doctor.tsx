@@ -104,8 +104,8 @@ export default function DoctorLayout({ children }: DoctorLayoutProps) {
                 src="/images/betalyfe-icon.svg"
                 className="w-8 h-8 rounded-full"
               />
-              <span className="font-bold text-xl hidden md:inline-block">
-                Beta-Lyfe MD
+              <span className="font-bold text-lg hidden md:inline-block">
+                ST connect MD
               </span>
             </Link>
           </div>
@@ -158,7 +158,7 @@ export default function DoctorLayout({ children }: DoctorLayoutProps) {
                         <div className="bg-primary/10 p-1 rounded-md dark:bg-primary/20">
                           <Stethoscope className="h-6 w-6 text-primary" />
                         </div>
-                        <span className="font-bold text-xl">Beta-Lyfe MD</span>
+                        <span className="font-bold text-lg">ST connect MD</span>
                       </div>
                       <Button
                         variant="ghost"

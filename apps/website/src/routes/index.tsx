@@ -106,7 +106,7 @@ export default function LandingPage() {
               </div>
               <div className="relative hidden lg:block">
                 <img
-                  src="/placeholder.svg?height=550&width=550&text=Doctor+Video+Call"
+                  src="./public/images/doc-video-patient.png"
                   width={550}
                   height={550}
                   alt="Doctor on video call with patient"
