@@ -12,10 +12,10 @@ export default function TopNavBar() {
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center gap-2 overflow-hidden">
             <img
-              src="/images/logo-stl.jpg"
+              src="/images/logo-stl.png"
               className="w-20 h-20 bg-clip-border border-b-8 border-transparent"
             />
-            <span className="text-xl font-bold">STConnect</span>
+            {/* <span className="text-xl font-bold">STConnect</span> */}
           </Link>
         </div>
         <nav className="hidden md:flex gap-6">
@@ -57,7 +57,7 @@ export default function TopNavBar() {
           <Button asChild variant="outline" className="hidden md:inline-flex">
             <Link to="/get-the-app">Get the App</Link>
           </Button>
-          <Button asChild>
+          <Button asChild className=' text-white'>
             <Link to="/signup" className="text-white">
               Get Started
             </Link>

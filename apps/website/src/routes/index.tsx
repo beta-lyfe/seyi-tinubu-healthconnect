@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { Loader2Icon } from 'lucide-react'
+import { ArrowLeft, Loader2Icon } from 'lucide-react'
 import { Button } from '@beta-lyfe/ui/components/button'
 import {
   Card,
@@ -49,69 +49,49 @@ export default function LandingPage() {
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-blue-50 to-white">
+        <section className="w-full py-12 md:py-24 lg:py-30 xl:py-36  bg-green-600
+         ">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_700px]">
               <div className="flex flex-col justify-center space-y-4">
-                <div className="space-y-2">
-                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                    Healthcare at Your Fingertips
+                <div className="space-y-2 mb-4">
+                  <div className=' text-md text-left font-semibold text-white rounded-full rounded-br-none bg-green-400 px-8 py-3 w-fit mb-6'>
+                    <p>YOUR HEALTH IS OUR PRIORITY</p>
+                  </div>
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-white pb-12">                
+                   Redefining Access to Healthcare in Nigeria
                   </h1>
-                  <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Seyi Tinubu Health Initiative  
-A tech-driven health initiative using telehealth to deliver free medical consultations and essential drug access to Nigeria’s most vulnerable. Through a mobile-first platform, underserved mothers and children can now connect with doctors, access care, and receive medications anytime, anywhere.
+                  <p className="max-w-[600px] text-muted-foreground md:text-xl text-white">
+                   Seyi Tinubu Health Initiative is a tech-driven health initiative using telehealth to deliver free medical consultations and essential drug access to Nigeria’s most vulnerable. Through a mobile-first platform, underserved mothers and children can now connect with doctors, access care, and receive medications anytime, anywhere.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Button asChild size="lg" className="px-8 text-white">
                     Book a Consultation
                   </Button>
-                  <Button asChild variant="outline" size="lg" className="px-8">
-                    <p>Visit Our Pharmacy</p>
+                  <Button asChild variant="outline" size="lg" className="px-8  rounded-full border-none bg-orange-500 text-white">
+                    <div className="flex items-end gap-4">
+                    <p>Visit Our Pharmacy </p>
+                    <div className=' rounded-full bg-white p-1'>
+                       <ArrowRight className=' text-orange-500'/>
+                      </div>
+                    </div>
+                  </Button>
+                  <Button asChild variant="outline" size="lg" className="px-10 rounded-full border-white bg-transparent text-white">
+                    <p>Contact us</p>
                   </Button>
                 </div>
-                <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mt-8">
-                  <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-3xl font-bold text-primary">
-                      2,500+
-                    </span>
-                    <span className="text-sm text-muted-foreground text-center">
-                      Care Providers
-                    </span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-3xl font-bold text-primary">36+</span>
-                    <span className="text-sm text-muted-foreground text-center">
-                      Specialties
-                    </span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-3xl font-bold text-primary">
-                      100%
-                    </span>
-                    <span className="text-sm text-muted-foreground text-center">
-                      States in Nigeria + FCT
-                    </span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-3xl font-bold text-primary">
-                      8,000+
-                    </span>
-                    <span className="text-sm text-muted-foreground text-center">
-                      Completed Appointments
-                    </span>
-                  </div>
-                </div>
+                
               </div>
               <div className="relative hidden lg:block">
                 <img
-                  src="./public/images/doc-video-patient.png"
+                  src="/public/images/seyi1.png"
                   width={550}
                   height={550}
                   alt="Doctor on video call with patient"
-                  className="mx-auto aspect-video overflow-hidden rounded-xl object-cover"
+                  className="mx-auto overflow-hidden rounded-xl object-cover"
                 />
-                <div className="absolute -bottom-6 -left-6 rounded-lg bg-white p-4 shadow-lg">
+                {/* <div className="absolute -bottom-6 -left-6 rounded-lg bg-white p-4 shadow-lg">
                   <div className="flex items-center space-x-2">
                     <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
                       <Clock className="h-5 w-5 text-green-600" />
@@ -121,12 +101,39 @@ A tech-driven health initiative using telehealth to deliver free medical consult
                       <p className="text-xl font-bold">Under 5 minutes</p>
                     </div>
                   </div>
-                </div>
-              </div>
+                 </div> */}
+              </div> 
             </div>
           </div>
         </section>
-
+        <section className="w-full py-12 md:py-20 lg:py-16 lg:px-52 ">
+          <div className="grid grid-cols-2 bg-white gap-4 md:grid-cols-4 mt-8">
+            <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
+              <span className="text-3xl font-bold text-primary">2,500+</span>
+              <span className="text-sm text-muted-foreground text-center font-semibold text-black">
+                Care Providers
+              </span>
+            </div>
+            <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
+              <span className="text-3xl font-bold text-primary">36+</span>
+              <span className="text-sm text-muted-foreground text-center font-semibold text-black">
+                Specialties
+              </span>
+            </div>
+            <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
+              <span className="text-3xl font-bold text-primary ">100%</span>
+              <span className="text-sm text-muted-foreground text-center font-semiboldx text-black">
+                States in Nigeria + FCT
+              </span>
+            </div>
+            <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
+              <span className="text-3xl font-bold text-primary">8,000+</span>
+              <span className="text-sm text-muted-foreground text-center font-semibold text-black">
+                Completed Appointments
+              </span>
+            </div>
+          </div>
+        </section>
         {/* Services Section */}
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
@@ -520,7 +527,7 @@ A tech-driven health initiative using telehealth to deliver free medical consult
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <img
-                  src="/images/logo-stl.jpg"
+                  src="/images/logo-stl.png"
                   className="h-10 w-10 rounded-full"
                 />
                 <span className="text-lg font-bold">STConnect</span>
