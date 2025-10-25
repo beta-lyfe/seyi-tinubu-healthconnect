@@ -58,9 +58,8 @@ export default function LandingPage() {
                     Healthcare at Your Fingertips
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Connect with licensed doctors across Nigeria, get
-                    prescriptions, and order medications from our online
-                    pharmacy—all from the comfort of your home.
+                    Seyi Tinubu Health Initiative  
+A tech-driven health initiative using telehealth to deliver free medical consultations and essential drug access to Nigeria’s most vulnerable. Through a mobile-first platform, underserved mothers and children can now connect with doctors, access care, and receive medications anytime, anywhere.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -295,25 +294,25 @@ export default function LandingPage() {
                   name: 'Dr. Adebayo Johnson',
                   specialty: 'Cardiology',
                   experience: '15+ years',
-                  img: '/placeholder.svg?height=300&width=300&text=Dr.+Johnson'
+                  img: '/images/doctor1.png'
                 },
                 {
                   name: 'Dr. Ngozi Okafor',
                   specialty: 'Pediatrics',
                   experience: '12+ years',
-                  img: '/placeholder.svg?height=300&width=300&text=Dr.+Okafor'
+                  img: '/images/doctor2.png'
                 },
                 {
                   name: 'Dr. Emeka Nwachukwu',
                   specialty: 'Dermatology',
                   experience: '10+ years',
-                  img: '/placeholder.svg?height=300&width=300&text=Dr.+Nwachukwu'
+                  img: '/images/doctor3.png'
                 },
                 {
                   name: 'Dr. Fatima Bello',
                   specialty: 'Gynecology',
                   experience: '14+ years',
-                  img: '/placeholder.svg?height=300&width=300&text=Dr.+Bello'
+                  img: '/images/doctor4.png'
                 }
               ].map((doctor, index) => (
                 <Card key={index} className="overflow-hidden">
@@ -408,7 +407,7 @@ export default function LandingPage() {
                         ))}
                     </div>
                     <blockquote className="text-lg mb-4">
-                      "{testimonial.quote}"
+                      {testimonial.quote}
                     </blockquote>
                     <div className="flex items-center">
                       <div className="h-10 w-10 rounded-full bg-muted">
@@ -521,7 +520,7 @@ export default function LandingPage() {
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <img
-                  src="/images/betalyfe-icon.svg"
+                  src="/images/logo-stl.jpg"
                   className="h-10 w-10 rounded-full"
                 />
                 <span className="text-lg font-bold">STConnect</span>

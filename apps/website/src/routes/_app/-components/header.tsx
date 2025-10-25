@@ -10,10 +10,10 @@ export default function TopNavBar() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2 overflow-hidden">
             <img
-              src="/images/betalyfe-icon.svg"
-              className="w-10 h-10 rounded-full"
+              src="/images/logo-stl.jpg"
+              className="w-20 h-20 bg-clip-border border-b-8 border-transparent"
             />
             <span className="text-xl font-bold">STConnect</span>
           </Link>
