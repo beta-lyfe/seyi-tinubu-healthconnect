@@ -85,7 +85,7 @@ export default function LandingPage() {
               </div>
               <div className="relative hidden lg:block">
                 <img
-                  src="/public/images/seyi1.png"
+                  src="/images/seyi1.png"
                   width={550}
                   height={550}
                   alt="Doctor on video call with patient"
