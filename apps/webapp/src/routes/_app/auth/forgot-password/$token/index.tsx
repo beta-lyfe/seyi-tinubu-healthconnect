@@ -95,7 +95,7 @@ export default function ForgotPasswordPage() {
             <div className="bg-primary/10 p-2 rounded-full">
               <img
               onClick={()=>router.navigate({to:'/testcall'})}
-                src="/images/betalyfe-icon.svg"
+                src="/images/logo-stl.png"
                 className="w-14 h-14 rounded-full"
               />
             </div>

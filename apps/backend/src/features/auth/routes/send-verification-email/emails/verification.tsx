@@ -114,7 +114,7 @@ const footer = {
   textTransform: 'uppercase' as const
 }
 
-const logoUrl = 'https://betalyfe.com.ng/images/betalyfe-icon.svg'
+const logoUrl = 'https://betalyfe.com.ng/images/logo-stl.png'
 
 export default function VerificationEmail({
   user,

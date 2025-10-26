@@ -83,7 +83,7 @@ export  function MainLayout({ children }: MainLayoutProps) {
         <div className="container flex h-14 items-center">
           <div className="mr-4 flex items-center gap-3">
             <img
-              src="/images/betalyfe-icon.svg"
+              src="/images/logo-stl.png"
               className="w-10 h-10 rounded-full"
             />
             <p className="text-primary font-bold">ST connect</p>

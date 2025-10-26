@@ -486,7 +486,7 @@ function PharmacyPage() {
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <img
-                  src="/images/betalyfe-icon.svg"
+                  src="/images/logo-stl.png"
                   className="w-10 h-10 rounded-full"
                 />
                 <span className="text-lg font-bold">STConnect Pharmacy</span>

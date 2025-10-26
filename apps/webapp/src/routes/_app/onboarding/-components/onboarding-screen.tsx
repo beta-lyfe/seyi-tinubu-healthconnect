@@ -121,8 +121,8 @@ export function OnboardingScreen() {
     >
       <div className="absolute top-4 left-4">
         <img
-          src="/images/betalyfe-icon.svg"
-          className="w-12 h-12 rounded-full"
+          src="/images/logo-stl.png"
+          className="w-16  h-16 rounded-full"
         />
       </div>
 

@@ -25,7 +25,7 @@ export default function NotFound() {
           <div className="relative flex flex-col items-center">
             <div className="bg-primary/10 p-4 rounded-full mb-4">
               <img
-                src="/images/betalyfe-icon.svg"
+                src="/images/logo-stl.png"
                 className="w-14 h-14 rounded-full"
               />
             </div>

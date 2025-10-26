@@ -101,7 +101,7 @@ export default function DoctorLayout({ children }: DoctorLayoutProps) {
               className="flex items-center space-x-2"
             >
               <img
-                src="/images/betalyfe-icon.svg"
+                src="/images/logo-stl.png"
                 className="w-8 h-8 rounded-full"
               />
               <span className="font-bold text-lg hidden md:inline-block">

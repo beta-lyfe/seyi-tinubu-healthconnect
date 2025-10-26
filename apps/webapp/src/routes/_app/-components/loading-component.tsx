@@ -11,7 +11,7 @@ export default function LoadingScreen() {
           {/* Pill Icon */}
           <div className="absolute animate-pulse">
             <img
-              src="/images/betalyfe-icon.svg"
+              src="/images/logo-stl.png"
               className="w-24 h-24 rounded-full"
             />
           </div>

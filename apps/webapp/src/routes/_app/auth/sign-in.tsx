@@ -199,8 +199,8 @@ export default function SignInPage() {
         <div className="flex flex-col items-center mb-8">
           <div className="bg-primary/10 p-3 rounded-full mb-4">
             <img
-              src="/images/betalyfe-icon.svg"
-              className="w-14 h-14 rounded-full"
+              src="/images/logo-stl.png"
+              className="w-20 h-20 rounded-full"
             />
           </div>
           <h1 className="text-xl font-bold">Welcome back to ST connect</h1>
