@@ -55,12 +55,12 @@ export default function TopNavBar() {
         </nav>
         <div className="flex items-center gap-4">
           <Button asChild variant="outline" className="hidden md:inline-flex">
-            <Link to="/get-the-app">Get the App</Link>
+            <a href="https://seyi-webapp.vercel.app/">Get the App</a>
           </Button>
           <Button asChild className=' text-white'>
-            <Link to="/signup" className="text-white">
+            <a href="https://seyi-webapp.vercel.app/" className="text-white">
               Get Started
-            </Link>
+            </a>
           </Button>
           <Button
             variant="ghost"
