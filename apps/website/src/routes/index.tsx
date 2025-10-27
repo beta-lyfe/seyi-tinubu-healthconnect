@@ -49,10 +49,10 @@ export default function LandingPage() {
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-30 xl:py-36  bg-green-600
+        <section className="w-full py-12 md:py-24 lg:py-30 xl:py-36 backdrop-blur-3xl  bg-green-600 bg-[url('/images/hero.jpg1')] bg-cover
          ">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_700px]">
+          <div className="container px-4 md:px-6 ">
+            <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_700px] ">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2 mb-4">
                   <div className=' text-md text-left font-semibold text-white rounded-full rounded-br-none bg-green-400 px-8 py-3 w-fit mb-6'>
@@ -421,12 +421,12 @@ export default function LandingPage() {
                         ))}
                     </div>
                     <blockquote className="text-lg mb-4">
-                      {testimonial.quote}
+                      <span className='text-[32px] text-[#63BBE9]'>“</span>{testimonial.quote}
                     </blockquote>
                     <div className="flex items-center">
                       <div className="h-10 w-10 rounded-full bg-muted">
                         <img
-                          src={`/placeholder.svg?height=40&width=40&text=${testimonial.author.charAt(0)}`}
+                          src={`/images/testimonial${index + 1}.jpg`}
                           alt={testimonial.author}
                           width={40}
                           height={40}
@@ -450,49 +450,49 @@ export default function LandingPage() {
         </section>
 
         {/* Coverage Map Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
+        <section className="w-full py-20  md:py-56 lg:py-44 bg-[url('/images/seyi-bg.jpg')] bg-cover bg-center">
+          <div className="container px-4 backdrop-blur-sm bl md:px-6  bg-cover bg-center">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-              <div className="space-y-4">
+              <div className="space-y-8">
                 <div className="inline-block text-xl text-left font-semibold text-white rounded-full rounded-br-none bg-[#5ee088] px-12 py-3 w-fit mb-6">
                   Nationwide Coverage
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-[#3498db]">
                   Serving All 36 States and FCT
                 </h2>
-                <p className="text-muted-foreground md:text-xl/relaxed">
+                <p className="text-muted-foreground md:text-xl/relaxed text-white">
                   Seyi Tinubu Connect provides healthcare services and medication delivery
                   across all of Nigeria. No matter where you are, quality
                   healthcare is just a tap away.
                 </p>
                 <div className="grid grid-cols-2 gap-4 mt-6">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 text-white">
                     <Users className="h-5 w-5 text-primary" />
                     <span>2,500+ Care Providers</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 text-white">
                     <Award className="h-5 w-5 text-primary" />
                     <span>36+ Medical Specialties</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 text-white">
                     <Map className="h-5 w-5 text-primary" />
                     <span>100% Geographic Coverage</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="text-white flex items-center gap-2">
                     <MapPin className="h-5 w-5 text-primary" />
                     <span>Medication Delivery Nationwide</span>
                   </div>
                 </div>
-                <Button asChild className="mt-4 text-white bg-[#ff6f61]">
+                <Button asChild className="mt-12 text-white ">
                   <p>Check Availability in Your Area</p>
                 </Button>
               </div>
               <div className="relative h-[400px] w-full overflow-hidden rounded-xl">
-                <img
+                {/* <img
                   src="/placeholder.svg?height=400&width=600&text=Nigeria+Map"
                   alt="Map of Nigeria showing Seyi Tinubu Connect coverage"
                   className="object-cover"
-                />
+                /> */}
               </div>
             </div>
           </div>
@@ -512,14 +512,14 @@ export default function LandingPage() {
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Button asChild size="lg" variant="secondary" className="px-8">
+                <Button asChild size="lg" variant="secondary" className="bg-[#33ba7f] px-8 text-white">
                   <Link to="/get-the-app">Download the App</Link>
                 </Button>
                 <Button
                   asChild
                   size="lg"
                   variant="outline"
-                  className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 px-8"
+                  className="bg-transparent border-primary-foreground bg-white text-[#33ba7f] hover:bg-primary-foreground/10 px-8"
                 >
                   <Link to="/contact-us">Contact Us</Link>
                 </Button>
