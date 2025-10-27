@@ -57,7 +57,7 @@ export default function TopNavBar() {
           <Button asChild variant="outline" className="hidden md:inline-flex">
             <a href="https://seyi-webapp.vercel.app/">Get the App</a>
           </Button>
-          <Button asChild className=' text-white'>
+          <Button asChild className=' text-white bg-[#2cb977]'>
             <a href="https://seyi-webapp.vercel.app/" className="text-white">
               Get Started
             </a>

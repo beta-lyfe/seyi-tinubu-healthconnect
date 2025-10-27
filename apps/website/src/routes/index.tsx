@@ -107,27 +107,27 @@ export default function LandingPage() {
           </div>
         </section>
         <section className="w-full py-12 md:py-20 lg:py-16 lg:px-52 ">
-          <div className="grid grid-cols-2 bg-white gap-4 md:grid-cols-4 mt-8">
+          <div className="grid grid-cols-2 bg-white gap-4 md:grid-cols-4 mt-8 p-4">
             <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-              <span className="text-3xl font-bold text-primary">2,500+</span>
+              <span className="text-5xl font-bold text-primary">2,500+</span>
               <span className="text-sm text-muted-foreground text-center font-semibold text-black">
                 Care Providers
               </span>
             </div>
             <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-              <span className="text-3xl font-bold text-primary">36+</span>
+              <span className="text-5xl font-bold text-primary">36+</span>
               <span className="text-sm text-muted-foreground text-center font-semibold text-black">
                 Specialties
               </span>
             </div>
             <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-              <span className="text-3xl font-bold text-primary ">100%</span>
+              <span className="text-5xl font-bold text-primary ">100%</span>
               <span className="text-sm text-muted-foreground text-center font-semiboldx text-black">
                 States in Nigeria + FCT
               </span>
             </div>
             <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-              <span className="text-3xl font-bold text-primary">8,000+</span>
+              <span className="text-5xl font-bold text-primary">8,000+</span>
               <span className="text-sm text-muted-foreground text-center font-semibold text-black">
                 Completed Appointments
               </span>
@@ -139,10 +139,10 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
+                <div className="inline-block text-xl text-left font-semibold text-white rounded-full rounded-br-none bg-[#5ee088] px-12 py-3 w-fit mb-6 ">
                   Our Services
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-[#3498db]">
                   Comprehensive Healthcare Solutions
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -217,10 +217,10 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
+                <div className="inline-block text-xl text-left font-semibold text-[#42a68b] rounded-full rounded-br-none border-[#2ecc71] border-2 bg-[#eaf5f2] px-8 py-3 w-fit mb-6">
                   How To Use
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-[#3498db]">
                   Simple, secure, and convenient
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -253,7 +253,7 @@ export default function LandingPage() {
                   key={index}
                   className="group relative flex flex-col items-center space-y-4"
                 >
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-primary-foreground">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#5ee088] text-2xl font-bold text-primary-foreground">
                     {step.step}
                   </div>
                   <div className="space-y-2">
@@ -270,11 +270,11 @@ export default function LandingPage() {
                 </div>
               ))}
             </div>
-            <div className="flex justify-center mt-8">
+            {/* <div className="flex justify-center mt-8">
               <Button asChild size="lg" className="px-8 text-white">
                 <Link to="/get-the-app">Download the App</Link>
               </Button>
-            </div>
+            </div> */}
           </div>
         </section>
 
@@ -283,10 +283,10 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
-                  Care Providers
+                <div className="inline-block text-md text-left font-semibold text-white rounded-full rounded-br-none bg-[#5ee088] border-[#2ecc71] border-2 px-8 py-3 w-fit mb-6">
+                  Our Doctors
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-[#3498db]">
                   Meet Our Healthcare Professionals
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -350,9 +350,16 @@ export default function LandingPage() {
               ))}
             </div>
             <div className="flex justify-center mt-8">
-              <Button asChild variant="outline">
-                <p>View All Care Providers</p>
+              <Button asChild variant="outline" className='bg-[#ff6f61] text-white p-4 text-md rounded-full'>
+                <div className='flex justify-between items-center gap-3 '>
+                    <p>See more Doctors</p>
+                    <div className='bg-white rounded-full p-2'>
+                       <ArrowRight className='text-[#ff6f61]'/>
+                    </div>
+              </div>
               </Button>
+              
+              
             </div>
           </div>
         </section>
@@ -365,10 +372,10 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
+                <div className="inline-block text-xl text-left font-semibold text-white rounded-full rounded-br-none bg-[#5ee088] px-12 py-3 w-fit mb-6">
                   Testimonials
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-[#3498db]">
                   What our users are saying
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -447,10 +454,10 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
               <div className="space-y-4">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
+                <div className="inline-block text-xl text-left font-semibold text-white rounded-full rounded-br-none bg-[#5ee088] px-12 py-3 w-fit mb-6">
                   Nationwide Coverage
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-[#3498db]">
                   Serving All 36 States and FCT
                 </h2>
                 <p className="text-muted-foreground md:text-xl/relaxed">
@@ -476,7 +483,7 @@ export default function LandingPage() {
                     <span>Medication Delivery Nationwide</span>
                   </div>
                 </div>
-                <Button asChild className="mt-4 text-white">
+                <Button asChild className="mt-4 text-white bg-[#ff6f61]">
                   <p>Check Availability in Your Area</p>
                 </Button>
               </div>
@@ -492,7 +499,7 @@ export default function LandingPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-primary-foreground">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#33ba7f] text-primary-foreground">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
