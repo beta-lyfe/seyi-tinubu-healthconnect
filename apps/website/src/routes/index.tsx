@@ -49,8 +49,10 @@ export default function LandingPage() {
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-30 xl:py-36 backdrop-blur-3xl  bg-green-600 bg-[url('/images/hero.jpg1')] bg-cover
+        <section className="w-full py-12 md:py-24 lg:py-30 xl:py-36   bg-green-600 bg-[url('/images/hero1.jpg')] bg-cover 
          ">
+         
+
           <div className="container px-4 md:px-6 ">
             <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_700px] ">
               <div className="flex flex-col justify-center space-y-4">
