@@ -49,11 +49,10 @@ export default function LandingPage() {
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-30 xl:py-36   bg-green-600 bg-[url('/images/hero1.jpg')] bg-cover 
+        <section className="w-full   bg-green-600 bg-[url('/images/hero2.jpg')] bg-cover 
          ">
-         
-
-          <div className="container px-4 md:px-6 ">
+        
+          <div className=" px-4 md:px-6 lg:px-48 py-10 bg-green-600 h-full bg-opacity-60 w-full">
             <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_700px] ">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2 mb-4">
@@ -137,7 +136,7 @@ export default function LandingPage() {
           </div>
         </section>
         {/* Services Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full py-12 md:pb-24 lg:pb-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -489,13 +488,7 @@ export default function LandingPage() {
                   <p>Check Availability in Your Area</p>
                 </Button>
               </div>
-              <div className="relative h-[400px] w-full overflow-hidden rounded-xl">
-                {/* <img
-                  src="/placeholder.svg?height=400&width=600&text=Nigeria+Map"
-                  alt="Map of Nigeria showing Seyi Tinubu Connect coverage"
-                  className="object-cover"
-                /> */}
-              </div>
+              
             </div>
           </div>
         </section>
