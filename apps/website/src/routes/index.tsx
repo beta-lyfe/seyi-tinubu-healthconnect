@@ -83,7 +83,7 @@ export default function LandingPage() {
                 </div>
                 
               </div>
-              <div className="relative hidden lg:block">
+              <div className="relative hidden lg:block bg-[url('/images/bgcircle.png')] bg-center bg-no-repeat">
                 <img
                   src="/images/seyi1.png"
                   width={550}
@@ -512,16 +512,16 @@ export default function LandingPage() {
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Button asChild size="lg" variant="secondary" className="bg-[#33ba7f] px-8 text-white">
-                  <Link to="/get-the-app">Download the App</Link>
+                <Button asChild size="lg" variant="secondary" className="bg-[#33ba7f] px-8 border-none text-white">
+                  <img src="/images/google.png"/>
                 </Button>
                 <Button
                   asChild
                   size="lg"
                   variant="outline"
-                  className="bg-transparent border-primary-foreground bg-white text-[#33ba7f] hover:bg-primary-foreground/10 px-8"
+                  className="bg-transparent border-none text-[#33ba7f] hover:bg-primary-foreground/10 px-8"
                 >
-                  <Link to="/contact-us">Contact Us</Link>
+                  <img src="/images/apple.png"/>
                 </Button>
               </div>
             </div>

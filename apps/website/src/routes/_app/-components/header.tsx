@@ -32,7 +32,7 @@ export default function TopNavBar() {
             to="/pharmacy"
             className="text-sm font-medium hover:text-primary"
           >
-            Phramacy
+            Pharmacy
           </Link>
           <Link
             to="/how-to-use"
