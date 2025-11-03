@@ -138,11 +138,11 @@ export default function AboutUsPage() {
               <Card className="bg-background">
                 <CardContent className="p-6 flex flex-col items-center text-center space-y-4">
                   <div className="rounded-full bg-primary/10 p-3">
-                    <span className="text-xl font-bold text-primary">2018</span>
+                    <span className="text-xl font-bold text-primary">2025</span>
                   </div>
                   <h3 className="text-xl font-bold">The Beginning</h3>
                   <p className="text-muted-foreground">
-                    Seyi Tinubu Connect was founded by Dr. Adebayo Johnson and Ngozi Okafor
+                    Seyi Tinubu Connect was founded by Seyi Tinubu, Sediq and Samuel Okechukwu
                     in Lagos with a vision to revolutionize healthcare access in
                     Nigeria.
                   </p>
@@ -151,7 +151,7 @@ export default function AboutUsPage() {
               <Card className="bg-background">
                 <CardContent className="p-6 flex flex-col items-center text-center space-y-4">
                   <div className="rounded-full bg-primary/10 p-3">
-                    <span className="text-xl font-bold text-primary">2020</span>
+                    <span className="text-xl font-bold text-primary">2025</span>
                   </div>
                   <h3 className="text-xl font-bold">Platform Launch</h3>
                   <p className="text-muted-foreground">
