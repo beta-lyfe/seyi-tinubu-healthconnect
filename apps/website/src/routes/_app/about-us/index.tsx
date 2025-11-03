@@ -164,7 +164,7 @@ export default function AboutUsPage() {
               <Card className="bg-background">
                 <CardContent className="p-6 flex flex-col items-center text-center space-y-4">
                   <div className="rounded-full bg-primary/10 p-3">
-                    <span className="text-xl font-bold text-primary">2022</span>
+                    <span className="text-xl font-bold text-primary">2026</span>
                   </div>
                   <h3 className="text-xl font-bold">Nationwide Expansion</h3>
                   <p className="text-muted-foreground">
