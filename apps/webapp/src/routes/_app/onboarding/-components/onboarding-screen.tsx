@@ -121,8 +121,8 @@ export function OnboardingScreen() {
     >
       <div className="absolute top-4 left-4">
         <img
-          src="/images/betalyfe-icon.svg"
-          className="w-12 h-12 rounded-full"
+          src="/images/logo-stl.png"
+          className="w-16  h-16 rounded-full"
         />
       </div>
 
@@ -162,12 +162,12 @@ export function OnboardingScreen() {
           </div>
 
           <motion.h1
-            className="text-3xl font-bold mb-2 text-primary"
+            className="text-2xl font-bold mb-2 text-primary"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            Beta-Lyfe
+            ST connect
           </motion.h1>
 
           <motion.p

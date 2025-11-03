@@ -10,12 +10,12 @@ export default function TopNavBar() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2 overflow-hidden">
             <img
-              src="/images/betalyfe-icon.svg"
-              className="w-10 h-10 rounded-full"
+              src="/images/logo-stl.png"
+              className="w-20 h-20 bg-clip-border border-b-8 border-transparent"
             />
-            <span className="text-xl font-bold">STConnect</span>
+            {/* <span className="text-xl font-bold">STConnect</span> */}
           </Link>
         </div>
         <nav className="hidden md:flex gap-6">
@@ -32,7 +32,7 @@ export default function TopNavBar() {
             to="/pharmacy"
             className="text-sm font-medium hover:text-primary"
           >
-            Phramacy
+            Pharmacy
           </Link>
           <Link
             to="/how-to-use"
@@ -55,12 +55,12 @@ export default function TopNavBar() {
         </nav>
         <div className="flex items-center gap-4">
           <Button asChild variant="outline" className="hidden md:inline-flex">
-            <Link to="/get-the-app">Get the App</Link>
+            <a href="https://seyi-webapp.vercel.app/">Get the App</a>
           </Button>
-          <Button asChild>
-            <Link to="/signup" className="text-white">
+          <Button asChild className=' text-white bg-[#2cb977]'>
+            <a href="https://seyi-webapp.vercel.app/" className="text-white">
               Get Started
-            </Link>
+            </a>
           </Button>
           <Button
             variant="ghost"

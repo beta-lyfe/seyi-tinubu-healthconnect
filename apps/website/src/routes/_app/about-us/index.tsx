@@ -58,9 +58,9 @@ export default function AboutUsPage() {
               </div>
               <div className="relative hidden lg:block">
                 <img
-                  src="/placeholder.svg?height=550&width=550&text=Seyi+Tinubu+Connect+Team"
-                  width={550}
-                  height={550}
+                  src="/images/seyi1.png"
+                  width={700}
+                  height={700}
                   alt="Seyi Tinubu Connect team members"
                   className="mx-auto aspect-video overflow-hidden rounded-xl object-cover"
                 />
@@ -223,23 +223,23 @@ export default function AboutUsPage() {
                 <div className="grid gap-6 md:grid-cols-3">
                   {[
                     {
-                      name: 'Dr. Adebayo Johnson',
-                      title: 'Co-Founder & CEO',
-                      bio: 'Dr. Johnson is a healthcare entrepreneur with over 15 years of experience in the Nigerian healthcare sector. Prior to founding Seyi Tinubu Connect, he served as the Medical Director at Lagos General Hospital.',
-                      img: '/placeholder.svg?height=300&width=300&text=Dr.+Johnson'
+                      name: 'Seyi Tinubu',
+                      title: 'Founder',
+                      bio: 'Seyi Tinubu is a entrepreneur with a passion for healthcare innovation.',
+                      img: '/images/seyi1.png'
                     },
-                    {
-                      name: 'Ngozi Okafor',
-                      title: 'Co-Founder & COO',
-                      bio: "With a background in healthcare management and an MBA from Lagos Business School, Ngozi oversees Seyi Tinubu Connect's operations, ensuring seamless service delivery across all departments.",
-                      img: '/placeholder.svg?height=300&width=300&text=Ngozi+Okafor'
-                    },
-                    {
-                      name: 'Oluwaseun Adeyemi',
-                      title: 'Chief Financial Officer',
-                      bio: 'Oluwaseun brings 12 years of financial expertise from both healthcare and technology sectors. He previously worked with major health insurance providers and tech startups in Nigeria.',
-                      img: '/placeholder.svg?height=300&width=300&text=Oluwaseun+Adeyemi'
-                    }
+                      // {
+                      //   name: 'Ngozi Okafor',
+                      //   title: 'Co-Founder & COO',
+                      //   bio: "With a background in healthcare management and an MBA from Lagos Business School, Ngozi oversees Seyi Tinubu Connect's operations, ensuring seamless service delivery across all departments.",
+                      //   img: '/placeholder.svg?height=300&width=300&text=Ngozi+Okafor'
+                      // },
+                      // {
+                      //   name: 'Oluwaseun Adeyemi',
+                      //   title: 'Chief Financial Officer',
+                      //   bio: 'Oluwaseun brings 12 years of financial expertise from both healthcare and technology sectors. He previously worked with major health insurance providers and tech startups in Nigeria.',
+                      //   img: '/placeholder.svg?height=300&width=300&text=Oluwaseun+Adeyemi'
+                      // }
                   ].map((person, index) => (
                     <Card key={index} className="overflow-hidden">
                       <div className="aspect-square relative">

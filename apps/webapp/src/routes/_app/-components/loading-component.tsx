@@ -11,7 +11,7 @@ export default function LoadingScreen() {
           {/* Pill Icon */}
           <div className="absolute animate-pulse">
             <img
-              src="/images/betalyfe-icon.svg"
+              src="/images/logo-stl.png"
               className="w-24 h-24 rounded-full"
             />
           </div>
@@ -19,7 +19,7 @@ export default function LoadingScreen() {
 
         {/* Scaling Logo */}
         <div className="mt-14 flex items-center justify-center animate-scale">
-          <span className="text-2xl font-bold">BetaLyfe</span>
+          <span className="text-xl font-bold">ST connect</span>
         </div>
 
         <p className="mt-4 text-muted-foreground">

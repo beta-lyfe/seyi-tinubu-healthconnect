@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { Loader2Icon } from 'lucide-react'
+import { ArrowLeft, Loader2Icon } from 'lucide-react'
 import { Button } from '@beta-lyfe/ui/components/button'
 import {
   Card,
@@ -49,70 +49,50 @@ export default function LandingPage() {
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-blue-50 to-white">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_700px]">
+        <section className="w-full   bg-green-600 bg-[url('/images/hero2.jpg')] bg-cover 
+         ">
+        
+          <div className=" px-4 md:px-6 lg:px-48 py-10 bg-green-600 h-full bg-opacity-60 w-full">
+            <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_700px] ">
               <div className="flex flex-col justify-center space-y-4">
-                <div className="space-y-2">
-                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                    Healthcare at Your Fingertips
+                <div className="space-y-2 mb-4">
+                  <div className=' text-md text-left font-semibold text-white rounded-full rounded-br-none bg-green-400 px-8 py-3 w-fit mb-6'>
+                    <p>YOUR HEALTH IS OUR PRIORITY</p>
+                  </div>
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-white pb-12">                
+                   Redefining Access to Healthcare in Nigeria
                   </h1>
-                  <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Connect with licensed doctors across Nigeria, get
-                    prescriptions, and order medications from our online
-                    pharmacy—all from the comfort of your home.
+                  <p className="max-w-[600px] text-muted-foreground md:text-xl text-white">
+                   Seyi Tinubu Health Initiative is a tech-driven health initiative using telehealth to deliver free medical consultations and essential drug access to Nigeria’s most vulnerable. Through a mobile-first platform, underserved mothers and children can now connect with doctors, access care, and receive medications anytime, anywhere.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Button asChild size="lg" className="px-8 text-white">
                     Book a Consultation
                   </Button>
-                  <Button asChild variant="outline" size="lg" className="px-8">
-                    <p>Visit Our Pharmacy</p>
+                  <Button asChild variant="outline" size="lg" className="px-8  rounded-full border-none bg-orange-500 text-white">
+                    <div className="flex items-end gap-4">
+                    <p>Visit Our Pharmacy </p>
+                    <div className=' rounded-full bg-white p-1'>
+                       <ArrowRight className=' text-orange-500'/>
+                      </div>
+                    </div>
+                  </Button>
+                  <Button asChild variant="outline" size="lg" className="px-10 rounded-full border-white bg-transparent text-white">
+                    <p>Contact us</p>
                   </Button>
                 </div>
-                <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mt-8">
-                  <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-3xl font-bold text-primary">
-                      2,500+
-                    </span>
-                    <span className="text-sm text-muted-foreground text-center">
-                      Care Providers
-                    </span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-3xl font-bold text-primary">36+</span>
-                    <span className="text-sm text-muted-foreground text-center">
-                      Specialties
-                    </span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-3xl font-bold text-primary">
-                      100%
-                    </span>
-                    <span className="text-sm text-muted-foreground text-center">
-                      States in Nigeria + FCT
-                    </span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
-                    <span className="text-3xl font-bold text-primary">
-                      8,000+
-                    </span>
-                    <span className="text-sm text-muted-foreground text-center">
-                      Completed Appointments
-                    </span>
-                  </div>
-                </div>
+                
               </div>
-              <div className="relative hidden lg:block">
+              <div className="relative hidden lg:block bg-[url('/images/bgcircle.png')] bg-center bg-no-repeat">
                 <img
-                  src="/placeholder.svg?height=550&width=550&text=Doctor+Video+Call"
+                  src="/images/seyi1.png"
                   width={550}
                   height={550}
                   alt="Doctor on video call with patient"
-                  className="mx-auto aspect-video overflow-hidden rounded-xl object-cover"
+                  className="mx-auto overflow-hidden rounded-xl object-cover"
                 />
-                <div className="absolute -bottom-6 -left-6 rounded-lg bg-white p-4 shadow-lg">
+                {/* <div className="absolute -bottom-6 -left-6 rounded-lg bg-white p-4 shadow-lg">
                   <div className="flex items-center space-x-2">
                     <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
                       <Clock className="h-5 w-5 text-green-600" />
@@ -122,21 +102,48 @@ export default function LandingPage() {
                       <p className="text-xl font-bold">Under 5 minutes</p>
                     </div>
                   </div>
-                </div>
-              </div>
+                 </div> */}
+              </div> 
             </div>
           </div>
         </section>
-
+        <section className="w-full py-12 md:py-20 lg:py-16 lg:px-52 ">
+          <div className="grid grid-cols-2 bg-white gap-4 md:grid-cols-4 mt-8 p-4">
+            <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
+              <span className="text-5xl font-bold text-primary">2,500+</span>
+              <span className="text-sm text-muted-foreground text-center font-semibold text-black">
+                Care Providers
+              </span>
+            </div>
+            <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
+              <span className="text-5xl font-bold text-primary">36+</span>
+              <span className="text-sm text-muted-foreground text-center font-semibold text-black">
+                Specialties
+              </span>
+            </div>
+            <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
+              <span className="text-5xl font-bold text-primary ">100%</span>
+              <span className="text-sm text-muted-foreground text-center font-semiboldx text-black">
+                States in Nigeria + FCT
+              </span>
+            </div>
+            <div className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm">
+              <span className="text-5xl font-bold text-primary">8,000+</span>
+              <span className="text-sm text-muted-foreground text-center font-semibold text-black">
+                Completed Appointments
+              </span>
+            </div>
+          </div>
+        </section>
         {/* Services Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full py-12 md:pb-24 lg:pb-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
+                <div className="inline-block text-xl text-left font-semibold text-white rounded-full rounded-br-none bg-[#5ee088] px-12 py-3 w-fit mb-6 ">
                   Our Services
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-[#3498db]">
                   Comprehensive Healthcare Solutions
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -211,10 +218,10 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
+                <div className="inline-block text-xl text-left font-semibold text-[#42a68b] rounded-full rounded-br-none border-[#2ecc71] border-2 bg-[#eaf5f2] px-8 py-3 w-fit mb-6">
                   How To Use
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-[#3498db]">
                   Simple, secure, and convenient
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -247,7 +254,7 @@ export default function LandingPage() {
                   key={index}
                   className="group relative flex flex-col items-center space-y-4"
                 >
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-primary-foreground">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#5ee088] text-2xl font-bold text-primary-foreground">
                     {step.step}
                   </div>
                   <div className="space-y-2">
@@ -264,11 +271,11 @@ export default function LandingPage() {
                 </div>
               ))}
             </div>
-            <div className="flex justify-center mt-8">
+            {/* <div className="flex justify-center mt-8">
               <Button asChild size="lg" className="px-8 text-white">
                 <Link to="/get-the-app">Download the App</Link>
               </Button>
-            </div>
+            </div> */}
           </div>
         </section>
 
@@ -277,10 +284,10 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
-                  Care Providers
+                <div className="inline-block text-md text-left font-semibold text-white rounded-full rounded-br-none bg-[#5ee088] border-[#2ecc71] border-2 px-8 py-3 w-fit mb-6">
+                  Our Doctors
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-[#3498db]">
                   Meet Our Healthcare Professionals
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -295,25 +302,25 @@ export default function LandingPage() {
                   name: 'Dr. Adebayo Johnson',
                   specialty: 'Cardiology',
                   experience: '15+ years',
-                  img: '/placeholder.svg?height=300&width=300&text=Dr.+Johnson'
+                  img: '/images/doctor1.png'
                 },
                 {
                   name: 'Dr. Ngozi Okafor',
                   specialty: 'Pediatrics',
                   experience: '12+ years',
-                  img: '/placeholder.svg?height=300&width=300&text=Dr.+Okafor'
+                  img: '/images/doctor2.png'
                 },
                 {
                   name: 'Dr. Emeka Nwachukwu',
                   specialty: 'Dermatology',
                   experience: '10+ years',
-                  img: '/placeholder.svg?height=300&width=300&text=Dr.+Nwachukwu'
+                  img: '/images/doctor3.png'
                 },
                 {
                   name: 'Dr. Fatima Bello',
                   specialty: 'Gynecology',
                   experience: '14+ years',
-                  img: '/placeholder.svg?height=300&width=300&text=Dr.+Bello'
+                  img: '/images/doctor4.png'
                 }
               ].map((doctor, index) => (
                 <Card key={index} className="overflow-hidden">
@@ -344,9 +351,16 @@ export default function LandingPage() {
               ))}
             </div>
             <div className="flex justify-center mt-8">
-              <Button asChild variant="outline">
-                <p>View All Care Providers</p>
+              <Button asChild variant="outline" className='bg-[#ff6f61] text-white p-4 text-md rounded-full'>
+                <div className='flex justify-between items-center gap-3 '>
+                    <p>See more Doctors</p>
+                    <div className='bg-white rounded-full p-2'>
+                       <ArrowRight className='text-[#ff6f61]'/>
+                    </div>
+              </div>
               </Button>
+              
+              
             </div>
           </div>
         </section>
@@ -359,10 +373,10 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
+                <div className="inline-block text-xl text-left font-semibold text-white rounded-full rounded-br-none bg-[#5ee088] px-12 py-3 w-fit mb-6">
                   Testimonials
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-[#3498db]">
                   What our users are saying
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -408,12 +422,12 @@ export default function LandingPage() {
                         ))}
                     </div>
                     <blockquote className="text-lg mb-4">
-                      "{testimonial.quote}"
+                      <span className='text-[32px] text-[#63BBE9]'>“</span>{testimonial.quote}
                     </blockquote>
                     <div className="flex items-center">
                       <div className="h-10 w-10 rounded-full bg-muted">
                         <img
-                          src={`/placeholder.svg?height=40&width=40&text=${testimonial.author.charAt(0)}`}
+                          src={`/images/testimonial${index + 1}.jpg`}
                           alt={testimonial.author}
                           width={40}
                           height={40}
@@ -437,56 +451,50 @@ export default function LandingPage() {
         </section>
 
         {/* Coverage Map Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
+        <section className="w-full py-20  md:py-56 lg:py-44 bg-[url('/images/seyi-bg.jpg')] bg-cover bg-center">
+          <div className="container px-4 backdrop-blur-sm bl md:px-6  bg-cover bg-center">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-              <div className="space-y-4">
-                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
+              <div className="space-y-8">
+                <div className="inline-block text-xl text-left font-semibold text-white rounded-full rounded-br-none bg-[#5ee088] px-12 py-3 w-fit mb-6">
                   Nationwide Coverage
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-[#3498db]">
                   Serving All 36 States and FCT
                 </h2>
-                <p className="text-muted-foreground md:text-xl/relaxed">
+                <p className="text-muted-foreground md:text-xl/relaxed text-white">
                   Seyi Tinubu Connect provides healthcare services and medication delivery
                   across all of Nigeria. No matter where you are, quality
                   healthcare is just a tap away.
                 </p>
                 <div className="grid grid-cols-2 gap-4 mt-6">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 text-white">
                     <Users className="h-5 w-5 text-primary" />
                     <span>2,500+ Care Providers</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 text-white">
                     <Award className="h-5 w-5 text-primary" />
                     <span>36+ Medical Specialties</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 text-white">
                     <Map className="h-5 w-5 text-primary" />
                     <span>100% Geographic Coverage</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="text-white flex items-center gap-2">
                     <MapPin className="h-5 w-5 text-primary" />
                     <span>Medication Delivery Nationwide</span>
                   </div>
                 </div>
-                <Button asChild className="mt-4 text-white">
+                <Button asChild className="mt-12 text-white ">
                   <p>Check Availability in Your Area</p>
                 </Button>
               </div>
-              <div className="relative h-[400px] w-full overflow-hidden rounded-xl">
-                <img
-                  src="/placeholder.svg?height=400&width=600&text=Nigeria+Map"
-                  alt="Map of Nigeria showing Seyi Tinubu Connect coverage"
-                  className="object-cover"
-                />
-              </div>
+              
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-primary-foreground">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#33ba7f] text-primary-foreground">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -499,16 +507,16 @@ export default function LandingPage() {
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Button asChild size="lg" variant="secondary" className="px-8">
-                  <Link to="/get-the-app">Download the App</Link>
+                <Button asChild size="lg" variant="secondary" className="bg-[#33ba7f] px-8 border-none text-white">
+                  <img src="/images/google.png"/>
                 </Button>
                 <Button
                   asChild
                   size="lg"
                   variant="outline"
-                  className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 px-8"
+                  className="bg-transparent border-none text-[#33ba7f] hover:bg-primary-foreground/10 px-8"
                 >
-                  <Link to="/contact-us">Contact Us</Link>
+                  <img src="/images/apple.png"/>
                 </Button>
               </div>
             </div>
@@ -521,7 +529,7 @@ export default function LandingPage() {
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <img
-                  src="/images/betalyfe-icon.svg"
+                  src="/images/logo-stl.png"
                   className="h-10 w-10 rounded-full"
                 />
                 <span className="text-lg font-bold">STConnect</span>

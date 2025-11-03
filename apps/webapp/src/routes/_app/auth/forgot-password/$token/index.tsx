@@ -95,11 +95,11 @@ export default function ForgotPasswordPage() {
             <div className="bg-primary/10 p-2 rounded-full">
               <img
               onClick={()=>router.navigate({to:'/testcall'})}
-                src="/images/betalyfe-icon.svg"
+                src="/images/logo-stl.png"
                 className="w-14 h-14 rounded-full"
               />
             </div>
-            <h1 className="text-xl font-bold ml-2">Beta-Lyfe</h1>
+            <h1 className="text-lg font-bold ml-2">ST connect</h1>
           </div>
           <Link to="/auth/sign-in">
             <Button variant="ghost" size="sm">

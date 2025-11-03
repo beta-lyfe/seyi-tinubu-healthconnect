@@ -14,7 +14,7 @@ function RouteComponent() {
     <Input type='text' value={token} onChange={(e)=>setToken(e.target.value)}/>
     <Button 
     onClick={()=>router.navigate({to:'/testcall/call',search:{
-      roomname:'betalyfe',
+      roomname:'ST connect',
       token:token
     }})}
     >move to consulation</Button>

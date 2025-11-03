@@ -83,10 +83,10 @@ export  function MainLayout({ children }: MainLayoutProps) {
         <div className="container flex h-14 items-center">
           <div className="mr-4 flex items-center gap-3">
             <img
-              src="/images/betalyfe-icon.svg"
+              src="/images/logo-stl.png"
               className="w-10 h-10 rounded-full"
             />
-            <p className="text-primary font-bold">Beta lyfe</p>
+            <p className="text-primary font-bold">ST connect</p>
           </div>
 
           <div className="flex-1 flex justify-end md:justify-between items-center gap-2">
@@ -136,7 +136,7 @@ export  function MainLayout({ children }: MainLayoutProps) {
                             <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                           </svg>
                         </div>
-                        <span className="font-bold text-xl">Beta-Lyfe</span>
+                        <span className="font-bold text-lg">ST connect</span>
                       </div>
                       <Button
                         variant="ghost"

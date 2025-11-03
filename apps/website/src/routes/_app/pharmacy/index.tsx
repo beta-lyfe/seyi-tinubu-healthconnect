@@ -208,33 +208,33 @@ function PharmacyPage() {
                       name: 'Paracetamol',
                       generic: 'Acetaminophen',
                       price: '₦500',
-                      img: '/placeholder.svg?height=200&width=200&text=Paracetamol'
+                      img: '/images/drug1.png'
                     },
                     {
                       name: 'Amoxicillin',
                       generic: 'Amoxicillin',
                       price: '₦1,200',
                       prescription: true,
-                      img: '/placeholder.svg?height=200&width=200&text=Amoxicillin'
+                      img: '/images/drug2.png'
                     },
                     {
                       name: 'Vitamin C',
                       generic: 'Ascorbic Acid',
                       price: '₦800',
-                      img: '/placeholder.svg?height=200&width=200&text=Vitamin+C'
+                      img: '/images/drug3.png'
                     },
                     {
                       name: 'Lisinopril',
                       generic: 'Lisinopril',
                       price: '₦1,500',
                       prescription: true,
-                      img: '/placeholder.svg?height=200&width=200&text=Lisinopril'
+                      img: '/images/drug4.png'
                     },
                     {
                       name: 'Ibuprofen',
                       generic: 'Ibuprofen',
                       price: '₦600',
-                      img: '/placeholder.svg?height=200&width=200&text=Ibuprofen'
+                      img: '/images/drug5.png'
                     }
                   ].map((product, index) => (
                     <a href={`/pharmacy/product/${index}`} key={index}>
@@ -486,7 +486,7 @@ function PharmacyPage() {
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <img
-                  src="/images/betalyfe-icon.svg"
+                  src="/images/logo-stl.png"
                   className="w-10 h-10 rounded-full"
                 />
                 <span className="text-lg font-bold">STConnect Pharmacy</span>

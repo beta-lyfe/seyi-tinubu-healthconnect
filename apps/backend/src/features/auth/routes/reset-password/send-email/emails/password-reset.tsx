@@ -19,7 +19,7 @@ interface PasswordResetEmailProps {
   websiteLink: string
 }
 
-const logoUrl = 'https://betalyfe.com.ng/images/betalyfe-icon.svg'
+const logoUrl = 'https://betalyfe.com.ng/images/logo-stl.png'
 
 const main = {
   backgroundColor: '#f6f9fc',

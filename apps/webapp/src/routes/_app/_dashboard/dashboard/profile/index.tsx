@@ -518,7 +518,7 @@ function ProfilePage() {
                   <div className="space-y-0.5">
                     <Label htmlFor="marketing">Marketing communications</Label>
                     <p className="text-sm text-muted-foreground">
-                      Receive marketing communications from Beta-Lyfe
+                      Receive marketing communications from ST connect
                     </p>
                   </div>
                   <Switch id="marketing" />

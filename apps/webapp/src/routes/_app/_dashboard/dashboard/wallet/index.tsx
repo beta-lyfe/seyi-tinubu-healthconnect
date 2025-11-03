@@ -65,7 +65,7 @@ export default function WalletPage() {
           <CardHeader className="pb-3">
             <CardTitle className='text-md md:text-lg'>Wallet Balance</CardTitle>
             <CardDescription>
-              Your current Beta-Lyfe wallet balance
+              Your current ST connect wallet balance
             </CardDescription>
           </CardHeader>
           <CardContent>
