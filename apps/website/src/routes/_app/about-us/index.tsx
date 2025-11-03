@@ -481,7 +481,7 @@ export default function AboutUsPage() {
                   </Card>
                 </div>
 
-                <Card className="bg-background">
+                {/*<Card className="bg-background">
                   <CardContent className="p-6 space-y-4">
                     <h3 className="text-xl font-bold">Awards & Recognition</h3>
                     <ul className="space-y-2">
@@ -505,7 +505,7 @@ export default function AboutUsPage() {
                       </li>
                     </ul>
                   </CardContent>
-                </Card>
+                </Card>*/}
               </div>
 
               <Card className="bg-background">
