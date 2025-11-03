@@ -142,7 +142,7 @@ export default function AboutUsPage() {
                   </div>
                   <h3 className="text-xl font-bold">The Beginning</h3>
                   <p className="text-muted-foreground">
-                    Seyi Tinubu Connect was founded by Seyi Tinubu, Sediq and Samuel Okechukwu
+                    Seyi Tinubu Connect was founded by Seyi Tinubu, Abubakar Isa Jibrin, Okechukwu Samuel, Uchenna Ofoma and Ikechukwu Fortune
                     in Lagos with a vision to revolutionize healthcare access in
                     Nigeria.
                   </p>
@@ -228,18 +228,18 @@ export default function AboutUsPage() {
                       bio: 'Seyi Tinubu is a entrepreneur with a passion for healthcare innovation.',
                       img: '/images/seyi1.png'
                     },
-                      // {
-                      //   name: 'Ngozi Okafor',
-                      //   title: 'Co-Founder & COO',
-                      //   bio: "With a background in healthcare management and an MBA from Lagos Business School, Ngozi oversees Seyi Tinubu Connect's operations, ensuring seamless service delivery across all departments.",
-                      //   img: '/placeholder.svg?height=300&width=300&text=Ngozi+Okafor'
-                      // },
-                      // {
-                      //   name: 'Oluwaseun Adeyemi',
-                      //   title: 'Chief Financial Officer',
-                      //   bio: 'Oluwaseun brings 12 years of financial expertise from both healthcare and technology sectors. He previously worked with major health insurance providers and tech startups in Nigeria.',
-                      //   img: '/placeholder.svg?height=300&width=300&text=Oluwaseun+Adeyemi'
-                      // }
+                    // {
+                    //   name: 'Ngozi Okafor',
+                    //   title: 'Co-Founder & COO',
+                    //   bio: "With a background in healthcare management and an MBA from Lagos Business School, Ngozi oversees Seyi Tinubu Connect's operations, ensuring seamless service delivery across all departments.",
+                    //   img: '/placeholder.svg?height=300&width=300&text=Ngozi+Okafor'
+                    // },
+                    // {
+                    //   name: 'Oluwaseun Adeyemi',
+                    //   title: 'Chief Financial Officer',
+                    //   bio: 'Oluwaseun brings 12 years of financial expertise from both healthcare and technology sectors. He previously worked with major health insurance providers and tech startups in Nigeria.',
+                    //   img: '/placeholder.svg?height=300&width=300&text=Oluwaseun+Adeyemi'
+                    // }
                   ].map((person, index) => (
                     <Card key={index} className="overflow-hidden">
                       <div className="aspect-square relative">
@@ -605,7 +605,7 @@ export default function AboutUsPage() {
         </section>
 
         {/* Locations Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        {/*<section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8">
               <div className="space-y-2">
@@ -690,7 +690,7 @@ export default function AboutUsPage() {
               </Card>
             </div>
           </div>
-        </section>
+        </section>*/}
 
         {/* CTA Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-primary-foreground">
