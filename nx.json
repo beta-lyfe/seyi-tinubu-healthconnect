@@ -25,10 +25,10 @@
     {
       "plugin": "@nx/vite/plugin",
       "options": {
-        "buildTargetName": "vite:build",
+        "buildTargetName": "build",
         "testTargetName": "test",
         "serveTargetName": "serve",
-        "devTargetName": "vite:dev",
+        "devTargetName": "dev",
         "previewTargetName": "preview",
         "serveStaticTargetName": "serve-static",
         "typecheckTargetName": "typecheck",
